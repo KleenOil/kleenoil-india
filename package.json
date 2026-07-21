@@ -1,0 +1,86 @@
+{
+  "name": "industrial-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Enterprise-grade industrial corporate portfolio platform",
+  "type": "module",
+  "scripts": {
+    "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
+    "db:down": "docker compose -f docker/docker-compose.yml down",
+    "db:logs": "docker compose -f docker/docker-compose.yml logs -f postgres",
+    "db:migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate",
+    "db:reset": "docker compose -f docker/docker-compose.yml down -v",
+    "db:up": "docker compose -f docker/docker-compose.yml up -d --wait",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --no-server-fast-refresh",
+    "devsafe": "node --input-type=module -e \"import fs from 'node:fs'; fs.rmSync('.next',{recursive:true,force:true})\" && cross-env NODE_OPTIONS=--no-deprecation next dev --no-server-fast-refresh",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
+    "lint:fix": "cross-env NODE_OPTIONS=--no-deprecation eslint . --fix",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "prepare": "husky",
+    "setup:local": "npm run db:up && npm run db:migrate",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@payloadcms/db-postgres": "3.85.2",
+    "@payloadcms/next": "3.85.2",
+    "@payloadcms/richtext-lexical": "3.85.2",
+    "@payloadcms/ui": "3.85.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cross-env": "10.1.0",
+    "graphql": "^16.12.0",
+    "gsap": "^3.15.0",
+    "lucide-react": "^0.575.0",
+    "next": "16.2.10",
+    "payload": "3.85.2",
+    "radix-ui": "^1.6.1",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "sharp": "0.34.2",
+    "tailwind-merge": "^3.5.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "21.2.0",
+    "@commitlint/config-conventional": "21.2.0",
+    "@playwright/test": "1.61.1",
+    "@tailwindcss/postcss": "^4.3.2",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "16.3.2",
+    "@types/node": "^24.12.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.5.2",
+    "eslint": "^9.39.3",
+    "eslint-config-next": "16.2.10",
+    "husky": "9.1.7",
+    "jsdom": "^28.0.0",
+    "lint-staged": "17.0.8",
+    "postcss": "^8.5.6",
+    "prettier": "3.9.4",
+    "tailwindcss": "4.3.2",
+    "typescript": "6.0.3",
+    "vitest": "4.1.9"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css,scss,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

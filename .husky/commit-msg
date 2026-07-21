@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+# Validate commit messages against Conventional Commits (Commitlint).
+# Activated by Husky during `npm run prepare` in Phase 1.
+
+npx --no -- commitlint --edit "$1"

@@ -1,0 +1,40 @@
+# Deploy workflow — intentional stub until Hostinger VPS or Vercel is finalized.
+# See docs/DEPLOYMENT.md for target architecture.
+#
+# Do not enable automatic production deploys until staging credentials are configured.
+
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Target environment
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+      confirm:
+        description: Type deploy to confirm
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    name: Deploy (${{ inputs.environment }})
+    runs-on: ubuntu-latest
+    if: inputs.confirm == 'deploy'
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deployment not configured
+        run: |
+          echo "::warning::Deploy workflow is a stub."
+          echo "Configure Hostinger VPS SSH deploy or Vercel integration before enabling."
+          echo "Target environment: ${{ inputs.environment }}"
+          echo "See docs/DEPLOYMENT.md for the deployment architecture."
+          exit 1

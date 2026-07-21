@@ -1,0 +1,10 @@
+/**
+ * End-to-end tests (Playwright).
+ *
+ * Naming convention: *.e2e.ts
+ *
+ * Example: tests/e2e/homepage.e2e.ts
+ *
+ * Run: npm run test:e2e
+ * Debug: npm run test:e2e:ui
+ */

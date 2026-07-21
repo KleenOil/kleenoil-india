@@ -1,0 +1,212 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Brand — overridable via CMS SiteSettings in future phases */
+  --color-brand-primary: #006633;
+  --color-brand-deep: #004422;
+  --color-brand-bright: #008844;
+  --color-brand-soft: #cae5d9;
+  --color-brand-dim: #00663326;
+
+  /* Surfaces */
+  --color-background: #ebf2ee;
+  --color-surface: #dce8e1;
+  --color-surface-elevated: #e5ede8;
+  --color-surface-glass: #0066330a;
+
+  /* Text */
+  --color-text-primary: #003319;
+  --color-text-secondary: #4a6f60;
+  --color-text-tertiary: #7a9e8e;
+
+  /* Borders */
+  --color-border-subtle: #acccbb;
+  --color-border-strong: #80b690;
+
+  /* shadcn/ui semantic tokens */
+  --color-foreground: var(--color-text-primary);
+  --color-muted-foreground: var(--color-text-secondary);
+  --color-primary: var(--color-brand-primary);
+  --color-primary-foreground: #ffffff;
+  --color-secondary: var(--color-surface);
+  --color-secondary-foreground: var(--color-text-primary);
+  --color-muted: var(--color-surface-elevated);
+  --color-accent: var(--color-brand-soft);
+  --color-accent-foreground: var(--color-text-primary);
+  --color-destructive: #dc2626;
+  --color-destructive-foreground: #ffffff;
+  --color-border: var(--color-border-subtle);
+  --color-input: var(--color-border-subtle);
+  --color-ring: var(--color-brand-primary);
+  --color-card: var(--color-surface-elevated);
+  --color-card-foreground: var(--color-text-primary);
+  --color-popover: var(--color-surface-elevated);
+  --color-popover-foreground: var(--color-text-primary);
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  --font-heading: var(--font-family-heading), 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-family-body), 'Arimo', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-family-body), 'Arimo', ui-monospace, monospace;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: auto;
+    overflow-x: clip;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    /* Static gradients — no fixed attachment (major scroll jank on Windows) */
+    background-image:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(0, 102, 51, 0.09), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 100% 0%, rgba(202, 229, 217, 0.45), transparent 50%),
+      radial-gradient(ellipse 50% 30% at 50% 100%, rgba(0, 102, 51, 0.05), transparent 60%);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  /* Solid translucent surfaces — no backdrop-blur (expensive while scrolling) */
+  .surface-panel {
+    @apply border border-white/40 bg-background/92 shadow-[0_8px_32px_#00663314];
+  }
+
+  .surface-card {
+    @apply border border-white/30 bg-surface-elevated/92 shadow-[0_12px_28px_#00663312] transition-transform duration-200 ease-out;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .homepage-motion .surface-card:hover {
+      @apply -translate-y-0.5;
+    }
+  }
+}
+
+/* Sticky header — opaque tint only (blur on sticky headers causes scroll jank) */
+.site-header {
+  @apply bg-background/96;
+  box-shadow: 0 2px 12px #0066330c;
+}
+
+.site-header.header-scrolled {
+  @apply bg-background;
+  box-shadow: 0 4px 16px #00663312;
+}
+
+.site-header-inner {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.site-header.header-scrolled .site-header-inner {
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+}
+
+/* GSAP initial hide — only until a block finishes revealing */
+@media (prefers-reduced-motion: no-preference) {
+  .homepage-motion.is-animating [data-reveal]:not(.motion-revealed) [data-reveal-target],
+  .homepage-motion.is-animating [data-reveal]:not(.motion-revealed) [data-reveal-part],
+  .homepage-motion.is-animating [data-reveal]:not(.motion-revealed) [data-reveal-item],
+  .homepage-motion.is-animating [data-reveal]:not(.motion-revealed) [data-reveal-column],
+  .homepage-motion.is-animating [data-reveal]:not(.motion-revealed) [data-reveal-panel],
+  .homepage-motion.is-animating [data-reveal]:not(.motion-revealed) [data-reveal-logos] > *,
+  .homepage-motion.is-animating [data-reveal]:not(.motion-revealed) [data-reveal-badges] > *,
+  .homepage-motion.is-animating [data-reveal-stagger]:not(.motion-revealed) .grid > *,
+  .homepage-motion.is-animating [data-reveal-stagger]:not(.motion-revealed) article,
+  .homepage-motion.is-animating [data-reveal-stagger]:not(.motion-revealed) figure,
+  .homepage-motion.is-animating [data-reveal-stagger]:not(.motion-revealed) blockquote {
+    opacity: 0;
+    transform: translate3d(0, 1.15rem, 0);
+  }
+
+  .homepage-motion.is-animating [data-reveal]:not(.motion-revealed) [data-reveal-panel] {
+    transform: translate3d(0, 1.35rem, 0) scale(0.985);
+  }
+
+  .homepage-motion.is-animating [data-reveal]:not(.motion-revealed) .motion-line-grow {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  .homepage-motion.is-animating [data-reveal='hero']:not(.motion-revealed) [data-hero-glow] {
+    opacity: 0.3;
+  }
+
+  .homepage-motion [data-reveal].motion-revealed [data-reveal-target],
+  .homepage-motion [data-reveal].motion-revealed [data-reveal-part],
+  .homepage-motion [data-reveal].motion-revealed [data-reveal-item],
+  .homepage-motion [data-reveal].motion-revealed [data-reveal-column],
+  .homepage-motion [data-reveal].motion-revealed [data-reveal-panel],
+  .homepage-motion [data-reveal].motion-revealed [data-reveal-logos] > *,
+  .homepage-motion [data-reveal].motion-revealed [data-reveal-badges] > *,
+  .homepage-motion [data-reveal-stagger].motion-revealed .grid > *,
+  .homepage-motion [data-reveal-stagger].motion-revealed article,
+  .homepage-motion [data-reveal-stagger].motion-revealed figure,
+  .homepage-motion [data-reveal-stagger].motion-revealed blockquote,
+  .homepage-motion [data-reveal].motion-revealed .motion-line-grow,
+  .homepage-motion [data-reveal].motion-revealed [data-hero-glow] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.homepage-motion.motion-reduced [data-reveal-target],
+.homepage-motion.motion-reduced [data-reveal-part],
+.homepage-motion.motion-reduced [data-reveal-item],
+.homepage-motion.motion-reduced [data-reveal-column],
+.homepage-motion.motion-reduced [data-reveal-panel],
+.homepage-motion.motion-reduced [data-reveal-logos] > *,
+.homepage-motion.motion-reduced [data-reveal-badges] > *,
+.homepage-motion.motion-reduced [data-reveal-stagger] .grid > *,
+.homepage-motion.motion-reduced [data-reveal-stagger] article,
+.homepage-motion.motion-reduced [data-reveal-stagger] figure,
+.homepage-motion.motion-reduced [data-reveal-stagger] blockquote,
+.homepage-motion.motion-reduced .motion-line-grow,
+.homepage-motion.motion-reduced [data-hero-glow] {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,17 @@
+node_modules
+.next
+out
+build
+dist
+coverage
+playwright-report
+test-results
+blob-report
+
+# Generated files
+src/payload-types.ts
+src/app/(payload)/admin/importMap.js
+package-lock.json
+
+# Design assets
+*.pen

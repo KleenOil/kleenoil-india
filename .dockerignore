@@ -1,0 +1,36 @@
+# Docker
+.git
+.gitignore
+.dockerignore
+
+# Dependencies & build output
+node_modules
+.next
+out
+dist
+build
+coverage
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Media uploads (mounted as volume in production)
+media
+
+# Testing & tooling
+playwright-report
+test-results
+blob-report
+.husky/_
+
+# Design files
+*.pen
+
+# Documentation (not needed in image)
+docs
+
+# OS
+.DS_Store
+Thumbs.db

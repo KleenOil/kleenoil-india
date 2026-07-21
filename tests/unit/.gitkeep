@@ -1,0 +1,9 @@
+/**
+ * Unit and component tests (Vitest + React Testing Library).
+ *
+ * Naming convention:
+ *   - *.test.ts   — utility / lib tests
+ *   - *.test.tsx  — component tests
+ *
+ * Example: tests/unit/lib/env.test.ts
+ */
