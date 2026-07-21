@@ -42,7 +42,9 @@ export function slugField(options: SlugFieldOptions = {}): Field {
     index: true,
     admin: {
       position: 'sidebar',
-      description: 'URL-friendly identifier. Auto-generated from title if left blank.',
+      components: {
+        Description: '/components/admin/SlugLiveLink#SlugLiveLink',
+      },
     },
     hooks: {
       beforeValidate: [formatSlug(fallbackFrom)],

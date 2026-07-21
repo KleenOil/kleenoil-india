@@ -61,9 +61,16 @@ export const Pages: CollectionConfig = {
       name: 'layout',
       type: 'blocks',
       label: 'Layout',
+      labels: {
+        singular: 'Layout',
+        plural: 'Layout',
+      },
       blocks: pageBlocks,
       admin: {
         initCollapsed: true,
+        components: {
+          Field: '/components/admin/LayoutBlocksField#LayoutBlocksField',
+        },
       },
     },
     seoField,

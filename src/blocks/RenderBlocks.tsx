@@ -42,6 +42,8 @@ type LayoutBlock = {
 type RenderBlocksProps = {
   blocks: LayoutBlock[] | null | undefined;
   motion?: boolean;
+  /** When true and blocks are empty, render the design homepage fallback. */
+  fallbackToHomepage?: boolean;
 };
 
 type RevealOptions = {
@@ -84,9 +86,17 @@ function HomepageFallback({ motion }: { motion: boolean }) {
  * Server Component block renderer.
  * All V1 homepage blocks are registered here.
  */
-export function RenderBlocks({ blocks, motion = false }: RenderBlocksProps) {
+export function RenderBlocks({
+  blocks,
+  motion = false,
+  fallbackToHomepage = false,
+}: RenderBlocksProps) {
   if (!blocks?.length) {
-    return <HomepageFallback motion={motion} />;
+    if (fallbackToHomepage) {
+      return <HomepageFallback motion={motion} />;
+    }
+
+    return null;
   }
 
   return (

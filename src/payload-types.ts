@@ -195,9 +195,6 @@ export interface Media {
 export interface Page {
   id: number;
   title: string;
-  /**
-   * URL-friendly identifier. Auto-generated from title if left blank.
-   */
   slug: string;
   layout?:
     | (

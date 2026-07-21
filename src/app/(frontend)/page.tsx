@@ -2,28 +2,9 @@ import type { Metadata } from 'next';
 
 import { RenderBlocks } from '@/blocks/RenderBlocks';
 import { HomepageMotion } from '@/components/motion/HomepageMotion';
-import { getPayloadClient } from '@/lib/payload';
-import type { Page } from '@/payload-types';
+import { getHomePage } from '@/lib/cms/pages';
 
 export const dynamic = 'force-dynamic';
-
-async function getHomePage(): Promise<Page | null> {
-  try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: 'pages',
-      where: {
-        and: [{ slug: { equals: 'home' } }, { _status: { equals: 'published' } }],
-      },
-      limit: 1,
-      depth: 2,
-    });
-
-    return (result.docs[0] as Page | undefined) ?? null;
-  } catch {
-    return null;
-  }
-}
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getHomePage();
@@ -45,7 +26,7 @@ export default async function HomePage() {
 
   return (
     <HomepageMotion>
-      <RenderBlocks blocks={blocks} motion />
+      <RenderBlocks blocks={blocks} motion fallbackToHomepage />
     </HomepageMotion>
   );
 }
