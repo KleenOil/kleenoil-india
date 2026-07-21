@@ -16,10 +16,6 @@ build/
 .env.test.local
 .env.production.local
 
-# Payload
-src/payload-types.ts
-src/app/(payload)/admin/importMap.js
-
 # Media (local storage)
 media/
 

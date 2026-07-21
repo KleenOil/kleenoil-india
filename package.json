@@ -5,7 +5,7 @@
   "description": "Enterprise-grade industrial corporate portfolio platform",
   "type": "module",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
+    "build": "npm run generate:importmap && npm run generate:types && cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
     "db:down": "docker compose -f docker/docker-compose.yml down",
     "db:logs": "docker compose -f docker/docker-compose.yml logs -f postgres",
     "db:migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate",

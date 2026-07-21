@@ -14,11 +14,13 @@ env:
   NODE_ENV: production
   NEXT_TELEMETRY_DISABLED: '1'
   # Build-time secrets only — never real production credentials
-  NEXT_PUBLIC_SITE_URL: http://localhost:3000
+  NEXT_PUBLIC_SITE_URL: https://localhost:3000
   DATABASE_URL: postgresql://postgres:postgres@localhost:5432/industrial_platform
   PAYLOAD_SECRET: ci-build-secret-minimum-32-characters-long
+  REVALIDATE_SECRET: ci-revalidate-secret-minimum-32-characters
   STORAGE_PROVIDER: local
   EMAIL_PROVIDER: resend
+  RESEND_API_KEY: re_ci_placeholder_key_not_used_in_build
 
 jobs:
   quality:
