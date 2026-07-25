@@ -8,7 +8,9 @@ type MotionHandle = {
 
 type GsapInstance = typeof import('gsap').gsap;
 
-const ITEM_SELECTORS = '[data-reveal-item], [data-reveal-stagger] .grid > *';
+/** Cards/boxes only — skip grids marked data-reveal-ignore (e.g. PDP gallery thumbs). */
+const ITEM_SELECTORS =
+  '[data-reveal-item], [data-reveal-stagger] .grid:not([data-reveal-ignore]) > *';
 
 const OBSERVER_OPTIONS: IntersectionObserverInit = {
   root: null,
@@ -189,7 +191,7 @@ function playSection(
     gsap.set(columns, { opacity: 0, y: config.yItem });
     tl.to(
       columns,
-      { opacity: 1, y: 0, duration: config.duration, stagger: 0.09 },
+      { opacity: 1, y: 0, duration: config.duration, stagger: config.staggerItem },
       headerParts.length ? 0.12 : 0,
     );
   }

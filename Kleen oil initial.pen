@@ -14793,6 +14793,4145 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "H4TiV",
+      "x": 5742,
+      "y": 0,
+      "name": "Kleenoil India / PDP — Combined",
+      "clip": true,
+      "width": 1440,
+      "fill": "$background",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "zog0x",
+          "name": "Nav",
+          "width": "fill_container",
+          "fill": "#EBF2EECC",
+          "stroke": "$border-subtle",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "strokeAlignment": "inner",
+          "effect": [
+            {
+              "type": "background_blur",
+              "radius": 28
+            },
+            {
+              "type": "shadow",
+              "shadowType": "outer",
+              "color": "#00663318",
+              "offset": {
+                "x": 0,
+                "y": 6
+              },
+              "blur": 28
+            }
+          ],
+          "padding": [
+            24,
+            64
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "oGF6V",
+              "name": "Logo Group",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "z7r7D3",
+                  "name": "Logo Mark",
+                  "width": 36,
+                  "height": 36,
+                  "fill": "$brand-green",
+                  "cornerRadius": 8,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "d8SPT",
+                      "name": "K",
+                      "fill": "#FFFFFF",
+                      "content": "K",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 20,
+                      "fontWeight": "800"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "DQnFk",
+                  "name": "Wordmark",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "h3p4gq",
+                      "name": "Brand",
+                      "fill": "$text-primary",
+                      "content": "KLEENOIL",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 18,
+                      "fontWeight": "700",
+                      "letterSpacing": -0.5
+                    },
+                    {
+                      "type": "text",
+                      "id": "gOiZ4",
+                      "name": "Tagline",
+                      "fill": "$text-tertiary",
+                      "content": "INDIA — EST. 1988",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 9,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1.6
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "cI3al",
+              "name": "Links",
+              "gap": 40,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Ut86P",
+                  "name": "Products",
+                  "fill": "$text-secondary",
+                  "content": "Products",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "600",
+                  "letterSpacing": 0.2
+                },
+                {
+                  "type": "text",
+                  "id": "al5DE",
+                  "name": "Industries",
+                  "fill": "$text-secondary",
+                  "content": "Industries",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "600",
+                  "letterSpacing": 0.2
+                },
+                {
+                  "type": "text",
+                  "id": "Hr1uK",
+                  "name": "Solutions",
+                  "fill": "$text-secondary",
+                  "content": "Solutions",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "600",
+                  "letterSpacing": 0.2
+                },
+                {
+                  "type": "text",
+                  "id": "t4OvBk",
+                  "name": "About",
+                  "fill": "$text-secondary",
+                  "content": "About",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "600",
+                  "letterSpacing": 0.2
+                },
+                {
+                  "type": "text",
+                  "id": "oXu02",
+                  "name": "Resources",
+                  "fill": "$text-secondary",
+                  "content": "Resources",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "600",
+                  "letterSpacing": 0.2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "F7AUHX",
+              "name": "Nav Right",
+              "gap": 24,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "dk4XK",
+                  "name": "Search",
+                  "fill": "#E5EDE866",
+                  "cornerRadius": 10,
+                  "effect": {
+                    "type": "background_blur",
+                    "radius": 12
+                  },
+                  "gap": 6,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "ha26l",
+                      "name": "Search",
+                      "width": 14,
+                      "height": 14,
+                      "icon": "search",
+                      "library": "lucide",
+                      "fill": "$text-secondary"
+                    },
+                    {
+                      "type": "text",
+                      "id": "hfyzF",
+                      "name": "Label",
+                      "fill": "$text-secondary",
+                      "content": "Search",
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Rwk1u",
+                  "name": "Contact",
+                  "fill": "#E5EDE899",
+                  "cornerRadius": 10,
+                  "stroke": "$border-strong",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "effect": {
+                    "type": "background_blur",
+                    "radius": 14
+                  },
+                  "gap": 8,
+                  "padding": [
+                    10,
+                    18
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "oFD3H",
+                      "name": "Label",
+                      "fill": "$text-primary",
+                      "content": "Contact",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "nkHiS",
+                      "name": "Arrow",
+                      "width": 14,
+                      "height": 14,
+                      "icon": "arrow-up-right",
+                      "library": "lucide",
+                      "fill": "$text-primary"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "jlLje",
+          "name": "Hero",
+          "width": "fill_container",
+          "fill": "$background",
+          "gap": 64,
+          "padding": [
+            80,
+            100
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "K1Lfl",
+              "name": "Gallery",
+              "width": 680,
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "I0YpES",
+                  "name": "Main Image",
+                  "metadata": {
+                    "type": "unsplash",
+                    "username": "timumphreys",
+                    "link": "https://unsplash.com/@timumphreys",
+                    "author": "Tim Umphreys"
+                  },
+                  "clip": true,
+                  "width": "fill_container",
+                  "height": 520,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://images.unsplash.com/photo-1569371030340-816be1bc1be9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODQ5MjkwNjZ8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 20,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 2,
+                  "strokeAlignment": "inner",
+                  "effect": [
+                    {
+                      "type": "background_blur",
+                      "radius": 24
+                    },
+                    {
+                      "type": "shadow",
+                      "shadowType": "outer",
+                      "color": "#00663320",
+                      "offset": {
+                        "x": 0,
+                        "y": 16
+                      },
+                      "blur": 40
+                    }
+                  ],
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "yIn1x",
+                      "layoutPosition": "absolute",
+                      "x": 0,
+                      "y": 0,
+                      "name": "Tint",
+                      "fill": "#00663312",
+                      "width": 680,
+                      "height": 520
+                    },
+                    {
+                      "type": "frame",
+                      "id": "K59z9",
+                      "layoutPosition": "absolute",
+                      "x": 24,
+                      "y": 24,
+                      "name": "Badge",
+                      "fill": "#E5EDE8CC",
+                      "cornerRadius": 100,
+                      "effect": {
+                        "type": "background_blur",
+                        "radius": 16
+                      },
+                      "gap": 8,
+                      "padding": [
+                        10,
+                        14
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "EOiie",
+                          "name": "Dot",
+                          "fill": "$brand-green",
+                          "width": 6,
+                          "height": 6
+                        },
+                        {
+                          "type": "text",
+                          "id": "eTBPI",
+                          "name": "L",
+                          "fill": "$brand-green",
+                          "content": "FLAGSHIP SYSTEM",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "700",
+                          "letterSpacing": 1.2
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "GfVGf",
+                  "name": "Thumbnails",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "qGpyG",
+                      "name": "Thumb 1",
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "zoshuacolah",
+                        "link": "https://unsplash.com/@zoshuacolah",
+                        "author": "Zoshua Colah"
+                      },
+                      "clip": true,
+                      "width": "fill_container",
+                      "height": 96,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1764114441005-df7e660bc2c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODQ5MjkwNjd8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12,
+                      "stroke": "$brand-green",
+                      "strokeWidth": 2,
+                      "strokeAlignment": "inner"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "s4XrP",
+                      "name": "Thumb 2",
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "captain_nick",
+                        "link": "https://unsplash.com/@captain_nick",
+                        "author": "CAPTAIN NICK"
+                      },
+                      "clip": true,
+                      "width": "fill_container",
+                      "height": 96,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1720670996713-98e074aff7be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODQ5MjkwNjh8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "d107Le",
+                      "name": "Thumb 3",
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "jontyson",
+                        "link": "https://unsplash.com/@jontyson",
+                        "author": "Jon Tyson"
+                      },
+                      "clip": true,
+                      "width": "fill_container",
+                      "height": 96,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1531708366981-aa022a4e34ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODQ5MjkwNjl8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "XjHeJ",
+                      "name": "Thumb 4",
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "jeswinthomas",
+                        "link": "https://unsplash.com/@jeswinthomas",
+                        "author": "Jeswin Thomas"
+                      },
+                      "clip": true,
+                      "width": "fill_container",
+                      "height": 96,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1596495717678-69df9f89c2a3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODQ5MjkwNzB8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "g4yVaH",
+              "name": "Product Info",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 28,
+              "padding": [
+                8,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "Tz7jB",
+                  "type": "ref",
+                  "ref": "DB8YG",
+                  "name": "Eyebrow",
+                  "descendants": {
+                    "FpdjV": {
+                      "content": "01 / OIL FILTRATION SYSTEMS"
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "XW6kW",
+                  "name": "Title",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Multi-Stage Bypass\nFiltration System",
+                  "lineHeight": 1.05,
+                  "fontFamily": "$font-heading",
+                  "fontSize": 48,
+                  "fontWeight": "700",
+                  "letterSpacing": -2.4
+                },
+                {
+                  "type": "text",
+                  "id": "ke29a",
+                  "name": "Subtitle",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Precision oil purification that removes 99.9% of particulate, water and varnish — extending equipment life by up to 5× and cutting unplanned downtime across heavy industry.",
+                  "lineHeight": 1.55,
+                  "fontFamily": "$font-body",
+                  "fontSize": 17,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "m08saK",
+                  "name": "Quick Specs",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "d9RGN",
+                      "name": "Removal",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "effect": {
+                        "type": "background_blur",
+                        "radius": 16
+                      },
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": [
+                        16,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "i1ANHZ",
+                          "name": "Val",
+                          "fill": "$brand-green",
+                          "content": "99.9%",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 22,
+                          "fontWeight": "700",
+                          "letterSpacing": -0.8
+                        },
+                        {
+                          "type": "text",
+                          "id": "ELoRz",
+                          "name": "Lbl",
+                          "fill": "$text-tertiary",
+                          "content": "REMOVAL",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 10,
+                          "fontWeight": "700",
+                          "letterSpacing": 1.2
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "hY8LV",
+                      "name": "Oil Life",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "effect": {
+                        "type": "background_blur",
+                        "radius": 16
+                      },
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": [
+                        16,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "QjUJs",
+                          "name": "Val",
+                          "fill": "$brand-green",
+                          "content": "5×",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 22,
+                          "fontWeight": "700",
+                          "letterSpacing": -0.8
+                        },
+                        {
+                          "type": "text",
+                          "id": "NKSiD",
+                          "name": "Lbl",
+                          "fill": "$text-tertiary",
+                          "content": "OIL LIFE",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 10,
+                          "fontWeight": "700",
+                          "letterSpacing": 1.2
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Y2IDDC",
+                      "name": "Cleanliness",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "effect": {
+                        "type": "background_blur",
+                        "radius": 16
+                      },
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": [
+                        16,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "fzAXi",
+                          "name": "Val",
+                          "fill": "$brand-green",
+                          "content": "ISO 16",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 22,
+                          "fontWeight": "700",
+                          "letterSpacing": -0.8
+                        },
+                        {
+                          "type": "text",
+                          "id": "XFgaG",
+                          "name": "Lbl",
+                          "fill": "$text-tertiary",
+                          "content": "CLEANLINESS",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 10,
+                          "fontWeight": "700",
+                          "letterSpacing": 1.2
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "LZb1y",
+                      "name": "Duty",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "effect": {
+                        "type": "background_blur",
+                        "radius": 16
+                      },
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": [
+                        16,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "g6stg",
+                          "name": "Val",
+                          "fill": "$brand-green",
+                          "content": "24/7",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 22,
+                          "fontWeight": "700",
+                          "letterSpacing": -0.8
+                        },
+                        {
+                          "type": "text",
+                          "id": "NwaTb",
+                          "name": "Lbl",
+                          "fill": "$text-tertiary",
+                          "content": "DUTY",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 10,
+                          "fontWeight": "700",
+                          "letterSpacing": 1.2
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "eAPns",
+                  "name": "CTA Row",
+                  "width": "fill_container",
+                  "gap": 14,
+                  "padding": [
+                    8,
+                    0,
+                    0,
+                    0
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "id": "g2wlB3",
+                      "type": "ref",
+                      "ref": "hRxx9",
+                      "name": "Contact to buy",
+                      "descendants": {
+                        "yIQrM": {
+                          "content": "Contact to buy"
+                        }
+                      }
+                    },
+                    {
+                      "id": "QNW4W",
+                      "type": "ref",
+                      "ref": "z7OZYm",
+                      "name": "Download Specs",
+                      "descendants": {
+                        "i5SDD": {
+                          "content": "Download specs"
+                        },
+                        "McdO1": {
+                          "icon": "download"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "zMgPc",
+          "name": "Contamination Problem",
+          "width": "fill_container",
+          "fill": "$surface",
+          "stroke": "$border-subtle",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner",
+          "layout": "vertical",
+          "gap": 48,
+          "padding": 100,
+          "children": [
+            {
+              "type": "frame",
+              "id": "i6HnTA",
+              "name": "Header",
+              "width": "fill_container",
+              "gap": 48,
+              "justifyContent": "space_between",
+              "alignItems": "end",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "wqQJh",
+                  "name": "Left",
+                  "width": 620,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "id": "g2Vze",
+                      "type": "ref",
+                      "ref": "DB8YG",
+                      "name": "Eyebrow",
+                      "descendants": {
+                        "FpdjV": {
+                          "content": "THE CONTAMINATION PROBLEM"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "UMKBS",
+                      "name": "Title",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "What enters the oil —\nand what it costs.",
+                      "lineHeight": 1.08,
+                      "fontFamily": "$font-heading",
+                      "fontSize": 40,
+                      "fontWeight": "700",
+                      "letterSpacing": -1.8
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "c4ZVR",
+                  "name": "Right",
+                  "width": 480,
+                  "padding": [
+                    0,
+                    0,
+                    8,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "TxTDf",
+                      "name": "Body",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Hydraulic fluid does more than transmit power. Contaminants accelerate wear, raise energy use, and shorten oil life across presses, moulders and mobile plant.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "IHqMH",
+              "name": "Two Cols",
+              "width": "fill_container",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "E7kE9",
+                  "name": "Contaminants",
+                  "width": "fill_container",
+                  "fill": "#E5EDE8B3",
+                  "cornerRadius": 16,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "layout": "vertical",
+                  "gap": 20,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "tLBj1",
+                      "name": "H",
+                      "fill": "$text-primary",
+                      "content": "Contamination generated",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 18,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "G1TpZX",
+                      "name": "S",
+                      "fill": "$text-tertiary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Common solids and moisture found in hydraulic circuits",
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "WCdQS",
+                      "name": "List",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "PfsAy",
+                          "name": "Iron particles",
+                          "width": "fill_container",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "strokeAlignment": "inner",
+                          "gap": 12,
+                          "padding": [
+                            14,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "c576Ir",
+                              "name": "I",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "circle",
+                              "library": "lucide",
+                              "fill": "$brand-green"
+                            },
+                            {
+                              "type": "text",
+                              "id": "SFWhg",
+                              "name": "T",
+                              "fill": "$text-primary",
+                              "content": "Iron particles",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "LghEQ",
+                          "name": "Aluminum particles",
+                          "width": "fill_container",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "strokeAlignment": "inner",
+                          "gap": 12,
+                          "padding": [
+                            14,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "VsSBa",
+                              "name": "I",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "circle",
+                              "library": "lucide",
+                              "fill": "$brand-green"
+                            },
+                            {
+                              "type": "text",
+                              "id": "P3h18l",
+                              "name": "T",
+                              "fill": "$text-primary",
+                              "content": "Aluminum particles",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "uVEe5",
+                          "name": "Rubber particles",
+                          "width": "fill_container",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "strokeAlignment": "inner",
+                          "gap": 12,
+                          "padding": [
+                            14,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "t2k1i",
+                              "name": "I",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "circle",
+                              "library": "lucide",
+                              "fill": "$brand-green"
+                            },
+                            {
+                              "type": "text",
+                              "id": "xorPy",
+                              "name": "T",
+                              "fill": "$text-primary",
+                              "content": "Rubber particles",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "SVKiH",
+                          "name": "Moisture",
+                          "width": "fill_container",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "strokeAlignment": "inner",
+                          "gap": 12,
+                          "padding": [
+                            14,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "jwfjD",
+                              "name": "I",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "droplets",
+                              "library": "lucide",
+                              "fill": "$brand-green"
+                            },
+                            {
+                              "type": "text",
+                              "id": "eJrtL",
+                              "name": "T",
+                              "fill": "$text-primary",
+                              "content": "Moisture",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Yx6yR",
+                          "name": "Carbon particles",
+                          "width": "fill_container",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "strokeAlignment": "inner",
+                          "gap": 12,
+                          "padding": [
+                            14,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "AB0zG",
+                              "name": "I",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "circle",
+                              "library": "lucide",
+                              "fill": "$brand-green"
+                            },
+                            {
+                              "type": "text",
+                              "id": "WpH59",
+                              "name": "T",
+                              "fill": "$text-primary",
+                              "content": "Carbon particles",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "MHnW8",
+                  "name": "Problems",
+                  "width": "fill_container",
+                  "fill": "#E5EDE8B3",
+                  "cornerRadius": 16,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "layout": "vertical",
+                  "gap": 20,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Fisjo",
+                      "name": "H",
+                      "fill": "$text-primary",
+                      "content": "Problems this leads to",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 18,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "QXc6m",
+                      "name": "S",
+                      "fill": "$text-tertiary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Downstream failures and operating cost",
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "o47pA",
+                      "name": "List",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "c2x21",
+                          "name": "Pump damage",
+                          "width": "fill_container",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "strokeAlignment": "inner",
+                          "gap": 12,
+                          "padding": [
+                            12,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "NFGg0",
+                              "name": "I",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "circle-alert",
+                              "library": "lucide",
+                              "fill": "$brand-green"
+                            },
+                            {
+                              "type": "text",
+                              "id": "Xu1ph",
+                              "name": "T",
+                              "fill": "$text-primary",
+                              "content": "Pump damage",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "jyo0c",
+                          "name": "Valve damage",
+                          "width": "fill_container",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "strokeAlignment": "inner",
+                          "gap": 12,
+                          "padding": [
+                            12,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "d6HT63",
+                              "name": "I",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "circle-alert",
+                              "library": "lucide",
+                              "fill": "$brand-green"
+                            },
+                            {
+                              "type": "text",
+                              "id": "u9Jsl",
+                              "name": "T",
+                              "fill": "$text-primary",
+                              "content": "Valve damage",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ODxvt",
+                          "name": "Seal damage",
+                          "width": "fill_container",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "strokeAlignment": "inner",
+                          "gap": 12,
+                          "padding": [
+                            12,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "Y60JE",
+                              "name": "I",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "circle-alert",
+                              "library": "lucide",
+                              "fill": "$brand-green"
+                            },
+                            {
+                              "type": "text",
+                              "id": "E3dtyO",
+                              "name": "T",
+                              "fill": "$text-primary",
+                              "content": "Seal damage",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "bxSHG",
+                          "name": "Pressure issues",
+                          "width": "fill_container",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "strokeAlignment": "inner",
+                          "gap": 12,
+                          "padding": [
+                            12,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "eeFm1",
+                              "name": "I",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "circle-alert",
+                              "library": "lucide",
+                              "fill": "$brand-green"
+                            },
+                            {
+                              "type": "text",
+                              "id": "fRfJV",
+                              "name": "T",
+                              "fill": "$text-primary",
+                              "content": "Pressure issues",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "w7Ake",
+                          "name": "Higher machine energy consumption",
+                          "width": "fill_container",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "strokeAlignment": "inner",
+                          "gap": 12,
+                          "padding": [
+                            12,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "vEEiH",
+                              "name": "I",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "circle-alert",
+                              "library": "lucide",
+                              "fill": "$brand-green"
+                            },
+                            {
+                              "type": "text",
+                              "id": "GTtes",
+                              "name": "T",
+                              "fill": "$text-primary",
+                              "content": "Higher machine energy consumption",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "qkE7C",
+                          "name": "Lesser machine output",
+                          "width": "fill_container",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "strokeAlignment": "inner",
+                          "gap": 12,
+                          "padding": [
+                            12,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "eum85",
+                              "name": "I",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "circle-alert",
+                              "library": "lucide",
+                              "fill": "$brand-green"
+                            },
+                            {
+                              "type": "text",
+                              "id": "thYA4",
+                              "name": "T",
+                              "fill": "$text-primary",
+                              "content": "Lesser machine output",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ZndvE",
+                          "name": "High replacement cost of industrial oils",
+                          "width": "fill_container",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "strokeAlignment": "inner",
+                          "gap": 12,
+                          "padding": [
+                            12,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "XiPsr",
+                              "name": "I",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "circle-alert",
+                              "library": "lucide",
+                              "fill": "$brand-green"
+                            },
+                            {
+                              "type": "text",
+                              "id": "sPK5J",
+                              "name": "T",
+                              "fill": "$text-primary",
+                              "content": "High replacement cost of industrial oils",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "NUoCv",
+          "name": "How It Works",
+          "width": "fill_container",
+          "fill": "$background",
+          "layout": "vertical",
+          "gap": 48,
+          "padding": 100,
+          "children": [
+            {
+              "type": "frame",
+              "id": "pgA0j",
+              "name": "Header",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 20,
+              "alignItems": "center",
+              "children": [
+                {
+                  "id": "N3Q61",
+                  "type": "ref",
+                  "ref": "DB8YG",
+                  "name": "Eyebrow",
+                  "descendants": {
+                    "FpdjV": {
+                      "content": "HOW IT WORKS"
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "bzAYX",
+                  "name": "Title",
+                  "fill": "$text-primary",
+                  "content": "Four stages. One continuous clean.",
+                  "textAlign": "center",
+                  "fontFamily": "$font-heading",
+                  "fontSize": 40,
+                  "fontWeight": "700",
+                  "letterSpacing": -1.8
+                },
+                {
+                  "type": "text",
+                  "id": "qApbH",
+                  "name": "Sub",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 720,
+                  "content": "Oil is drawn from the reservoir, conditioned through sequential stages, and returned cleaner — without interrupting production.",
+                  "lineHeight": 1.55,
+                  "textAlign": "center",
+                  "fontFamily": "$font-body",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "z7q0Pt",
+              "name": "Stages",
+              "width": "fill_container",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Amcsn",
+                  "name": "Intake",
+                  "width": "fill_container",
+                  "fill": "#E5EDE8B3",
+                  "cornerRadius": 16,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "effect": [
+                    {
+                      "type": "background_blur",
+                      "radius": 18
+                    },
+                    {
+                      "type": "shadow",
+                      "shadowType": "outer",
+                      "color": "#00663310",
+                      "offset": {
+                        "x": 0,
+                        "y": 6
+                      },
+                      "blur": 20
+                    }
+                  ],
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "LtlDF",
+                      "name": "Num",
+                      "fill": "$brand-green",
+                      "content": "01",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 36,
+                      "fontWeight": "700",
+                      "letterSpacing": -1.5
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "i3y27",
+                      "name": "Rule",
+                      "fill": "$brand-green",
+                      "width": 40,
+                      "height": 3
+                    },
+                    {
+                      "type": "text",
+                      "id": "fBF7K",
+                      "name": "Title",
+                      "fill": "$text-primary",
+                      "content": "Intake",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 20,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "OQ84u",
+                      "name": "Desc",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Oil drawn from reservoir via dedicated bypass circuit at controlled flow.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "f6EQg",
+                  "name": "Coalescing",
+                  "width": "fill_container",
+                  "fill": "#E5EDE8B3",
+                  "cornerRadius": 16,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "effect": [
+                    {
+                      "type": "background_blur",
+                      "radius": 18
+                    },
+                    {
+                      "type": "shadow",
+                      "shadowType": "outer",
+                      "color": "#00663310",
+                      "offset": {
+                        "x": 0,
+                        "y": 6
+                      },
+                      "blur": 20
+                    }
+                  ],
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "QNmbo",
+                      "name": "Num",
+                      "fill": "$brand-green",
+                      "content": "02",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 36,
+                      "fontWeight": "700",
+                      "letterSpacing": -1.5
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "CI2Yu",
+                      "name": "Rule",
+                      "fill": "$brand-green",
+                      "width": 40,
+                      "height": 3
+                    },
+                    {
+                      "type": "text",
+                      "id": "O6rAv",
+                      "name": "Title",
+                      "fill": "$text-primary",
+                      "content": "Coalescing",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 20,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "faNKB",
+                      "name": "Desc",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Free water and large particulates separated before fine filtration.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "WoKgq",
+                  "name": "Depth Media",
+                  "width": "fill_container",
+                  "fill": "#E5EDE8B3",
+                  "cornerRadius": 16,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "effect": [
+                    {
+                      "type": "background_blur",
+                      "radius": 18
+                    },
+                    {
+                      "type": "shadow",
+                      "shadowType": "outer",
+                      "color": "#00663310",
+                      "offset": {
+                        "x": 0,
+                        "y": 6
+                      },
+                      "blur": 20
+                    }
+                  ],
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "D95k9",
+                      "name": "Num",
+                      "fill": "$brand-green",
+                      "content": "03",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 36,
+                      "fontWeight": "700",
+                      "letterSpacing": -1.5
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "sRbh5",
+                      "name": "Rule",
+                      "fill": "$brand-green",
+                      "width": 40,
+                      "height": 3
+                    },
+                    {
+                      "type": "text",
+                      "id": "cIgsN",
+                      "name": "Title",
+                      "fill": "$text-primary",
+                      "content": "Depth Media",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 20,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "BNi1G",
+                      "name": "Desc",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "1–3 micron absolute media captures varnish and sub-micron solids.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "dK89b",
+                  "name": "Return",
+                  "width": "fill_container",
+                  "fill": "#E5EDE8B3",
+                  "cornerRadius": 16,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "effect": [
+                    {
+                      "type": "background_blur",
+                      "radius": 18
+                    },
+                    {
+                      "type": "shadow",
+                      "shadowType": "outer",
+                      "color": "#00663310",
+                      "offset": {
+                        "x": 0,
+                        "y": 6
+                      },
+                      "blur": 20
+                    }
+                  ],
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "hrm9N",
+                      "name": "Num",
+                      "fill": "$brand-green",
+                      "content": "04",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 36,
+                      "fontWeight": "700",
+                      "letterSpacing": -1.5
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "QDArN",
+                      "name": "Rule",
+                      "fill": "$brand-green",
+                      "width": 40,
+                      "height": 3
+                    },
+                    {
+                      "type": "text",
+                      "id": "q6n5Ua",
+                      "name": "Title",
+                      "fill": "$text-primary",
+                      "content": "Return",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 20,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "irdHZ",
+                      "name": "Desc",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Clean oil returned to tank — continuous loop until target ISO code.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "ODvV4",
+          "name": "Machines",
+          "width": "fill_container",
+          "fill": "$surface",
+          "stroke": "$border-subtle",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner",
+          "layout": "vertical",
+          "gap": 40,
+          "padding": 100,
+          "children": [
+            {
+              "type": "frame",
+              "id": "u8z7a",
+              "name": "Header",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "id": "lzkrP",
+                  "type": "ref",
+                  "ref": "DB8YG",
+                  "name": "Eyebrow",
+                  "descendants": {
+                    "FpdjV": {
+                      "content": "MACHINES USING HYDRAULIC OIL"
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "JTlTx",
+                  "name": "Title",
+                  "fill": "$text-primary",
+                  "content": "Where this system is applied",
+                  "fontFamily": "$font-heading",
+                  "fontSize": 36,
+                  "fontWeight": "700",
+                  "letterSpacing": -1.6
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "VOUGt",
+              "name": "Grid",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "kyw0I",
+                  "name": "Row 1",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "HXYKz",
+                      "name": "Injection Molding Machines",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "gap": 12,
+                      "padding": [
+                        20,
+                        18
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "YHySu",
+                          "name": "I",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "settings",
+                          "library": "lucide",
+                          "fill": "$brand-green"
+                        },
+                        {
+                          "type": "text",
+                          "id": "fBPqn",
+                          "name": "T",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Injection Molding Machines",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "u5X9nV",
+                      "name": "Die Casting Machines",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "gap": 12,
+                      "padding": [
+                        20,
+                        18
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "ZeSy5",
+                          "name": "I",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "settings",
+                          "library": "lucide",
+                          "fill": "$brand-green"
+                        },
+                        {
+                          "type": "text",
+                          "id": "x28HQ6",
+                          "name": "T",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Die Casting Machines",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "u7JGF",
+                      "name": "Blow Moulding Machines",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "gap": 12,
+                      "padding": [
+                        20,
+                        18
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "E641E",
+                          "name": "I",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "settings",
+                          "library": "lucide",
+                          "fill": "$brand-green"
+                        },
+                        {
+                          "type": "text",
+                          "id": "AdIqF",
+                          "name": "T",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Blow Moulding Machines",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "xcPLE",
+                      "name": "Power Press",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "gap": 12,
+                      "padding": [
+                        20,
+                        18
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "hAZ1u",
+                          "name": "I",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "settings",
+                          "library": "lucide",
+                          "fill": "$brand-green"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Eup0W",
+                          "name": "T",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Power Press",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "GvdQF",
+                  "name": "Row 2",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "EGWvf",
+                      "name": "Excavators",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "gap": 12,
+                      "padding": [
+                        20,
+                        18
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "s4i7Ur",
+                          "name": "I",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "settings",
+                          "library": "lucide",
+                          "fill": "$brand-green"
+                        },
+                        {
+                          "type": "text",
+                          "id": "RUsfQ",
+                          "name": "T",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Excavators",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "gsqyS",
+                      "name": "Dumpers",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "gap": 12,
+                      "padding": [
+                        20,
+                        18
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "r3b8x",
+                          "name": "I",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "settings",
+                          "library": "lucide",
+                          "fill": "$brand-green"
+                        },
+                        {
+                          "type": "text",
+                          "id": "HHPrw",
+                          "name": "T",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Dumpers",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "V8KYEr",
+                      "name": "Hydraulic Power Packs",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "gap": 12,
+                      "padding": [
+                        20,
+                        18
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "bBLrj",
+                          "name": "I",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "settings",
+                          "library": "lucide",
+                          "fill": "$brand-green"
+                        },
+                        {
+                          "type": "text",
+                          "id": "CzKpF",
+                          "name": "T",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Hydraulic Power Packs",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "w2q5B",
+                      "name": "Other Hydraulic Systems",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "gap": 12,
+                      "padding": [
+                        20,
+                        18
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "NV1pw",
+                          "name": "I",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "settings",
+                          "library": "lucide",
+                          "fill": "$brand-green"
+                        },
+                        {
+                          "type": "text",
+                          "id": "jDCG4",
+                          "name": "T",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Other Hydraulic Systems",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "LoXuE",
+          "name": "Models",
+          "width": "fill_container",
+          "fill": "$background",
+          "layout": "vertical",
+          "gap": 40,
+          "padding": 100,
+          "children": [
+            {
+              "type": "frame",
+              "id": "M0vhH",
+              "name": "Header",
+              "width": "fill_container",
+              "gap": 40,
+              "justifyContent": "space_between",
+              "alignItems": "end",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "T4htON",
+                  "name": "Left",
+                  "width": 640,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "id": "q0ABW",
+                      "type": "ref",
+                      "ref": "DB8YG",
+                      "name": "Eyebrow",
+                      "descendants": {
+                        "FpdjV": {
+                          "content": "AVAILABLE MODELS"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "xivhZ",
+                      "name": "Title",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Kleenoil hydraulic\ncleaning systems",
+                      "lineHeight": 1.08,
+                      "fontFamily": "$font-heading",
+                      "fontSize": 36,
+                      "fontWeight": "700",
+                      "letterSpacing": -1.6
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "BhI3c",
+                  "name": "Right",
+                  "width": 420,
+                  "padding": [
+                    0,
+                    0,
+                    4,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "rH1kn",
+                      "name": "Body",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Select by capacity. All units use 9788 filter cartridges and can run as permanent reservoir loops or mobile trolleys.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "GcS9G",
+              "name": "Model Table",
+              "clip": true,
+              "width": "fill_container",
+              "fill": "#E5EDE8B3",
+              "cornerRadius": 16,
+              "stroke": "$border-subtle",
+              "strokeWidth": 1,
+              "strokeAlignment": "inner",
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "okNG5",
+                  "name": "Head",
+                  "width": "fill_container",
+                  "fill": "$brand-green-dim",
+                  "gap": 16,
+                  "padding": [
+                    16,
+                    28
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "a94nS",
+                      "name": "MODEL",
+                      "fill": "$brand-green",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "MODEL",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 1.2
+                    },
+                    {
+                      "type": "text",
+                      "id": "YXBqB",
+                      "name": "SERIES",
+                      "fill": "$brand-green",
+                      "content": "SERIES",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 1.2
+                    },
+                    {
+                      "type": "text",
+                      "id": "D5g7Qk",
+                      "name": "CARTRIDGE",
+                      "fill": "$brand-green",
+                      "content": "CARTRIDGE",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 1.2
+                    },
+                    {
+                      "type": "text",
+                      "id": "iZkOp",
+                      "name": "FORM",
+                      "fill": "$brand-green",
+                      "content": "FORM FACTOR",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 1.2
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "wTtDE",
+                  "name": "Kleenoil SMFS 1XSDU 9788",
+                  "width": "fill_container",
+                  "stroke": "$border-subtle",
+                  "strokeWidth": {
+                    "top": 1
+                  },
+                  "strokeAlignment": "inner",
+                  "gap": 16,
+                  "padding": [
+                    18,
+                    28
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "V1zNtF",
+                      "name": "Model",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Kleenoil SMFS 1XSDU 9788",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "nBr04",
+                      "name": "Series",
+                      "fill": "$text-secondary",
+                      "content": "SMFS",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "ShDKC",
+                      "name": "Cart",
+                      "fill": "$text-secondary",
+                      "content": "9788",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "E31Zy",
+                      "name": "Form",
+                      "fill": "$text-secondary",
+                      "content": "Static / Mobile",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "f6Jm0T",
+                      "name": "CTA",
+                      "width": 140,
+                      "gap": 6,
+                      "justifyContent": "end",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "jivLN",
+                          "name": "L",
+                          "fill": "$brand-green",
+                          "content": "Contact to buy",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 13,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "icon",
+                          "id": "C9Om9K",
+                          "name": "A",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "arrow-up-right",
+                          "library": "lucide",
+                          "fill": "$brand-green"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Z4Qz3",
+                  "name": "Kleenoil SMFS 2XSDU 9788",
+                  "width": "fill_container",
+                  "stroke": "$border-subtle",
+                  "strokeWidth": {
+                    "top": 1
+                  },
+                  "strokeAlignment": "inner",
+                  "gap": 16,
+                  "padding": [
+                    18,
+                    28
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "f1ZmZ",
+                      "name": "Model",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Kleenoil SMFS 2XSDU 9788",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "M7CVr",
+                      "name": "Series",
+                      "fill": "$text-secondary",
+                      "content": "SMFS",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "dBLbE",
+                      "name": "Cart",
+                      "fill": "$text-secondary",
+                      "content": "9788",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "CBAnz",
+                      "name": "Form",
+                      "fill": "$text-secondary",
+                      "content": "Static / Mobile",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "yXIwk",
+                      "name": "CTA",
+                      "width": 140,
+                      "gap": 6,
+                      "justifyContent": "end",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "aamqG",
+                          "name": "L",
+                          "fill": "$brand-green",
+                          "content": "Contact to buy",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 13,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "icon",
+                          "id": "t7iwPg",
+                          "name": "A",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "arrow-up-right",
+                          "library": "lucide",
+                          "fill": "$brand-green"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "m5chwd",
+                  "name": "Kleenoil MFS 4XSDU 9788",
+                  "width": "fill_container",
+                  "stroke": "$border-subtle",
+                  "strokeWidth": {
+                    "top": 1
+                  },
+                  "strokeAlignment": "inner",
+                  "gap": 16,
+                  "padding": [
+                    18,
+                    28
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "G6Wm7",
+                      "name": "Model",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Kleenoil MFS 4XSDU 9788",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "FoHDX",
+                      "name": "Series",
+                      "fill": "$text-secondary",
+                      "content": "MFS",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "EPqfR",
+                      "name": "Cart",
+                      "fill": "$text-secondary",
+                      "content": "9788",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "X3Iylw",
+                      "name": "Form",
+                      "fill": "$text-secondary",
+                      "content": "Static / Mobile",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "aJXxp",
+                      "name": "CTA",
+                      "width": 140,
+                      "gap": 6,
+                      "justifyContent": "end",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "IUtoO",
+                          "name": "L",
+                          "fill": "$brand-green",
+                          "content": "Contact to buy",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 13,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "icon",
+                          "id": "fvvlE",
+                          "name": "A",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "arrow-up-right",
+                          "library": "lucide",
+                          "fill": "$brand-green"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "tsp7G",
+                  "name": "Kleenoil MFS 6XSDU 9788",
+                  "width": "fill_container",
+                  "stroke": "$border-subtle",
+                  "strokeWidth": {
+                    "top": 1
+                  },
+                  "strokeAlignment": "inner",
+                  "gap": 16,
+                  "padding": [
+                    18,
+                    28
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "h00EY8",
+                      "name": "Model",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Kleenoil MFS 6XSDU 9788",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "ef03H",
+                      "name": "Series",
+                      "fill": "$text-secondary",
+                      "content": "MFS",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Z3Om1z",
+                      "name": "Cart",
+                      "fill": "$text-secondary",
+                      "content": "9788",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "i4YuW",
+                      "name": "Form",
+                      "fill": "$text-secondary",
+                      "content": "Static / Mobile",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "K0kO70",
+                      "name": "CTA",
+                      "width": 140,
+                      "gap": 6,
+                      "justifyContent": "end",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "N7h9cD",
+                          "name": "L",
+                          "fill": "$brand-green",
+                          "content": "Contact to buy",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 13,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "icon",
+                          "id": "a6uNA",
+                          "name": "A",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "arrow-up-right",
+                          "library": "lucide",
+                          "fill": "$brand-green"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "j9YsK",
+                  "name": "Kleenoil MFS 8XSDU 9788",
+                  "width": "fill_container",
+                  "stroke": "$border-subtle",
+                  "strokeWidth": {
+                    "top": 1
+                  },
+                  "strokeAlignment": "inner",
+                  "gap": 16,
+                  "padding": [
+                    18,
+                    28
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ZdMtL",
+                      "name": "Model",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Kleenoil MFS 8XSDU 9788",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "jAvFg",
+                      "name": "Series",
+                      "fill": "$text-secondary",
+                      "content": "MFS",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "c158o",
+                      "name": "Cart",
+                      "fill": "$text-secondary",
+                      "content": "9788",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "DNjER",
+                      "name": "Form",
+                      "fill": "$text-secondary",
+                      "content": "Static / Mobile",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "c3TrIl",
+                      "name": "CTA",
+                      "width": 140,
+                      "gap": 6,
+                      "justifyContent": "end",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "AELXu",
+                          "name": "L",
+                          "fill": "$brand-green",
+                          "content": "Contact to buy",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 13,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "icon",
+                          "id": "qOur1",
+                          "name": "A",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "arrow-up-right",
+                          "library": "lucide",
+                          "fill": "$brand-green"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "b9vWX3",
+          "name": "Proven Results",
+          "width": "fill_container",
+          "fill": "$surface",
+          "stroke": "$border-subtle",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner",
+          "layout": "vertical",
+          "gap": 48,
+          "padding": 100,
+          "children": [
+            {
+              "type": "frame",
+              "id": "KDvlB",
+              "name": "Header",
+              "width": "fill_container",
+              "gap": 48,
+              "justifyContent": "space_between",
+              "alignItems": "end",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "AY08M",
+                  "name": "Left",
+                  "width": 640,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "id": "AAwuB",
+                      "type": "ref",
+                      "ref": "DB8YG",
+                      "name": "Eyebrow",
+                      "descendants": {
+                        "FpdjV": {
+                          "content": "PROVEN RESULTS"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "isaOH",
+                      "name": "Title",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "What plants measure\nafter install.",
+                      "lineHeight": 1.08,
+                      "fontFamily": "$font-heading",
+                      "fontSize": 40,
+                      "fontWeight": "700",
+                      "letterSpacing": -1.8
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "m4H9nW",
+                  "name": "Right",
+                  "width": 420,
+                  "padding": [
+                    0,
+                    0,
+                    8,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "qC58R",
+                      "name": "Body",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Typical outcomes from KO-BFS deployments in automotive, steel and power generation facilities.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "URe2n",
+              "name": "Metrics",
+              "width": "fill_container",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "sE9O8",
+                  "name": "Oil life extension",
+                  "width": "fill_container",
+                  "fill": "#E5EDE8B3",
+                  "cornerRadius": 16,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "effect": [
+                    {
+                      "type": "background_blur",
+                      "radius": 20
+                    },
+                    {
+                      "type": "shadow",
+                      "shadowType": "outer",
+                      "color": "#00663312",
+                      "offset": {
+                        "x": 0,
+                        "y": 8
+                      },
+                      "blur": 24
+                    }
+                  ],
+                  "layout": "vertical",
+                  "gap": 14,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "x36lU",
+                      "name": "Val",
+                      "fill": "$brand-green",
+                      "content": "5×",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 44,
+                      "fontWeight": "700",
+                      "letterSpacing": -2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "q8Z9hE",
+                      "name": "Rule",
+                      "fill": "$brand-green",
+                      "width": 40,
+                      "height": 3
+                    },
+                    {
+                      "type": "text",
+                      "id": "dtLkl",
+                      "name": "Label",
+                      "fill": "$text-primary",
+                      "content": "Oil life extension",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 17,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "TWLgh",
+                      "name": "Desc",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Average increase in drain intervals after 90 days of continuous bypass.",
+                      "lineHeight": 1.5,
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "IHDh9",
+                  "name": "Downtime cut",
+                  "width": "fill_container",
+                  "fill": "#E5EDE8B3",
+                  "cornerRadius": 16,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "effect": [
+                    {
+                      "type": "background_blur",
+                      "radius": 20
+                    },
+                    {
+                      "type": "shadow",
+                      "shadowType": "outer",
+                      "color": "#00663312",
+                      "offset": {
+                        "x": 0,
+                        "y": 8
+                      },
+                      "blur": 24
+                    }
+                  ],
+                  "layout": "vertical",
+                  "gap": 14,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nutY8",
+                      "name": "Val",
+                      "fill": "$brand-green",
+                      "content": "68%",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 44,
+                      "fontWeight": "700",
+                      "letterSpacing": -2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "sLx8r",
+                      "name": "Rule",
+                      "fill": "$brand-green",
+                      "width": 40,
+                      "height": 3
+                    },
+                    {
+                      "type": "text",
+                      "id": "iHp9C",
+                      "name": "Label",
+                      "fill": "$text-primary",
+                      "content": "Downtime cut",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 17,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "xZrXp",
+                      "name": "Desc",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Reduction in unplanned hydraulic failures across monitored fleets.",
+                      "lineHeight": 1.5,
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "QcGJ2",
+                  "name": "Target cleanliness",
+                  "width": "fill_container",
+                  "fill": "#E5EDE8B3",
+                  "cornerRadius": 16,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "effect": [
+                    {
+                      "type": "background_blur",
+                      "radius": 20
+                    },
+                    {
+                      "type": "shadow",
+                      "shadowType": "outer",
+                      "color": "#00663312",
+                      "offset": {
+                        "x": 0,
+                        "y": 8
+                      },
+                      "blur": 24
+                    }
+                  ],
+                  "layout": "vertical",
+                  "gap": 14,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "PH9iw",
+                      "name": "Val",
+                      "fill": "$brand-green",
+                      "content": "ISO 16",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 44,
+                      "fontWeight": "700",
+                      "letterSpacing": -2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "nfqkp",
+                      "name": "Rule",
+                      "fill": "$brand-green",
+                      "width": 40,
+                      "height": 3
+                    },
+                    {
+                      "type": "text",
+                      "id": "PBdQ5",
+                      "name": "Label",
+                      "fill": "$text-primary",
+                      "content": "Target cleanliness",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 17,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Hy7Xs",
+                      "name": "Desc",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Achievable particle code on systems previously stuck at ISO 20+.",
+                      "lineHeight": 1.5,
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "uXwcW",
+                  "name": "Payback",
+                  "width": "fill_container",
+                  "fill": "#E5EDE8B3",
+                  "cornerRadius": 16,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "effect": [
+                    {
+                      "type": "background_blur",
+                      "radius": 20
+                    },
+                    {
+                      "type": "shadow",
+                      "shadowType": "outer",
+                      "color": "#00663312",
+                      "offset": {
+                        "x": 0,
+                        "y": 8
+                      },
+                      "blur": 24
+                    }
+                  ],
+                  "layout": "vertical",
+                  "gap": 14,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "UnEmN",
+                      "name": "Val",
+                      "fill": "$brand-green",
+                      "content": "<12 mo",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 44,
+                      "fontWeight": "700",
+                      "letterSpacing": -2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "PEkDt",
+                      "name": "Rule",
+                      "fill": "$brand-green",
+                      "width": 40,
+                      "height": 3
+                    },
+                    {
+                      "type": "text",
+                      "id": "AkOPv",
+                      "name": "Label",
+                      "fill": "$text-primary",
+                      "content": "Payback",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 17,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "pch8x",
+                      "name": "Desc",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Typical ROI from oil savings and avoided component replacements.",
+                      "lineHeight": 1.5,
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "L6z3ld",
+          "name": "Related",
+          "width": "fill_container",
+          "fill": "$background",
+          "layout": "vertical",
+          "gap": 48,
+          "padding": 100,
+          "children": [
+            {
+              "type": "frame",
+              "id": "H3NPM3",
+              "name": "Header",
+              "width": "fill_container",
+              "gap": 40,
+              "justifyContent": "space_between",
+              "alignItems": "end",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "DwND2",
+                  "name": "Left",
+                  "width": 720,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "id": "hVr9u",
+                      "type": "ref",
+                      "ref": "DB8YG",
+                      "name": "Eyebrow",
+                      "descendants": {
+                        "FpdjV": {
+                          "content": "RELATED SYSTEMS"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "N8RFxe",
+                      "name": "Title",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Complete the contamination\ncontrol stack.",
+                      "lineHeight": 1.08,
+                      "fontFamily": "$font-heading",
+                      "fontSize": 40,
+                      "fontWeight": "700",
+                      "letterSpacing": -1.8
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "OLjAM",
+                  "name": "Right",
+                  "width": 400,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": [
+                    0,
+                    0,
+                    8,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Z5VEo",
+                      "name": "Body",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Pair bypass filtration with dehydration and analysis for a full fluid-health programme.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "id": "Zur0r",
+                      "type": "ref",
+                      "ref": "HOVNX",
+                      "name": "View All",
+                      "descendants": {
+                        "CknnL": {
+                          "content": "View all products"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "aGGzd",
+              "name": "Products",
+              "width": "fill_container",
+              "gap": 24,
+              "children": [
+                {
+                  "id": "t32i56",
+                  "type": "ref",
+                  "ref": "d8PM2e",
+                  "name": "Vacuum Dehydration",
+                  "width": "fill_container",
+                  "descendants": {
+                    "VFc6W": {
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1724222976890-38f36c591a67?w=1080",
+                        "mode": "fill"
+                      }
+                    },
+                    "mF5Fg": {
+                      "content": "02 / VACUUM"
+                    },
+                    "NiKxl": {
+                      "content": "Vacuum Dehydration"
+                    },
+                    "j1uQX": {
+                      "content": "High-vacuum dehydrators that eliminate dissolved water and gases from hydraulic and turbine oils."
+                    }
+                  }
+                },
+                {
+                  "id": "uQNlU",
+                  "type": "ref",
+                  "ref": "d8PM2e",
+                  "name": "Magnetic Filtration",
+                  "width": "fill_container",
+                  "descendants": {
+                    "VFc6W": {
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1632305308846-86bfa4494b1d?w=1080",
+                        "mode": "fill"
+                      }
+                    },
+                    "mF5Fg": {
+                      "content": "04 / MAGNETIC"
+                    },
+                    "NiKxl": {
+                      "content": "Magnetic Filtration"
+                    },
+                    "j1uQX": {
+                      "content": "High-gauss magnetic separators that capture sub-micron ferrous particles invisible to mesh filtration."
+                    }
+                  }
+                },
+                {
+                  "id": "bVpFW",
+                  "type": "ref",
+                  "ref": "d8PM2e",
+                  "name": "Oil Analysis",
+                  "width": "fill_container",
+                  "descendants": {
+                    "VFc6W": {
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1699373383910-6f9cf75ee50a?w=1080",
+                        "mode": "fill"
+                      }
+                    },
+                    "mF5Fg": {
+                      "content": "05 / ANALYSIS"
+                    },
+                    "NiKxl": {
+                      "content": "Oil Analysis Equipment"
+                    },
+                    "j1uQX": {
+                      "content": "Lab and on-site instrumentation for ISO 4406 cleanliness, water content and wear metals."
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "GNdqw",
+          "name": "Final CTA",
+          "clip": true,
+          "width": "fill_container",
+          "height": 520,
+          "fill": "$brand-green-soft",
+          "layout": "vertical",
+          "padding": [
+            64,
+            100
+          ],
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "hpthA",
+              "name": "Content",
+              "width": "fill_container",
+              "fill": "#E5EDE8AA",
+              "cornerRadius": 24,
+              "effect": [
+                {
+                  "type": "background_blur",
+                  "radius": 32
+                },
+                {
+                  "type": "shadow",
+                  "shadowType": "outer",
+                  "color": "#00663328",
+                  "offset": {
+                    "x": 0,
+                    "y": 20
+                  },
+                  "blur": 48
+                }
+              ],
+              "layout": "vertical",
+              "gap": 28,
+              "padding": 48,
+              "alignItems": "center",
+              "children": [
+                {
+                  "id": "Or2Dy",
+                  "type": "ref",
+                  "ref": "DB8YG",
+                  "name": "Eyebrow",
+                  "descendants": {
+                    "FpdjV": {
+                      "content": "READY TO SPECIFY"
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "vuByN",
+                  "name": "Headline",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 900,
+                  "content": "Talk to an engineer\nbefore you buy.",
+                  "lineHeight": 1.02,
+                  "textAlign": "center",
+                  "fontFamily": "$font-heading",
+                  "fontSize": 52,
+                  "fontWeight": "700",
+                  "letterSpacing": -2.4
+                },
+                {
+                  "type": "text",
+                  "id": "Dpwy2",
+                  "name": "Sub",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 640,
+                  "content": "Share your reservoir size, fluid type and cleanliness target — we’ll recommend the right KO-BFS configuration and send a quote.",
+                  "lineHeight": 1.55,
+                  "textAlign": "center",
+                  "fontFamily": "$font-body",
+                  "fontSize": 17,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "lBFVc",
+                  "name": "CTAs",
+                  "gap": 14,
+                  "padding": [
+                    8,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "id": "oiTAm",
+                      "type": "ref",
+                      "ref": "hRxx9",
+                      "name": "Contact to buy",
+                      "descendants": {
+                        "yIQrM": {
+                          "content": "Contact to buy"
+                        }
+                      }
+                    },
+                    {
+                      "id": "jy4IZ",
+                      "type": "ref",
+                      "ref": "z7OZYm",
+                      "name": "Book Consult",
+                      "descendants": {
+                        "i5SDD": {
+                          "content": "Book consultation"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "KcuE8",
+          "name": "Footer",
+          "width": "fill_container",
+          "fill": "#DCE8E1",
+          "stroke": "$border-subtle",
+          "strokeWidth": {
+            "top": 1
+          },
+          "strokeAlignment": "inner",
+          "layout": "vertical",
+          "gap": 80,
+          "padding": [
+            100,
+            100,
+            40,
+            100
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "EXsmT",
+              "name": "Top",
+              "width": "fill_container",
+              "gap": 80,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "pGyI2",
+                  "name": "Brand",
+                  "width": 380,
+                  "layout": "vertical",
+                  "gap": 28,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "gvzK9",
+                      "name": "Logo Row",
+                      "gap": 12,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "WDsIC",
+                          "name": "Logo Mark",
+                          "width": 32,
+                          "height": 32,
+                          "fill": "$brand-green",
+                          "cornerRadius": 6,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "l5poW",
+                              "name": "K",
+                              "fill": "#FFFFFF",
+                              "content": "K",
+                              "fontFamily": "$font-heading",
+                              "fontSize": 18,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ckT5H",
+                          "name": "Wordmark",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "e7wL1",
+                              "name": "Brand",
+                              "fill": "$text-primary",
+                              "content": "KLEENOIL",
+                              "fontFamily": "$font-heading",
+                              "fontSize": 16,
+                              "fontWeight": "600",
+                              "letterSpacing": -0.3
+                            },
+                            {
+                              "type": "text",
+                              "id": "Mubtc",
+                              "name": "Tag",
+                              "fill": "$text-tertiary",
+                              "content": "INDIA — EST. 1988",
+                              "fontFamily": "$font-mono",
+                              "fontSize": 9,
+                              "fontWeight": "normal",
+                              "letterSpacing": 1.6
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "pi8IH",
+                      "name": "Tag",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": 340,
+                      "content": "Engineering the cleanest oil and longest equipment life in heavy industry, since 1988.",
+                      "lineHeight": 1.6,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ynnXD",
+                      "name": "Newsletter",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 12,
+                      "padding": [
+                        24,
+                        0,
+                        0,
+                        0
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "F5UXnd",
+                          "name": "Label",
+                          "fill": "$text-tertiary",
+                          "content": "INDUSTRY BRIEFINGS",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "500",
+                          "letterSpacing": 1.4
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Kn2u8",
+                          "name": "Input",
+                          "width": 340,
+                          "fill": "#EBF2EEB3",
+                          "cornerRadius": 12,
+                          "stroke": "$border-subtle",
+                          "strokeWidth": 1,
+                          "strokeAlignment": "inner",
+                          "effect": {
+                            "type": "background_blur",
+                            "radius": 16
+                          },
+                          "padding": [
+                            6,
+                            6,
+                            6,
+                            18
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "o2ZhPS",
+                              "name": "Placeholder",
+                              "fill": "$text-tertiary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "your@company.com",
+                              "fontFamily": "$font-body",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "ebQhi",
+                              "name": "Submit",
+                              "fill": "$brand-green",
+                              "cornerRadius": 8,
+                              "effect": {
+                                "type": "shadow",
+                                "shadowType": "outer",
+                                "color": "#00663325",
+                                "offset": {
+                                  "x": 0,
+                                  "y": 4
+                                },
+                                "blur": 12
+                              },
+                              "gap": 6,
+                              "padding": [
+                                8,
+                                14
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "AODAc",
+                                  "name": "Label",
+                                  "fill": "#FFFFFF",
+                                  "content": "Subscribe",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 12,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "qi5iY",
+                  "name": "Link Cols",
+                  "width": "fill_container",
+                  "gap": 48,
+                  "justifyContent": "end",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "viKRf",
+                      "name": "PRODUCTS",
+                      "width": 160,
+                      "layout": "vertical",
+                      "gap": 18,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "dB0j0",
+                          "name": "Heading",
+                          "fill": "$text-tertiary",
+                          "content": "PRODUCTS",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "500",
+                          "letterSpacing": 1.4
+                        },
+                        {
+                          "type": "text",
+                          "id": "P940do",
+                          "name": "Oil Filtration",
+                          "fill": "$text-secondary",
+                          "content": "Oil Filtration",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "o82Ed",
+                          "name": "Vacuum Dehydration",
+                          "fill": "$text-secondary",
+                          "content": "Vacuum Dehydration",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "g9ZwP",
+                          "name": "Coolant Purification",
+                          "fill": "$text-secondary",
+                          "content": "Coolant Purification",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "xwJmi",
+                          "name": "Magnetic Filtration",
+                          "fill": "$text-secondary",
+                          "content": "Magnetic Filtration",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "jdt5v",
+                          "name": "Oil Analysis",
+                          "fill": "$text-secondary",
+                          "content": "Oil Analysis",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "fX1oy",
+                      "name": "INDUSTRIES",
+                      "width": 160,
+                      "layout": "vertical",
+                      "gap": 18,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "c521U",
+                          "name": "Heading",
+                          "fill": "$text-tertiary",
+                          "content": "INDUSTRIES",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "500",
+                          "letterSpacing": 1.4
+                        },
+                        {
+                          "type": "text",
+                          "id": "uK9aj",
+                          "name": "Automotive",
+                          "fill": "$text-secondary",
+                          "content": "Automotive",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "kPICA",
+                          "name": "Aerospace",
+                          "fill": "$text-secondary",
+                          "content": "Aerospace",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "aKpLr",
+                          "name": "Steel Plants",
+                          "fill": "$text-secondary",
+                          "content": "Steel Plants",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "S9WIH",
+                          "name": "Marine",
+                          "fill": "$text-secondary",
+                          "content": "Marine",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "A3H2Te",
+                          "name": "Power Plants",
+                          "fill": "$text-secondary",
+                          "content": "Power Plants",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "AEHW5",
+                          "name": "CNC Manufacturing",
+                          "fill": "$text-secondary",
+                          "content": "CNC Manufacturing",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "zMqpP",
+                      "name": "COMPANY",
+                      "width": 160,
+                      "layout": "vertical",
+                      "gap": 18,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nWO5d",
+                          "name": "Heading",
+                          "fill": "$text-tertiary",
+                          "content": "COMPANY",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "500",
+                          "letterSpacing": 1.4
+                        },
+                        {
+                          "type": "text",
+                          "id": "D1cpGS",
+                          "name": "About",
+                          "fill": "$text-secondary",
+                          "content": "About",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "DQHTE",
+                          "name": "Engineering Team",
+                          "fill": "$text-secondary",
+                          "content": "Engineering Team",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "b81ORe",
+                          "name": "Press",
+                          "fill": "$text-secondary",
+                          "content": "Press",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "gZnID",
+                          "name": "Careers",
+                          "fill": "$text-secondary",
+                          "content": "Careers",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "DGuzD",
+                          "name": "Sustainability",
+                          "fill": "$text-secondary",
+                          "content": "Sustainability",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "JziiW",
+                      "name": "RESOURCES",
+                      "width": 160,
+                      "layout": "vertical",
+                      "gap": 18,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "cgUP4",
+                          "name": "Heading",
+                          "fill": "$text-tertiary",
+                          "content": "RESOURCES",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "500",
+                          "letterSpacing": 1.4
+                        },
+                        {
+                          "type": "text",
+                          "id": "OfHj4",
+                          "name": "Case Studies",
+                          "fill": "$text-secondary",
+                          "content": "Case Studies",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "yJgGn",
+                          "name": "Technical Library",
+                          "fill": "$text-secondary",
+                          "content": "Technical Library",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "f41wbN",
+                          "name": "Brochures",
+                          "fill": "$text-secondary",
+                          "content": "Brochures",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "aF2pZ",
+                          "name": "FAQ",
+                          "fill": "$text-secondary",
+                          "content": "FAQ",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "uvtEf",
+                          "name": "Contact",
+                          "fill": "$text-secondary",
+                          "content": "Contact",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "rectangle",
+              "id": "K3XSC",
+              "name": "Divider",
+              "fill": "$border-subtle",
+              "width": "fill_container",
+              "height": 1
+            },
+            {
+              "type": "frame",
+              "id": "MExF8",
+              "name": "Bottom",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "FMj9n",
+                  "name": "Copy",
+                  "fill": "$text-tertiary",
+                  "content": "© 2026 KLEENOIL INDIA PVT. LTD. — BANGALORE, INDIA",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "VHtzj",
+                  "name": "Links",
+                  "gap": 32,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "V0zhR",
+                      "name": "Privacy",
+                      "fill": "$text-tertiary",
+                      "content": "PRIVACY",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "VWujy",
+                      "name": "Terms",
+                      "fill": "$text-tertiary",
+                      "content": "TERMS",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "plY0J",
+                      "name": "Cookies",
+                      "fill": "$text-tertiary",
+                      "content": "COOKIES",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "QbOaX",
+                      "name": "Compliance",
+                      "fill": "$text-tertiary",
+                      "content": "COMPLIANCE",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "variables": {

@@ -1,8 +1,11 @@
 'use client';
 
-import { useField } from '@payloadcms/ui';
+import { useDocumentInfo, useField } from '@payloadcms/ui';
 
-function buildPagePath(slug: string | null | undefined): string | null {
+function buildPublicPath(
+  slug: string | null | undefined,
+  collectionSlug?: string | null,
+): string | null {
   if (!slug || typeof slug !== 'string') {
     return null;
   }
@@ -12,7 +15,10 @@ function buildPagePath(slug: string | null | undefined): string | null {
     return null;
   }
 
-  // Reserved homepage slug maps to site root
+  if (collectionSlug === 'products') {
+    return `/products/${cleaned}`;
+  }
+
   if (cleaned === 'home') {
     return '/';
   }
@@ -35,11 +41,12 @@ function getSiteOrigin(): string {
 
 /** Shows the public URL for the current slug under the slug field. */
 export function SlugLiveLink() {
+  const { collectionSlug } = useDocumentInfo();
   const { value } = useField<string>({ path: 'slug' });
-  const path = buildPagePath(value);
-  const href = path ? `${getSiteOrigin()}${path === '/' ? '' : path}` : null;
-  // Root should be origin only (no trailing path), path `/` → `https://site.com`
-  const displayHref = path === '/' ? getSiteOrigin() : href;
+  const path = buildPublicPath(value, collectionSlug);
+  const origin = getSiteOrigin();
+  const displayHref = path === '/' ? origin : path ? `${origin}${path}` : null;
+  const href = path === '/' ? `${origin}/` : displayHref;
 
   return (
     <div style={{ marginTop: '0.35rem' }}>
@@ -50,9 +57,9 @@ export function SlugLiveLink() {
         URL-friendly identifier. Auto-generated from title if left blank.
       </div>
 
-      {displayHref ? (
+      {displayHref && href ? (
         <a
-          href={path === '/' ? `${getSiteOrigin()}/` : displayHref}
+          href={href}
           target="_blank"
           rel="noopener noreferrer"
           style={{
@@ -77,7 +84,7 @@ export function SlugLiveLink() {
         </div>
       )}
 
-      {value && value !== 'home' ? (
+      {collectionSlug === 'pages' && value && value !== 'home' ? (
         <div
           style={{
             marginTop: '0.35rem',

@@ -7,6 +7,8 @@ import { fileURLToPath } from 'url';
 
 import { Media } from './collections/Media';
 import { Pages } from './collections/Pages';
+import { Products } from './collections/Products';
+import { ProductTemplates } from './collections/ProductTemplates';
 import { Users } from './collections/Users';
 import { ContactInfo } from './globals/ContactInfo';
 import { Footer } from './globals/Footer';
@@ -14,6 +16,7 @@ import { Navigation } from './globals/Navigation';
 import { SeoDefaults } from './globals/SeoDefaults';
 import { SiteSettings } from './globals/SiteSettings';
 import { getServerEnv } from './lib/env';
+import { ensureDefaultProductTemplate } from './lib/cms/seed-product-template';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -30,7 +33,7 @@ export default buildConfig({
       titleSuffix: ' | CMS',
     },
   },
-  collections: [Users, Media, Pages],
+  collections: [Users, Media, Pages, ProductTemplates, Products],
   globals: [SiteSettings, Navigation, Footer, ContactInfo, SeoDefaults],
   editor: lexicalEditor(),
   secret: env.PAYLOAD_SECRET,
@@ -44,4 +47,13 @@ export default buildConfig({
   }),
   sharp,
   plugins: [],
+  onInit: async (payload) => {
+    try {
+      await ensureDefaultProductTemplate(payload);
+    } catch (error) {
+      payload.logger.warn(
+        `Could not seed default Product Template: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+  },
 });

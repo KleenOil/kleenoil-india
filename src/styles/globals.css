@@ -143,7 +143,10 @@
   .homepage-motion.is-animating [data-reveal]:not(.motion-revealed) [data-reveal-panel],
   .homepage-motion.is-animating [data-reveal]:not(.motion-revealed) [data-reveal-logos] > *,
   .homepage-motion.is-animating [data-reveal]:not(.motion-revealed) [data-reveal-badges] > *,
-  .homepage-motion.is-animating [data-reveal-stagger]:not(.motion-revealed) .grid > *,
+  .homepage-motion.is-animating
+    [data-reveal-stagger]:not(.motion-revealed)
+    .grid:not([data-reveal-ignore])
+    > *,
   .homepage-motion.is-animating [data-reveal-stagger]:not(.motion-revealed) article,
   .homepage-motion.is-animating [data-reveal-stagger]:not(.motion-revealed) figure,
   .homepage-motion.is-animating [data-reveal-stagger]:not(.motion-revealed) blockquote {

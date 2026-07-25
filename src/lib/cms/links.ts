@@ -50,5 +50,14 @@ export function getMediaAlt(media: number | Media | null | undefined, fallback =
     return fallback;
   }
 
-  return media.alt || fallback;
+  if (media.alt) {
+    return media.alt;
+  }
+
+  if (media.filename) {
+    const base = media.filename.split(/[/\\]/).pop() || media.filename;
+    return base.replace(/\.[^.]+$/, '') || base;
+  }
+
+  return fallback;
 }
