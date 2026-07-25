@@ -66,9 +66,9 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
   const [active, setActive] = useState(0);
   const activeImage = gallery[active] ?? gallery[0];
 
-  const specs = block?.quickSpecs?.filter((s) => s.value && s.label)?.length
+  const specs: SpecItem[] = block?.quickSpecs?.filter((s) => s.value && s.label)?.length
     ? block.quickSpecs.filter((s) => s.value && s.label)
-    : DEFAULT_PDP_HERO.quickSpecs;
+    : DEFAULT_PDP_HERO.quickSpecs.map((spec) => ({ ...spec, animateCounter: false }));
 
   const cmsCtas =
     block?.ctas
