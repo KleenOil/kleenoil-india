@@ -1,6 +1,6 @@
 import type { Block } from 'payload';
 
-import { linkArrayField, sectionHeaderFields } from '../shared';
+import { eyebrowField, headingField, linkArrayField } from '../shared';
 
 export const CTA: Block = {
   slug: 'cta',
@@ -9,10 +9,15 @@ export const CTA: Block = {
     plural: 'CTAs',
   },
   fields: [
-    ...sectionHeaderFields,
+    eyebrowField,
+    headingField,
     {
       name: 'subtext',
       type: 'textarea',
+      label: 'Subtext',
+      admin: {
+        description: 'Supporting copy under the heading.',
+      },
     },
     linkArrayField({ name: 'ctas', label: 'CTAs', maxRows: 2 }),
     {

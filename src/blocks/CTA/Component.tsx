@@ -2,7 +2,7 @@ import { Eyebrow } from '@/components/ui/eyebrow';
 import { CtaButton } from '@/components/ui/cta-button';
 import { TrustBadgeRow } from '@/components/sections/TrustBadgeRow';
 import { DEFAULT_CTA } from '@/lib/cms/defaults';
-import { resolveLink } from '@/lib/cms/links';
+import { resolveCtaList } from '@/lib/cms/links';
 
 type CtaLinkItem = {
   link?: {
@@ -36,20 +36,13 @@ type CtaBlockProps = {
 export function CtaBlock({ block }: CtaBlockProps) {
   const eyebrow = block?.eyebrow || DEFAULT_CTA.eyebrow;
   const heading = block?.heading || DEFAULT_CTA.heading;
-  const subtext = block?.subtext || block?.description || DEFAULT_CTA.subtext;
+  // Prefer subtext; fall back to section description if subtext was left empty.
+  const subtext =
+    (typeof block?.subtext === 'string' && block.subtext.trim()) ||
+    (typeof block?.description === 'string' && block.description.trim()) ||
+    DEFAULT_CTA.subtext;
 
-  const cmsCtas =
-    block?.ctas
-      ?.map((item) => resolveLink(item.link))
-      .filter((item): item is NonNullable<typeof item> => Boolean(item)) ?? [];
-
-  const ctas =
-    cmsCtas.length > 0
-      ? cmsCtas
-      : DEFAULT_CTA.ctas.map((cta) => ({
-          ...cta,
-          openInNewTab: false,
-        }));
+  const ctas = resolveCtaList(block?.ctas, DEFAULT_CTA.ctas);
 
   const badges =
     block?.trustBadges

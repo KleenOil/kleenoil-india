@@ -5,7 +5,7 @@ import { AnimatedCounter } from '@/components/ui/animated-counter';
 import { Eyebrow } from '@/components/ui/eyebrow';
 import { CtaButton } from '@/components/ui/cta-button';
 import { DEFAULT_HERO } from '@/lib/cms/defaults';
-import { getMediaAlt, getMediaUrl, resolveLink } from '@/lib/cms/links';
+import { getMediaAlt, getMediaUrl, resolveCtaList } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
 
 type HeroMetaStat = {
@@ -43,18 +43,7 @@ export function HeroBlock({ block }: HeroProps) {
   const headline = block?.headline || DEFAULT_HERO.headline;
   const subheadline = block?.subheadline || DEFAULT_HERO.subheadline;
 
-  const cmsCtas =
-    block?.ctas
-      ?.map((item) => resolveLink(item.link))
-      .filter((item): item is NonNullable<typeof item> => Boolean(item)) ?? [];
-
-  const ctas =
-    cmsCtas.length > 0
-      ? cmsCtas
-      : DEFAULT_HERO.ctas.map((cta) => ({
-          ...cta,
-          openInNewTab: false,
-        }));
+  const ctas = resolveCtaList(block?.ctas, DEFAULT_HERO.ctas);
 
   const metaStats = block?.metaStats?.filter((stat) => stat.value && stat.label)?.length
     ? block.metaStats.filter((stat) => stat.value && stat.label)

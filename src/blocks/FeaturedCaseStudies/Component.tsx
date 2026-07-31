@@ -29,7 +29,9 @@ export function FeaturedCaseStudiesBlock({ block }: FeaturedCaseStudiesBlockProp
   const heading = block?.heading || DEFAULT_FEATURED_CASE_STUDIES.heading;
   const description = block?.description || DEFAULT_FEATURED_CASE_STUDIES.description;
 
-  const resolvedCta = resolveLink(block?.cta);
+  const resolvedCta = resolveLink(block?.cta, {
+    fallbackHref: DEFAULT_FEATURED_CASE_STUDIES.cta.href,
+  });
   const sectionCta = resolvedCta
     ? {
         label: resolvedCta.label,

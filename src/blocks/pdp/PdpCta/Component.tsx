@@ -2,10 +2,10 @@ import { Eyebrow } from '@/components/ui/eyebrow';
 import { CtaButton } from '@/components/ui/cta-button';
 import { TrustBadgeRow } from '@/components/sections/TrustBadgeRow';
 import { DEFAULT_PDP_CTA } from '@/lib/cms/pdp-defaults';
-import { resolveLink } from '@/lib/cms/links';
+import { resolveCtaList, type CmsLink } from '@/lib/cms/links';
 
 type CtaItem = {
-  link?: Parameters<typeof resolveLink>[0];
+  link?: CmsLink | null;
 };
 
 type BadgeItem = {
@@ -26,15 +26,7 @@ export function PdpCtaBlock({ block }: { block?: PdpCtaBlockData | null }) {
   const heading = block?.heading || DEFAULT_PDP_CTA.heading;
   const subtext = block?.subtext || DEFAULT_PDP_CTA.subtext;
 
-  const cmsCtas =
-    block?.ctas
-      ?.map((item) => resolveLink(item.link))
-      .filter((item): item is NonNullable<typeof item> => Boolean(item)) ?? [];
-
-  const ctas =
-    cmsCtas.length > 0
-      ? cmsCtas
-      : DEFAULT_PDP_CTA.ctas.map((cta) => ({ ...cta, openInNewTab: false }));
+  const ctas = resolveCtaList(block?.ctas, DEFAULT_PDP_CTA.ctas);
 
   const badges =
     block?.trustBadges?.filter((badge) => badge.label)?.map((badge) => ({ label: badge.label! })) ??

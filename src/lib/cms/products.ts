@@ -44,18 +44,21 @@ export async function getPublishedProducts(limit = 24): Promise<Product[]> {
 export async function getResolvedPdpLayout(product: Product): Promise<PdpLayoutBlock[]> {
   let template: ProductTemplate | null = null;
 
-  if (product.template && typeof product.template === 'object') {
-    template = product.template as ProductTemplate;
-  } else if (product.template) {
+  const templateRef = product.template;
+  const templateId = typeof templateRef === 'object' && templateRef ? templateRef.id : templateRef;
+
+  if (templateId) {
     try {
       const payload = await getPayloadClient();
+      // Depth 3 so related products inside template layout include featuredImage media.
       template = (await payload.findByID({
         collection: 'product-templates',
-        id: product.template,
-        depth: 2,
+        id: templateId,
+        depth: 3,
       })) as ProductTemplate;
     } catch {
-      template = null;
+      template =
+        typeof templateRef === 'object' && templateRef ? (templateRef as ProductTemplate) : null;
     }
   }
 

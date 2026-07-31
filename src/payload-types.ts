@@ -406,7 +406,9 @@ export interface Page {
         | {
             eyebrow?: string | null;
             heading?: string | null;
-            description?: string | null;
+            /**
+             * Supporting copy under the heading.
+             */
             subtext?: string | null;
             ctas?:
               | {
@@ -1431,7 +1433,6 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               eyebrow?: T;
               heading?: T;
-              description?: T;
               subtext?: T;
               ctas?:
                 | T

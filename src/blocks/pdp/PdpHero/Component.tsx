@@ -7,7 +7,7 @@ import { AnimatedCounter } from '@/components/ui/animated-counter';
 import { CtaButton } from '@/components/ui/cta-button';
 import { Eyebrow } from '@/components/ui/eyebrow';
 import { DEFAULT_PDP_HERO } from '@/lib/cms/pdp-defaults';
-import { getMediaAlt, getMediaUrl, resolveLink } from '@/lib/cms/links';
+import { getMediaAlt, getMediaUrl, resolveCtaList, type CmsLink } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
 import { cn } from '@/lib/utils';
 
@@ -18,7 +18,7 @@ type SpecItem = {
 };
 
 type CtaItem = {
-  link?: Parameters<typeof resolveLink>[0];
+  link?: CmsLink | null;
 };
 
 export type PdpHeroBlockData = {
@@ -70,15 +70,7 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
     ? block.quickSpecs.filter((s) => s.value && s.label)
     : DEFAULT_PDP_HERO.quickSpecs.map((spec) => ({ ...spec, animateCounter: false }));
 
-  const cmsCtas =
-    block?.ctas
-      ?.map((item) => resolveLink(item.link))
-      .filter((item): item is NonNullable<typeof item> => Boolean(item)) ?? [];
-
-  const ctas =
-    cmsCtas.length > 0
-      ? cmsCtas
-      : DEFAULT_PDP_HERO.ctas.map((cta) => ({ ...cta, openInNewTab: false }));
+  const ctas = resolveCtaList(block?.ctas, DEFAULT_PDP_HERO.ctas);
 
   return (
     <section className="bg-background">
