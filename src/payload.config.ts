@@ -17,6 +17,7 @@ import { SeoDefaults } from './globals/SeoDefaults';
 import { SiteSettings } from './globals/SiteSettings';
 import { getServerEnv } from './lib/env';
 import { ensureDefaultProductTemplate } from './lib/cms/seed-product-template';
+import { getStoragePlugins } from './lib/storage/plugins';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -46,7 +47,7 @@ export default buildConfig({
     },
   }),
   sharp,
-  plugins: [],
+  plugins: [...getStoragePlugins(env)],
   onInit: async (payload) => {
     try {
       await ensureDefaultProductTemplate(payload);

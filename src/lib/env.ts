@@ -54,6 +54,38 @@ const serverEnvSchema = z
       .transform((value) => value === 'true'),
   })
   .superRefine((env, ctx) => {
+    // Always validate storage credentials when a cloud provider is selected
+    // (including during Vercel builds).
+    if (env.STORAGE_PROVIDER === 'cloudinary') {
+      if (!env.CLOUDINARY_CLOUD_NAME || !env.CLOUDINARY_API_KEY || !env.CLOUDINARY_API_SECRET) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['STORAGE_PROVIDER'],
+          message: 'Cloudinary credentials are required when STORAGE_PROVIDER=cloudinary',
+        });
+      }
+    }
+
+    if (env.STORAGE_PROVIDER === 's3') {
+      if (!env.S3_BUCKET || !env.S3_REGION || !env.S3_ACCESS_KEY_ID || !env.S3_SECRET_ACCESS_KEY) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['STORAGE_PROVIDER'],
+          message: 'S3 credentials are required when STORAGE_PROVIDER=s3',
+        });
+      }
+    }
+
+    // Vercel has no persistent disk — local uploads will always fail there.
+    if (process.env.VERCEL && env.STORAGE_PROVIDER === 'local') {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['STORAGE_PROVIDER'],
+        message:
+          'STORAGE_PROVIDER=local is not supported on Vercel. Set STORAGE_PROVIDER=cloudinary (or s3) and credentials.',
+      });
+    }
+
     if (!shouldEnforceProductionRules()) {
       return;
     }
@@ -80,26 +112,6 @@ const serverEnvSchema = z
         path: ['RESEND_API_KEY'],
         message: 'RESEND_API_KEY is required when EMAIL_PROVIDER=resend in production',
       });
-    }
-
-    if (env.STORAGE_PROVIDER === 'cloudinary') {
-      if (!env.CLOUDINARY_CLOUD_NAME || !env.CLOUDINARY_API_KEY || !env.CLOUDINARY_API_SECRET) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['STORAGE_PROVIDER'],
-          message: 'Cloudinary credentials are required when STORAGE_PROVIDER=cloudinary',
-        });
-      }
-    }
-
-    if (env.STORAGE_PROVIDER === 's3') {
-      if (!env.S3_BUCKET || !env.S3_REGION || !env.S3_ACCESS_KEY_ID || !env.S3_SECRET_ACCESS_KEY) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['STORAGE_PROVIDER'],
-          message: 'S3 credentials are required when STORAGE_PROVIDER=s3',
-        });
-      }
     }
 
     if (env.EMAIL_PROVIDER === 'smtp') {

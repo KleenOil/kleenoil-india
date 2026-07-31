@@ -27,6 +27,18 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.r2.cloudflarestorage.com',
+      },
     ],
   },
   webpack: (webpackConfig) => {

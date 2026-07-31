@@ -113,7 +113,8 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    staticDir: 'media',
+    // Used only when STORAGE_PROVIDER=local. Cloud adapters disable local disk.
+    staticDir: process.env.MEDIA_ROOT || 'media',
     mimeTypes: [
       'image/jpeg',
       'image/png',
