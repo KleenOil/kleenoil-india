@@ -20,7 +20,7 @@ export default async function ProductsIndexPage() {
       <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-12 px-6 py-16 lg:px-[100px] lg:py-[100px]">
         <div className="max-w-[720px] space-y-4">
           <Eyebrow>PRODUCT CATALOGUE</Eyebrow>
-          <h1 className="font-heading text-4xl font-bold tracking-[-0.04em] text-text-primary lg:text-5xl">
+          <h1 className="font-heading text-3xl font-bold tracking-[-0.04em] text-text-primary md:text-4xl lg:text-5xl">
             Filtration systems for every operational reality.
           </h1>
           <p className="text-lg text-text-secondary">

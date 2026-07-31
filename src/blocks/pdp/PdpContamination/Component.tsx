@@ -29,7 +29,7 @@ export function PdpContaminationBlock({ block }: { block?: PdpContaminationBlock
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
           <div className="max-w-[620px] space-y-4">
             <Eyebrow>{eyebrow}</Eyebrow>
-            <h2 className="font-heading text-3xl font-bold leading-[1.08] tracking-[-0.04em] text-text-primary lg:text-[40px]">
+            <h2 className="font-heading text-[1.625rem] font-bold leading-[1.08] tracking-[-0.04em] text-text-primary md:text-3xl lg:text-[40px]">
               {heading.split('\n').map((line, index) => (
                 <span key={`${line}-${index}`} className="block">
                   {line}

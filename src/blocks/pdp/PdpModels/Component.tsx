@@ -33,7 +33,7 @@ export function PdpModelsBlock({ block }: { block?: PdpModelsBlockData | null })
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-[640px] space-y-4">
             <Eyebrow>{eyebrow}</Eyebrow>
-            <h2 className="font-heading text-3xl font-bold leading-[1.08] tracking-[-0.04em] text-text-primary lg:text-[36px]">
+            <h2 className="font-heading text-[1.625rem] font-bold leading-[1.08] tracking-[-0.04em] text-text-primary md:text-3xl lg:text-[36px]">
               {heading.split('\n').map((line, index) => (
                 <span key={`${line}-${index}`} className="block">
                   {line}

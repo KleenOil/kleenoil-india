@@ -58,7 +58,7 @@ export function SectionHeader({
         {heading ? (
           <h2
             className={cn(
-              'font-heading text-3xl font-bold leading-[1.05] tracking-[-0.04em] text-text-primary sm:text-4xl lg:text-[48px]',
+              'font-heading text-[1.625rem] font-bold leading-[1.05] tracking-[-0.04em] text-text-primary md:text-3xl lg:text-[48px]',
               isCenter && 'leading-none tracking-[-0.05em] lg:text-[48px]',
             )}
           >
@@ -72,7 +72,7 @@ export function SectionHeader({
         {isCenter && description ? (
           <p
             data-reveal-part
-            className="max-w-[680px] text-[17px] leading-relaxed text-text-secondary"
+            className="max-w-[680px] text-base leading-relaxed text-text-secondary md:text-[17px]"
           >
             {description}
           </p>

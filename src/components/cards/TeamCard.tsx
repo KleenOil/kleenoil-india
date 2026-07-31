@@ -28,7 +28,7 @@ export function TeamCard({ member, className }: TeamCardProps) {
           />
         ) : (
           <div className="flex h-full items-center justify-center bg-gradient-to-br from-brand-soft to-surface">
-            <span className="font-heading text-4xl font-bold text-brand-deep">
+            <span className="font-heading text-3xl font-bold text-brand-deep md:text-4xl">
               {member.name.charAt(0)}
             </span>
           </div>

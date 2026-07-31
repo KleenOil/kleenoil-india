@@ -68,7 +68,7 @@ export function AboutStoryBlock({ block }: AboutStoryBlockProps) {
             </div>
 
             <blockquote className="surface-card rounded-2xl border-l-2 border-brand-primary bg-surface-elevated/88 p-7">
-              <p className="font-heading text-[22px] font-semibold leading-snug text-text-primary">
+              <p className="font-heading text-lg font-semibold leading-snug text-text-primary md:text-[22px]">
                 &ldquo;{quote}&rdquo;
               </p>
               <footer className="mt-5 flex flex-col gap-0.5">

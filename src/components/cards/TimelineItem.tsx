@@ -22,7 +22,7 @@ export function TimelineItem({ item, className }: TimelineItemProps) {
       )}
     >
       <div className="shrink-0 sm:w-[140px]">
-        <p className="font-heading text-4xl font-bold tracking-tight text-brand-primary sm:text-[44px]">
+        <p className="font-heading text-3xl font-bold tracking-tight text-brand-primary md:text-[44px]">
           {item.year}
         </p>
         <p className="mt-1.5 font-mono text-[10px] font-medium tracking-[1.4px] text-text-tertiary uppercase">
@@ -30,7 +30,7 @@ export function TimelineItem({ item, className }: TimelineItemProps) {
         </p>
       </div>
       <div className="flex flex-col gap-2.5 sm:pt-2">
-        <h3 className="font-heading text-[22px] font-bold leading-tight tracking-tight text-text-primary">
+        <h3 className="font-heading text-lg font-bold leading-tight tracking-tight text-text-primary md:text-[22px]">
           {item.title}
         </h3>
         <p className="text-sm leading-relaxed text-text-secondary">{item.description}</p>

@@ -117,14 +117,16 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
 
         <div className="flex flex-1 flex-col gap-7 pt-2">
           <Eyebrow>{eyebrow}</Eyebrow>
-          <h1 className="font-heading text-4xl font-bold leading-[1.05] tracking-[-0.04em] text-text-primary sm:text-5xl lg:text-[48px]">
+          <h1 className="font-heading text-3xl font-bold leading-[1.05] tracking-[-0.04em] text-text-primary md:text-4xl lg:text-[48px]">
             {title.split('\n').map((line, index) => (
               <span key={`${line}-${index}`} className="block">
                 {line}
               </span>
             ))}
           </h1>
-          <p className="max-w-xl text-[17px] leading-relaxed text-text-secondary">{summary}</p>
+          <p className="max-w-xl text-base leading-relaxed text-text-secondary md:text-[17px]">
+            {summary}
+          </p>
 
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {specs.map((spec) => (
@@ -133,7 +135,7 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
                 data-reveal-item
                 className="surface-card flex flex-col gap-1.5 rounded-xl border border-border-subtle bg-surface-elevated/70 p-4"
               >
-                <p className="font-heading text-[22px] font-bold tracking-tight text-brand-primary">
+                <p className="font-heading text-xl font-bold tracking-tight text-brand-primary md:text-[22px]">
                   {spec.animateCounter && spec.value ? (
                     <AnimatedCounter value={spec.value} durationMs={2000} />
                   ) : (

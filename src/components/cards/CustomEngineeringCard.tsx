@@ -36,7 +36,7 @@ export function CustomEngineeringCard({
             06 / Bespoke
           </span>
         </div>
-        <h3 className="font-heading text-3xl font-bold leading-tight tracking-tight text-text-primary sm:text-4xl">
+        <h3 className="font-heading text-2xl font-bold leading-tight tracking-tight text-text-primary md:text-3xl lg:text-4xl">
           Custom Engineering Solutions
         </h3>
         <p className="text-sm leading-relaxed text-text-secondary">

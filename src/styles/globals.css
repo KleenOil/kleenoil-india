@@ -113,6 +113,38 @@
   }
 }
 
+/* Mobile type scale — keep display copy readable under 768px */
+@media (max-width: 767px) {
+  html {
+    font-size: 15px;
+  }
+
+  body {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .font-heading.text-5xl {
+    font-size: 1.875rem !important;
+    line-height: 1.08 !important;
+  }
+
+  .font-heading.text-4xl {
+    font-size: 1.75rem !important;
+    line-height: 1.1 !important;
+  }
+
+  .font-heading.text-3xl {
+    font-size: 1.5rem !important;
+    line-height: 1.12 !important;
+  }
+
+  .text-lg {
+    font-size: 1rem !important;
+    line-height: 1.55 !important;
+  }
+}
+
 /* Sticky header — opaque tint only (blur on sticky headers causes scroll jank) */
 .site-header {
   @apply bg-background/96;

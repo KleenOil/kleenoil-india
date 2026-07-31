@@ -28,7 +28,7 @@ export function PdpHowItWorksBlock({ block }: { block?: PdpHowItWorksBlockData |
       <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-12 px-6 py-16 lg:gap-12 lg:px-[100px] lg:py-[100px]">
         <div className="mx-auto flex max-w-[720px] flex-col items-center gap-5 text-center">
           <Eyebrow>{eyebrow}</Eyebrow>
-          <h2 className="font-heading text-3xl font-bold tracking-[-0.04em] text-text-primary lg:text-[40px]">
+          <h2 className="font-heading text-[1.625rem] font-bold tracking-[-0.04em] text-text-primary md:text-3xl lg:text-[40px]">
             {heading}
           </h2>
           <p className="text-base leading-relaxed text-text-secondary">{description}</p>
@@ -40,7 +40,7 @@ export function PdpHowItWorksBlock({ block }: { block?: PdpHowItWorksBlockData |
               key={`${step.title}-${index}`}
               className="surface-card flex flex-col gap-4 rounded-2xl border border-border-subtle bg-surface-elevated/70 p-7"
             >
-              <p className="font-heading text-4xl font-bold tracking-tight text-brand-primary">
+              <p className="font-heading text-3xl font-bold tracking-tight text-brand-primary md:text-4xl">
                 {step.label || String(index + 1).padStart(2, '0')}
               </p>
               <span className="h-[3px] w-10 rounded-full bg-brand-primary" aria-hidden />

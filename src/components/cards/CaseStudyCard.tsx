@@ -37,7 +37,7 @@ export function CaseStudyCard({ caseStudy, className }: CaseStudyCardProps) {
             {caseStudy.tag}
           </span>
         </div>
-        <h3 className="font-heading text-2xl font-bold leading-tight tracking-tight text-text-primary sm:text-[30px]">
+        <h3 className="font-heading text-xl font-bold leading-tight tracking-tight text-text-primary md:text-2xl lg:text-[30px]">
           {caseStudy.title}
         </h3>
         <p className="text-sm leading-relaxed text-text-secondary">{caseStudy.description}</p>
@@ -48,7 +48,7 @@ export function CaseStudyCard({ caseStudy, className }: CaseStudyCardProps) {
           <div key={`${metric.value}-${metric.label}`} className="flex flex-1 items-center">
             {index > 0 ? <span className="h-12 w-px bg-border-subtle" aria-hidden /> : null}
             <div className="flex min-w-[100px] flex-1 flex-col gap-1 px-6 py-6 sm:px-8">
-              <p className="font-heading text-[32px] font-bold tracking-tight text-brand-primary">
+              <p className="font-heading text-2xl font-bold tracking-tight text-brand-primary md:text-[32px]">
                 {metric.value}
               </p>
               <p className="font-mono text-[10px] font-bold tracking-[1.2px] text-text-tertiary uppercase">

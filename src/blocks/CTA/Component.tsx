@@ -70,7 +70,7 @@ export function CtaBlock({ block }: CtaBlockProps) {
             <Eyebrow>{eyebrow}</Eyebrow>
           </div>
 
-          <h2 className="font-heading text-4xl font-bold leading-[0.98] tracking-[-0.06em] text-text-primary sm:text-5xl lg:text-[80px]">
+          <h2 className="font-heading text-3xl font-bold leading-[0.98] tracking-[-0.06em] text-text-primary md:text-4xl lg:text-[80px]">
             {heading.split('\n').map((line, index) => (
               <span key={`${line}-${index}`} data-reveal-part className="block">
                 {line}
@@ -80,7 +80,7 @@ export function CtaBlock({ block }: CtaBlockProps) {
 
           <p
             data-reveal-part
-            className="max-w-[640px] text-lg font-semibold leading-relaxed text-text-secondary"
+            className="max-w-[640px] text-base font-semibold leading-relaxed text-text-secondary md:text-lg"
           >
             {subtext}
           </p>

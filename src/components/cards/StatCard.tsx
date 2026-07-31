@@ -20,7 +20,9 @@ export function StatCard({ value, label, className }: StatCardProps) {
       <p
         className={cn(
           'font-heading font-bold tracking-tight text-text-primary',
-          isCompact ? 'text-[52px] tracking-[-0.03em]' : 'text-[64px] tracking-[-0.05em]',
+          isCompact
+            ? 'text-4xl tracking-[-0.03em] md:text-[52px]'
+            : 'text-5xl tracking-[-0.05em] md:text-[64px]',
         )}
       >
         {value}

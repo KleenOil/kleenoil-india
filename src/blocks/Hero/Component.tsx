@@ -63,7 +63,7 @@ export function HeroBlock({ block }: HeroProps) {
         }}
       />
 
-      <div className="relative mx-auto flex w-full max-w-[1440px] flex-col gap-10 px-6 py-16 lg:flex-row lg:items-center lg:gap-[60px] lg:px-[100px] lg:py-[100px]">
+      <div className="relative mx-auto flex w-full max-w-[1440px] flex-col gap-10 px-6 py-16 lg:flex-row lg:items-stretch lg:gap-[60px] lg:px-[100px] lg:py-[100px]">
         <div className="surface-panel w-full rounded-[20px] p-6 lg:max-w-[640px] lg:p-10">
           <div className="flex flex-col gap-8">
             <div data-reveal-target>
@@ -72,7 +72,7 @@ export function HeroBlock({ block }: HeroProps) {
 
             <h1
               data-reveal-target
-              className="font-heading text-4xl font-bold leading-[0.98] tracking-[-0.04em] text-text-primary sm:text-5xl lg:text-[58px]"
+              className="font-heading text-3xl font-bold leading-[0.98] tracking-[-0.04em] text-text-primary md:text-4xl lg:text-[58px]"
             >
               {headline.split('\n').map((line, index) => (
                 <span key={`${line}-${index}`} className="block">
@@ -83,7 +83,7 @@ export function HeroBlock({ block }: HeroProps) {
 
             <p
               data-reveal-target
-              className="max-w-[520px] text-lg font-semibold leading-relaxed text-text-secondary"
+              className="max-w-[520px] text-base font-semibold leading-relaxed text-text-secondary md:text-lg"
             >
               {subheadline}
             </p>
@@ -107,7 +107,7 @@ export function HeroBlock({ block }: HeroProps) {
             >
               {metaStats.map((stat) => (
                 <div key={`${stat.value}-${stat.label}`} className="flex flex-col gap-1.5">
-                  <p className="font-heading text-[28px] font-bold tracking-tight text-brand-primary">
+                  <p className="font-heading text-2xl font-bold tracking-tight text-brand-primary md:text-[28px]">
                     <AnimatedCounter value={stat.value!} />
                   </p>
                   <p className="text-[11px] font-bold tracking-[1.2px] text-text-tertiary uppercase">
@@ -119,11 +119,11 @@ export function HeroBlock({ block }: HeroProps) {
           </div>
         </div>
 
-        <div data-reveal-target className="w-full flex-1">
+        <div data-reveal-target className="flex w-full flex-1 flex-col">
           <ParallaxMedia
             enabled
             strength={0.16}
-            className="surface-card relative aspect-[4/5] rounded-[20px] border-2 border-border-subtle bg-brand-soft sm:aspect-[5/6] lg:aspect-auto lg:h-[600px]"
+            className="surface-card relative aspect-[4/5] min-h-[320px] flex-1 rounded-[20px] border-2 border-border-subtle bg-brand-soft sm:aspect-[5/6] lg:aspect-auto lg:h-full lg:min-h-0"
           >
             {imageUrl ? (
               <Image

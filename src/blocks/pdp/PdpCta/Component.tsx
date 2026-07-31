@@ -37,14 +37,14 @@ export function PdpCtaBlock({ block }: { block?: PdpCtaBlockData | null }) {
       <div className="relative mx-auto w-full max-w-[1440px] px-6 py-16 lg:px-[100px] lg:py-20">
         <div className="surface-panel mx-auto flex max-w-[1100px] flex-col items-center gap-8 rounded-3xl p-10 text-center lg:gap-10 lg:p-12">
           <Eyebrow>{eyebrow}</Eyebrow>
-          <h2 className="font-heading text-4xl font-bold leading-[1.02] tracking-[-0.05em] text-text-primary sm:text-5xl lg:text-[52px]">
+          <h2 className="font-heading text-3xl font-bold leading-[1.02] tracking-[-0.05em] text-text-primary md:text-4xl lg:text-[52px]">
             {heading.split('\n').map((line, index) => (
               <span key={`${line}-${index}`} className="block">
                 {line}
               </span>
             ))}
           </h2>
-          <p className="max-w-[640px] text-[17px] font-semibold leading-relaxed text-text-secondary">
+          <p className="max-w-[640px] text-base font-semibold leading-relaxed text-text-secondary md:text-[17px]">
             {subtext}
           </p>
           <div className="flex flex-wrap justify-center gap-3.5">
