@@ -84,6 +84,13 @@ const BLOCK_SEEDS: Record<string, () => LayoutBlock> = {
       DEFAULT_FEATURED_PRODUCTS.cta.href,
       DEFAULT_FEATURED_PRODUCTS.cta.appearance,
     ).link,
+    cards: DEFAULT_FEATURED_PRODUCTS.products.map((product) => ({
+      tag: product.tag,
+      title: product.title,
+      description: product.description,
+      href: product.href,
+    })),
+    customEngineering: { ...DEFAULT_FEATURED_PRODUCTS.customEngineering },
   }),
   'featured-industries': () => ({
     blockType: 'featured-industries',

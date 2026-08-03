@@ -2,8 +2,26 @@ import { CustomEngineeringCard } from '@/components/cards/CustomEngineeringCard'
 import { ProductCard, type ProductCardData } from '@/components/cards/ProductCard';
 import { SectionHeader } from '@/components/sections/SectionHeader';
 import { DEFAULT_FEATURED_PRODUCTS } from '@/lib/cms/defaults';
-import { getMediaUrl, resolveLink } from '@/lib/cms/links';
-import { getPublishedProducts } from '@/lib/cms/products';
+import { getMediaAlt, getMediaUrl, resolveLink } from '@/lib/cms/links';
+import type { Media, Product } from '@/payload-types';
+
+type FeaturedProductCard = {
+  tag?: string | null;
+  title?: string | null;
+  description?: string | null;
+  image?: number | Media | null;
+  product?: number | Product | null;
+  href?: string | null;
+  id?: string | null;
+};
+
+type CustomEngineeringFields = {
+  tag?: string | null;
+  title?: string | null;
+  description?: string | null;
+  ctaLabel?: string | null;
+  href?: string | null;
+};
 
 export type FeaturedProductsBlockData = {
   blockType: 'featured-products';
@@ -18,13 +36,42 @@ export type FeaturedProductsBlockData = {
     page?: number | { slug?: string | null } | null;
     appearance?: 'primary' | 'secondary' | 'ghost' | null;
   } | null;
+  cards?: FeaturedProductCard[] | null;
+  customEngineering?: CustomEngineeringFields | null;
 };
 
 type FeaturedProductsBlockProps = {
   block?: FeaturedProductsBlockData | null;
 };
 
-export async function FeaturedProductsBlock({ block }: FeaturedProductsBlockProps) {
+function resolveCardHref(card: FeaturedProductCard): string {
+  if (card.product && typeof card.product === 'object' && card.product.slug) {
+    return `/products/${card.product.slug}`;
+  }
+
+  if (typeof card.href === 'string' && card.href.trim()) {
+    return card.href.trim();
+  }
+
+  return '/products';
+}
+
+function mapCard(card: FeaturedProductCard, index: number): ProductCardData | null {
+  if (!card.title?.trim()) {
+    return null;
+  }
+
+  return {
+    tag: card.tag?.trim() || `0${(index % 9) + 1} / SYSTEM`,
+    title: card.title.trim(),
+    description: card.description?.trim() || '',
+    href: resolveCardHref(card),
+    imageUrl: getMediaUrl(card.image),
+    imageAlt: getMediaAlt(card.image, card.title),
+  };
+}
+
+export function FeaturedProductsBlock({ block }: FeaturedProductsBlockProps) {
   const eyebrow = block?.eyebrow || DEFAULT_FEATURED_PRODUCTS.eyebrow;
   const heading = block?.heading || DEFAULT_FEATURED_PRODUCTS.heading;
   const description = block?.description || DEFAULT_FEATURED_PRODUCTS.description;
@@ -41,22 +88,19 @@ export async function FeaturedProductsBlock({ block }: FeaturedProductsBlockProp
       }
     : DEFAULT_FEATURED_PRODUCTS.cta;
 
-  const customCardHref = sectionCta.href === '/products' ? '/contact' : sectionCta.href;
+  const cmsCards =
+    block?.cards
+      ?.map((card, index) => mapCard(card, index))
+      .filter((card): card is ProductCardData => Boolean(card)) ?? [];
 
-  const cmsProducts = await getPublishedProducts(5);
-  const products: ProductCardData[] =
-    cmsProducts.length > 0
-      ? cmsProducts.map((product, index) => ({
-          tag: `0${(index % 9) + 1} / SYSTEM`,
-          title: product.name,
-          description: product.shortDescription || '',
-          href: `/products/${product.slug}`,
-          imageUrl: getMediaUrl(product.featuredImage),
-        }))
-      : DEFAULT_FEATURED_PRODUCTS.products;
-
+  const products = cmsCards.length > 0 ? cmsCards : DEFAULT_FEATURED_PRODUCTS.products;
   const primaryRow = products.slice(0, 3);
   const secondaryRow = products.slice(3, 5);
+
+  const customEngineering = {
+    ...DEFAULT_FEATURED_PRODUCTS.customEngineering,
+    ...(block?.customEngineering ?? {}),
+  };
 
   return (
     <section className="bg-background">
@@ -79,7 +123,7 @@ export async function FeaturedProductsBlock({ block }: FeaturedProductsBlockProp
             {secondaryRow.map((product) => (
               <ProductCard key={product.href + product.title} product={product} />
             ))}
-            <CustomEngineeringCard href={customCardHref} />
+            <CustomEngineeringCard card={customEngineering} />
           </div>
         </div>
       </div>

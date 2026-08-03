@@ -282,6 +282,48 @@ export interface Page {
               openInNewTab?: boolean | null;
               appearance?: ('primary' | 'secondary' | 'ghost') | null;
             };
+            /**
+             * Build cards manually. Optionally link a Product so Explore goes to that PDP; otherwise use Custom link.
+             */
+            cards?:
+              | {
+                  /**
+                   * e.g. 01 / SYSTEM
+                   */
+                  tag?: string | null;
+                  title: string;
+                  description?: string | null;
+                  image?: (number | null) | Media;
+                  /**
+                   * Optional. When set, the card links to this product’s detail page.
+                   */
+                  product?: (number | null) | Product;
+                  /**
+                   * Fallback URL when no product is linked (e.g. /products).
+                   */
+                  href?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * The special card at the end of the second row.
+             */
+            customEngineering?: {
+              /**
+               * e.g. 06 / Bespoke
+               */
+              tag?: string | null;
+              title?: string | null;
+              description?: string | null;
+              /**
+               * e.g. Speak with an engineer
+               */
+              ctaLabel?: string | null;
+              /**
+               * Where the card goes (e.g. /contact)
+               */
+              href?: string | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'featured-products';
@@ -495,223 +537,6 @@ export interface Page {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * Shared PDP section layouts. Products pick a template and override sections as needed.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "product-templates".
- */
-export interface ProductTemplate {
-  id: number;
-  name: string;
-  slug: string;
-  /**
-   * Common section content for products using this template. Section order here defines the PDP.
-   */
-  layout?:
-    | (
-        | {
-            /**
-             * e.g. FLAGSHIP SYSTEM
-             */
-            badge?: string | null;
-            /**
-             * e.g. 01 / OIL FILTRATION SYSTEMS
-             */
-            eyebrow?: string | null;
-            /**
-             * Use line breaks for multi-line titles.
-             */
-            title?: string | null;
-            summary?: string | null;
-            /**
-             * Select or upload multiple images at once. Reorder as needed.
-             */
-            gallery?: (number | Media)[] | null;
-            quickSpecs?:
-              | {
-                  value: string;
-                  label: string;
-                  /**
-                   * When enabled, the value counts up when this spec scrolls into view (works best with numeric values like 99.9% or 5×).
-                   */
-                  animateCounter?: boolean | null;
-                  id?: string | null;
-                }[]
-              | null;
-            ctas?:
-              | {
-                  link: {
-                    type: 'page' | 'custom';
-                    label?: string | null;
-                    page?: (number | null) | Page;
-                    /**
-                     * Absolute URL or site path (e.g. /products or https://example.com).
-                     */
-                    url?: string | null;
-                    openInNewTab?: boolean | null;
-                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'pdp-hero';
-          }
-        | {
-            eyebrow?: string | null;
-            heading?: string | null;
-            description?: string | null;
-            cards?:
-              | {
-                  title: string;
-                  description?: string | null;
-                  stat?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'pdp-contamination';
-          }
-        | {
-            eyebrow?: string | null;
-            heading?: string | null;
-            description?: string | null;
-            steps?:
-              | {
-                  label: string;
-                  title: string;
-                  description?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'pdp-how-it-works';
-          }
-        | {
-            eyebrow?: string | null;
-            heading?: string | null;
-            description?: string | null;
-            machines?:
-              | {
-                  title: string;
-                  description?: string | null;
-                  image?: (number | null) | Media;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'pdp-machines';
-          }
-        | {
-            eyebrow?: string | null;
-            heading?: string | null;
-            description?: string | null;
-            columns?:
-              | {
-                  label: string;
-                  id?: string | null;
-                }[]
-              | null;
-            models?:
-              | {
-                  name: string;
-                  values?:
-                    | {
-                        value: string;
-                        id?: string | null;
-                      }[]
-                    | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'pdp-models';
-          }
-        | {
-            eyebrow?: string | null;
-            heading?: string | null;
-            description?: string | null;
-            results?:
-              | {
-                  tag?: string | null;
-                  title: string;
-                  description?: string | null;
-                  metrics?:
-                    | {
-                        value: string;
-                        label: string;
-                        id?: string | null;
-                      }[]
-                    | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'pdp-results';
-          }
-        | {
-            eyebrow?: string | null;
-            heading?: string | null;
-            description?: string | null;
-            /**
-             * Pick products to feature. Falls back to manual cards if empty.
-             */
-            products?: (number | Product)[] | null;
-            cards?:
-              | {
-                  title: string;
-                  description?: string | null;
-                  href?: string | null;
-                  image?: (number | null) | Media;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'pdp-related';
-          }
-        | {
-            eyebrow?: string | null;
-            heading?: string | null;
-            subtext?: string | null;
-            ctas?:
-              | {
-                  link: {
-                    type: 'page' | 'custom';
-                    label?: string | null;
-                    page?: (number | null) | Page;
-                    /**
-                     * Absolute URL or site path (e.g. /products or https://example.com).
-                     */
-                    url?: string | null;
-                    openInNewTab?: boolean | null;
-                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            trustBadges?:
-              | {
-                  label: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'pdp-cta';
-          }
-      )[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -993,6 +818,223 @@ export interface Product {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * Shared PDP section layouts. Products pick a template and override sections as needed.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-templates".
+ */
+export interface ProductTemplate {
+  id: number;
+  name: string;
+  slug: string;
+  /**
+   * Common section content for products using this template. Section order here defines the PDP.
+   */
+  layout?:
+    | (
+        | {
+            /**
+             * e.g. FLAGSHIP SYSTEM
+             */
+            badge?: string | null;
+            /**
+             * e.g. 01 / OIL FILTRATION SYSTEMS
+             */
+            eyebrow?: string | null;
+            /**
+             * Use line breaks for multi-line titles.
+             */
+            title?: string | null;
+            summary?: string | null;
+            /**
+             * Select or upload multiple images at once. Reorder as needed.
+             */
+            gallery?: (number | Media)[] | null;
+            quickSpecs?:
+              | {
+                  value: string;
+                  label: string;
+                  /**
+                   * When enabled, the value counts up when this spec scrolls into view (works best with numeric values like 99.9% or 5×).
+                   */
+                  animateCounter?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            ctas?:
+              | {
+                  link: {
+                    type: 'page' | 'custom';
+                    label?: string | null;
+                    page?: (number | null) | Page;
+                    /**
+                     * Absolute URL or site path (e.g. /products or https://example.com).
+                     */
+                    url?: string | null;
+                    openInNewTab?: boolean | null;
+                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pdp-hero';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            cards?:
+              | {
+                  title: string;
+                  description?: string | null;
+                  stat?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pdp-contamination';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            steps?:
+              | {
+                  label: string;
+                  title: string;
+                  description?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pdp-how-it-works';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            machines?:
+              | {
+                  title: string;
+                  description?: string | null;
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pdp-machines';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            columns?:
+              | {
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            models?:
+              | {
+                  name: string;
+                  values?:
+                    | {
+                        value: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pdp-models';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            results?:
+              | {
+                  tag?: string | null;
+                  title: string;
+                  description?: string | null;
+                  metrics?:
+                    | {
+                        value: string;
+                        label: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pdp-results';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            /**
+             * Pick products to feature. Falls back to manual cards if empty.
+             */
+            products?: (number | Product)[] | null;
+            cards?:
+              | {
+                  title: string;
+                  description?: string | null;
+                  href?: string | null;
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pdp-related';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            subtext?: string | null;
+            ctas?:
+              | {
+                  link: {
+                    type: 'page' | 'custom';
+                    label?: string | null;
+                    page?: (number | null) | Page;
+                    /**
+                     * Absolute URL or site path (e.g. /products or https://example.com).
+                     */
+                    url?: string | null;
+                    openInNewTab?: boolean | null;
+                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            trustBadges?:
+              | {
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pdp-cta';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1302,6 +1344,26 @@ export interface PagesSelect<T extends boolean = true> {
                     url?: T;
                     openInNewTab?: T;
                     appearance?: T;
+                  };
+              cards?:
+                | T
+                | {
+                    tag?: T;
+                    title?: T;
+                    description?: T;
+                    image?: T;
+                    product?: T;
+                    href?: T;
+                    id?: T;
+                  };
+              customEngineering?:
+                | T
+                | {
+                    tag?: T;
+                    title?: T;
+                    description?: T;
+                    ctaLabel?: T;
+                    href?: T;
                   };
               id?: T;
               blockName?: T;

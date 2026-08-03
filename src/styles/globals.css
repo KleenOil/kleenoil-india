@@ -145,6 +145,121 @@
   }
 }
 
+/* Rich Content (Lexical) — heading + body styles */
+.rich-content {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.rich-content :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.rich-content h1 {
+  margin: 1.75rem 0 1rem;
+  font-size: 1.875rem; /* 30px */
+}
+
+.rich-content h2 {
+  margin: 1.5rem 0 0.875rem;
+  font-size: 1.625rem; /* 26px */
+}
+
+.rich-content h3 {
+  margin: 1.35rem 0 0.75rem;
+  font-size: 1.375rem; /* 22px */
+}
+
+.rich-content h4 {
+  margin: 1.25rem 0 0.625rem;
+  font-size: 1.1875rem; /* 19px */
+}
+
+.rich-content h5 {
+  margin: 1.125rem 0 0.5rem;
+  font-size: 1.0625rem; /* 17px */
+}
+
+.rich-content h6 {
+  margin: 1rem 0 0.5rem;
+  font-size: 0.9375rem; /* 15px */
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.rich-content p {
+  margin: 1rem 0;
+}
+
+.rich-content :is(ul, ol) {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.rich-content ul {
+  list-style: disc;
+}
+
+.rich-content ol {
+  list-style: decimal;
+}
+
+.rich-content li {
+  margin: 0.35rem 0;
+}
+
+.rich-content a {
+  font-weight: 600;
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.rich-content strong {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.rich-content blockquote {
+  margin: 1.25rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--color-brand-primary);
+  color: var(--color-text-primary);
+  font-style: italic;
+}
+
+@media (min-width: 768px) {
+  .rich-content h1 {
+    font-size: 2.5rem; /* 40px */
+  }
+
+  .rich-content h2 {
+    font-size: 2rem; /* 32px */
+  }
+
+  .rich-content h3 {
+    font-size: 1.625rem; /* 26px */
+  }
+
+  .rich-content h4 {
+    font-size: 1.375rem; /* 22px */
+  }
+
+  .rich-content h5 {
+    font-size: 1.125rem; /* 18px */
+  }
+
+  .rich-content h6 {
+    font-size: 1rem; /* 16px */
+  }
+}
+
 /* Sticky header — opaque tint only (blur on sticky headers causes scroll jank) */
 .site-header {
   @apply bg-background/96;

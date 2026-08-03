@@ -128,6 +128,14 @@ export const DEFAULT_FEATURED_PRODUCTS = {
   description:
     'A complete portfolio of contamination control, fluid conditioning, and oil analysis technologies — each engineered to extend equipment life and eliminate downtime.',
   cta: { label: 'View full catalogue', href: '/products', appearance: 'ghost' as const },
+  customEngineering: {
+    tag: '06 / Bespoke',
+    title: 'Custom Engineering Solutions',
+    description:
+      'Specialised filtration architectures designed around your fluid chemistry, operating envelope, and production cycle.',
+    ctaLabel: 'Speak with an engineer',
+    href: '/contact',
+  },
   products: [
     {
       tag: '01 / SYSTEM',

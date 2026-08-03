@@ -3,15 +3,35 @@ import { ArrowUpRight, Sparkles } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
+export type CustomEngineeringCardData = {
+  tag?: string | null;
+  title?: string | null;
+  description?: string | null;
+  ctaLabel?: string | null;
+  href?: string | null;
+};
+
 type CustomEngineeringCardProps = {
-  href?: string;
+  card?: CustomEngineeringCardData | null;
   className?: string;
 };
 
-export function CustomEngineeringCard({
-  href = '/contact',
-  className,
-}: CustomEngineeringCardProps) {
+const DEFAULTS = {
+  tag: '06 / Bespoke',
+  title: 'Custom Engineering Solutions',
+  description:
+    'Specialised filtration architectures designed around your fluid chemistry, operating envelope, and production cycle.',
+  ctaLabel: 'Speak with an engineer',
+  href: '/contact',
+};
+
+export function CustomEngineeringCard({ card, className }: CustomEngineeringCardProps) {
+  const tag = card?.tag?.trim() || DEFAULTS.tag;
+  const title = card?.title?.trim() || DEFAULTS.title;
+  const description = card?.description?.trim() || DEFAULTS.description;
+  const ctaLabel = card?.ctaLabel?.trim() || DEFAULTS.ctaLabel;
+  const href = card?.href?.trim() || DEFAULTS.href;
+
   return (
     <Link
       href={href}
@@ -33,22 +53,17 @@ export function CustomEngineeringCard({
         <div className="inline-flex items-center gap-2">
           <Sparkles className="size-3.5 text-brand-primary" aria-hidden />
           <span className="font-mono text-[11px] font-medium tracking-[1.4px] text-brand-primary uppercase">
-            06 / Bespoke
+            {tag}
           </span>
         </div>
         <h3 className="font-heading text-2xl font-bold leading-tight tracking-tight text-text-primary md:text-3xl lg:text-4xl">
-          Custom Engineering Solutions
+          {title}
         </h3>
-        <p className="text-sm leading-relaxed text-text-secondary">
-          Specialised filtration architectures designed around your fluid chemistry, operating
-          envelope, and production cycle.
-        </p>
+        <p className="text-sm leading-relaxed text-text-secondary">{description}</p>
       </div>
 
       <div className="relative flex items-center justify-between border-t border-border-subtle pt-6">
-        <span className="font-heading text-sm font-medium text-brand-primary">
-          Speak with an engineer
-        </span>
+        <span className="font-heading text-sm font-medium text-brand-primary">{ctaLabel}</span>
         <ArrowUpRight
           className="size-4 text-brand-primary transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:-translate-y-1"
           aria-hidden
