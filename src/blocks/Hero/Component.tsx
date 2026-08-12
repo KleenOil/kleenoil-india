@@ -4,7 +4,7 @@ import { ParallaxMedia } from '@/components/motion/ParallaxMedia';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
 import { Eyebrow } from '@/components/ui/eyebrow';
 import { CtaButton } from '@/components/ui/cta-button';
-import { DEFAULT_HERO } from '@/lib/cms/defaults';
+import { DEFAULT_HERO, DEFAULT_IMMERSIVE_HERO } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl, resolveCtaList } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
 
@@ -26,6 +26,7 @@ type HeroCtaItem = {
 
 export type HeroBlockData = {
   blockType: 'hero';
+  variant?: 'panel' | 'immersive' | null;
   eyebrow?: string | null;
   headline?: string | null;
   subheadline?: string | null;
@@ -39,18 +40,117 @@ type HeroProps = {
 };
 
 export function HeroBlock({ block }: HeroProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_HERO.eyebrow;
-  const headline = block?.headline || DEFAULT_HERO.headline;
-  const subheadline = block?.subheadline || DEFAULT_HERO.subheadline;
+  const isImmersive = block?.variant === 'immersive';
+  const defaults = isImmersive ? DEFAULT_IMMERSIVE_HERO : DEFAULT_HERO;
 
-  const ctas = resolveCtaList(block?.ctas, DEFAULT_HERO.ctas);
+  const eyebrow = block?.eyebrow || defaults.eyebrow;
+  const headline = block?.headline || defaults.headline;
+  const subheadline = block?.subheadline || defaults.subheadline;
+
+  const ctas = resolveCtaList(block?.ctas, defaults.ctas);
 
   const metaStats = block?.metaStats?.filter((stat) => stat.value && stat.label)?.length
     ? block.metaStats.filter((stat) => stat.value && stat.label)
-    : DEFAULT_HERO.metaStats;
+    : defaults.metaStats;
 
-  const imageUrl = getMediaUrl(block?.image);
-  const imageAlt = getMediaAlt(block?.image, 'Industrial filtration equipment');
+  const imageUrl =
+    getMediaUrl(block?.image) || (isImmersive ? DEFAULT_IMMERSIVE_HERO.imageUrl : null);
+  const imageAlt = getMediaAlt(
+    block?.image,
+    isImmersive ? 'Kleenoil industrial filtration facility' : 'Industrial filtration equipment',
+  );
+
+  if (isImmersive) {
+    return (
+      <section className="relative isolate min-h-[640px] overflow-hidden lg:min-h-[720px]">
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt={imageAlt}
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-brand-deep" aria-hidden />
+        )}
+
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(180deg, #003319F2 0%, #00331999 55%, #00331933 100%)',
+          }}
+        />
+
+        <div className="relative mx-auto flex min-h-[640px] w-full max-w-[1440px] flex-col justify-center px-6 py-20 lg:min-h-[720px] lg:px-[100px] lg:py-[160px]">
+          <div className="flex max-w-[900px] flex-col gap-7">
+            <p
+              data-reveal-target
+              className="font-mono text-[13px] font-bold tracking-[2.4px] text-brand-soft uppercase"
+            >
+              {eyebrow}
+            </p>
+
+            <h1
+              data-reveal-target
+              className="font-heading text-4xl font-bold leading-[0.98] tracking-[-0.04em] text-white md:text-5xl lg:text-[72px] lg:tracking-[-0.045em]"
+            >
+              {headline.split('\n').map((line, index) => (
+                <span key={`${line}-${index}`} className="block">
+                  {line}
+                </span>
+              ))}
+            </h1>
+
+            <p
+              data-reveal-target
+              className="max-w-[640px] text-base font-semibold leading-relaxed text-brand-soft md:text-lg"
+            >
+              {subheadline}
+            </p>
+
+            {ctas.length > 0 ? (
+              <div data-reveal-target className="flex flex-wrap gap-3.5 pt-1">
+                {ctas.map((cta) => (
+                  <CtaButton
+                    key={cta.href + cta.label}
+                    href={cta.href}
+                    appearance={cta.appearance}
+                    openInNewTab={cta.openInNewTab}
+                    className={
+                      cta.appearance === 'primary'
+                        ? 'hover:border-white hover:bg-transparent hover:text-white'
+                        : undefined
+                    }
+                  >
+                    {cta.label}
+                  </CtaButton>
+                ))}
+              </div>
+            ) : null}
+
+            <div
+              data-reveal-target
+              className="mt-2 flex flex-wrap items-start gap-10 border-t border-white/15 pt-6 sm:gap-12"
+            >
+              {metaStats.map((stat) => (
+                <div key={`${stat.value}-${stat.label}`} className="flex flex-col gap-1">
+                  <p className="font-heading text-[28px] font-bold tracking-[-0.03em] text-white">
+                    <AnimatedCounter value={stat.value!} />
+                  </p>
+                  <p className="font-mono text-[11px] font-bold tracking-[1.4px] text-border-strong uppercase">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="relative overflow-hidden bg-background">

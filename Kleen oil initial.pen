@@ -1,5 +1,5 @@
 {
-  "version": "2.15",
+  "version": "2.17",
   "children": [
     {
       "type": "frame",
@@ -28519,6 +28519,4532 @@
                       "fontSize": 11,
                       "fontWeight": "normal",
                       "letterSpacing": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "GbPlK",
+      "x": 11962,
+      "y": 0,
+      "name": "Kleenoil India / About Us — Final",
+      "clip": true,
+      "width": 1440,
+      "fill": "$background",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "djZBc",
+          "name": "About - Nav",
+          "width": "fill_container",
+          "fill": "#EBF2EECC",
+          "stroke": "$border-subtle",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "strokeAlignment": "inner",
+          "strokeLinejoin": "round",
+          "effect": [
+            {
+              "type": "background_blur",
+              "radius": 28
+            },
+            {
+              "type": "shadow",
+              "shadowType": "outer",
+              "color": "#00663318",
+              "offset": {
+                "x": 0,
+                "y": 6
+              },
+              "blur": 28
+            }
+          ],
+          "padding": [
+            24,
+            64
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "yRBG8",
+              "name": "Logo Group",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "heHYJ",
+                  "name": "Logo Mark",
+                  "width": 36,
+                  "height": 36,
+                  "fill": "$brand-green",
+                  "cornerRadius": 8,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "fmMtP",
+                      "name": "K",
+                      "fill": "#FFFFFF",
+                      "content": "K",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 20,
+                      "fontWeight": "800"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "y6Q8e",
+                  "name": "Wordmark",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "gssM2",
+                      "name": "Brand",
+                      "fill": "$text-primary",
+                      "content": "KLEENOIL",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 18,
+                      "fontWeight": "700",
+                      "letterSpacing": -0.5
+                    },
+                    {
+                      "type": "text",
+                      "id": "t0RC7R",
+                      "name": "Tagline",
+                      "fill": "$text-tertiary",
+                      "content": "INDIA — EST. 1988",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 9,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1.6
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "UHKWE",
+              "name": "Links",
+              "gap": 40,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "WuYuG",
+                  "name": "Products",
+                  "fill": "$text-secondary",
+                  "content": "Products",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "600",
+                  "letterSpacing": 0.2
+                },
+                {
+                  "type": "text",
+                  "id": "rirZL",
+                  "name": "Industries",
+                  "fill": "$text-secondary",
+                  "content": "Industries",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "600",
+                  "letterSpacing": 0.2
+                },
+                {
+                  "type": "text",
+                  "id": "Z4xZS",
+                  "name": "Solutions",
+                  "fill": "$text-secondary",
+                  "content": "Solutions",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "600",
+                  "letterSpacing": 0.2
+                },
+                {
+                  "type": "text",
+                  "id": "nkk9H",
+                  "name": "About",
+                  "fill": "$text-primary",
+                  "content": "About",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "700",
+                  "letterSpacing": 0.2
+                },
+                {
+                  "type": "text",
+                  "id": "SiaCR",
+                  "name": "Resources",
+                  "fill": "$text-secondary",
+                  "content": "Resources",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "600",
+                  "letterSpacing": 0.2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "BV9iY",
+              "name": "Nav Right",
+              "gap": 24,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "TaMhh",
+                  "name": "Search",
+                  "fill": "#E5EDE866",
+                  "cornerRadius": 10,
+                  "effect": {
+                    "type": "background_blur",
+                    "radius": 12
+                  },
+                  "gap": 6,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "S86vdM",
+                      "name": "Search",
+                      "width": 14,
+                      "height": 14,
+                      "icon": "search",
+                      "library": "lucide",
+                      "fill": "$text-secondary"
+                    },
+                    {
+                      "type": "text",
+                      "id": "gbbqb",
+                      "name": "Label",
+                      "fill": "$text-secondary",
+                      "content": "Search",
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "kZ5UJ",
+                  "name": "Contact",
+                  "fill": "#E5EDE899",
+                  "cornerRadius": 10,
+                  "stroke": "$border-strong",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "effect": {
+                    "type": "background_blur",
+                    "radius": 14
+                  },
+                  "gap": 8,
+                  "padding": [
+                    10,
+                    18
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "vcJ2n",
+                      "name": "Label",
+                      "fill": "$text-primary",
+                      "content": "Contact",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "Td5hD",
+                      "name": "Arrow",
+                      "width": 14,
+                      "height": 14,
+                      "icon": "arrow-up-right",
+                      "library": "lucide",
+                      "fill": "$text-primary"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "tygjs",
+          "name": "About - Immersive Hero",
+          "metadata": {
+            "type": "unsplash",
+            "username": "rozetsky",
+            "link": "https://unsplash.com/@rozetsky",
+            "author": "Ant Rozetsky"
+          },
+          "clip": true,
+          "width": "fill_container",
+          "height": 720,
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "https://images.unsplash.com/photo-1600683550547-2c38a96fb400?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODU3ODYyMTl8&ixlib=rb-4.1.0&q=80&w=1080",
+            "mode": "fill"
+          },
+          "layout": "none",
+          "children": [
+            {
+              "type": "rectangle",
+              "id": "WiqJa",
+              "layoutPosition": "absolute",
+              "x": 0,
+              "y": 0,
+              "name": "Scrim",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 180,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#003319F2",
+                    "position": 0
+                  },
+                  {
+                    "color": "#00331999",
+                    "position": 0.55
+                  },
+                  {
+                    "color": "#00331933",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 1440,
+              "height": 720
+            },
+            {
+              "type": "frame",
+              "id": "qlRCn",
+              "layoutPosition": "absolute",
+              "x": 100,
+              "y": 160,
+              "name": "Hero Content",
+              "width": 900,
+              "layout": "vertical",
+              "gap": 28,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "RCkdz",
+                  "name": "Eyebrow",
+                  "fill": "#CAE5D9",
+                  "content": "ABOUT · EST. 1988",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 13,
+                  "fontWeight": "700",
+                  "letterSpacing": 2.4
+                },
+                {
+                  "type": "text",
+                  "id": "JN39F",
+                  "name": "Title",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "We keep industry’s\nlifeblood clean.",
+                  "lineHeight": 0.98,
+                  "fontFamily": "$font-heading",
+                  "fontSize": 72,
+                  "fontWeight": "700",
+                  "letterSpacing": -3.2
+                },
+                {
+                  "type": "text",
+                  "id": "rAwGC",
+                  "name": "Sub",
+                  "fill": "#CAE5D9",
+                  "textGrowth": "fixed-width",
+                  "width": 640,
+                  "content": "Manufacturer. Importer. Distributor. Kleenoil India has defined in-depth filtration across the sub-continent for nearly four decades.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font-body",
+                  "fontSize": 18,
+                  "fontWeight": "600"
+                },
+                {
+                  "id": "gTp4k",
+                  "type": "ref",
+                  "ref": "hRxx9",
+                  "name": "About - Hero CTA",
+                  "descendants": {
+                    "yIQrM": {
+                      "content": "Request an estimate"
+                    }
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "N75ho",
+                  "name": "Meta",
+                  "gap": 40,
+                  "padding": [
+                    16,
+                    0,
+                    0,
+                    0
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "M6rYh",
+                      "name": "Countries",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "WE8nA",
+                          "name": "V",
+                          "fill": "#FFFFFF",
+                          "content": "23",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 28,
+                          "fontWeight": "700",
+                          "letterSpacing": -1
+                        },
+                        {
+                          "type": "text",
+                          "id": "xqiYq",
+                          "name": "L",
+                          "fill": "#80B690",
+                          "content": "COUNTRIES",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "700",
+                          "letterSpacing": 1.4
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "bdHk9",
+                      "name": "Customers",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "QNKIO",
+                          "name": "V",
+                          "fill": "#FFFFFF",
+                          "content": "2,000+",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 28,
+                          "fontWeight": "700",
+                          "letterSpacing": -1
+                        },
+                        {
+                          "type": "text",
+                          "id": "hm6mU",
+                          "name": "L",
+                          "fill": "#80B690",
+                          "content": "CUSTOMERS",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "700",
+                          "letterSpacing": 1.4
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "a2szBU",
+                      "name": "Quality",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "C40Vx",
+                          "name": "V",
+                          "fill": "#FFFFFF",
+                          "content": "ISO 9001",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 28,
+                          "fontWeight": "700",
+                          "letterSpacing": -1
+                        },
+                        {
+                          "type": "text",
+                          "id": "hbhSI",
+                          "name": "L",
+                          "fill": "#80B690",
+                          "content": "QUALITY",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "700",
+                          "letterSpacing": 1.4
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Ui0di",
+          "name": "About - Manifesto",
+          "width": "fill_container",
+          "fill": "#dce8e1ff",
+          "layout": "vertical",
+          "gap": 32,
+          "padding": [
+            120,
+            160
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "Q0gN8",
+              "name": "Quote Mark",
+              "opacity": 0.35,
+              "fill": "$brand-green",
+              "content": "“",
+              "fontFamily": "$font-heading",
+              "fontSize": 96,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "PgDYI",
+              "name": "Quote",
+              "fill": "$text-primary",
+              "textGrowth": "fixed-width",
+              "width": 960,
+              "content": "Despite imitations, we remain the premier manufacturer and supplier of comprehensive filtration media — trusted to extend fluid life and hold demanding tolerances.",
+              "lineHeight": 1.25,
+              "textAlign": "center",
+              "fontFamily": "$font-heading",
+              "fontSize": 32,
+              "fontWeight": "600",
+              "letterSpacing": -1
+            },
+            {
+              "type": "rectangle",
+              "cornerRadius": 2,
+              "id": "gjqGO",
+              "name": "Rule",
+              "fill": "$brand-green",
+              "width": 64,
+              "height": 3
+            },
+            {
+              "type": "text",
+              "id": "CviSA",
+              "name": "Attr",
+              "fill": "$text-tertiary",
+              "content": "KLEENOIL FILTRATION INDIA · LEEDS TECHNICAL COLLABORATION",
+              "textAlign": "center",
+              "fontFamily": "$font-mono",
+              "fontSize": 12,
+              "fontWeight": "700",
+              "letterSpacing": 1.6
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "NoWsz",
+          "name": "About - Origin",
+          "width": "fill_container",
+          "fill": "$background",
+          "padding": [
+            0,
+            100,
+            100,
+            100
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "OWaoU",
+              "name": "About - Origin Story",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 28,
+              "padding": [
+                56,
+                48,
+                56,
+                0
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "H0spg",
+                  "name": "Label",
+                  "fill": "$brand-green",
+                  "content": "THE ORIGIN",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "700",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "HYUb0",
+                  "name": "Title",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "It began in New Delhi\nwith a UK partnership.",
+                  "lineHeight": 1.05,
+                  "fontFamily": "$font-heading",
+                  "fontSize": 44,
+                  "fontWeight": "700",
+                  "letterSpacing": -2
+                },
+                {
+                  "type": "text",
+                  "id": "u6oKJp",
+                  "name": "Body",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "In 1988, Kleenoil Filtration India forged a technical and financial collaboration with Kleenoil Filtration Ltd, Leeds, UK. That alliance turned a local ambition into the foremost filtration house across the Indian sub-continent.",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$font-body",
+                  "fontSize": 17,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "DbGCm",
+                  "name": "Body2",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Today we manufacture, import and distribute in-depth filters and systems — backed by ISO 9001 certification and rigorous quality testing for every clientele.",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$font-body",
+                  "fontSize": 17,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "yxZXD",
+                  "name": "CTA",
+                  "gap": 12,
+                  "padding": [
+                    12,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "id": "WStG4",
+                      "type": "ref",
+                      "ref": "hRxx9",
+                      "name": "Estimate",
+                      "descendants": {
+                        "yIQrM": {
+                          "content": "Request an estimate"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "iDIRg",
+              "name": "About - Origin Timeline",
+              "clip": true,
+              "width": 480,
+              "fill": "$brand-green",
+              "cornerRadius": 20,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Dko4h",
+                  "name": "1988",
+                  "width": "fill_container",
+                  "stroke": "#FFFFFF22",
+                  "strokeWidth": {
+                    "bottom": 1
+                  },
+                  "strokeAlignment": "inner",
+                  "gap": 24,
+                  "padding": [
+                    28,
+                    32
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "eZ41Q",
+                      "name": "Y",
+                      "fill": "#FFFFFF",
+                      "content": "1988",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 28,
+                      "fontWeight": "700",
+                      "letterSpacing": -1
+                    },
+                    {
+                      "type": "text",
+                      "id": "Humtp",
+                      "name": "L",
+                      "fill": "#CAE5D9",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Founded with Leeds, UK",
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "z6UNc",
+                  "name": "2008",
+                  "width": "fill_container",
+                  "stroke": "#FFFFFF22",
+                  "strokeWidth": {
+                    "bottom": 1
+                  },
+                  "strokeAlignment": "inner",
+                  "gap": 24,
+                  "padding": [
+                    28,
+                    32
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "vqQ5k",
+                      "name": "Y",
+                      "fill": "#FFFFFF",
+                      "content": "2008",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 28,
+                      "fontWeight": "700",
+                      "letterSpacing": -1
+                    },
+                    {
+                      "type": "text",
+                      "id": "NDNmk",
+                      "name": "L",
+                      "fill": "#CAE5D9",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Eclipse Magnetics sole distributor",
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "MNAbZ",
+                  "name": "2014",
+                  "width": "fill_container",
+                  "stroke": "#FFFFFF22",
+                  "strokeWidth": {
+                    "bottom": 1
+                  },
+                  "strokeAlignment": "inner",
+                  "gap": 24,
+                  "padding": [
+                    28,
+                    32
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "a9HtGP",
+                      "name": "Y",
+                      "fill": "#FFFFFF",
+                      "content": "2014",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 28,
+                      "fontWeight": "700",
+                      "letterSpacing": -1
+                    },
+                    {
+                      "type": "text",
+                      "id": "cc15c",
+                      "name": "L",
+                      "fill": "#CAE5D9",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Filtertechnik oil analysis",
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "l14ze",
+                  "name": "2018",
+                  "width": "fill_container",
+                  "stroke": "#FFFFFF22",
+                  "strokeWidth": {
+                    "bottom": 1
+                  },
+                  "strokeAlignment": "inner",
+                  "gap": 24,
+                  "padding": [
+                    28,
+                    32
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "xm4PA",
+                      "name": "Y",
+                      "fill": "#FFFFFF",
+                      "content": "2018",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 28,
+                      "fontWeight": "700",
+                      "letterSpacing": -1
+                    },
+                    {
+                      "type": "text",
+                      "id": "t6TkS",
+                      "name": "L",
+                      "fill": "#CAE5D9",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "HC Feng coolant solutions",
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "600"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "U9Tr1i",
+          "name": "About - Alliances Band",
+          "width": "fill_container",
+          "fill": "$surface",
+          "layout": "vertical",
+          "gap": 40,
+          "padding": [
+            80,
+            100
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "l4xON",
+              "name": "Label",
+              "fill": "$brand-green",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "GLOBAL PARTNERS",
+              "textAlign": "center",
+              "fontFamily": "$font-mono",
+              "fontSize": 12,
+              "fontWeight": "700",
+              "letterSpacing": 2
+            },
+            {
+              "type": "frame",
+              "id": "j1qVAj",
+              "name": "Logos",
+              "width": "fill_container",
+              "gap": 24,
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "o5Qdd",
+                  "name": "Eclipse Magnetics",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": [
+                    24,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "V3bRV",
+                      "name": "N",
+                      "fill": "$text-primary",
+                      "content": "ECLIPSE MAGNETICS",
+                      "textAlign": "center",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 16,
+                      "fontWeight": "700",
+                      "letterSpacing": 1.5
+                    },
+                    {
+                      "type": "text",
+                      "id": "R8rbkd",
+                      "name": "P",
+                      "fill": "$text-tertiary",
+                      "content": "Sheffield, UK",
+                      "textAlign": "center",
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "N9BFQ",
+                  "name": "Filtertechnik",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": [
+                    24,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "JxRkd",
+                      "name": "N",
+                      "fill": "$text-primary",
+                      "content": "FILTERTECHNIK",
+                      "textAlign": "center",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 16,
+                      "fontWeight": "700",
+                      "letterSpacing": 1.5
+                    },
+                    {
+                      "type": "text",
+                      "id": "ETIAN",
+                      "name": "P",
+                      "fill": "$text-tertiary",
+                      "content": "Nottingham, UK",
+                      "textAlign": "center",
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "NnSiu",
+                  "name": "HC Feng",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": [
+                    24,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "OZUHc",
+                      "name": "N",
+                      "fill": "$text-primary",
+                      "content": "HC FENG",
+                      "textAlign": "center",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 16,
+                      "fontWeight": "700",
+                      "letterSpacing": 1.5
+                    },
+                    {
+                      "type": "text",
+                      "id": "w6Qagc",
+                      "name": "P",
+                      "fill": "$text-tertiary",
+                      "content": "Taiwan",
+                      "textAlign": "center",
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "yRUsx",
+                  "name": "Kleenoil Ltd",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": [
+                    24,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "a2Fn0",
+                      "name": "N",
+                      "fill": "$text-primary",
+                      "content": "KLEENOIL LTD",
+                      "textAlign": "center",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 16,
+                      "fontWeight": "700",
+                      "letterSpacing": 1.5
+                    },
+                    {
+                      "type": "text",
+                      "id": "Oww2W",
+                      "name": "P",
+                      "fill": "$text-tertiary",
+                      "content": "Leeds, UK",
+                      "textAlign": "center",
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "ABAHX",
+          "name": "About - Meet the Team",
+          "width": "fill_container",
+          "fill": "$background",
+          "stroke": "$border-subtle",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner",
+          "layout": "vertical",
+          "gap": 48,
+          "padding": 100,
+          "children": [
+            {
+              "type": "frame",
+              "id": "iY4Q8",
+              "name": "About - Team Header",
+              "width": "fill_container",
+              "gap": 40,
+              "justifyContent": "space_between",
+              "alignItems": "end",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "oO2Ur",
+                  "name": "Left",
+                  "width": 720,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "id": "zn8xw",
+                      "type": "ref",
+                      "ref": "DB8YG",
+                      "name": "Eyebrow",
+                      "descendants": {
+                        "FpdjV": {
+                          "content": "MEET THE TEAM"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "GLWbI",
+                      "name": "Title",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "The people behind\nthe filtration.",
+                      "lineHeight": 1.08,
+                      "fontFamily": "$font-heading",
+                      "fontSize": 40,
+                      "fontWeight": "700",
+                      "letterSpacing": -1.8
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "G3hJr",
+                  "name": "Right",
+                  "width": 420,
+                  "padding": [
+                    0,
+                    0,
+                    8,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ZGpsJ",
+                      "name": "Body",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Leadership and specialists across sales, engineering, finance and operations — building Kleenoil since 1988.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "dXFOC",
+              "name": "About - Leadership",
+              "width": "fill_container",
+              "gap": 20,
+              "children": [
+                {
+                  "id": "R8qox",
+                  "type": "ref",
+                  "ref": "ZVQ3w",
+                  "name": "Ravinder Kapur",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TY9JF": {
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600",
+                        "mode": "fill"
+                      }
+                    },
+                    "E6neu": {
+                      "content": "Ravinder Kapur"
+                    },
+                    "G9ouja": {
+                      "content": "CMD"
+                    }
+                  }
+                },
+                {
+                  "id": "p3JJp9",
+                  "type": "ref",
+                  "ref": "ZVQ3w",
+                  "name": "Namita Kapur",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TY9JF": {
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600",
+                        "mode": "fill"
+                      }
+                    },
+                    "E6neu": {
+                      "content": "Namita Kapur"
+                    },
+                    "G9ouja": {
+                      "content": "DIRECTOR – BUSINESS DEVELOPMENT"
+                    }
+                  }
+                },
+                {
+                  "id": "OTuGO",
+                  "type": "ref",
+                  "ref": "ZVQ3w",
+                  "name": "Ankrish Kapur",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TY9JF": {
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600",
+                        "mode": "fill"
+                      }
+                    },
+                    "E6neu": {
+                      "content": "Ankrish Kapur"
+                    },
+                    "G9ouja": {
+                      "content": "DIRECTOR – SALES AND STRATEGY"
+                    }
+                  }
+                },
+                {
+                  "id": "oZoOT",
+                  "type": "ref",
+                  "ref": "ZVQ3w",
+                  "name": "Aneesh Kapur",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TY9JF": {
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600",
+                        "mode": "fill"
+                      }
+                    },
+                    "E6neu": {
+                      "content": "Aneesh Kapur"
+                    },
+                    "G9ouja": {
+                      "content": "DIRECTOR – SALES AND OPERATION"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "U5WYYH",
+              "name": "Ops Label",
+              "fill": "$text-tertiary",
+              "content": "OPERATIONS & SPECIALISTS",
+              "fontFamily": "$font-mono",
+              "fontSize": 12,
+              "fontWeight": "700",
+              "letterSpacing": 1.4
+            },
+            {
+              "type": "frame",
+              "id": "u4SkC",
+              "name": "About - Specialists",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "RIUL5",
+                  "name": "Row 1",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "DFPh0",
+                      "name": "Sundeep Uberai",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "opJDp",
+                          "name": "N",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Sundeep Uberai",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 15,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "qamXj",
+                          "name": "R",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "CEO – Filtration Services",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "j2jYXP",
+                      "name": "Rajeev Bhardwaj",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "VKmuB",
+                          "name": "N",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Rajeev Bhardwaj",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 15,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "fl0yY",
+                          "name": "R",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "General Sales Manager",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "R9W0so",
+                      "name": "Bed Prakash",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "fvMlu",
+                          "name": "N",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Bed Prakash",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 15,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "NFnkS",
+                          "name": "R",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "General Sales Manager",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "C4uuI",
+                      "name": "Vinod Mulgund",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "R9zLCI",
+                          "name": "N",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Vinod Mulgund",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 15,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "ugVC8",
+                          "name": "R",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Head – Business Development",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "YGsT2",
+                  "name": "Row 2",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "P63bT",
+                      "name": "Deepak Saxena",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "rRoa5",
+                          "name": "N",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Deepak Saxena",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 15,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "D1wisa",
+                          "name": "R",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Sales Manager",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "lb4s5",
+                      "name": "Shubh Khanna",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "gZub8",
+                          "name": "N",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Shubh Khanna",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 15,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "y2uF3",
+                          "name": "R",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Marketing Manager",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "K5LMZp",
+                      "name": "Abhishek Anand",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Pwt52",
+                          "name": "N",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Abhishek Anand",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 15,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "HlLJD",
+                          "name": "R",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Technical Support & CR",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "RRdkt",
+                      "name": "Harprit Singh",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "U0uRX9",
+                          "name": "N",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Harprit Singh",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 15,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "R16FIT",
+                          "name": "R",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Manager – Sales & Support",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "LSUNc",
+                  "name": "Row 3",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "yDHJZ",
+                      "name": "Muneshwar Thakur",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "LCevR",
+                          "name": "N",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Muneshwar Thakur",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 15,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "QnNBZ",
+                          "name": "R",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Manager – Finance",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "V1sHcU",
+                      "name": "Anil Vishwakarma",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "zUufT",
+                          "name": "N",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Anil Vishwakarma",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 15,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "QZUMo",
+                          "name": "R",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Manager – Accounts",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "d8EXU5",
+                      "name": "Chitresh Bisht",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "PXel8",
+                          "name": "N",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Chitresh Bisht",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 15,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "WQ6Yz",
+                          "name": "R",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Manager – Utilities",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "U8Cii",
+                      "name": "Ashish Rai",
+                      "width": "fill_container",
+                      "fill": "#E5EDE8B3",
+                      "cornerRadius": 12,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "vD6ca",
+                          "name": "N",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Ashish Rai",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 15,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "k0Ibm",
+                          "name": "R",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Senior Production Engineer",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "WKhsO",
+          "name": "About - Whats New",
+          "width": "fill_container",
+          "fill": "$surface",
+          "layout": "vertical",
+          "gap": 40,
+          "padding": 100,
+          "children": [
+            {
+              "type": "frame",
+              "id": "C2Nhn",
+              "name": "About - News Header",
+              "width": "fill_container",
+              "gap": 40,
+              "justifyContent": "space_between",
+              "alignItems": "end",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "gGdpM",
+                  "name": "Left",
+                  "width": 640,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "id": "cOszF",
+                      "type": "ref",
+                      "ref": "DB8YG",
+                      "name": "Eyebrow",
+                      "descendants": {
+                        "FpdjV": {
+                          "content": "WHAT'S NEW"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "BN7Gc",
+                      "name": "Title",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "News, events and\nproduct updates.",
+                      "lineHeight": 1.08,
+                      "fontFamily": "$font-heading",
+                      "fontSize": 40,
+                      "fontWeight": "700",
+                      "letterSpacing": -1.8
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "SfeLj",
+                  "name": "Right",
+                  "width": 420,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": [
+                    0,
+                    0,
+                    8,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "IDk55",
+                      "name": "Body",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Bespoke machines, exhibitions, articles and social updates — the channel for everything new from Kleenoil.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ixoky",
+              "name": "About - News Cards",
+              "width": "fill_container",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "MlF5C",
+                  "name": "Bespoke Machines",
+                  "width": "fill_container",
+                  "fill": "$surface",
+                  "cornerRadius": 16,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "NoHZt",
+                      "name": "Tag",
+                      "fill": "$brand-green-dim",
+                      "cornerRadius": 100,
+                      "padding": [
+                        6,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "e7dlk",
+                          "name": "TL",
+                          "fill": "$brand-green",
+                          "content": "COMING SOON",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 10,
+                          "fontWeight": "700",
+                          "letterSpacing": 1.2
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "opvMD",
+                      "name": "T",
+                      "fill": "$text-primary",
+                      "content": "Bespoke Machines",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 22,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "NmXxi",
+                      "name": "D",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Custom filtration builds engineered for unique plant requirements.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "id": "BZGht",
+                      "type": "ref",
+                      "ref": "HOVNX",
+                      "name": "Link",
+                      "descendants": {
+                        "CknnL": {
+                          "content": "Explore"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "AO177",
+                  "name": "Events & Exhibitions",
+                  "width": "fill_container",
+                  "fill": "$surface",
+                  "cornerRadius": 16,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Nx6Px",
+                      "name": "Tag",
+                      "fill": "$brand-green-dim",
+                      "cornerRadius": 100,
+                      "padding": [
+                        6,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "C4VV8",
+                          "name": "TL",
+                          "fill": "$brand-green",
+                          "content": "COMING SOON",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 10,
+                          "fontWeight": "700",
+                          "letterSpacing": 1.2
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "ZA1dN",
+                      "name": "T",
+                      "fill": "$text-primary",
+                      "content": "Events & Exhibitions",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 22,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "zhWvA",
+                      "name": "D",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Trade shows and industry events where Kleenoil meets customers.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "id": "P7MyEH",
+                      "type": "ref",
+                      "ref": "HOVNX",
+                      "name": "Link",
+                      "descendants": {
+                        "CknnL": {
+                          "content": "Explore"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "k1g4p",
+                  "name": "Articles",
+                  "width": "fill_container",
+                  "fill": "$surface",
+                  "cornerRadius": 16,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "U3sdv",
+                      "name": "Tag",
+                      "fill": "$brand-green-dim",
+                      "cornerRadius": 100,
+                      "padding": [
+                        6,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "HZeQC",
+                          "name": "TL",
+                          "fill": "$brand-green",
+                          "content": "COMING SOON",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 10,
+                          "fontWeight": "700",
+                          "letterSpacing": 1.2
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "J01H2E",
+                      "name": "T",
+                      "fill": "$text-primary",
+                      "content": "Articles",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 22,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "HBFVc",
+                      "name": "D",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Technical notes and insights on contamination control.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "id": "pFBWB",
+                      "type": "ref",
+                      "ref": "HOVNX",
+                      "name": "Link",
+                      "descendants": {
+                        "CknnL": {
+                          "content": "Explore"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "PvbIt",
+          "name": "About - Distribution Network & HQ",
+          "width": "fill_container",
+          "fill": "$background",
+          "layout": "vertical",
+          "gap": 64,
+          "padding": 100,
+          "children": [
+            {
+              "type": "frame",
+              "id": "h9RPKl",
+              "name": "About - Network Header",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "id": "OB2n2",
+                  "type": "ref",
+                  "ref": "DB8YG",
+                  "name": "Eyebrow",
+                  "descendants": {
+                    "FpdjV": {
+                      "content": "DISTRIBUTION NETWORK"
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "BC7su",
+                  "name": "Title",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 720,
+                  "content": "Wherever industry runs,\nwe're there.",
+                  "lineHeight": 1.08,
+                  "fontFamily": "$font-heading",
+                  "fontSize": 40,
+                  "fontWeight": "700",
+                  "letterSpacing": -1.8
+                },
+                {
+                  "type": "text",
+                  "id": "vJN1z",
+                  "name": "Sub",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 560,
+                  "content": "A pan-India network of hubs, partners and service points — coordinated from Gurgaon HQ for fast response on every plant floor.",
+                  "lineHeight": 1.55,
+                  "fontFamily": "$font-body",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "j6Loh",
+              "name": "About - Network Body",
+              "width": "fill_container",
+              "gap": 48,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "P8tyXk",
+                  "name": "Map Column",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 14,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "nUkUk",
+                      "name": "India Network Map",
+                      "clip": true,
+                      "width": "fill_container",
+                      "height": 560,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "images/generated-1786351958035.png",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 20,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "layout": "none"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "eQ8Gs",
+                      "name": "Map Legend",
+                      "width": "fill_container",
+                      "gap": 24,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "rNq9W",
+                          "name": "Headquarters",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "x7GRi",
+                              "name": "Swatch",
+                              "width": 12,
+                              "height": 12,
+                              "fill": "$brand-green",
+                              "cornerRadius": 100
+                            },
+                            {
+                              "type": "text",
+                              "id": "CkXbX",
+                              "name": "L",
+                              "fill": "$text-secondary",
+                              "content": "Headquarters",
+                              "fontFamily": "$font-body",
+                              "fontSize": 12,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "H6wGGV",
+                          "name": "Regional hub",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "xwBQ9",
+                              "name": "Swatch",
+                              "width": 12,
+                              "height": 12,
+                              "fill": "$border-strong",
+                              "cornerRadius": 100
+                            },
+                            {
+                              "type": "text",
+                              "id": "MsXfk",
+                              "name": "L",
+                              "fill": "$text-secondary",
+                              "content": "Regional hub",
+                              "fontFamily": "$font-body",
+                              "fontSize": 12,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "E3RzOc",
+                          "name": "Partner / service",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "pdRZ1",
+                              "name": "Swatch",
+                              "width": 12,
+                              "height": 12,
+                              "fill": "$brand-green-soft",
+                              "cornerRadius": 100,
+                              "stroke": "$border-subtle",
+                              "strokeWidth": 1
+                            },
+                            {
+                              "type": "text",
+                              "id": "SUUC6",
+                              "name": "L",
+                              "fill": "$text-secondary",
+                              "content": "Partner / service",
+                              "fontFamily": "$font-body",
+                              "fontSize": 12,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "UTpki",
+                  "name": "Hubs Column",
+                  "width": 420,
+                  "layout": "vertical",
+                  "gap": 28,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "p5QN95",
+                      "name": "Network Stats",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "J8bZZw",
+                          "name": "Stats Row 1",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "BWiwx",
+                              "name": "STATES",
+                              "width": "fill_container",
+                              "fill": "#E5EDE8B3",
+                              "cornerRadius": 14,
+                              "stroke": "$border-subtle",
+                              "strokeWidth": 1,
+                              "layout": "vertical",
+                              "gap": 6,
+                              "padding": 18,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "SZpJO",
+                                  "name": "V",
+                                  "fill": "$text-primary",
+                                  "content": "18",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 28,
+                                  "fontWeight": "700",
+                                  "letterSpacing": -1
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "WHqg3",
+                                  "name": "L",
+                                  "fill": "$text-tertiary",
+                                  "content": "STATES",
+                                  "fontFamily": "$font-mono",
+                                  "fontSize": 10,
+                                  "fontWeight": "700",
+                                  "letterSpacing": 1.2
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "Iphcc",
+                              "name": "PARTNERS",
+                              "width": "fill_container",
+                              "fill": "#E5EDE8B3",
+                              "cornerRadius": 14,
+                              "stroke": "$border-subtle",
+                              "strokeWidth": 1,
+                              "layout": "vertical",
+                              "gap": 6,
+                              "padding": 18,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "x0ZTJI",
+                                  "name": "V",
+                                  "fill": "$text-primary",
+                                  "content": "45+",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 28,
+                                  "fontWeight": "700",
+                                  "letterSpacing": -1
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "g15q2Q",
+                                  "name": "L",
+                                  "fill": "$text-tertiary",
+                                  "content": "PARTNERS",
+                                  "fontFamily": "$font-mono",
+                                  "fontSize": 10,
+                                  "fontWeight": "700",
+                                  "letterSpacing": 1.2
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "npRKj",
+                          "name": "Stats Row 2",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "TpZ7V",
+                              "name": "SITES",
+                              "width": "fill_container",
+                              "fill": "#E5EDE8B3",
+                              "cornerRadius": 14,
+                              "stroke": "$border-subtle",
+                              "strokeWidth": 1,
+                              "layout": "vertical",
+                              "gap": 6,
+                              "padding": 18,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "ZDQX9",
+                                  "name": "V",
+                                  "fill": "$text-primary",
+                                  "content": "220",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 28,
+                                  "fontWeight": "700",
+                                  "letterSpacing": -1
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "hVcFZ",
+                                  "name": "L",
+                                  "fill": "$text-tertiary",
+                                  "content": "SITES",
+                                  "fontFamily": "$font-mono",
+                                  "fontSize": 10,
+                                  "fontWeight": "700",
+                                  "letterSpacing": 1.2
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "YqY8f",
+                              "name": "COUNTRIES",
+                              "width": "fill_container",
+                              "fill": "#E5EDE8B3",
+                              "cornerRadius": 14,
+                              "stroke": "$border-subtle",
+                              "strokeWidth": 1,
+                              "layout": "vertical",
+                              "gap": 6,
+                              "padding": 18,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Lx0I3",
+                                  "name": "V",
+                                  "fill": "$text-primary",
+                                  "content": "23",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 28,
+                                  "fontWeight": "700",
+                                  "letterSpacing": -1
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "FHdt0",
+                                  "name": "L",
+                                  "fill": "$text-tertiary",
+                                  "content": "COUNTRIES",
+                                  "fontFamily": "$font-mono",
+                                  "fontSize": 10,
+                                  "fontWeight": "700",
+                                  "letterSpacing": 1.2
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "ZC0el",
+                      "name": "Hubs Label",
+                      "fill": "$text-tertiary",
+                      "content": "REGIONAL HUBS",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 1.4
+                    },
+                    {
+                      "type": "frame",
+                      "id": "jGNEz",
+                      "name": "Hubs List",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 10,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "dyTBc",
+                          "name": "Gurgaon (HQ)",
+                          "width": "fill_container",
+                          "fill": "$surface-elevated",
+                          "cornerRadius": 12,
+                          "stroke": "$border-subtle",
+                          "strokeWidth": 1,
+                          "gap": 14,
+                          "padding": [
+                            14,
+                            16
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "v8za3m",
+                              "name": "Dot",
+                              "width": 10,
+                              "height": 10,
+                              "fill": "$brand-green",
+                              "cornerRadius": 100
+                            },
+                            {
+                              "type": "frame",
+                              "id": "p6LhAC",
+                              "name": "Text",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "e0v3N2",
+                                  "name": "City",
+                                  "fill": "$text-primary",
+                                  "content": "Gurgaon",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 15,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "Spj9m",
+                                  "name": "Role",
+                                  "fill": "$text-secondary",
+                                  "content": "HQ · North India",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "rDXdx",
+                          "name": "Mumbai",
+                          "width": "fill_container",
+                          "fill": "$surface-elevated",
+                          "cornerRadius": 12,
+                          "stroke": "$border-subtle",
+                          "strokeWidth": 1,
+                          "gap": 14,
+                          "padding": [
+                            14,
+                            16
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "hTe3B",
+                              "name": "Dot",
+                              "width": 10,
+                              "height": 10,
+                              "fill": "$brand-green",
+                              "cornerRadius": 100
+                            },
+                            {
+                              "type": "frame",
+                              "id": "cPo1g",
+                              "name": "Text",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "l546u",
+                                  "name": "City",
+                                  "fill": "$text-primary",
+                                  "content": "Mumbai",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 15,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "JMCBf",
+                                  "name": "Role",
+                                  "fill": "$text-secondary",
+                                  "content": "West · Distribution",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "zYqBU",
+                          "name": "Bangalore",
+                          "width": "fill_container",
+                          "fill": "$surface-elevated",
+                          "cornerRadius": 12,
+                          "stroke": "$border-subtle",
+                          "strokeWidth": 1,
+                          "gap": 14,
+                          "padding": [
+                            14,
+                            16
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "T7CJk",
+                              "name": "Dot",
+                              "width": 10,
+                              "height": 10,
+                              "fill": "$brand-green",
+                              "cornerRadius": 100
+                            },
+                            {
+                              "type": "frame",
+                              "id": "CG4tU",
+                              "name": "Text",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "TYcrk",
+                                  "name": "City",
+                                  "fill": "$text-primary",
+                                  "content": "Bangalore",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 15,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "DQz5x",
+                                  "name": "Role",
+                                  "fill": "$text-secondary",
+                                  "content": "South · Service & Sales",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "pHtmA",
+                          "name": "Chennai",
+                          "width": "fill_container",
+                          "fill": "$surface-elevated",
+                          "cornerRadius": 12,
+                          "stroke": "$border-subtle",
+                          "strokeWidth": 1,
+                          "gap": 14,
+                          "padding": [
+                            14,
+                            16
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "d3mHCW",
+                              "name": "Dot",
+                              "width": 10,
+                              "height": 10,
+                              "fill": "$brand-green",
+                              "cornerRadius": 100
+                            },
+                            {
+                              "type": "frame",
+                              "id": "Cy8Vx",
+                              "name": "Text",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "SECvi",
+                                  "name": "City",
+                                  "fill": "$text-primary",
+                                  "content": "Chennai",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 15,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "i5dv1k",
+                                  "name": "Role",
+                                  "fill": "$text-secondary",
+                                  "content": "South · Channel Partners",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "obpMm",
+                          "name": "Kolkata",
+                          "width": "fill_container",
+                          "fill": "$surface-elevated",
+                          "cornerRadius": 12,
+                          "stroke": "$border-subtle",
+                          "strokeWidth": 1,
+                          "gap": 14,
+                          "padding": [
+                            14,
+                            16
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "YLEGe",
+                              "name": "Dot",
+                              "width": 10,
+                              "height": 10,
+                              "fill": "$brand-green",
+                              "cornerRadius": 100
+                            },
+                            {
+                              "type": "frame",
+                              "id": "UUuLc",
+                              "name": "Text",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "rd4tG",
+                                  "name": "City",
+                                  "fill": "$text-primary",
+                                  "content": "Kolkata",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 15,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "CALyk",
+                                  "name": "Role",
+                                  "fill": "$text-secondary",
+                                  "content": "East · Regional Desk",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "o9vd8",
+                          "name": "Hyderabad",
+                          "width": "fill_container",
+                          "fill": "$surface-elevated",
+                          "cornerRadius": 12,
+                          "stroke": "$border-subtle",
+                          "strokeWidth": 1,
+                          "gap": 14,
+                          "padding": [
+                            14,
+                            16
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "CKloy",
+                              "name": "Dot",
+                              "width": 10,
+                              "height": 10,
+                              "fill": "$brand-green",
+                              "cornerRadius": 100
+                            },
+                            {
+                              "type": "frame",
+                              "id": "F92vzB",
+                              "name": "Text",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "hAnbH",
+                                  "name": "City",
+                                  "fill": "$text-primary",
+                                  "content": "Hyderabad",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 15,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "ycSi6",
+                                  "name": "Role",
+                                  "fill": "$text-secondary",
+                                  "content": "South-Central · Partners",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "f2xlaz",
+              "name": "About - HQ Row",
+              "width": "fill_container",
+              "gap": 48,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Djucj",
+                  "name": "HQ Aerial",
+                  "metadata": {
+                    "type": "unsplash",
+                    "username": "3dottawa",
+                    "link": "https://unsplash.com/@3dottawa",
+                    "author": "Point3D Commercial Imaging Ltd."
+                  },
+                  "clip": true,
+                  "width": "fill_container",
+                  "height": 360,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://images.unsplash.com/photo-1669003152226-b37b58281b84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODU3ODYyODB8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 20
+                },
+                {
+                  "type": "frame",
+                  "id": "b7KFai",
+                  "name": "HQ Info",
+                  "width": 480,
+                  "layout": "vertical",
+                  "gap": 24,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "kKa07",
+                      "name": "Label",
+                      "fill": "$brand-green",
+                      "content": "HEADQUARTERS",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 12,
+                      "fontWeight": "700",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "DY191",
+                      "name": "Title",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Gurgaon,\nHaryana",
+                      "lineHeight": 1.02,
+                      "fontFamily": "$font-heading",
+                      "fontSize": 48,
+                      "fontWeight": "700",
+                      "letterSpacing": -2.2
+                    },
+                    {
+                      "type": "text",
+                      "id": "MnGDg",
+                      "name": "Addr",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "537, Phase V, Udyog Vihar\nGurgaon – 122 016, Haryana, India",
+                      "lineHeight": 1.55,
+                      "fontFamily": "$font-body",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "AYtFq",
+                      "name": "Contacts",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 12,
+                      "padding": [
+                        8,
+                        0,
+                        0,
+                        0
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "s7q6Hu",
+                          "name": "Phone",
+                          "width": "fill_container",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "strokeAlignment": "inner",
+                          "padding": [
+                            12,
+                            0
+                          ],
+                          "justifyContent": "space_between",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "O6hFa",
+                              "name": "K",
+                              "fill": "$text-tertiary",
+                              "content": "Phone",
+                              "fontFamily": "$font-body",
+                              "fontSize": 13,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "ZDMk9",
+                              "name": "V",
+                              "fill": "$text-primary",
+                              "content": "+91 124 490 4545",
+                              "fontFamily": "$font-heading",
+                              "fontSize": 14,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "h2UX2P",
+                          "name": "Helpline",
+                          "width": "fill_container",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "strokeAlignment": "inner",
+                          "padding": [
+                            12,
+                            0
+                          ],
+                          "justifyContent": "space_between",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "BicwY",
+                              "name": "K",
+                              "fill": "$text-tertiary",
+                              "content": "Helpline",
+                              "fontFamily": "$font-body",
+                              "fontSize": 13,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "fwL30",
+                              "name": "V",
+                              "fill": "$text-primary",
+                              "content": "+91 98991 51010",
+                              "fontFamily": "$font-heading",
+                              "fontSize": 14,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "zwU2q",
+                          "name": "Email",
+                          "width": "fill_container",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "strokeAlignment": "inner",
+                          "padding": [
+                            12,
+                            0
+                          ],
+                          "justifyContent": "space_between",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "X5Z5iq",
+                              "name": "K",
+                              "fill": "$text-tertiary",
+                              "content": "Email",
+                              "fontFamily": "$font-body",
+                              "fontSize": 13,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "CJ1NA",
+                              "name": "V",
+                              "fill": "$text-primary",
+                              "content": "info@kleenoilindia.com",
+                              "fontFamily": "$font-heading",
+                              "fontSize": 14,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "p6zquH",
+          "name": "About - FAQ Accordion",
+          "width": "fill_container",
+          "fill": "#dce8e1ff",
+          "layout": "vertical",
+          "gap": 28,
+          "padding": 100,
+          "children": [
+            {
+              "type": "text",
+              "id": "Do0Mc",
+              "name": "Label",
+              "fill": "$brand-green",
+              "content": "FAQ · ACCORDION",
+              "fontFamily": "$font-mono",
+              "fontSize": 12,
+              "fontWeight": "700",
+              "letterSpacing": 1.8
+            },
+            {
+              "type": "text",
+              "id": "A8wsHb",
+              "name": "Title",
+              "fill": "$text-primary",
+              "content": "Questions teams ask first",
+              "fontFamily": "$font-heading",
+              "fontSize": 36,
+              "fontWeight": "700",
+              "letterSpacing": -1.4
+            },
+            {
+              "type": "frame",
+              "id": "K9s6x6",
+              "name": "Items",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "dA7ET",
+                  "name": "About - FAQ Open",
+                  "width": "fill_container",
+                  "fill": "$background",
+                  "cornerRadius": 14,
+                  "stroke": "$brand-green",
+                  "strokeWidth": 2,
+                  "strokeAlignment": "inner",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "padding": 24,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "syosT",
+                      "name": "T",
+                      "width": "fill_container",
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "GKMvN",
+                          "name": "Q",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Where is Kleenoil India based?",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 17,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "icon",
+                          "id": "Q1gNLY",
+                          "name": "I",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "minus",
+                          "library": "lucide",
+                          "fill": "$brand-green"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "uU8RT",
+                      "name": "A",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Headquarters: 537, Phase V, Udyog Vihar, Gurgaon – 122 016, Haryana. Helpline +91 98991 51010 · info@kleenoilindia.com",
+                      "lineHeight": 1.55,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "twVNA",
+                  "name": "About - FAQ ISO 9001",
+                  "width": "fill_container",
+                  "fill": "$background",
+                  "cornerRadius": 14,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "padding": [
+                    22,
+                    24
+                  ],
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "V5e2hK",
+                      "name": "Q",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "What does ISO 9001 cover for your products?",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 16,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "tQYWN",
+                      "name": "I",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "plus",
+                      "library": "lucide",
+                      "fill": "$text-tertiary"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "SOGpV",
+                  "name": "About - FAQ Alliances",
+                  "width": "fill_container",
+                  "fill": "$background",
+                  "cornerRadius": 14,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "padding": [
+                    22,
+                    24
+                  ],
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "aAnpg",
+                      "name": "Q",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "How do partner alliances affect product range?",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 16,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "YeY4R",
+                      "name": "I",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "plus",
+                      "library": "lucide",
+                      "fill": "$text-tertiary"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "x0bG6U",
+                  "name": "About - FAQ Plant Visit",
+                  "width": "fill_container",
+                  "fill": "$background",
+                  "cornerRadius": 14,
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "padding": [
+                    22,
+                    24
+                  ],
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "jvWzR",
+                      "name": "Q",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Can we visit for a plant assessment?",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 16,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "EcvVE",
+                      "name": "I",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "plus",
+                      "library": "lucide",
+                      "fill": "$text-tertiary"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "zafIZ",
+          "name": "About - Final CTA",
+          "width": "fill_container",
+          "fill": "$brand-green-soft",
+          "gap": 48,
+          "padding": [
+            80,
+            100
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "nGh3m",
+              "name": "About - CTA Copy",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "id": "c2qyu",
+                  "type": "ref",
+                  "ref": "DB8YG",
+                  "name": "Eyebrow",
+                  "descendants": {
+                    "FpdjV": {
+                      "content": "REQUEST AN ESTIMATE"
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "ecfMP",
+                  "name": "Title",
+                  "fill": "$text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Ready to save money and\nextend equipment life?",
+                  "lineHeight": 1.08,
+                  "fontFamily": "$font-heading",
+                  "fontSize": 40,
+                  "fontWeight": "700",
+                  "letterSpacing": -1.8
+                },
+                {
+                  "type": "text",
+                  "id": "AO7Ts",
+                  "name": "Sub",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 560,
+                  "content": "More than 2,000 customers trust Kleenoil to increase fluid life and meet demanding tolerances. Talk to our team for an estimate.",
+                  "lineHeight": 1.55,
+                  "fontFamily": "$font-body",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Cbneg",
+              "name": "About - CTA Actions",
+              "width": 320,
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "id": "B7EYwJ",
+                  "type": "ref",
+                  "ref": "hRxx9",
+                  "name": "Estimate",
+                  "width": "fill_container",
+                  "descendants": {
+                    "yIQrM": {
+                      "content": "Request an estimate"
+                    }
+                  }
+                },
+                {
+                  "id": "bVlIU",
+                  "type": "ref",
+                  "ref": "z7OZYm",
+                  "name": "Contact",
+                  "width": "fill_container",
+                  "descendants": {
+                    "i5SDD": {
+                      "content": "Contact us"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "R6VrsS",
+          "name": "About - Footer",
+          "width": "fill_container",
+          "fill": "$surface",
+          "stroke": "$border-subtle",
+          "strokeWidth": {
+            "top": 1
+          },
+          "strokeAlignment": "inner",
+          "strokeLinejoin": "round",
+          "layout": "vertical",
+          "gap": 80,
+          "padding": [
+            100,
+            100,
+            40,
+            100
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "F4Op0",
+              "name": "About - Footer Top",
+              "width": "fill_container",
+              "gap": 80,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "TrKsR",
+                  "name": "Brand",
+                  "width": 380,
+                  "layout": "vertical",
+                  "gap": 28,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "a68mS1",
+                      "name": "Logo Row",
+                      "gap": 12,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "KpsmP",
+                          "name": "Logo Mark",
+                          "width": 32,
+                          "height": 32,
+                          "fill": "$brand-green",
+                          "cornerRadius": 6,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "dxdbH",
+                              "name": "K",
+                              "fill": "#FFFFFF",
+                              "content": "K",
+                              "fontFamily": "$font-heading",
+                              "fontSize": 18,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "qMzou",
+                          "name": "Wordmark",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "gXknC",
+                              "name": "Brand",
+                              "fill": "$text-primary",
+                              "content": "KLEENOIL",
+                              "fontFamily": "$font-heading",
+                              "fontSize": 16,
+                              "fontWeight": "600",
+                              "letterSpacing": -0.3
+                            },
+                            {
+                              "type": "text",
+                              "id": "U1Sakl",
+                              "name": "Tag",
+                              "fill": "$text-tertiary",
+                              "content": "INDIA — EST. 1988",
+                              "fontFamily": "$font-mono",
+                              "fontSize": 9,
+                              "fontWeight": "normal",
+                              "letterSpacing": 1.6
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "B9HpPD",
+                      "name": "Tag",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": 340,
+                      "content": "Engineering the cleanest oil and longest equipment life in heavy industry, since 1988.",
+                      "lineHeight": 1.6,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "J2I9DU",
+                      "name": "Newsletter",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 12,
+                      "padding": [
+                        24,
+                        0,
+                        0,
+                        0
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "skxkc",
+                          "name": "Label",
+                          "fill": "$text-tertiary",
+                          "content": "INDUSTRY BRIEFINGS",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "500",
+                          "letterSpacing": 1.4
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Z7BCbh",
+                          "name": "Input",
+                          "width": 340,
+                          "fill": "#EBF2EEB3",
+                          "cornerRadius": 12,
+                          "stroke": "$border-subtle",
+                          "strokeWidth": 1,
+                          "strokeAlignment": "inner",
+                          "effect": {
+                            "type": "background_blur",
+                            "radius": 16
+                          },
+                          "padding": [
+                            6,
+                            6,
+                            6,
+                            18
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "vF7N4",
+                              "name": "Placeholder",
+                              "fill": "$text-tertiary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "your@company.com",
+                              "fontFamily": "$font-body",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "O5zzh",
+                              "name": "Submit",
+                              "fill": "$brand-green",
+                              "cornerRadius": 8,
+                              "effect": {
+                                "type": "shadow",
+                                "shadowType": "outer",
+                                "color": "#00663325",
+                                "offset": {
+                                  "x": 0,
+                                  "y": 4
+                                },
+                                "blur": 12
+                              },
+                              "gap": 6,
+                              "padding": [
+                                8,
+                                14
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "OCKhw",
+                                  "name": "Label",
+                                  "fill": "#FFFFFF",
+                                  "content": "Subscribe",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 12,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "BhVsX",
+                  "name": "Link Cols",
+                  "width": "fill_container",
+                  "gap": 28,
+                  "justifyContent": "end",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "L1gaG",
+                      "name": "PRODUCTS",
+                      "width": 170,
+                      "layout": "vertical",
+                      "gap": 18,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "qjF1f",
+                          "name": "Heading",
+                          "fill": "$text-tertiary",
+                          "content": "PRODUCTS",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "500",
+                          "letterSpacing": 1.4
+                        },
+                        {
+                          "type": "text",
+                          "id": "y642eN",
+                          "name": "Oil Filtration",
+                          "fill": "$text-secondary",
+                          "content": "Oil Filtration",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "zIONK",
+                          "name": "Vacuum Dehydration",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Vacuum Dehydration",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "YSDP1",
+                          "name": "Coolant Purification",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Coolant Purification",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "shCMr",
+                          "name": "Magnetic Filtration",
+                          "fill": "$text-secondary",
+                          "content": "Magnetic Filtration",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "QI0lN",
+                          "name": "Oil Analysis",
+                          "fill": "$text-secondary",
+                          "content": "Oil Analysis",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "kQ63c",
+                      "name": "INDUSTRIES",
+                      "width": 170,
+                      "layout": "vertical",
+                      "gap": 18,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "wUK9g",
+                          "name": "Heading",
+                          "fill": "$text-tertiary",
+                          "content": "INDUSTRIES",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "500",
+                          "letterSpacing": 1.4
+                        },
+                        {
+                          "type": "text",
+                          "id": "Tn26c",
+                          "name": "Automotive",
+                          "fill": "$text-secondary",
+                          "content": "Automotive",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "tYBGV",
+                          "name": "Aerospace",
+                          "fill": "$text-secondary",
+                          "content": "Aerospace",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "lKNL6",
+                          "name": "Steel Plants",
+                          "fill": "$text-secondary",
+                          "content": "Steel Plants",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "rd8KB",
+                          "name": "Marine",
+                          "fill": "$text-secondary",
+                          "content": "Marine",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "B7J8Wt",
+                          "name": "Power Plants",
+                          "fill": "$text-secondary",
+                          "content": "Power Plants",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "SqW8m",
+                          "name": "CNC Manufacturing",
+                          "fill": "$text-secondary",
+                          "content": "CNC Manufacturing",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "J8ZOa",
+                      "name": "COMPANY",
+                      "width": 160,
+                      "layout": "vertical",
+                      "gap": 18,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "WfZUR",
+                          "name": "Heading",
+                          "fill": "$text-tertiary",
+                          "content": "COMPANY",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "500",
+                          "letterSpacing": 1.4
+                        },
+                        {
+                          "type": "text",
+                          "id": "n5isOm",
+                          "name": "About",
+                          "fill": "$text-secondary",
+                          "content": "About",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "W7VsH",
+                          "name": "Engineering Team",
+                          "fill": "$text-secondary",
+                          "content": "Engineering Team",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "I7TwdO",
+                          "name": "Press",
+                          "fill": "$text-secondary",
+                          "content": "Press",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "tBwYr",
+                          "name": "Careers",
+                          "fill": "$text-secondary",
+                          "content": "Careers",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "MbYCh",
+                          "name": "Sustainability",
+                          "fill": "$text-secondary",
+                          "content": "Sustainability",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "FMNU5",
+                      "name": "RESOURCES",
+                      "width": 160,
+                      "layout": "vertical",
+                      "gap": 18,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "fMd6X",
+                          "name": "Heading",
+                          "fill": "$text-tertiary",
+                          "content": "RESOURCES",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "500",
+                          "letterSpacing": 1.4
+                        },
+                        {
+                          "type": "text",
+                          "id": "y73qo",
+                          "name": "Case Studies",
+                          "fill": "$text-secondary",
+                          "content": "Case Studies",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "cu4zz",
+                          "name": "Technical Library",
+                          "fill": "$text-secondary",
+                          "content": "Technical Library",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "BViXH",
+                          "name": "Brochures",
+                          "fill": "$text-secondary",
+                          "content": "Brochures",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "G7wZv",
+                          "name": "FAQ",
+                          "fill": "$text-secondary",
+                          "content": "FAQ",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "ed0VG",
+                          "name": "Contact",
+                          "fill": "$text-secondary",
+                          "content": "Contact",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "rectangle",
+              "id": "k90wG",
+              "name": "Divider",
+              "fill": "$border-subtle",
+              "width": "fill_container",
+              "height": 1
+            },
+            {
+              "type": "frame",
+              "id": "IAJWm",
+              "name": "About - Footer Bottom",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "s11TQk",
+                  "name": "Copy",
+                  "fill": "$text-tertiary",
+                  "content": "© 2026 KLEENOIL INDIA PVT. LTD. — BANGALORE, INDIA",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "I5dtd",
+                  "name": "Links",
+                  "gap": 32,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "j1kxFs",
+                      "name": "Privacy",
+                      "fill": "$text-tertiary",
+                      "content": "PRIVACY",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "zZu5A",
+                      "name": "Terms",
+                      "fill": "$text-tertiary",
+                      "content": "TERMS",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "p2YZ3A",
+                      "name": "Cookies",
+                      "fill": "$text-tertiary",
+                      "content": "COOKIES",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "E2hqtj",
+                      "name": "Compliance",
+                      "fill": "$text-tertiary",
+                      "content": "COMPLIANCE",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "QfGA1",
+      "x": 13482,
+      "y": 0,
+      "name": "Distribution Map — Integration Options",
+      "width": 3120,
+      "fill": "$background",
+      "cornerRadius": 24,
+      "stroke": "$border-subtle",
+      "strokeWidth": 1,
+      "layout": "vertical",
+      "gap": 40,
+      "padding": 48,
+      "children": [
+        {
+          "type": "frame",
+          "id": "QBCbp",
+          "name": "Options Header",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 12,
+          "children": [
+            {
+              "type": "text",
+              "id": "F0Fwf",
+              "name": "Eyebrow",
+              "fill": "$brand-green",
+              "content": "DESIGN OPTIONS · DISTRIBUTION NETWORK",
+              "fontFamily": "$font-mono",
+              "fontSize": 12,
+              "fontWeight": "700",
+              "letterSpacing": 2
+            },
+            {
+              "type": "text",
+              "id": "H9TZH",
+              "name": "Title",
+              "fill": "$text-primary",
+              "content": "Three ways to place the map on About Us",
+              "fontFamily": "$font-heading",
+              "fontSize": 32,
+              "fontWeight": "700",
+              "letterSpacing": -1.2
+            },
+            {
+              "type": "text",
+              "id": "C5GXm",
+              "name": "Sub",
+              "fill": "$text-secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "A = Split map + hubs (recommended) · B = Full-bleed interactive map · C = Map card with milestones",
+              "fontFamily": "$font-body",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "HPqGy",
+          "name": "Options Row",
+          "width": "fill_container",
+          "gap": 28,
+          "children": [
+            {
+              "type": "frame",
+              "id": "wReO4",
+              "name": "Option A — Split Map + Hubs",
+              "width": "fill_container",
+              "fill": "$surface-elevated",
+              "cornerRadius": 20,
+              "stroke": "$brand-green",
+              "strokeWidth": 2,
+              "layout": "vertical",
+              "gap": 20,
+              "padding": 28,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "DXHXO",
+                  "name": "Badge",
+                  "fill": "$brand-green",
+                  "content": "A · RECOMMENDED",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 11,
+                  "fontWeight": "700",
+                  "letterSpacing": 1.4
+                },
+                {
+                  "type": "text",
+                  "id": "WsJuw",
+                  "name": "Title",
+                  "fill": "$text-primary",
+                  "content": "Split: map + regional hubs",
+                  "fontFamily": "$font-heading",
+                  "fontSize": 22,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "E1gcs",
+                  "name": "Desc",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Large India map with hub pins on the left. Stats and city list on the right. Fits the existing HQ block below.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "L45QG",
+                  "name": "Map Preview A",
+                  "clip": true,
+                  "width": "fill_container",
+                  "height": 280,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "images/generated-1786351935212.png",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 16,
+                  "layout": "none"
+                },
+                {
+                  "type": "frame",
+                  "id": "wdlCx",
+                  "name": "Stats A",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "UOtlC",
+                      "name": "STATES",
+                      "width": "fill_container",
+                      "fill": "$background",
+                      "cornerRadius": 12,
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": 14,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "fP4Ep",
+                          "name": "V",
+                          "fill": "$text-primary",
+                          "content": "18",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 22,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "o2SQS",
+                          "name": "L",
+                          "fill": "$text-tertiary",
+                          "content": "STATES",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 10,
+                          "fontWeight": "700",
+                          "letterSpacing": 1
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "XivNc",
+                      "name": "PARTNERS",
+                      "width": "fill_container",
+                      "fill": "$background",
+                      "cornerRadius": 12,
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": 14,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "EqxVM",
+                          "name": "V",
+                          "fill": "$text-primary",
+                          "content": "45+",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 22,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Vm2Ef",
+                          "name": "L",
+                          "fill": "$text-tertiary",
+                          "content": "PARTNERS",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 10,
+                          "fontWeight": "700",
+                          "letterSpacing": 1
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "N8vlSM",
+                      "name": "GURGAON",
+                      "width": "fill_container",
+                      "fill": "$background",
+                      "cornerRadius": 12,
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": 14,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "wiugf",
+                          "name": "V",
+                          "fill": "$text-primary",
+                          "content": "HQ",
+                          "fontFamily": "$font-heading",
+                          "fontSize": 22,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "CqprH",
+                          "name": "L",
+                          "fill": "$text-tertiary",
+                          "content": "GURGAON",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 10,
+                          "fontWeight": "700",
+                          "letterSpacing": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "w8qreh",
+              "name": "Option B — Full-bleed Map",
+              "width": "fill_container",
+              "fill": "$surface-elevated",
+              "cornerRadius": 20,
+              "stroke": "$border-subtle",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 20,
+              "padding": 28,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "UzVgc",
+                  "name": "Badge",
+                  "fill": "$text-tertiary",
+                  "content": "B · INTERACTIVE",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 11,
+                  "fontWeight": "700",
+                  "letterSpacing": 1.4
+                },
+                {
+                  "type": "text",
+                  "id": "ifFMd",
+                  "name": "Title",
+                  "fill": "$text-primary",
+                  "content": "Full-bleed map with filters",
+                  "fontFamily": "$font-heading",
+                  "fontSize": 22,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "LBiKX",
+                  "name": "Desc",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Map fills the section. Filter chips (HQ / Warehouses / Partners) and a selected-city tooltip. Best for a dedicated footprint page.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "pRptA",
+                  "name": "Map Preview B",
+                  "clip": true,
+                  "width": "fill_container",
+                  "height": 280,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "images/generated-1786351935955.png",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 16,
+                  "layout": "none"
+                },
+                {
+                  "type": "frame",
+                  "id": "UjVJc",
+                  "name": "Chips",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "w6eMO",
+                      "name": "All",
+                      "fill": "$background",
+                      "cornerRadius": 100,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "padding": [
+                        8,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "a7sUY",
+                          "name": "T",
+                          "fill": "$text-secondary",
+                          "content": "All",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "tHBtZ",
+                      "name": "HQ",
+                      "fill": "$brand-green",
+                      "cornerRadius": 100,
+                      "padding": [
+                        8,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Bv6ZL",
+                          "name": "T",
+                          "fill": "#FFFFFF",
+                          "content": "HQ",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "fpCur",
+                      "name": "Warehouses",
+                      "fill": "$background",
+                      "cornerRadius": 100,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "padding": [
+                        8,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "U6kyr7",
+                          "name": "T",
+                          "fill": "$text-secondary",
+                          "content": "Warehouses",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "BQs28",
+                      "name": "Partners",
+                      "fill": "$background",
+                      "cornerRadius": 100,
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "padding": [
+                        8,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "tIdoT",
+                          "name": "T",
+                          "fill": "$text-secondary",
+                          "content": "Partners",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "N6Udew",
+              "name": "Option C — Map + Milestones",
+              "width": "fill_container",
+              "fill": "$surface-elevated",
+              "cornerRadius": 20,
+              "stroke": "$border-subtle",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 20,
+              "padding": 28,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "L3dKC",
+                  "name": "Badge",
+                  "fill": "$text-tertiary",
+                  "content": "C · STORY",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 11,
+                  "fontWeight": "700",
+                  "letterSpacing": 1.4
+                },
+                {
+                  "type": "text",
+                  "id": "KcpDu",
+                  "name": "Title",
+                  "fill": "$text-primary",
+                  "content": "Map card + network milestones",
+                  "fontFamily": "$font-heading",
+                  "fontSize": 22,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "pwvNA",
+                  "name": "Desc",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Compact map beside a vertical timeline of network growth. Strong narrative fit next to Origin story.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "h5gIv",
+                  "name": "Map Preview C",
+                  "clip": true,
+                  "width": "fill_container",
+                  "height": 200,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "images/generated-1786351935549.png",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 16,
+                  "layout": "none"
+                },
+                {
+                  "type": "frame",
+                  "id": "o1lf9n",
+                  "name": "2015",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "JmpmJ",
+                      "name": "Y",
+                      "fill": "$brand-green",
+                      "content": "2015",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "NFAie",
+                      "name": "T",
+                      "fill": "$text-secondary",
+                      "content": "First west hub",
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Y133Eg",
+                  "name": "2018",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "D0Tpl",
+                      "name": "Y",
+                      "fill": "$brand-green",
+                      "content": "2018",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "rX940",
+                      "name": "T",
+                      "fill": "$text-secondary",
+                      "content": "North + south hubs",
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "J2iBr",
+                  "name": "2024",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "jljNM",
+                      "name": "Y",
+                      "fill": "$brand-green",
+                      "content": "2024",
+                      "fontFamily": "$font-heading",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "mErVw",
+                      "name": "T",
+                      "fill": "$text-secondary",
+                      "content": "Pan-India partners",
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
                     }
                   ]
                 }

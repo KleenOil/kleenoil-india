@@ -9,6 +9,20 @@ export const Hero: Block = {
     plural: 'Heroes',
   },
   fields: [
+    {
+      name: 'variant',
+      type: 'select',
+      label: 'Layout',
+      defaultValue: 'panel',
+      options: [
+        { label: 'Panel (homepage)', value: 'panel' },
+        { label: 'Immersive (About)', value: 'immersive' },
+      ],
+      admin: {
+        description:
+          'Panel = split content + image. Immersive = full-bleed industrial hero used on About.',
+      },
+    },
     eyebrowField,
     {
       name: 'headline',

@@ -95,6 +95,22 @@ export const DEFAULT_HERO = {
   ],
 };
 
+/** Full-bleed About page hero (Pencil “Immersive Hero”). */
+export const DEFAULT_IMMERSIVE_HERO = {
+  eyebrow: 'ABOUT · EST. 1988',
+  headline: 'We keep industry’s\nlifeblood clean.',
+  subheadline:
+    'Manufacturer. Importer. Distributor. Kleenoil India has defined in-depth filtration across the sub-continent for nearly four decades.',
+  ctas: [{ label: 'Request an estimate', href: '/contact', appearance: 'primary' as const }],
+  metaStats: [
+    { value: '23', label: 'COUNTRIES' },
+    { value: '2,000+', label: 'CUSTOMERS' },
+    { value: 'ISO 9001', label: 'QUALITY' },
+  ],
+  imageUrl:
+    'https://images.unsplash.com/photo-1600683550547-2c38a96fb400?auto=format&fit=crop&w=1920&q=80',
+};
+
 export const DEFAULT_STATISTICS = {
   eyebrow: 'BY THE NUMBERS',
   heading: 'Four decades of\nengineering trust.',
@@ -457,6 +473,156 @@ export const DEFAULT_CTA = {
     { label: 'ISO 9001 CERTIFIED' },
     { label: '24H RESPONSE' },
     { label: '2,000+ CLIENTS GLOBALLY' },
+  ],
+};
+
+export const DEFAULT_MANIFESTO = {
+  quote:
+    'Despite imitations, we remain the premier manufacturer and supplier of comprehensive filtration media — trusted to extend fluid life and hold demanding tolerances.',
+  attribution: 'KLEENOIL FILTRATION INDIA · LEEDS TECHNICAL COLLABORATION',
+};
+
+export const DEFAULT_ABOUT_ORIGIN = {
+  eyebrow: 'THE ORIGIN',
+  heading: 'It began in New Delhi\nwith a UK partnership.',
+  body: 'In 1988, Kleenoil Filtration India forged a technical and financial collaboration with Kleenoil Filtration Ltd, Leeds, UK. That alliance turned a local ambition into the foremost filtration house across the Indian sub-continent.',
+  bodySecondary:
+    'Today we manufacture, import and distribute in-depth filters and systems — backed by ISO 9001 certification and rigorous quality testing for every clientele.',
+  cta: {
+    label: 'Request an estimate',
+    href: '/contact',
+    appearance: 'primary' as const,
+    openInNewTab: false,
+  },
+  milestones: [
+    { year: '1988', title: 'Founded with Leeds, UK' },
+    { year: '2008', title: 'Eclipse Magnetics sole distributor' },
+    { year: '2014', title: 'Filtertechnik oil analysis' },
+    { year: '2018', title: 'HC Feng coolant solutions' },
+  ],
+};
+
+export const DEFAULT_WHATS_NEW = {
+  eyebrow: "What's new",
+  heading: 'News, events and product updates.',
+  description:
+    'Discover machines, exhibitions, reports and small updates — the channel for everything new from Kleenoil.',
+  cards: [
+    {
+      badge: 'Coming Soon',
+      title: 'Bespoke Machines',
+      description: 'Custom built to meet unique plant requirements.',
+      href: '/products',
+      linkLabel: 'Explore',
+    },
+    {
+      badge: 'Coming Soon',
+      title: 'Events & Exhibitions',
+      description: 'Trade shows and industry events with a Kleenoil presence worldwide.',
+      href: '/resources',
+      linkLabel: 'Explore',
+    },
+    {
+      badge: 'Coming Soon',
+      title: 'Articles',
+      description: 'Technical ideas and insights on contamination control.',
+      href: '/blog',
+      linkLabel: 'Explore',
+    },
+  ],
+};
+
+export const DEFAULT_DISTRIBUTION_NETWORK = {
+  eyebrow: 'NETWORK AND PRESENCE',
+  heading: "Wherever industry runs,\nwe're there.",
+  description:
+    'A pan-India network of hubs, partners and service points — coordinated from Gurgaon so support stays close to every plant.',
+  stats: [
+    { value: '18', label: 'LABS' },
+    { value: '45+', label: 'OFFICES' },
+    { value: '220', label: 'CITIES' },
+    { value: '23', label: 'STATES' },
+  ],
+  regionalOffices: [
+    {
+      city: 'Gurgaon',
+      region: 'NCR Region · HQ',
+      kind: 'hq' as const,
+      mapsUrl:
+        'https://www.google.com/maps/dir/?api=1&destination=537,+Phase+V,+Udyog+Vihar,+Gurgaon,+Haryana+122016',
+    },
+    {
+      city: 'Mumbai',
+      region: 'West — Maharashtra',
+      kind: 'hub' as const,
+      mapsUrl: 'https://www.google.com/maps/dir/?api=1&destination=Mumbai,+Maharashtra',
+    },
+    {
+      city: 'Bangalore',
+      region: 'South — Karnataka',
+      kind: 'hub' as const,
+      mapsUrl: 'https://www.google.com/maps/dir/?api=1&destination=Bangalore,+Karnataka',
+    },
+    {
+      city: 'Chennai',
+      region: 'South — Tamil Nadu',
+      kind: 'hub' as const,
+      mapsUrl: 'https://www.google.com/maps/dir/?api=1&destination=Chennai,+Tamil+Nadu',
+    },
+    {
+      city: 'Kolkata',
+      region: 'East — West Bengal',
+      kind: 'hub' as const,
+      mapsUrl: 'https://www.google.com/maps/dir/?api=1&destination=Kolkata,+West+Bengal',
+    },
+    {
+      city: 'Hyderabad',
+      region: 'South — Andhra Pradesh',
+      kind: 'hub' as const,
+      mapsUrl: 'https://www.google.com/maps/dir/?api=1&destination=Hyderabad,+Telangana',
+    },
+  ],
+  hq: {
+    label: 'HEADQUARTER',
+    title: 'Gurgaon, Haryana',
+    address: '537, Phase V, Udyog Vihar, Gurgaon – 122 016, Haryana, India.',
+    phone: '+91 124 430 4040',
+    mobile: '+91 98991 51010',
+    email: 'info@kleenoilindia.com',
+  },
+  hqImageUrl:
+    'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1200&q=80',
+};
+
+export const DEFAULT_FAQ_ACCORDION = {
+  eyebrow: 'FAQ · ACCORDION',
+  heading: 'Questions teams ask first',
+  description: null as string | null,
+  items: [
+    {
+      question: 'Where is Kleenoil India based?',
+      answer:
+        'Headquarters: 537, Phase V, Udyog Vihar, Gurgaon – 122 016, Haryana. Helpline +91 98991 51010 · info@kleenoilindia.com',
+      defaultOpen: true,
+    },
+    {
+      question: 'What does ISO 9001 cover for your products?',
+      answer:
+        'ISO 9001 certifies our quality management system across manufacturing, import and distribution — from filter media production through final system testing.',
+      defaultOpen: false,
+    },
+    {
+      question: 'How do partner alliances affect product range?',
+      answer:
+        'Technical collaborations with partners in the UK, Europe and Asia expand our portfolio with complementary magnetics, mist extraction and coolant solutions — all supported locally.',
+      defaultOpen: false,
+    },
+    {
+      question: 'Can we visit for a plant assessment?',
+      answer:
+        'Yes. Our engineers schedule on-site fluid system audits and contamination assessments across India. Contact us to arrange a visit.',
+      defaultOpen: false,
+    },
   ],
 };
 

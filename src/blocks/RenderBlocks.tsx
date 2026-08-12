@@ -1,9 +1,15 @@
+import { AboutOriginBlock, type AboutOriginBlockData } from '@/blocks/AboutOrigin/Component';
 import { AboutStoryBlock, type AboutStoryBlockData } from '@/blocks/AboutStory/Component';
 import {
   ContactPreviewBlock,
   type ContactPreviewBlockData,
 } from '@/blocks/ContactPreview/Component';
 import { CtaBlock, type CtaBlockData } from '@/blocks/CTA/Component';
+import {
+  DistributionNetworkBlock,
+  type DistributionNetworkBlockData,
+} from '@/blocks/DistributionNetwork/Component';
+import { FaqAccordionBlock, type FaqAccordionBlockData } from '@/blocks/FaqAccordion/Component';
 import {
   FeaturedCaseStudiesBlock,
   type FeaturedCaseStudiesBlockData,
@@ -21,6 +27,7 @@ import {
   type FeaturedServicesBlockData,
 } from '@/blocks/FeaturedServices/Component';
 import { HeroBlock, type HeroBlockData } from '@/blocks/Hero/Component';
+import { ManifestoBlock, type ManifestoBlockData } from '@/blocks/Manifesto/Component';
 import { ProcessStoryBlock, type ProcessStoryBlockData } from '@/blocks/ProcessStory/Component';
 import { RichContentBlock, type RichContentBlockData } from '@/blocks/RichContent/Component';
 import { StatisticsBlock, type StatisticsBlockData } from '@/blocks/Statistics/Component';
@@ -30,6 +37,7 @@ import {
   TrustIndicatorsBlock,
   type TrustIndicatorsBlockData,
 } from '@/blocks/TrustIndicators/Component';
+import { WhatsNewBlock, type WhatsNewBlockData } from '@/blocks/WhatsNew/Component';
 import { RevealSection } from '@/components/motion/RevealSection';
 import type { ReactNode } from 'react';
 
@@ -109,6 +117,56 @@ export function RenderBlocks({
             return wrapReveal(key, <HeroBlock block={block as HeroBlockData} />, motion, {
               variant: 'hero',
             });
+          case 'manifesto':
+            return wrapReveal(key, <ManifestoBlock block={block as ManifestoBlockData} />, motion, {
+              stagger: true,
+            });
+          case 'about-origin':
+            return wrapReveal(
+              key,
+              <AboutOriginBlock block={block as AboutOriginBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'about-story':
+            return wrapReveal(
+              key,
+              <AboutStoryBlock block={block as AboutStoryBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'trust-indicators':
+            return wrapReveal(
+              key,
+              <TrustIndicatorsBlock block={block as TrustIndicatorsBlockData} />,
+              motion,
+            );
+          case 'team':
+            return wrapReveal(key, <TeamBlock block={block as TeamBlockData} />, motion, {
+              stagger: true,
+            });
+          case 'whats-new':
+            return wrapReveal(key, <WhatsNewBlock block={block as WhatsNewBlockData} />, motion, {
+              stagger: true,
+            });
+          case 'distribution-network':
+            return wrapReveal(
+              key,
+              <DistributionNetworkBlock block={block as DistributionNetworkBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'faq-accordion':
+            return wrapReveal(
+              key,
+              <FaqAccordionBlock block={block as FaqAccordionBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'cta':
+            return wrapReveal(key, <CtaBlock block={block as CtaBlockData} />, motion, {
+              variant: 'cta',
+            });
           case 'statistics':
             return wrapReveal(
               key,
@@ -117,12 +175,6 @@ export function RenderBlocks({
               {
                 stagger: true,
               },
-            );
-          case 'trust-indicators':
-            return wrapReveal(
-              key,
-              <TrustIndicatorsBlock block={block as TrustIndicatorsBlockData} />,
-              motion,
             );
           case 'featured-products':
             return wrapReveal(
@@ -159,13 +211,6 @@ export function RenderBlocks({
               motion,
               { stagger: true },
             );
-          case 'about-story':
-            return wrapReveal(
-              key,
-              <AboutStoryBlock block={block as AboutStoryBlockData} />,
-              motion,
-              { stagger: true },
-            );
           case 'testimonials':
             return wrapReveal(
               key,
@@ -173,14 +218,6 @@ export function RenderBlocks({
               motion,
               { stagger: true },
             );
-          case 'team':
-            return wrapReveal(key, <TeamBlock block={block as TeamBlockData} />, motion, {
-              stagger: true,
-            });
-          case 'cta':
-            return wrapReveal(key, <CtaBlock block={block as CtaBlockData} />, motion, {
-              variant: 'cta',
-            });
           case 'contact-preview':
             return wrapReveal(
               key,

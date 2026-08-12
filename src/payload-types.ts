@@ -206,6 +206,10 @@ export interface Page {
   layout?:
     | (
         | {
+            /**
+             * Panel = split content + image. Immersive = full-bleed industrial hero used on About.
+             */
+            variant?: ('panel' | 'immersive') | null;
             eyebrow?: string | null;
             /**
              * Primary hero headline. Use line breaks for multi-line titles.
@@ -241,6 +245,61 @@ export interface Page {
             blockType: 'hero';
           }
         | {
+            quote: string;
+            attribution?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'manifesto';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            body?: string | null;
+            bodySecondary?: string | null;
+            cta: {
+              type: 'page' | 'custom';
+              label?: string | null;
+              page?: (number | null) | Page;
+              /**
+               * Absolute URL or site path (e.g. /products or https://example.com).
+               */
+              url?: string | null;
+              openInNewTab?: boolean | null;
+              appearance?: ('primary' | 'secondary' | 'ghost') | null;
+            };
+            milestones?:
+              | {
+                  year: string;
+                  title: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'about-origin';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            quote?: string | null;
+            quoteAuthor?: string | null;
+            quoteRole?: string | null;
+            image?: (number | null) | Media;
+            timeline?:
+              | {
+                  year?: string | null;
+                  label?: string | null;
+                  title: string;
+                  description?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'about-story';
+          }
+        | {
             heading?: string | null;
             logos?:
               | {
@@ -253,6 +312,145 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'trust-indicators';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            members?:
+              | {
+                  name: string;
+                  role: string;
+                  photo?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'team';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            cards?:
+              | {
+                  badge?: string | null;
+                  title: string;
+                  description?: string | null;
+                  link: {
+                    type: 'page' | 'custom';
+                    label?: string | null;
+                    page?: (number | null) | Page;
+                    /**
+                     * Absolute URL or site path (e.g. /products or https://example.com).
+                     */
+                    url?: string | null;
+                    openInNewTab?: boolean | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'whats-new';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            /**
+             * Leave empty to use the interactive India map. Upload only if you want a static image instead.
+             */
+            mapImage?: (number | null) | Media;
+            stats?:
+              | {
+                  value: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            regionalOffices?:
+              | {
+                  city: string;
+                  region: string;
+                  kind?: ('hq' | 'hub' | 'partner') | null;
+                  /**
+                   * Optional horizontal pin override as % of map width (0–100). Leave blank for city preset.
+                   */
+                  mapX?: number | null;
+                  /**
+                   * Optional vertical pin override as % of map height (0–100). Leave blank for city preset.
+                   */
+                  mapY?: number | null;
+                  /**
+                   * Optional. Paste a Google Maps place or directions URL. Shows an open-in-maps button on the hub card.
+                   */
+                  mapsUrl?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            hq?: {
+              label?: string | null;
+              title?: string | null;
+              address?: string | null;
+              phone?: string | null;
+              mobile?: string | null;
+              email?: string | null;
+            };
+            hqImage?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'distribution-network';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            items?:
+              | {
+                  question: string;
+                  answer: string;
+                  defaultOpen?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq-accordion';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            /**
+             * Supporting copy under the heading.
+             */
+            subtext?: string | null;
+            ctas?:
+              | {
+                  link: {
+                    type: 'page' | 'custom';
+                    label?: string | null;
+                    page?: (number | null) | Page;
+                    /**
+                     * Absolute URL or site path (e.g. /products or https://example.com).
+                     */
+                    url?: string | null;
+                    openInNewTab?: boolean | null;
+                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            trustBadges?:
+              | {
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cta';
           }
         | {
             eyebrow?: string | null;
@@ -394,27 +592,6 @@ export interface Page {
             eyebrow?: string | null;
             heading?: string | null;
             description?: string | null;
-            quote?: string | null;
-            quoteAuthor?: string | null;
-            quoteRole?: string | null;
-            image?: (number | null) | Media;
-            timeline?:
-              | {
-                  year?: string | null;
-                  label?: string | null;
-                  title: string;
-                  description?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'about-story';
-          }
-        | {
-            eyebrow?: string | null;
-            heading?: string | null;
-            description?: string | null;
             items?:
               | {
                   quote: string;
@@ -428,55 +605,6 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'testimonials';
-          }
-        | {
-            eyebrow?: string | null;
-            heading?: string | null;
-            description?: string | null;
-            members?:
-              | {
-                  name: string;
-                  role: string;
-                  photo?: (number | null) | Media;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'team';
-          }
-        | {
-            eyebrow?: string | null;
-            heading?: string | null;
-            /**
-             * Supporting copy under the heading.
-             */
-            subtext?: string | null;
-            ctas?:
-              | {
-                  link: {
-                    type: 'page' | 'custom';
-                    label?: string | null;
-                    page?: (number | null) | Page;
-                    /**
-                     * Absolute URL or site path (e.g. /products or https://example.com).
-                     */
-                    url?: string | null;
-                    openInNewTab?: boolean | null;
-                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            trustBadges?:
-              | {
-                  label: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'cta';
           }
         | {
             eyebrow?: string | null;
@@ -1269,6 +1397,7 @@ export interface PagesSelect<T extends boolean = true> {
         hero?:
           | T
           | {
+              variant?: T;
               eyebrow?: T;
               headline?: T;
               subheadline?: T;
@@ -1298,6 +1427,63 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        manifesto?:
+          | T
+          | {
+              quote?: T;
+              attribution?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'about-origin'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              body?: T;
+              bodySecondary?: T;
+              cta?:
+                | T
+                | {
+                    type?: T;
+                    label?: T;
+                    page?: T;
+                    url?: T;
+                    openInNewTab?: T;
+                    appearance?: T;
+                  };
+              milestones?:
+                | T
+                | {
+                    year?: T;
+                    title?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'about-story'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              quote?: T;
+              quoteAuthor?: T;
+              quoteRole?: T;
+              image?: T;
+              timeline?:
+                | T
+                | {
+                    year?: T;
+                    label?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         'trust-indicators'?:
           | T
           | {
@@ -1308,6 +1494,135 @@ export interface PagesSelect<T extends boolean = true> {
                     logo?: T;
                     alt?: T;
                     url?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        team?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              members?:
+                | T
+                | {
+                    name?: T;
+                    role?: T;
+                    photo?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'whats-new'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              cards?:
+                | T
+                | {
+                    badge?: T;
+                    title?: T;
+                    description?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          label?: T;
+                          page?: T;
+                          url?: T;
+                          openInNewTab?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'distribution-network'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              mapImage?: T;
+              stats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              regionalOffices?:
+                | T
+                | {
+                    city?: T;
+                    region?: T;
+                    kind?: T;
+                    mapX?: T;
+                    mapY?: T;
+                    mapsUrl?: T;
+                    id?: T;
+                  };
+              hq?:
+                | T
+                | {
+                    label?: T;
+                    title?: T;
+                    address?: T;
+                    phone?: T;
+                    mobile?: T;
+                    email?: T;
+                  };
+              hqImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'faq-accordion'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              items?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    defaultOpen?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        cta?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subtext?: T;
+              ctas?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          label?: T;
+                          page?: T;
+                          url?: T;
+                          openInNewTab?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              trustBadges?:
+                | T
+                | {
+                    label?: T;
                     id?: T;
                   };
               id?: T;
@@ -1432,28 +1747,6 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        'about-story'?:
-          | T
-          | {
-              eyebrow?: T;
-              heading?: T;
-              description?: T;
-              quote?: T;
-              quoteAuthor?: T;
-              quoteRole?: T;
-              image?: T;
-              timeline?:
-                | T
-                | {
-                    year?: T;
-                    label?: T;
-                    title?: T;
-                    description?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
         testimonials?:
           | T
           | {
@@ -1468,53 +1761,6 @@ export interface PagesSelect<T extends boolean = true> {
                     company?: T;
                     position?: T;
                     photo?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        team?:
-          | T
-          | {
-              eyebrow?: T;
-              heading?: T;
-              description?: T;
-              members?:
-                | T
-                | {
-                    name?: T;
-                    role?: T;
-                    photo?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        cta?:
-          | T
-          | {
-              eyebrow?: T;
-              heading?: T;
-              subtext?: T;
-              ctas?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          label?: T;
-                          page?: T;
-                          url?: T;
-                          openInNewTab?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              trustBadges?:
-                | T
-                | {
-                    label?: T;
                     id?: T;
                   };
               id?: T;

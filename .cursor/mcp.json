@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "pencil": {
+      "command": "C:\\Users\\ronit\\.cursor\\extensions\\highagency.pencildev-0.6.65-universal\\out\\mcp-server-windows-x64.exe",
+      "args": ["--app", "cursor"],
+      "env": {}
+    }
+  }
+}
