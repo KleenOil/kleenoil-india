@@ -49,12 +49,12 @@ export default buildConfig({
   sharp,
   plugins: [...getStoragePlugins(env)],
   onInit: async (payload) => {
-    try {
-      await ensureDefaultProductTemplate(payload);
-    } catch (error) {
+    // Fire-and-forget: never let seeding block or crash Payload initialization
+    // (which would take the admin panel down with it on Vercel).
+    void ensureDefaultProductTemplate(payload).catch((error) => {
       payload.logger.warn(
         `Could not seed default Product Template: ${error instanceof Error ? error.message : String(error)}`,
       );
-    }
+    });
   },
 });

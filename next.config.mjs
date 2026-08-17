@@ -6,7 +6,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
+  // `output: 'standalone'` is only for self-hosted/Docker deploys. On Vercel it
+  // breaks the Payload admin bundle output — leave unset here.
   async redirects() {
     return [
       {

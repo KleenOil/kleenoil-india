@@ -11,15 +11,14 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     const payload = await getPayloadClient();
     const result = await payload.find({
       collection: 'products',
-      where: {
-        and: [{ slug: { equals: slug } }, { _status: { equals: 'published' } }],
-      },
+      where: { slug: { equals: slug } },
       limit: 1,
       depth: 2,
     });
 
     return (result.docs[0] as Product | undefined) ?? null;
-  } catch {
+  } catch (error) {
+    console.error('[cms] getProductBySlug failed', error);
     return null;
   }
 }
@@ -29,14 +28,14 @@ export async function getPublishedProducts(limit = 24): Promise<Product[]> {
     const payload = await getPayloadClient();
     const result = await payload.find({
       collection: 'products',
-      where: { _status: { equals: 'published' } },
       limit,
       depth: 1,
       sort: '-updatedAt',
     });
 
     return result.docs as Product[];
-  } catch {
+  } catch (error) {
+    console.error('[cms] getPublishedProducts failed', error);
     return [];
   }
 }
@@ -56,7 +55,8 @@ export async function getResolvedPdpLayout(product: Product): Promise<PdpLayoutB
         id: templateId,
         depth: 3,
       })) as ProductTemplate;
-    } catch {
+    } catch (error) {
+      console.error('[cms] getResolvedPdpLayout: template lookup failed', error);
       template =
         typeof templateRef === 'object' && templateRef ? (templateRef as ProductTemplate) : null;
     }

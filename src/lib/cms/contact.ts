@@ -85,7 +85,8 @@ export async function getContactDetails(): Promise<ContactDetails> {
       phones: phones.length ? phones : DEFAULT_CONTACT.phones,
       emails: emails.length ? emails : DEFAULT_CONTACT.emails,
     };
-  } catch {
+  } catch (error) {
+    console.error('[cms] getContactDetails failed', error);
     return DEFAULT_CONTACT;
   }
 }

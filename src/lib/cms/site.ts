@@ -91,7 +91,8 @@ export async function getSiteChrome(): Promise<SiteChrome> {
       legalLinks: legalLinks.length ? legalLinks : DEFAULT_LEGAL_LINKS,
       enableSearch: settings?.features?.enableSearch ?? true,
     };
-  } catch {
+  } catch (error) {
+    console.error('[cms] getSiteChrome failed', error);
     return {
       site: DEFAULT_SITE,
       mainNav: DEFAULT_MAIN_NAV,

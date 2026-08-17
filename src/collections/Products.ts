@@ -87,16 +87,13 @@ export const Products: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'slug', 'template', '_status', 'updatedAt'],
+    defaultColumns: ['name', 'slug', 'template', 'updatedAt'],
     group: 'Content',
   },
+  // Products publish immediately on save. Drafts were causing new products to
+  // "disappear" from the site because editors saved without ever clicking
+  // "Publish". Keep version history (no drafts) so past edits are recoverable.
   versions: {
-    drafts: {
-      autosave: {
-        interval: 375,
-      },
-      schedulePublish: true,
-    },
     maxPerDoc: 50,
   },
   access: {

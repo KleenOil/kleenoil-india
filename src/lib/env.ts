@@ -13,6 +13,8 @@ function optionalString() {
     .transform((value) => (value === '' || value === undefined ? undefined : value));
 }
 
+let hasWarnedProdConfig = false;
+
 const serverEnvSchema = z
   .object({
     NODE_ENV: nodeEnvSchema.default('development'),
@@ -86,41 +88,35 @@ const serverEnvSchema = z
       });
     }
 
+    // Production quality checks are surfaced as warnings only.
+    // Making them hard errors used to blow up `getServerEnv()` on any request
+    // where these secrets weren't set — which took down the admin panel and
+    // frontend rendering with a blank / black screen on Vercel.
     if (!shouldEnforceProductionRules()) {
       return;
     }
 
+    const warnings: string[] = [];
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
     if (!siteUrl?.startsWith('https://')) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'NEXT_PUBLIC_SITE_URL must use HTTPS in production',
-      });
+      warnings.push('NEXT_PUBLIC_SITE_URL should use HTTPS in production');
     }
-
     if (!env.REVALIDATE_SECRET || env.REVALIDATE_SECRET.length < 32) {
-      ctx.addIssue({
-        code: 'custom',
-        path: ['REVALIDATE_SECRET'],
-        message: 'REVALIDATE_SECRET must be at least 32 characters in production',
-      });
+      warnings.push(
+        'REVALIDATE_SECRET should be at least 32 characters (only needed if you use /api/revalidate)',
+      );
     }
-
     if (env.EMAIL_PROVIDER === 'resend' && !env.RESEND_API_KEY) {
-      ctx.addIssue({
-        code: 'custom',
-        path: ['RESEND_API_KEY'],
-        message: 'RESEND_API_KEY is required when EMAIL_PROVIDER=resend in production',
-      });
+      warnings.push('RESEND_API_KEY is missing — email sending will fail until it is set');
+    }
+    if (env.EMAIL_PROVIDER === 'smtp' && (!env.SMTP_HOST || !env.SMTP_USER || !env.SMTP_PASS)) {
+      warnings.push('SMTP credentials are incomplete — email sending will fail until they are set');
     }
 
-    if (env.EMAIL_PROVIDER === 'smtp') {
-      if (!env.SMTP_HOST || !env.SMTP_USER || !env.SMTP_PASS) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['EMAIL_PROVIDER'],
-          message: 'SMTP credentials are required when EMAIL_PROVIDER=smtp in production',
-        });
+    if (warnings.length && typeof console !== 'undefined' && !hasWarnedProdConfig) {
+      hasWarnedProdConfig = true;
+      for (const message of warnings) {
+        console.warn(`[env] ${message}`);
       }
     }
   });

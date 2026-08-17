@@ -38,7 +38,8 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
     });
 
     return (result.docs[0] as Page | undefined) ?? null;
-  } catch {
+  } catch (error) {
+    console.error('[cms] getPageBySlug failed', error);
     return null;
   }
 }
@@ -56,7 +57,8 @@ export async function getHomePage(): Promise<Page | null> {
     });
 
     return (result.docs[0] as Page | undefined) ?? null;
-  } catch {
+  } catch (error) {
+    console.error('[cms] getHomePage failed', error);
     return null;
   }
 }
