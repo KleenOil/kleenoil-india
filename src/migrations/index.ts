@@ -6,6 +6,7 @@ import * as migration_20260725_100711_pdp_hero_gallery_multiselect from './20260
 import * as migration_20260725_102037_pdp_hero_quick_spec_counter from './20260725_102037_pdp_hero_quick_spec_counter';
 import * as migration_20260803_194920_featured_products_manual_cards from './20260803_194920_featured_products_manual_cards';
 import * as migration_20260803_195401_featured_products_custom_engineering_card from './20260803_195401_featured_products_custom_engineering_card';
+import * as migration_20260817_180000_add_about_page_blocks from './20260817_180000_add_about_page_blocks';
 
 export const migrations = [
   {
@@ -47,5 +48,10 @@ export const migrations = [
     up: migration_20260803_195401_featured_products_custom_engineering_card.up,
     down: migration_20260803_195401_featured_products_custom_engineering_card.down,
     name: '20260803_195401_featured_products_custom_engineering_card',
+  },
+  {
+    up: migration_20260817_180000_add_about_page_blocks.up,
+    down: migration_20260817_180000_add_about_page_blocks.down,
+    name: '20260817_180000_add_about_page_blocks',
   },
 ];

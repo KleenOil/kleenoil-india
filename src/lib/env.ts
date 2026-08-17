@@ -22,7 +22,7 @@ const serverEnvSchema = z
     DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
     PAYLOAD_SECRET: z.string().min(32, 'PAYLOAD_SECRET must be at least 32 characters'),
     PAYLOAD_ADMIN_ROUTE: z.string().startsWith('/').default('/admin'),
-    STORAGE_PROVIDER: storageProviderSchema.default('local'),
+    STORAGE_PROVIDER: storageProviderSchema.optional(),
     MEDIA_ROOT: z.string().default('./media'),
     CLOUDINARY_CLOUD_NAME: optionalString(),
     CLOUDINARY_API_KEY: optionalString(),
@@ -54,6 +54,18 @@ const serverEnvSchema = z
       .enum(['true', 'false'])
       .default('false')
       .transform((value) => value === 'true'),
+  })
+  .transform((env) => {
+    const hasCloudinary = Boolean(
+      env.CLOUDINARY_CLOUD_NAME && env.CLOUDINARY_API_KEY && env.CLOUDINARY_API_SECRET,
+    );
+    const storageProvider =
+      env.STORAGE_PROVIDER ?? (process.env.VERCEL || hasCloudinary ? 'cloudinary' : 'local');
+
+    return {
+      ...env,
+      STORAGE_PROVIDER: storageProvider,
+    };
   })
   .superRefine((env, ctx) => {
     // Always validate storage credentials when a cloud provider is selected
