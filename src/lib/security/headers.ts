@@ -15,7 +15,9 @@ export function buildSecurityHeaders(options: BuildSecurityHeadersOptions): Reco
 
   const scriptSrc = [
     "'self'",
-    ...(isProduction ? [] : ["'unsafe-eval'"]),
+    // Payload admin (and Next.js) evaluate runtime chunks; blocking this in
+    // production left /admin as a blank dark pane with a working sidebar.
+    "'unsafe-eval'",
     "'unsafe-inline'",
     ...(turnstileEnabled ? ['https://challenges.cloudflare.com'] : []),
     ...(gaEnabled ? ['https://www.googletagmanager.com'] : []),
@@ -23,6 +25,7 @@ export function buildSecurityHeaders(options: BuildSecurityHeadersOptions): Reco
 
   const connectSrc = [
     "'self'",
+    'https:',
     ...(turnstileEnabled ? ['https://challenges.cloudflare.com'] : []),
     ...(gaEnabled ? ['https://www.google-analytics.com', 'https://analytics.google.com'] : []),
   ];
@@ -43,7 +46,7 @@ export function buildSecurityHeaders(options: BuildSecurityHeadersOptions): Reco
     `script-src ${scriptSrc.join(' ')}`,
     `style-src 'self' 'unsafe-inline'`,
     `img-src ${imgSrc.join(' ')}`,
-    `font-src 'self'`,
+    `font-src 'self' data:`,
     `connect-src ${connectSrc.join(' ')}`,
     `frame-src ${frameSrc.join(' ') || "'none'"}`,
     `object-src 'none'`,

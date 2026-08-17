@@ -55,16 +55,22 @@ export function middleware(request: NextRequest) {
 
   const response = NextResponse.next();
 
-  const securityHeaders = buildSecurityHeaders({
-    isProduction,
-    siteUrl,
-    storageProvider,
-    turnstileEnabled,
-    gaEnabled,
-  });
+  // Payload admin hydrates a client SPA. Applying the public-site CSP to
+  // /admin blocks its scripts and leaves a blank content pane (sidebar only).
+  const isAdmin = pathname === '/admin' || pathname.startsWith('/admin/');
 
-  for (const [key, value] of Object.entries(securityHeaders)) {
-    response.headers.set(key, value);
+  if (!isAdmin) {
+    const securityHeaders = buildSecurityHeaders({
+      isProduction,
+      siteUrl,
+      storageProvider,
+      turnstileEnabled,
+      gaEnabled,
+    });
+
+    for (const [key, value] of Object.entries(securityHeaders)) {
+      response.headers.set(key, value);
+    }
   }
 
   // API routes must not be cached

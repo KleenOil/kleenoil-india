@@ -22,3 +22,5 @@ const Page = ({ params, searchParams }: Args) =>
   RootPage({ config, params, searchParams, importMap });
 
 export default Page;
+
+export const maxDuration = 60;

@@ -25,6 +25,7 @@ const dirname = path.dirname(filename);
 const env = getServerEnv();
 
 export default buildConfig({
+  serverURL: process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || undefined,
   admin: {
     user: Users.slug,
     importMap: {
