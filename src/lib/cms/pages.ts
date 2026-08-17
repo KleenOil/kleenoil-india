@@ -31,7 +31,7 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
     const result = await payload.find({
       collection: 'pages',
       where: {
-        and: [{ slug: { equals: slug } }, { _status: { equals: 'published' } }],
+        slug: { equals: slug },
       },
       limit: 1,
       depth: 2,
@@ -50,7 +50,7 @@ export async function getHomePage(): Promise<Page | null> {
     const result = await payload.find({
       collection: 'pages',
       where: {
-        and: [{ slug: { equals: 'home' } }, { _status: { equals: 'published' } }],
+        slug: { equals: 'home' },
       },
       limit: 1,
       depth: 2,

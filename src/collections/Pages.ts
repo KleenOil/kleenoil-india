@@ -32,16 +32,12 @@ export const Pages: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', '_status', 'updatedAt'],
+    defaultColumns: ['title', 'slug', 'updatedAt'],
     group: 'Content',
   },
+  // Keep version history, but do not require a separate Publish click.
+  // Drafts left Pages looking "blank" / disappearing on Vercel after save.
   versions: {
-    drafts: {
-      autosave: {
-        interval: 375,
-      },
-      schedulePublish: true,
-    },
     maxPerDoc: 50,
   },
   access: {
@@ -68,9 +64,6 @@ export const Pages: CollectionConfig = {
       blocks: pageBlocks,
       admin: {
         initCollapsed: true,
-        components: {
-          Field: '/components/admin/LayoutBlocksField#LayoutBlocksField',
-        },
       },
     },
     seoField,
