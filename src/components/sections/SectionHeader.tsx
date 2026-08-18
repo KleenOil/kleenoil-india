@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 
 type SectionCta = {
   label: string;
-  href: string;
+  href?: string | null;
   appearance?: 'primary' | 'secondary' | 'ghost';
   openInNewTab?: boolean;
 };

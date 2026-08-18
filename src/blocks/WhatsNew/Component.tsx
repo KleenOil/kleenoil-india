@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 import { SectionHeader } from '@/components/sections/SectionHeader';
+import { MaybeLink, hasHref } from '@/components/ui/maybe-link';
 import { DEFAULT_WHATS_NEW } from '@/lib/cms/defaults';
 import { resolveLink, type CmsLink } from '@/lib/cms/links';
 
@@ -34,13 +34,13 @@ export function WhatsNewBlock({ block }: WhatsNewBlockProps) {
       ?.filter((card) => card.title)
       .map((card, index) => {
         const fallback = DEFAULT_WHATS_NEW.cards[index] ?? DEFAULT_WHATS_NEW.cards[0];
-        const link = resolveLink(card.link, { fallbackHref: fallback?.href ?? '/' });
+        const link = resolveLink(card.link);
 
         return {
           badge: card.badge || fallback?.badge || 'Update',
           title: card.title!,
           description: card.description || fallback?.description || '',
-          href: link?.href ?? fallback?.href ?? '/',
+          href: link?.href ?? '',
           linkLabel: link?.label || fallback?.linkLabel || 'Explore',
         };
       }) ?? [];
@@ -79,13 +79,15 @@ export function WhatsNewBlock({ block }: WhatsNewBlockProps) {
                   {card.description}
                 </p>
               </div>
-              <Link
-                href={card.href}
-                className="inline-flex items-center gap-2 font-heading text-sm font-semibold text-brand-primary transition-opacity hover:opacity-80"
-              >
-                {card.linkLabel}
-                <ArrowRight className="size-4" aria-hidden />
-              </Link>
+              {hasHref(card.href) ? (
+                <MaybeLink
+                  href={card.href}
+                  className="inline-flex items-center gap-2 font-heading text-sm font-semibold text-brand-primary transition-opacity hover:opacity-80"
+                >
+                  {card.linkLabel}
+                  <ArrowRight className="size-4" aria-hidden />
+                </MaybeLink>
+              ) : null}
             </article>
           ))}
         </div>

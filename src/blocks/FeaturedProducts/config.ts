@@ -56,7 +56,8 @@ export const FeaturedProducts: Block = {
           type: 'text',
           label: 'Custom link',
           admin: {
-            description: 'Fallback URL when no product is linked (e.g. /products).',
+            description:
+              'Optional URL when no product is linked. Leave empty to keep the card not clickable.',
             condition: (_, siblingData) => !siblingData?.product,
           },
         },
@@ -94,7 +95,7 @@ export const FeaturedProducts: Block = {
           name: 'href',
           type: 'text',
           label: 'Link',
-          admin: { description: 'Where the card goes (e.g. /contact)' },
+          admin: { description: 'Optional. Leave empty to keep the card not clickable.' },
         },
       ],
     },

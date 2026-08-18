@@ -45,7 +45,7 @@ export function PdpRelatedBlock({ block }: { block?: PdpRelatedBlockData | null 
         tag: `0${index + 1} / SYSTEM`,
         title: card.title!,
         description: card.description || '',
-        href: card.href || '/products',
+        href: card.href?.trim() || '',
         imageUrl: getMediaUrl(card.image),
       })) ?? [];
 
@@ -83,7 +83,7 @@ export function PdpRelatedBlock({ block }: { block?: PdpRelatedBlockData | null 
 
         <div className="grid gap-6 md:grid-cols-3">
           {cards.map((card) => (
-            <ProductCard key={card.href + card.title} product={card} />
+            <ProductCard key={card.title} product={card} />
           ))}
         </div>
       </div>

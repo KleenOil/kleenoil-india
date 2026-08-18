@@ -48,9 +48,9 @@ export function PdpCtaBlock({ block }: { block?: PdpCtaBlockData | null }) {
             {subtext}
           </p>
           <div className="flex flex-wrap justify-center gap-3.5">
-            {ctas.map((cta) => (
+            {ctas.map((cta, index) => (
               <CtaButton
-                key={cta.href + cta.label}
+                key={`${cta.label}-${index}`}
                 href={cta.href}
                 appearance={cta.appearance}
                 openInNewTab={cta.openInNewTab}

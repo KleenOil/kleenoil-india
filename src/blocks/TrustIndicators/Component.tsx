@@ -39,7 +39,7 @@ export function TrustIndicatorsBlock({ block }: TrustIndicatorsBlockProps) {
         return {
           name: alt,
           imageUrl,
-          href: item.url || undefined,
+          href: item.url?.trim() || undefined,
         };
       })
       .filter((item): item is NonNullable<typeof item> => Boolean(item)) ?? [];

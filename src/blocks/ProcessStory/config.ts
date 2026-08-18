@@ -19,6 +19,14 @@ export const ProcessStory: Block = {
         { name: 'year', type: 'text', label: 'Year / Label' },
         { name: 'title', type: 'text', required: true },
         { name: 'description', type: 'textarea' },
+        {
+          name: 'spec',
+          type: 'text',
+          label: 'Spec badge',
+          admin: {
+            description: 'Pill under the description, e.g. PARTICULATE > 18μm.',
+          },
+        },
       ],
     },
   ],

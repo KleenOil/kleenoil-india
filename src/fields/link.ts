@@ -33,7 +33,8 @@ export const linkFields: Field[] = [
     label: 'Custom URL',
     admin: {
       condition: (_, siblingData) => siblingData?.type === 'custom',
-      description: 'Absolute URL or site path (e.g. /products or https://example.com).',
+      description:
+        'Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.',
     },
   },
   {

@@ -1,14 +1,14 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
+import { MaybeLink, hasHref } from '@/components/ui/maybe-link';
 import { cn } from '@/lib/utils';
 
 export type ProductCardData = {
   tag: string;
   title: string;
   description: string;
-  href: string;
+  href?: string | null;
   imageUrl?: string | null;
   imageAlt?: string;
 };
@@ -19,8 +19,10 @@ type ProductCardProps = {
 };
 
 export function ProductCard({ product, className }: ProductCardProps) {
+  const linked = hasHref(product.href);
+
   return (
-    <Link
+    <MaybeLink
       href={product.href}
       data-reveal-item
       className={cn(
@@ -52,14 +54,16 @@ export function ProductCard({ product, className }: ProductCardProps) {
           {product.title}
         </h3>
         <p className="flex-1 text-sm leading-relaxed text-text-secondary">{product.description}</p>
-        <div className="flex items-center justify-between pt-3">
-          <span className="font-heading text-sm font-bold text-brand-primary">Explore</span>
-          <ArrowUpRight
-            className="size-4 text-brand-primary transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:-translate-y-1"
-            aria-hidden
-          />
-        </div>
+        {linked ? (
+          <div className="flex items-center justify-between pt-3">
+            <span className="font-heading text-sm font-bold text-brand-primary">Explore</span>
+            <ArrowUpRight
+              className="size-4 text-brand-primary transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:-translate-y-1"
+              aria-hidden
+            />
+          </div>
+        ) : null}
       </div>
-    </Link>
+    </MaybeLink>
   );
 }

@@ -1,7 +1,7 @@
-import Link from 'next/link';
-
 import { Logo } from '@/components/branding/Logo';
+import { MaybeLink, hasHref } from '@/components/ui/maybe-link';
 import type { SiteChrome } from '@/lib/cms/site';
+import { cn } from '@/lib/utils';
 
 type FooterProps = {
   site: SiteChrome['site'];
@@ -30,13 +30,16 @@ export function Footer({ site, columns, legalLinks }: FooterProps) {
                 </p>
                 <ul className="space-y-4">
                   {column.links.map((link) => (
-                    <li key={link.href + link.label}>
-                      <Link
+                    <li key={link.label}>
+                      <MaybeLink
                         href={link.href}
-                        className="text-sm text-text-secondary transition-colors hover:text-text-primary"
+                        className={cn(
+                          'text-sm text-text-secondary',
+                          hasHref(link.href) && 'transition-colors hover:text-text-primary',
+                        )}
                       >
                         {link.label}
-                      </Link>
+                      </MaybeLink>
                     </li>
                   ))}
                 </ul>
@@ -50,13 +53,16 @@ export function Footer({ site, columns, legalLinks }: FooterProps) {
             <p className="text-[11px] tracking-[1px] text-text-tertiary uppercase">{copyright}</p>
             <ul className="flex flex-wrap gap-8">
               {legalLinks.map((link) => (
-                <li key={link.href + link.label}>
-                  <Link
+                <li key={link.label}>
+                  <MaybeLink
                     href={link.href}
-                    className="text-[11px] tracking-[1px] text-text-tertiary uppercase transition-colors hover:text-text-secondary"
+                    className={cn(
+                      'text-[11px] tracking-[1px] text-text-tertiary uppercase',
+                      hasHref(link.href) && 'transition-colors hover:text-text-secondary',
+                    )}
                   >
                     {link.label}
-                  </Link>
+                  </MaybeLink>
                 </li>
               ))}
             </ul>

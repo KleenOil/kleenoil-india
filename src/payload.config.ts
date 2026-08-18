@@ -46,6 +46,8 @@ export default buildConfig({
     pool: {
       connectionString: env.DATABASE_URL,
     },
+    // Vercel never auto-pushes schema; new block tables/columns must ship as migrations.
+    push: !process.env.VERCEL,
   }),
   sharp,
   plugins: [...getStoragePlugins(env)],

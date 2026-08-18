@@ -184,6 +184,12 @@ const BLOCK_SEEDS: Record<string, () => LayoutBlock> = {
     eyebrow: DEFAULT_FEATURED_INDUSTRIES.eyebrow,
     heading: DEFAULT_FEATURED_INDUSTRIES.heading,
     description: DEFAULT_FEATURED_INDUSTRIES.description,
+    cards: DEFAULT_FEATURED_INDUSTRIES.industries.map((industry) => ({
+      tag: industry.tag,
+      title: industry.title,
+      description: industry.description,
+      href: industry.href,
+    })),
   }),
   'featured-services': () => ({
     blockType: 'featured-services',
@@ -195,6 +201,12 @@ const BLOCK_SEEDS: Record<string, () => LayoutBlock> = {
       DEFAULT_FEATURED_SERVICES.cta.href,
       DEFAULT_FEATURED_SERVICES.cta.appearance,
     ).link,
+    cards: DEFAULT_FEATURED_SERVICES.services.map((service) => ({
+      tag: service.tag,
+      title: service.title,
+      description: service.description,
+      href: service.href,
+    })),
   }),
   'process-story': () => ({
     blockType: 'process-story',
@@ -205,6 +217,7 @@ const BLOCK_SEEDS: Record<string, () => LayoutBlock> = {
       year: step.stage,
       title: step.title,
       description: step.description,
+      spec: step.spec,
     })),
   }),
   'featured-case-studies': () => ({
@@ -217,6 +230,13 @@ const BLOCK_SEEDS: Record<string, () => LayoutBlock> = {
       DEFAULT_FEATURED_CASE_STUDIES.cta.href,
       DEFAULT_FEATURED_CASE_STUDIES.cta.appearance,
     ).link,
+    cards: DEFAULT_FEATURED_CASE_STUDIES.caseStudies.map((item) => ({
+      tag: item.tag,
+      title: item.title,
+      description: item.description,
+      href: item.href,
+      metrics: item.metrics,
+    })),
   }),
   testimonials: () => ({
     blockType: 'testimonials',

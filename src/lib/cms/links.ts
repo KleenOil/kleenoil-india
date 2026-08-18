@@ -10,15 +10,11 @@ export type CmsLink = {
 };
 
 export type ResolvedLink = {
+  /** Empty when the CMS row has a label but no page/URL. */
   href: string;
   label: string;
   openInNewTab: boolean;
   appearance: 'primary' | 'secondary' | 'ghost';
-};
-
-type ResolveLinkOptions = {
-  /** Used when label exists but page/url is missing. */
-  fallbackHref?: string;
 };
 
 /** Normalize nested `{ link }` rows or flat link groups from Payload. */
@@ -37,14 +33,25 @@ export function unwrapLink(
   return value as CmsLink;
 }
 
+function resolveHref(data: CmsLink): string {
+  if (data.type === 'page' && data.page && typeof data.page === 'object' && data.page.slug) {
+    return data.page.slug === 'home' ? '/' : `/${data.page.slug}`;
+  }
+
+  if (typeof data.url === 'string' && data.url.trim()) {
+    return data.url.trim();
+  }
+
+  return '';
+}
+
 /**
  * Resolve a CMS link for frontend buttons/nav.
- * Always returns when a label is present so CTA label edits are never dropped
- * just because URL/page was left empty.
+ * Returns when a label is present so CTA copy is kept even if URL/page is empty.
+ * An empty `href` means the UI should render a non-clickable element.
  */
 export function resolveLink(
   link: CmsLink | { link?: CmsLink | null } | null | undefined,
-  options: ResolveLinkOptions = {},
 ): ResolvedLink | null {
   const data = unwrapLink(link);
   if (!data) {
@@ -56,17 +63,8 @@ export function resolveLink(
     return null;
   }
 
-  const fallbackHref = options.fallbackHref ?? '/';
-  let href = fallbackHref;
-
-  if (data.type === 'page' && data.page && typeof data.page === 'object' && data.page.slug) {
-    href = data.page.slug === 'home' ? '/' : `/${data.page.slug}`;
-  } else if (typeof data.url === 'string' && data.url.trim()) {
-    href = data.url.trim();
-  }
-
   return {
-    href,
+    href: resolveHref(data),
     label,
     openInNewTab: Boolean(data.openInNewTab),
     appearance: data.appearance ?? 'primary',
@@ -98,11 +96,7 @@ export function resolveCtaList(
   }
 
   const resolved = items
-    .map((item, index) =>
-      resolveLink(item, {
-        fallbackHref: fallbacks[index]?.href ?? fallbacks[0]?.href ?? '/',
-      }),
-    )
+    .map((item) => resolveLink(item))
     .filter((item): item is ResolvedLink => Boolean(item));
 
   if (!resolved.length) {

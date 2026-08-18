@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 
+import { MaybeLink, hasHref } from '@/components/ui/maybe-link';
 import { cn } from '@/lib/utils';
 
 export type CustomEngineeringCardData = {
@@ -22,7 +22,6 @@ const DEFAULTS = {
   description:
     'Specialised filtration architectures designed around your fluid chemistry, operating envelope, and production cycle.',
   ctaLabel: 'Speak with an engineer',
-  href: '/contact',
 };
 
 export function CustomEngineeringCard({ card, className }: CustomEngineeringCardProps) {
@@ -30,10 +29,11 @@ export function CustomEngineeringCard({ card, className }: CustomEngineeringCard
   const title = card?.title?.trim() || DEFAULTS.title;
   const description = card?.description?.trim() || DEFAULTS.description;
   const ctaLabel = card?.ctaLabel?.trim() || DEFAULTS.ctaLabel;
-  const href = card?.href?.trim() || DEFAULTS.href;
+  const href = card?.href?.trim() || '';
+  const linked = hasHref(href);
 
   return (
-    <Link
+    <MaybeLink
       href={href}
       data-reveal-item
       className={cn(
@@ -62,13 +62,15 @@ export function CustomEngineeringCard({ card, className }: CustomEngineeringCard
         <p className="text-sm leading-relaxed text-text-secondary">{description}</p>
       </div>
 
-      <div className="relative flex items-center justify-between border-t border-border-subtle pt-6">
-        <span className="font-heading text-sm font-medium text-brand-primary">{ctaLabel}</span>
-        <ArrowUpRight
-          className="size-4 text-brand-primary transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:-translate-y-1"
-          aria-hidden
-        />
-      </div>
-    </Link>
+      {linked ? (
+        <div className="relative flex items-center justify-between border-t border-border-subtle pt-6">
+          <span className="font-heading text-sm font-medium text-brand-primary">{ctaLabel}</span>
+          <ArrowUpRight
+            className="size-4 text-brand-primary transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:-translate-y-1"
+            aria-hidden
+          />
+        </div>
+      ) : null}
+    </MaybeLink>
   );
 }

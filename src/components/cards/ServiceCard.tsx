@@ -1,13 +1,13 @@
-import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
+import { MaybeLink, hasHref } from '@/components/ui/maybe-link';
 import { cn } from '@/lib/utils';
 
 export type ServiceCardData = {
   tag: string;
   title: string;
   description: string;
-  href: string;
+  href?: string | null;
 };
 
 type ServiceCardProps = {
@@ -16,8 +16,10 @@ type ServiceCardProps = {
 };
 
 export function ServiceCard({ service, className }: ServiceCardProps) {
+  const linked = hasHref(service.href);
+
   return (
-    <Link
+    <MaybeLink
       href={service.href}
       data-reveal-item
       className={cn(
@@ -32,13 +34,15 @@ export function ServiceCard({ service, className }: ServiceCardProps) {
         {service.title}
       </h3>
       <p className="flex-1 text-sm leading-relaxed text-text-secondary">{service.description}</p>
-      <div className="flex items-center justify-between border-t border-border-subtle pt-5">
-        <span className="font-heading text-sm font-bold text-brand-primary">Learn more</span>
-        <ArrowUpRight
-          className="size-4 text-brand-primary transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:-translate-y-1"
-          aria-hidden
-        />
-      </div>
-    </Link>
+      {linked ? (
+        <div className="flex items-center justify-between border-t border-border-subtle pt-5">
+          <span className="font-heading text-sm font-bold text-brand-primary">Learn more</span>
+          <ArrowUpRight
+            className="size-4 text-brand-primary transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:-translate-y-1"
+            aria-hidden
+          />
+        </div>
+      ) : null}
+    </MaybeLink>
   );
 }

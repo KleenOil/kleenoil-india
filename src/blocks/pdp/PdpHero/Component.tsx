@@ -150,9 +150,9 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
           </div>
 
           <div className="flex flex-wrap gap-3.5 pt-2">
-            {ctas.map((cta) => (
+            {ctas.map((cta, index) => (
               <CtaButton
-                key={cta.href + cta.label}
+                key={`${cta.label}-${index}`}
                 href={cta.href}
                 appearance={cta.appearance}
                 openInNewTab={cta.openInNewTab}

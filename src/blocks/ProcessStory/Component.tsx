@@ -8,6 +8,7 @@ type ProcessStep = {
   year?: string | null;
   title?: string | null;
   description?: string | null;
+  spec?: string | null;
   icon?: number | Media | null;
 };
 
@@ -34,7 +35,7 @@ function mapCmsStep(step: ProcessStep, index: number): ProcessStageData | null {
     stage: step.year || fallback?.stage || `STAGE ${String(index + 1).padStart(2, '0')}`,
     title: step.title,
     description: step.description || fallback?.description || '',
-    spec: fallback?.spec || '',
+    spec: step.spec || fallback?.spec || '',
     theme: fallback?.theme || 'contaminated',
   };
 }

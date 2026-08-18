@@ -73,7 +73,6 @@ export interface Config {
     'product-templates': ProductTemplate;
     products: Product;
     'payload-kv': PayloadKv;
-    'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -86,7 +85,6 @@ export interface Config {
     'product-templates': ProductTemplatesSelect<false> | ProductTemplatesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
-    'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -115,13 +113,7 @@ export interface Config {
   };
   user: User;
   jobs: {
-    tasks: {
-      schedulePublish: TaskSchedulePublish;
-      inline: {
-        input: unknown;
-        output: unknown;
-      };
-    };
+    tasks: unknown;
     workflows: unknown;
   };
 }
@@ -224,7 +216,7 @@ export interface Page {
                     label?: string | null;
                     page?: (number | null) | Page;
                     /**
-                     * Absolute URL or site path (e.g. /products or https://example.com).
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
                      */
                     url?: string | null;
                     openInNewTab?: boolean | null;
@@ -261,7 +253,7 @@ export interface Page {
               label?: string | null;
               page?: (number | null) | Page;
               /**
-               * Absolute URL or site path (e.g. /products or https://example.com).
+               * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
                */
               url?: string | null;
               openInNewTab?: boolean | null;
@@ -343,7 +335,7 @@ export interface Page {
                     label?: string | null;
                     page?: (number | null) | Page;
                     /**
-                     * Absolute URL or site path (e.g. /products or https://example.com).
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
                      */
                     url?: string | null;
                     openInNewTab?: boolean | null;
@@ -433,7 +425,7 @@ export interface Page {
                     label?: string | null;
                     page?: (number | null) | Page;
                     /**
-                     * Absolute URL or site path (e.g. /products or https://example.com).
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
                      */
                     url?: string | null;
                     openInNewTab?: boolean | null;
@@ -474,7 +466,7 @@ export interface Page {
               label?: string | null;
               page?: (number | null) | Page;
               /**
-               * Absolute URL or site path (e.g. /products or https://example.com).
+               * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
                */
               url?: string | null;
               openInNewTab?: boolean | null;
@@ -497,7 +489,7 @@ export interface Page {
                    */
                   product?: (number | null) | Product;
                   /**
-                   * Fallback URL when no product is linked (e.g. /products).
+                   * Optional URL when no product is linked. Leave empty to keep the card not clickable.
                    */
                   href?: string | null;
                   id?: string | null;
@@ -518,7 +510,7 @@ export interface Page {
                */
               ctaLabel?: string | null;
               /**
-               * Where the card goes (e.g. /contact)
+               * Optional. Leave empty to keep the card not clickable.
                */
               href?: string | null;
             };
@@ -530,6 +522,25 @@ export interface Page {
             eyebrow?: string | null;
             heading?: string | null;
             description?: string | null;
+            /**
+             * Shown in two rows of three. Tag, title, description, image, and link.
+             */
+            cards?:
+              | {
+                  /**
+                   * e.g. 01 / INDUSTRY
+                   */
+                  tag?: string | null;
+                  title: string;
+                  description?: string | null;
+                  image?: (number | null) | Media;
+                  /**
+                   * Optional. Leave empty to keep the card as text only (not clickable).
+                   */
+                  href?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'featured-industries';
@@ -543,12 +554,30 @@ export interface Page {
               label?: string | null;
               page?: (number | null) | Page;
               /**
-               * Absolute URL or site path (e.g. /products or https://example.com).
+               * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
                */
               url?: string | null;
               openInNewTab?: boolean | null;
               appearance?: ('primary' | 'secondary' | 'ghost') | null;
             };
+            /**
+             * Tag, title, description, and link for each card.
+             */
+            cards?:
+              | {
+                  /**
+                   * e.g. 01 / CONSULT
+                   */
+                  tag?: string | null;
+                  title: string;
+                  description?: string | null;
+                  /**
+                   * Optional. Leave empty to keep the card as text only (not clickable).
+                   */
+                  href?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'featured-services';
@@ -562,6 +591,10 @@ export interface Page {
                   year?: string | null;
                   title: string;
                   description?: string | null;
+                  /**
+                   * Pill under the description, e.g. PARTICULATE > 18μm.
+                   */
+                  spec?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -578,12 +611,37 @@ export interface Page {
               label?: string | null;
               page?: (number | null) | Page;
               /**
-               * Absolute URL or site path (e.g. /products or https://example.com).
+               * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
                */
               url?: string | null;
               openInNewTab?: boolean | null;
               appearance?: ('primary' | 'secondary' | 'ghost') | null;
             };
+            /**
+             * Shown in two rows of two. Tag, title, description, link, and up to three stats.
+             */
+            cards?:
+              | {
+                  /**
+                   * e.g. CASE STUDY / AUTOMOTIVE
+                   */
+                  tag?: string | null;
+                  title: string;
+                  description?: string | null;
+                  /**
+                   * Optional. Leave empty to keep the card as text only (not clickable).
+                   */
+                  href?: string | null;
+                  metrics?:
+                    | {
+                        value: string;
+                        label: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'featured-case-studies';
@@ -664,7 +722,6 @@ export interface Page {
   publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -732,7 +789,7 @@ export interface Product {
                     label?: string | null;
                     page?: (number | null) | Page;
                     /**
-                     * Absolute URL or site path (e.g. /products or https://example.com).
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
                      */
                     url?: string | null;
                     openInNewTab?: boolean | null;
@@ -902,7 +959,7 @@ export interface Product {
                     label?: string | null;
                     page?: (number | null) | Page;
                     /**
-                     * Absolute URL or site path (e.g. /products or https://example.com).
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
                      */
                     url?: string | null;
                     openInNewTab?: boolean | null;
@@ -997,7 +1054,7 @@ export interface ProductTemplate {
                     label?: string | null;
                     page?: (number | null) | Page;
                     /**
-                     * Absolute URL or site path (e.g. /products or https://example.com).
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
                      */
                     url?: string | null;
                     openInNewTab?: boolean | null;
@@ -1139,7 +1196,7 @@ export interface ProductTemplate {
                     label?: string | null;
                     page?: (number | null) | Page;
                     /**
-                     * Absolute URL or site path (e.g. /products or https://example.com).
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
                      */
                     url?: string | null;
                     openInNewTab?: boolean | null;
@@ -1179,98 +1236,6 @@ export interface PayloadKv {
     | number
     | boolean
     | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-jobs".
- */
-export interface PayloadJob {
-  id: number;
-  /**
-   * Input data provided to the job
-   */
-  input?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  taskStatus?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  completedAt?: string | null;
-  totalTried?: number | null;
-  /**
-   * If hasError is true this job will not be retried
-   */
-  hasError?: boolean | null;
-  /**
-   * If hasError is true, this is the error that caused it
-   */
-  error?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  /**
-   * Task execution log
-   */
-  log?:
-    | {
-        executedAt: string;
-        completedAt: string;
-        taskSlug: 'inline' | 'schedulePublish';
-        taskID: string;
-        input?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        output?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        state: 'failed' | 'succeeded';
-        error?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  taskSlug?: ('inline' | 'schedulePublish') | null;
-  queue?: string | null;
-  waitUntil?: string | null;
-  processing?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1688,6 +1653,16 @@ export interface PagesSelect<T extends boolean = true> {
               eyebrow?: T;
               heading?: T;
               description?: T;
+              cards?:
+                | T
+                | {
+                    tag?: T;
+                    title?: T;
+                    description?: T;
+                    image?: T;
+                    href?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -1707,6 +1682,15 @@ export interface PagesSelect<T extends boolean = true> {
                     openInNewTab?: T;
                     appearance?: T;
                   };
+              cards?:
+                | T
+                | {
+                    tag?: T;
+                    title?: T;
+                    description?: T;
+                    href?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -1722,6 +1706,7 @@ export interface PagesSelect<T extends boolean = true> {
                     year?: T;
                     title?: T;
                     description?: T;
+                    spec?: T;
                     id?: T;
                   };
               id?: T;
@@ -1742,6 +1727,22 @@ export interface PagesSelect<T extends boolean = true> {
                     url?: T;
                     openInNewTab?: T;
                     appearance?: T;
+                  };
+              cards?:
+                | T
+                | {
+                    tag?: T;
+                    title?: T;
+                    description?: T;
+                    href?: T;
+                    metrics?:
+                      | T
+                      | {
+                          value?: T;
+                          label?: T;
+                          id?: T;
+                        };
+                    id?: T;
                   };
               id?: T;
               blockName?: T;
@@ -1797,7 +1798,6 @@ export interface PagesSelect<T extends boolean = true> {
   publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2229,37 +2229,6 @@ export interface PayloadKvSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-jobs_select".
- */
-export interface PayloadJobsSelect<T extends boolean = true> {
-  input?: T;
-  taskStatus?: T;
-  completedAt?: T;
-  totalTried?: T;
-  hasError?: T;
-  error?: T;
-  log?:
-    | T
-    | {
-        executedAt?: T;
-        completedAt?: T;
-        taskSlug?: T;
-        taskID?: T;
-        input?: T;
-        output?: T;
-        state?: T;
-        error?: T;
-        id?: T;
-      };
-  taskSlug?: T;
-  queue?: T;
-  waitUntil?: T;
-  processing?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
@@ -2306,7 +2275,7 @@ export interface SiteSetting {
     label?: string | null;
     page?: (number | null) | Page;
     /**
-     * Absolute URL or site path (e.g. /products or https://example.com).
+     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
      */
     url?: string | null;
     openInNewTab?: boolean | null;
@@ -2793,23 +2762,6 @@ export interface CollectionsWidget {
     [k: string]: unknown;
   };
   width: 'full';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TaskSchedulePublish".
- */
-export interface TaskSchedulePublish {
-  input: {
-    type?: ('publish' | 'unpublish') | null;
-    locale?: string | null;
-    doc?: {
-      relationTo: 'pages';
-      value: number | Page;
-    } | null;
-    global?: string | null;
-    user?: (number | null) | User;
-  };
-  output?: unknown;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

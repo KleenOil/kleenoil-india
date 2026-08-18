@@ -7,6 +7,9 @@ import * as migration_20260725_102037_pdp_hero_quick_spec_counter from './202607
 import * as migration_20260803_194920_featured_products_manual_cards from './20260803_194920_featured_products_manual_cards';
 import * as migration_20260803_195401_featured_products_custom_engineering_card from './20260803_195401_featured_products_custom_engineering_card';
 import * as migration_20260817_180000_add_about_page_blocks from './20260817_180000_add_about_page_blocks';
+import * as migration_20260818_101000_process_story_spec from './20260818_101000_process_story_spec';
+import * as migration_20260818_164100_featured_cards from './20260818_164100_featured_cards';
+import * as migration_20260818_165000_featured_case_study_cards from './20260818_165000_featured_case_study_cards';
 
 export const migrations = [
   {
@@ -53,5 +56,20 @@ export const migrations = [
     up: migration_20260817_180000_add_about_page_blocks.up,
     down: migration_20260817_180000_add_about_page_blocks.down,
     name: '20260817_180000_add_about_page_blocks',
+  },
+  {
+    up: migration_20260818_101000_process_story_spec.up,
+    down: migration_20260818_101000_process_story_spec.down,
+    name: '20260818_101000_process_story_spec',
+  },
+  {
+    up: migration_20260818_164100_featured_cards.up,
+    down: migration_20260818_164100_featured_cards.down,
+    name: '20260818_164100_featured_cards',
+  },
+  {
+    up: migration_20260818_165000_featured_case_study_cards.up,
+    down: migration_20260818_165000_featured_case_study_cards.down,
+    name: '20260818_165000_featured_case_study_cards',
   },
 ];

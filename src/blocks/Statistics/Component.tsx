@@ -30,7 +30,7 @@ export function StatisticsBlock({ block }: StatisticsBlockProps) {
 
   return (
     <section className="border-t border-border-subtle bg-surface">
-      <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-12 px-6 py-16 lg:gap-16 lg:px-[100px] lg:pb-0 lg:pt-[120px]">
+      <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-12 px-6 py-16 lg:gap-16 lg:px-[100px] lg:pt-[120px]">
         <SectionHeader eyebrow={eyebrow} heading={heading} description={description} />
 
         <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">

@@ -1,14 +1,14 @@
 import Image from 'next/image';
-import Link from 'next/link';
 
 import { ParallaxMedia } from '@/components/motion/ParallaxMedia';
+import { MaybeLink } from '@/components/ui/maybe-link';
 import { cn } from '@/lib/utils';
 
 export type IndustryCardData = {
   tag: string;
   title: string;
   description: string;
-  href: string;
+  href?: string | null;
   imageUrl?: string | null;
   imageAlt?: string;
 };
@@ -20,7 +20,7 @@ type IndustryCardProps = {
 
 export function IndustryCard({ industry, className }: IndustryCardProps) {
   return (
-    <Link
+    <MaybeLink
       href={industry.href}
       data-reveal-item
       className={cn(
@@ -58,6 +58,6 @@ export function IndustryCard({ industry, className }: IndustryCardProps) {
           {industry.description}
         </p>
       </div>
-    </Link>
+    </MaybeLink>
   );
 }

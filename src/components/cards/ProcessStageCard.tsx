@@ -76,12 +76,14 @@ export function ProcessStageCard({ stage, className }: ProcessStageCardProps) {
           {stage.title}
         </h3>
         <p className="text-[13px] leading-relaxed text-text-secondary">{stage.description}</p>
-        <div className="inline-flex w-fit items-center gap-2 rounded-lg border border-border-subtle bg-background/70 px-3 py-2">
-          <span className="size-1.5 rounded-full bg-brand-primary" aria-hidden />
-          <span className="font-mono text-[10px] font-medium tracking-[1.2px] text-text-primary uppercase">
-            {stage.spec}
-          </span>
-        </div>
+        {stage.spec ? (
+          <div className="inline-flex w-fit items-center gap-2 rounded-lg border border-border-subtle bg-background/70 px-3 py-2">
+            <span className="size-1.5 rounded-full bg-brand-primary" aria-hidden />
+            <span className="font-mono text-[10px] font-medium tracking-[1.2px] text-text-primary uppercase">
+              {stage.spec}
+            </span>
+          </div>
+        ) : null}
       </div>
     </article>
   );

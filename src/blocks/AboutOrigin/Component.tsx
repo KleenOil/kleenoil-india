@@ -27,9 +27,7 @@ export function AboutOriginBlock({ block }: AboutOriginBlockProps) {
   const body = block?.body || DEFAULT_ABOUT_ORIGIN.body;
   const bodySecondary = block?.bodySecondary || DEFAULT_ABOUT_ORIGIN.bodySecondary;
 
-  const cta =
-    resolveLink(block?.cta, { fallbackHref: DEFAULT_ABOUT_ORIGIN.cta.href }) ??
-    DEFAULT_ABOUT_ORIGIN.cta;
+  const cta = resolveLink(block?.cta) ?? DEFAULT_ABOUT_ORIGIN.cta;
 
   const milestones = block?.milestones?.filter((item) => item.year && item.title)?.length
     ? block.milestones.filter((item) => item.year && item.title)

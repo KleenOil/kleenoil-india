@@ -89,9 +89,9 @@ export function CtaBlock({ block }: CtaBlockProps) {
             data-reveal-part
             className="flex w-full max-w-md flex-col gap-3.5 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center"
           >
-            {ctas.map((cta) => (
+            {ctas.map((cta, index) => (
               <CtaButton
-                key={cta.href + cta.label}
+                key={`${cta.label}-${index}`}
                 href={cta.href}
                 appearance={cta.appearance}
                 openInNewTab={cta.openInNewTab}

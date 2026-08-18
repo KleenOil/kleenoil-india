@@ -1,5 +1,4 @@
-import Link from 'next/link';
-
+import { MaybeLink } from '@/components/ui/maybe-link';
 import { cn } from '@/lib/utils';
 
 export type CaseStudyMetric = {
@@ -11,7 +10,7 @@ export type CaseStudyCardData = {
   tag: string;
   title: string;
   description: string;
-  href: string;
+  href?: string | null;
   metrics: CaseStudyMetric[];
 };
 
@@ -22,7 +21,7 @@ type CaseStudyCardProps = {
 
 export function CaseStudyCard({ caseStudy, className }: CaseStudyCardProps) {
   return (
-    <Link
+    <MaybeLink
       href={caseStudy.href}
       data-reveal-item
       className={cn(
@@ -58,6 +57,6 @@ export function CaseStudyCard({ caseStudy, className }: CaseStudyCardProps) {
           </div>
         ))}
       </div>
-    </Link>
+    </MaybeLink>
   );
 }

@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { Logo } from '@/components/branding/Logo';
 import { CtaButton } from '@/components/ui/cta-button';
+import { MaybeLink, hasHref } from '@/components/ui/maybe-link';
 import type { SiteChrome } from '@/lib/cms/site';
 import { cn } from '@/lib/utils';
 
@@ -72,13 +73,16 @@ export function Header({ site, mainNav, utilityNav, enableSearch = true }: Heade
 
         <nav className="hidden items-center gap-10 lg:flex" aria-label="Main">
           {mainNav.map((item) => (
-            <Link
-              key={item.href + item.label}
+            <MaybeLink
+              key={item.label}
               href={item.href}
-              className="text-sm font-semibold tracking-wide text-text-secondary transition-colors hover:text-text-primary"
+              className={cn(
+                'text-sm font-semibold tracking-wide text-text-secondary',
+                hasHref(item.href) && 'transition-colors hover:text-text-primary',
+              )}
             >
               {item.label}
-            </Link>
+            </MaybeLink>
           ))}
         </nav>
 
@@ -140,15 +144,18 @@ export function Header({ site, mainNav, utilityNav, enableSearch = true }: Heade
 
         <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-6 py-8" aria-label="Mobile">
           {mainNav.map((item) => (
-            <Link
-              key={item.href + item.label}
+            <MaybeLink
+              key={item.label}
               href={item.href}
-              className="rounded-lg px-3 py-4 text-lg font-semibold text-text-primary transition-colors hover:bg-surface"
+              className={cn(
+                'rounded-lg px-3 py-4 text-lg font-semibold text-text-primary',
+                hasHref(item.href) && 'transition-colors hover:bg-surface',
+              )}
               onClick={() => setOpen(false)}
               tabIndex={open ? undefined : -1}
             >
               {item.label}
-            </Link>
+            </MaybeLink>
           ))}
 
           {enableSearch ? (

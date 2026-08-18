@@ -53,7 +53,7 @@ function resolveCardHref(card: FeaturedProductCard): string {
     return card.href.trim();
   }
 
-  return '/products';
+  return '';
 }
 
 function mapCard(card: FeaturedProductCard, index: number): ProductCardData | null {
@@ -76,9 +76,7 @@ export function FeaturedProductsBlock({ block }: FeaturedProductsBlockProps) {
   const heading = block?.heading || DEFAULT_FEATURED_PRODUCTS.heading;
   const description = block?.description || DEFAULT_FEATURED_PRODUCTS.description;
 
-  const resolvedCta = resolveLink(block?.cta, {
-    fallbackHref: DEFAULT_FEATURED_PRODUCTS.cta.href,
-  });
+  const resolvedCta = resolveLink(block?.cta);
   const sectionCta = resolvedCta
     ? {
         label: resolvedCta.label,
@@ -100,6 +98,9 @@ export function FeaturedProductsBlock({ block }: FeaturedProductsBlockProps) {
   const customEngineering = {
     ...DEFAULT_FEATURED_PRODUCTS.customEngineering,
     ...(block?.customEngineering ?? {}),
+    href: block?.customEngineering
+      ? block.customEngineering.href?.trim() || ''
+      : DEFAULT_FEATURED_PRODUCTS.customEngineering.href,
   };
 
   return (
@@ -115,13 +116,13 @@ export function FeaturedProductsBlock({ block }: FeaturedProductsBlockProps) {
         <div className="flex flex-col gap-6">
           <div className="grid gap-6 lg:grid-cols-3">
             {primaryRow.map((product) => (
-              <ProductCard key={product.href + product.title} product={product} />
+              <ProductCard key={product.title} product={product} />
             ))}
           </div>
 
           <div className="grid gap-6 lg:grid-cols-3">
             {secondaryRow.map((product) => (
-              <ProductCard key={product.href + product.title} product={product} />
+              <ProductCard key={product.title} product={product} />
             ))}
             <CustomEngineeringCard card={customEngineering} />
           </div>
