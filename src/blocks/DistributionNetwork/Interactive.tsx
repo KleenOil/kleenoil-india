@@ -24,6 +24,7 @@ export type DistributionOffice = {
 type DistributionNetworkInteractiveProps = {
   offices: DistributionOffice[];
   stats: Array<{ value: string; label: string }>;
+  showMap?: boolean;
   mapImageUrl?: string | null;
   mapImageAlt?: string;
 };
@@ -31,6 +32,7 @@ type DistributionNetworkInteractiveProps = {
 export function DistributionNetworkInteractive({
   offices,
   stats,
+  showMap = true,
   mapImageUrl,
   mapImageAlt = 'Kleenoil distribution network map',
 }: DistributionNetworkInteractiveProps) {
@@ -52,25 +54,32 @@ export function DistributionNetworkInteractive({
   const useStaticMap = Boolean(mapImageUrl);
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
-      {useStaticMap ? (
-        <div
-          data-reveal-part
-          className="relative min-h-[320px] overflow-hidden rounded-2xl border border-border-subtle bg-brand-soft lg:min-h-[480px]"
-        >
-          <Image
-            src={mapImageUrl!}
-            alt={mapImageAlt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 55vw"
-          />
-        </div>
-      ) : (
-        <div data-reveal-part>
-          <IndiaNetworkMap pins={pins} activeCity={activeCity} onSelect={setActiveCity} />
-        </div>
+    <div
+      className={cn(
+        'grid gap-8 lg:gap-10',
+        showMap ? 'lg:grid-cols-[1.15fr_0.85fr]' : 'lg:grid-cols-1',
       )}
+    >
+      {showMap ? (
+        useStaticMap ? (
+          <div
+            data-reveal-part
+            className="relative min-h-[320px] overflow-hidden rounded-2xl border border-border-subtle bg-brand-soft lg:min-h-[480px]"
+          >
+            <Image
+              src={mapImageUrl!}
+              alt={mapImageAlt}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 55vw"
+            />
+          </div>
+        ) : (
+          <div data-reveal-part>
+            <IndiaNetworkMap pins={pins} activeCity={activeCity} onSelect={setActiveCity} />
+          </div>
+        )
+      ) : null}
 
       <div className="flex flex-col gap-8">
         <div className="grid grid-cols-2 gap-4">
@@ -94,7 +103,7 @@ export function DistributionNetworkInteractive({
           <p className="font-mono text-[11px] font-bold tracking-[2px] text-brand-primary uppercase">
             Regional hubs
           </p>
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+          <ul className={cn('grid gap-3 sm:grid-cols-2', showMap && 'lg:grid-cols-1')}>
             {offices.map((office) => {
               const isActive = activeCity?.toLowerCase() === office.city.toLowerCase();
               const mapsUrl = office.mapsUrl?.trim() || null;

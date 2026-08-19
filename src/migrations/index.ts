@@ -10,6 +10,7 @@ import * as migration_20260817_180000_add_about_page_blocks from './20260817_180
 import * as migration_20260818_101000_process_story_spec from './20260818_101000_process_story_spec';
 import * as migration_20260818_164100_featured_cards from './20260818_164100_featured_cards';
 import * as migration_20260818_165000_featured_case_study_cards from './20260818_165000_featured_case_study_cards';
+import * as migration_20260819_080000_distribution_network_show_map from './20260819_080000_distribution_network_show_map';
 
 export const migrations = [
   {
@@ -71,5 +72,10 @@ export const migrations = [
     up: migration_20260818_165000_featured_case_study_cards.up,
     down: migration_20260818_165000_featured_case_study_cards.down,
     name: '20260818_165000_featured_case_study_cards',
+  },
+  {
+    up: migration_20260819_080000_distribution_network_show_map.up,
+    down: migration_20260819_080000_distribution_network_show_map.down,
+    name: '20260819_080000_distribution_network_show_map',
   },
 ];

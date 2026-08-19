@@ -352,6 +352,10 @@ export interface Page {
             heading?: string | null;
             description?: string | null;
             /**
+             * Turn off to hide the India map and keep stats, hubs, and HQ.
+             */
+            showMap?: boolean | null;
+            /**
              * Leave empty to use the interactive India map. Upload only if you want a static image instead.
              */
             mapImage?: (number | null) | Media;
@@ -1512,6 +1516,7 @@ export interface PagesSelect<T extends boolean = true> {
               eyebrow?: T;
               heading?: T;
               description?: T;
+              showMap?: T;
               mapImage?: T;
               stats?:
                 | T

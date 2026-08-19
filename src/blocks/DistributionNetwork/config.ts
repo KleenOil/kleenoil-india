@@ -11,6 +11,15 @@ export const DistributionNetwork: Block = {
   fields: [
     ...sectionHeaderFields,
     {
+      name: 'showMap',
+      type: 'checkbox',
+      label: 'Show map',
+      defaultValue: true,
+      admin: {
+        description: 'Turn off to hide the India map and keep stats, hubs, and HQ.',
+      },
+    },
+    {
       name: 'mapImage',
       type: 'upload',
       relationTo: 'media',
@@ -18,6 +27,7 @@ export const DistributionNetwork: Block = {
       admin: {
         description:
           'Leave empty to use the interactive India map. Upload only if you want a static image instead.',
+        condition: (_, siblingData) => siblingData?.showMap !== false,
       },
     },
     {

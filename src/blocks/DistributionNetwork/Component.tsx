@@ -38,6 +38,7 @@ export type DistributionNetworkBlockData = {
   eyebrow?: string | null;
   heading?: string | null;
   description?: string | null;
+  showMap?: boolean | null;
   mapImage?: number | Media | null;
   stats?: StatItem[] | null;
   regionalOffices?: OfficeItem[] | null;
@@ -121,6 +122,7 @@ export function DistributionNetworkBlock({ block }: DistributionNetworkBlockProp
         <DistributionNetworkInteractive
           offices={offices}
           stats={stats}
+          showMap={block?.showMap !== false}
           mapImageUrl={mapImageUrl}
           mapImageAlt={mapImageAlt}
         />

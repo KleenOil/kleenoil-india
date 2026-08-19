@@ -132,6 +132,7 @@ const BLOCK_SEEDS: Record<string, () => LayoutBlock> = {
   }),
   'distribution-network': () => ({
     blockType: 'distribution-network',
+    showMap: true,
     eyebrow: DEFAULT_DISTRIBUTION_NETWORK.eyebrow,
     heading: DEFAULT_DISTRIBUTION_NETWORK.heading,
     description: DEFAULT_DISTRIBUTION_NETWORK.description,
