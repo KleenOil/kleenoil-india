@@ -34,7 +34,7 @@ export function TeamCard({ member, className }: TeamCardProps) {
           </div>
         )}
       </div>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 p-4">
         <h3 className="font-heading text-xl font-bold tracking-tight text-text-primary">
           {member.name}
         </h3>
