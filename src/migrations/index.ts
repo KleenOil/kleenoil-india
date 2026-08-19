@@ -11,6 +11,8 @@ import * as migration_20260818_101000_process_story_spec from './20260818_101000
 import * as migration_20260818_164100_featured_cards from './20260818_164100_featured_cards';
 import * as migration_20260818_165000_featured_case_study_cards from './20260818_165000_featured_case_study_cards';
 import * as migration_20260819_080000_distribution_network_show_map from './20260819_080000_distribution_network_show_map';
+import * as migration_20260820_021500_pdp_contamination_columns from './20260820_021500_pdp_contamination_columns';
+import * as migration_20260820_025400_pdp_hero_quick_specs_per_row from './20260820_025400_pdp_hero_quick_specs_per_row';
 
 export const migrations = [
   {
@@ -77,5 +79,15 @@ export const migrations = [
     up: migration_20260819_080000_distribution_network_show_map.up,
     down: migration_20260819_080000_distribution_network_show_map.down,
     name: '20260819_080000_distribution_network_show_map',
+  },
+  {
+    up: migration_20260820_021500_pdp_contamination_columns.up,
+    down: migration_20260820_021500_pdp_contamination_columns.down,
+    name: '20260820_021500_pdp_contamination_columns',
+  },
+  {
+    up: migration_20260820_025400_pdp_hero_quick_specs_per_row.up,
+    down: migration_20260820_025400_pdp_hero_quick_specs_per_row.down,
+    name: '20260820_025400_pdp_hero_quick_specs_per_row',
   },
 ];

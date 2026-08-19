@@ -18,6 +18,7 @@ export const DEFAULT_PDP_HERO = {
     { value: 'ISO 16', label: 'CLEANLINESS' },
     { value: '24/7', label: 'DUTY' },
   ],
+  quickSpecsPerRow: 'auto' as const,
   ctas: [
     { label: 'Contact to buy', href: '/contact', appearance: 'primary' as const },
     { label: 'Download specs', href: '/resources', appearance: 'secondary' as const },
@@ -28,24 +29,26 @@ export const DEFAULT_PDP_CONTAMINATION = {
   eyebrow: 'THE CONTAMINATION PROBLEM',
   heading: 'What enters the oil —\nand what it costs.',
   description:
-    'Particles, water and varnish silently destroy clearances, valves and bearings — until downtime becomes the most expensive line item on the floor.',
-  cards: [
-    {
-      title: 'Particulate wear',
-      description: 'Sub-micron debris accelerates abrasion in pumps, servo valves and bearings.',
-      stat: '80% of failures',
-    },
-    {
-      title: 'Water ingress',
-      description:
-        'Free and dissolved water drives corrosion, microbial growth and additive washout.',
-      stat: '< 50 ppm target',
-    },
-    {
-      title: 'Varnish & oxidation',
-      description: 'Soft contaminants stick to cool surfaces and choke fine clearances.',
-      stat: 'Silent yield loss',
-    },
+    'Hydraulic fluid does more than transmit power. Contaminants accelerate wear, raise energy use, and shorten oil life across presses, moulders and mobile plant.',
+  leftHeading: 'Contamination generated',
+  leftDescription: 'Common solids and moisture found in hydraulic circuits',
+  rightHeading: 'Problems this leads to',
+  rightDescription: 'Downstream failures and operating cost',
+  leftItems: [
+    'Iron particles',
+    'Aluminum particles',
+    'Rubber particles',
+    'Moisture',
+    'Carbon particles',
+  ],
+  rightItems: [
+    'Pump damage',
+    'Valve damage',
+    'Seal damage',
+    'Pressure issues',
+    'Higher machine energy consumption',
+    'Lesser machine output',
+    'High replacement cost of industrial oils',
   ],
 };
 

@@ -111,12 +111,36 @@ export function resolveCtaList(
   return resolved;
 }
 
+/** Prefer a relative path so `next/image` localPatterns can serve Payload files. */
+function toNextImageSrc(url: string): string {
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    return url;
+  }
+
+  try {
+    const parsed = new URL(url);
+    const site = process.env.NEXT_PUBLIC_SITE_URL;
+    const sameOrigin = site ? parsed.origin === new URL(site).origin : false;
+    const localPayloadFile =
+      parsed.pathname.startsWith('/api/media/file/') &&
+      (parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1');
+
+    if (sameOrigin || localPayloadFile) {
+      return `${parsed.pathname}${parsed.search}`;
+    }
+  } catch {
+    return url;
+  }
+
+  return url;
+}
+
 export function getMediaUrl(media: number | Media | null | undefined): string | null {
   if (!media || typeof media === 'number') {
     return null;
   }
 
-  return media.url ?? null;
+  return media.url ? toNextImageSrc(media.url) : null;
 }
 
 export function getMediaAlt(media: number | Media | null | undefined, fallback = ''): string {

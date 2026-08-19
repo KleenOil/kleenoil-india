@@ -79,6 +79,87 @@ const syncLayoutFromTemplate: CollectionBeforeChangeHook = async ({ data, origin
   return data;
 };
 
+type PostgresDb = {
+  pool?: {
+    query: (query: string, params?: unknown[]) => Promise<unknown>;
+  };
+};
+
+/** Nested block arrays keep their row ids; Payload inserts them again without deleting first (PG unique on id). */
+const NESTED_ARRAY_KEYS = new Set([
+  'items',
+  'quickSpecs',
+  'steps',
+  'machines',
+  'columns',
+  'models',
+  'results',
+  'cards',
+  'ctas',
+  'trustBadges',
+]);
+
+function stripNestedArrayIds(layout: unknown): void {
+  if (!Array.isArray(layout)) {
+    return;
+  }
+
+  for (const block of layout) {
+    if (!block || typeof block !== 'object') {
+      continue;
+    }
+
+    for (const [key, value] of Object.entries(block as Record<string, unknown>)) {
+      if (!NESTED_ARRAY_KEYS.has(key) || !Array.isArray(value)) {
+        continue;
+      }
+
+      for (const row of value) {
+        if (row && typeof row === 'object' && 'id' in row) {
+          delete (row as { id?: unknown }).id;
+        }
+      }
+    }
+  }
+}
+
+const prepareProductLayoutSave: CollectionBeforeChangeHook = async ({
+  data,
+  originalDoc,
+  operation,
+  req,
+}) => {
+  if (!data) {
+    return data;
+  }
+
+  stripNestedArrayIds(data.layout);
+
+  if (operation !== 'update' || originalDoc?.id == null) {
+    return data;
+  }
+
+  const db = req.payload.db as PostgresDb;
+  if (typeof db.pool?.query === 'function') {
+    try {
+      await db.pool.query(
+        `DELETE FROM products_blocks_pdp_contamination_items
+         WHERE _parent_id IN (
+           SELECT id FROM products_blocks_pdp_contamination WHERE _parent_id = $1
+         )`,
+        [originalDoc.id],
+      );
+    } catch (error) {
+      req.payload.logger.warn(
+        { err: error },
+        'Could not clear contamination items before product save',
+      );
+    }
+  }
+
+  return data;
+};
+
 export const Products: CollectionConfig = {
   slug: 'products',
   labels: {
@@ -156,6 +237,6 @@ export const Products: CollectionConfig = {
     seoField,
   ],
   hooks: {
-    beforeChange: [syncLayoutFromTemplate],
+    beforeChange: [prepareProductLayoutSave, syncLayoutFromTemplate],
   },
 };

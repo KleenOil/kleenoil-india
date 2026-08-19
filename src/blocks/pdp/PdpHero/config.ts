@@ -40,10 +40,27 @@ const pdpHeroFields: Field[] = [
     },
   },
   {
+    name: 'quickSpecsPerRow',
+    type: 'select',
+    label: 'Cards per row',
+    defaultValue: 'auto',
+    options: [
+      { label: 'Auto', value: 'auto' },
+      { label: '1', value: 'one' },
+      { label: '2', value: 'two' },
+      { label: '3', value: 'three' },
+      { label: '4', value: 'four' },
+    ],
+    admin: {
+      description:
+        'Auto fills the row from how many specs you add (max 4, then wraps). 1–4 lock that many cards per row.',
+    },
+  },
+  {
     name: 'quickSpecs',
     type: 'array',
     label: 'Quick Specs',
-    maxRows: 4,
+    maxRows: 8,
     fields: [
       { name: 'value', type: 'text', required: true },
       { name: 'label', type: 'text', required: true },

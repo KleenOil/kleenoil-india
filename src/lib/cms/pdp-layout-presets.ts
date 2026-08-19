@@ -38,6 +38,7 @@ export function getDefaultPdpTemplateLayout(): PdpLayoutSeedBlock[] {
       title: DEFAULT_PDP_HERO.title,
       summary: DEFAULT_PDP_HERO.summary,
       quickSpecs: DEFAULT_PDP_HERO.quickSpecs,
+      quickSpecsPerRow: DEFAULT_PDP_HERO.quickSpecsPerRow,
       ctas: DEFAULT_PDP_HERO.ctas.map((cta) => customLink(cta.label, cta.href, cta.appearance)),
     },
     {
@@ -45,7 +46,14 @@ export function getDefaultPdpTemplateLayout(): PdpLayoutSeedBlock[] {
       eyebrow: DEFAULT_PDP_CONTAMINATION.eyebrow,
       heading: DEFAULT_PDP_CONTAMINATION.heading,
       description: DEFAULT_PDP_CONTAMINATION.description,
-      cards: DEFAULT_PDP_CONTAMINATION.cards,
+      leftHeading: DEFAULT_PDP_CONTAMINATION.leftHeading,
+      leftDescription: DEFAULT_PDP_CONTAMINATION.leftDescription,
+      rightHeading: DEFAULT_PDP_CONTAMINATION.rightHeading,
+      rightDescription: DEFAULT_PDP_CONTAMINATION.rightDescription,
+      items: [
+        ...DEFAULT_PDP_CONTAMINATION.leftItems.map((text) => ({ text, onRight: false })),
+        ...DEFAULT_PDP_CONTAMINATION.rightItems.map((text) => ({ text, onRight: true })),
+      ],
     },
     {
       blockType: 'pdp-how-it-works',

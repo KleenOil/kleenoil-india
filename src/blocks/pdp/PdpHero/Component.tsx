@@ -11,6 +11,8 @@ import { getMediaAlt, getMediaUrl, resolveCtaList, type CmsLink } from '@/lib/cm
 import type { Media } from '@/payload-types';
 import { cn } from '@/lib/utils';
 
+type QuickSpecsPerRow = 'auto' | 'one' | 'two' | 'three' | 'four';
+
 type SpecItem = {
   value?: string | null;
   label?: string | null;
@@ -29,6 +31,7 @@ export type PdpHeroBlockData = {
   summary?: string | null;
   gallery?: (number | Media)[] | null;
   quickSpecs?: SpecItem[] | null;
+  quickSpecsPerRow?: QuickSpecsPerRow | null;
   ctas?: CtaItem[] | null;
 };
 
@@ -69,6 +72,15 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
   const specs: SpecItem[] = block?.quickSpecs?.filter((s) => s.value && s.label)?.length
     ? block.quickSpecs.filter((s) => s.value && s.label)
     : DEFAULT_PDP_HERO.quickSpecs.map((spec) => ({ ...spec, animateCounter: false }));
+
+  const perRow = block?.quickSpecsPerRow || DEFAULT_PDP_HERO.quickSpecsPerRow;
+  const lockedColumns: Record<string, number> = {
+    one: 1,
+    two: 2,
+    three: 3,
+    four: 4,
+  };
+  const specColumns = lockedColumns[perRow] ?? Math.min(Math.max(specs.length, 1), 4);
 
   const ctas = resolveCtaList(block?.ctas, DEFAULT_PDP_HERO.ctas);
 
@@ -115,7 +127,7 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
           ) : null}
         </div>
 
-        <div className="flex flex-1 flex-col gap-7 pt-2">
+        <div className="flex min-w-0 flex-1 flex-col gap-7 pt-2">
           <Eyebrow>{eyebrow}</Eyebrow>
           <h1 className="font-heading text-3xl font-bold leading-[1.05] tracking-[-0.04em] text-text-primary md:text-4xl lg:text-[48px]">
             {title.split('\n').map((line, index) => (
@@ -128,21 +140,26 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
             {summary}
           </p>
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div
+            className="grid gap-4"
+            style={{
+              gridTemplateColumns: `repeat(${specColumns}, minmax(0, 1fr))`,
+            }}
+          >
             {specs.map((spec) => (
               <div
                 key={`${spec.value}-${spec.label}`}
                 data-reveal-item
-                className="surface-card flex flex-col gap-1.5 rounded-xl border border-border-subtle bg-surface-elevated/70 p-4"
+                className="@container surface-card flex min-w-0 flex-col gap-1.5 overflow-hidden rounded-xl border border-border-subtle bg-surface-elevated/70 p-4"
               >
-                <p className="font-heading text-xl font-bold tracking-tight text-brand-primary md:text-[22px]">
+                <p className="font-heading text-[clamp(0.95rem,16cqi,1.375rem)] font-bold leading-[1.15] tracking-tight wrap-anywhere text-brand-primary">
                   {spec.animateCounter && spec.value ? (
                     <AnimatedCounter value={spec.value} durationMs={2000} />
                   ) : (
                     spec.value
                   )}
                 </p>
-                <p className="font-mono text-[10px] font-bold tracking-[1.2px] text-text-tertiary uppercase">
+                <p className="font-mono text-[clamp(8px,8cqi,10px)] font-bold leading-snug tracking-[1.2px] wrap-anywhere text-text-tertiary uppercase">
                   {spec.label}
                 </p>
               </div>

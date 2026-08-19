@@ -1,7 +1,6 @@
 'use client';
 
-import Link from 'next/link';
-import { Menu, Search, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 import { Logo } from '@/components/branding/Logo';
@@ -14,10 +13,9 @@ type HeaderProps = {
   site: SiteChrome['site'];
   mainNav: SiteChrome['mainNav'];
   utilityNav: SiteChrome['utilityNav'];
-  enableSearch?: boolean;
 };
 
-export function Header({ site, mainNav, utilityNav, enableSearch = true }: HeaderProps) {
+export function Header({ site, mainNav, utilityNav }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const contact = utilityNav[0] ?? { label: 'Contact', href: '/contact' };
@@ -87,16 +85,6 @@ export function Header({ site, mainNav, utilityNav, enableSearch = true }: Heade
         </nav>
 
         <div className="hidden items-center gap-4 lg:flex">
-          {enableSearch ? (
-            <Link
-              href="/search"
-              className="inline-flex items-center gap-1.5 rounded-[10px] bg-surface-elevated/80 px-3 py-2 text-[13px] text-text-secondary transition-colors hover:text-text-primary"
-            >
-              <Search className="size-3.5" aria-hidden />
-              Search
-            </Link>
-          ) : null}
-
           <CtaButton
             href={contact.href}
             appearance="secondary"
@@ -157,18 +145,6 @@ export function Header({ site, mainNav, utilityNav, enableSearch = true }: Heade
               {item.label}
             </MaybeLink>
           ))}
-
-          {enableSearch ? (
-            <Link
-              href="/search"
-              className="mt-2 inline-flex items-center gap-2 rounded-lg px-3 py-4 text-base font-semibold text-text-secondary transition-colors hover:bg-surface hover:text-text-primary"
-              onClick={() => setOpen(false)}
-              tabIndex={open ? undefined : -1}
-            >
-              <Search className="size-4" aria-hidden />
-              Search
-            </Link>
-          ) : null}
         </nav>
 
         <div className="border-t border-border-subtle px-6 py-6">

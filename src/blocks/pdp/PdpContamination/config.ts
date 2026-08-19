@@ -8,14 +8,57 @@ const fields: Field[] = [
   headingField,
   descriptionField,
   {
-    name: 'cards',
+    name: 'leftHeading',
+    type: 'text',
+    label: 'Left heading',
+  },
+  {
+    name: 'leftDescription',
+    type: 'textarea',
+    label: 'Left description',
+  },
+  {
+    name: 'rightHeading',
+    type: 'text',
+    label: 'Right heading',
+  },
+  {
+    name: 'rightDescription',
+    type: 'textarea',
+    label: 'Right description',
+  },
+  {
+    name: 'items',
     type: 'array',
-    label: 'Problem Cards',
-    maxRows: 6,
+    label: 'List items',
+    labels: {
+      singular: 'Item',
+      plural: 'Items',
+    },
+    admin: {
+      initCollapsed: true,
+      description:
+        'Each row is an icon + label. Leave the toggle off for the left column, on for the right.',
+    },
     fields: [
-      { name: 'title', type: 'text', required: true },
-      { name: 'description', type: 'textarea' },
-      { name: 'stat', type: 'text', label: 'Stat / callout' },
+      {
+        name: 'icon',
+        type: 'upload',
+        relationTo: 'media',
+        label: 'Icon',
+      },
+      {
+        name: 'text',
+        type: 'text',
+        required: true,
+        label: 'Text',
+      },
+      {
+        name: 'onRight',
+        type: 'checkbox',
+        label: 'Place on right column',
+        defaultValue: false,
+      },
     ],
   },
 ];

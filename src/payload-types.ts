@@ -775,6 +775,10 @@ export interface Product {
              * Select or upload multiple images at once. Reorder as needed.
              */
             gallery?: (number | Media)[] | null;
+            /**
+             * Auto fills the row from how many specs you add (max 4, then wraps). 1–4 lock that many cards per row.
+             */
+            quickSpecsPerRow?: ('auto' | 'one' | 'two' | 'three' | 'four') | null;
             quickSpecs?:
               | {
                   value: string;
@@ -814,11 +818,18 @@ export interface Product {
             eyebrow?: string | null;
             heading?: string | null;
             description?: string | null;
-            cards?:
+            leftHeading?: string | null;
+            leftDescription?: string | null;
+            rightHeading?: string | null;
+            rightDescription?: string | null;
+            /**
+             * Each row is an icon + label. Leave the toggle off for the left column, on for the right.
+             */
+            items?:
               | {
-                  title: string;
-                  description?: string | null;
-                  stat?: string | null;
+                  icon?: (number | null) | Media;
+                  text: string;
+                  onRight?: boolean | null;
                   id?: string | null;
                 }[]
               | null;
@@ -1040,6 +1051,10 @@ export interface ProductTemplate {
              * Select or upload multiple images at once. Reorder as needed.
              */
             gallery?: (number | Media)[] | null;
+            /**
+             * Auto fills the row from how many specs you add (max 4, then wraps). 1–4 lock that many cards per row.
+             */
+            quickSpecsPerRow?: ('auto' | 'one' | 'two' | 'three' | 'four') | null;
             quickSpecs?:
               | {
                   value: string;
@@ -1075,11 +1090,18 @@ export interface ProductTemplate {
             eyebrow?: string | null;
             heading?: string | null;
             description?: string | null;
-            cards?:
+            leftHeading?: string | null;
+            leftDescription?: string | null;
+            rightHeading?: string | null;
+            rightDescription?: string | null;
+            /**
+             * Each row is an icon + label. Leave the toggle off for the left column, on for the right.
+             */
+            items?:
               | {
-                  title: string;
-                  description?: string | null;
-                  stat?: string | null;
+                  icon?: (number | null) | Media;
+                  text: string;
+                  onRight?: boolean | null;
                   id?: string | null;
                 }[]
               | null;
@@ -1822,6 +1844,7 @@ export interface ProductTemplatesSelect<T extends boolean = true> {
               title?: T;
               summary?: T;
               gallery?: T;
+              quickSpecsPerRow?: T;
               quickSpecs?:
                 | T
                 | {
@@ -1854,12 +1877,16 @@ export interface ProductTemplatesSelect<T extends boolean = true> {
               eyebrow?: T;
               heading?: T;
               description?: T;
-              cards?:
+              leftHeading?: T;
+              leftDescription?: T;
+              rightHeading?: T;
+              rightDescription?: T;
+              items?:
                 | T
                 | {
-                    title?: T;
-                    description?: T;
-                    stat?: T;
+                    icon?: T;
+                    text?: T;
+                    onRight?: T;
                     id?: T;
                   };
               id?: T;
@@ -2026,6 +2053,7 @@ export interface ProductsSelect<T extends boolean = true> {
               title?: T;
               summary?: T;
               gallery?: T;
+              quickSpecsPerRow?: T;
               quickSpecs?:
                 | T
                 | {
@@ -2059,12 +2087,16 @@ export interface ProductsSelect<T extends boolean = true> {
               eyebrow?: T;
               heading?: T;
               description?: T;
-              cards?:
+              leftHeading?: T;
+              leftDescription?: T;
+              rightHeading?: T;
+              rightDescription?: T;
+              items?:
                 | T
                 | {
-                    title?: T;
-                    description?: T;
-                    stat?: T;
+                    icon?: T;
+                    text?: T;
+                    onRight?: T;
                     id?: T;
                   };
               id?: T;
