@@ -379,6 +379,10 @@
     transform-origin: left center;
   }
 
+  .homepage-motion.is-animating [data-reveal]:not(.motion-revealed) .motion-line-grow-from-end {
+    transform-origin: right center;
+  }
+
   .homepage-motion.is-animating [data-reveal='hero']:not(.motion-revealed) [data-hero-glow] {
     opacity: 0.3;
   }

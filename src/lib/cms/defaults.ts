@@ -127,6 +127,7 @@ export const DEFAULT_STATISTICS = {
 
 export const DEFAULT_TRUST_INDICATORS = {
   heading: 'TRUSTED BY GLOBAL INDUSTRY LEADERS',
+  headingAlign: 'left' as const,
   logos: [
     { name: 'SIEMENS' },
     { name: 'TATA STEEL' },
@@ -429,35 +430,50 @@ export const DEFAULT_ABOUT_STORY = {
 };
 
 export const DEFAULT_TEAM = {
-  eyebrow: 'LEADERSHIP',
-  heading: 'Engineers who built\nthe filtration standard.',
+  eyebrow: 'MEET THE TEAM',
+  heading: 'The people behind\nthe filtration.',
   description:
-    'A multidisciplinary team of fluid systems engineers, metallurgists, and field specialists with decades of combined heavy-industry experience.',
+    'Leadership and specialists across sales, engineering, finance and operations — building Kleenoil since 1988.',
+  extraHeading: 'OPERATIONS & SPECIALISTS',
   members: [
     {
-      name: 'Rajiv Mehra',
-      role: 'FOUNDER & CHIEF ENGINEER',
+      name: 'Ravinder Kapur',
+      role: 'CMD',
       imageUrl:
         'https://images.unsplash.com/photo-1546888673-4db7ff10251a?auto=format&fit=crop&w=1080&q=80',
     },
     {
-      name: 'Anita Krishnan',
-      role: 'DIRECTOR OF ENGINEERING',
+      name: 'Namita Kapur',
+      role: 'Director – Business Development',
       imageUrl:
         'https://images.unsplash.com/photo-1701287348766-2eeb0e16f874?auto=format&fit=crop&w=1080&q=80',
     },
     {
-      name: 'Vikram Shah',
-      role: 'HEAD OF R&D',
+      name: 'Ankrish Kapur',
+      role: 'Director – Sales and Strategy',
       imageUrl:
         'https://images.unsplash.com/photo-1627776880991-808c5996527b?auto=format&fit=crop&w=1080&q=80',
     },
     {
-      name: 'Maya Iyer',
-      role: 'GLOBAL OPERATIONS',
+      name: 'Aneesh Kapur',
+      role: 'Director – Sales and Operation',
       imageUrl:
         'https://images.unsplash.com/photo-1743015852574-977620784641?auto=format&fit=crop&w=1080&q=80',
     },
+  ],
+  extraMembers: [
+    { name: 'Sundeep Uberai', role: 'CEO – Filtration Services' },
+    { name: 'Rajeev Bhardwaj', role: 'General Sales Manager' },
+    { name: 'Bed Prakash', role: 'General Sales Manager' },
+    { name: 'Vinod Mulgund', role: 'Head – Business Development' },
+    { name: 'Deepak Saxena', role: 'Sales Manager' },
+    { name: 'Shubh Khanna', role: 'Marketing Manager' },
+    { name: 'Abhishek Anand', role: 'Technical Support & CR' },
+    { name: 'Harprit Singh', role: 'Manager – Sales & Support' },
+    { name: 'Muneshwar Thakur', role: 'Manager – Finance' },
+    { name: 'Anil Vishwakarma', role: 'Manager – Accounts' },
+    { name: 'Chitresh Bisht', role: 'Manager – Utilities' },
+    { name: 'Ashish Rai', role: 'Senior Production Engineer' },
   ],
 };
 

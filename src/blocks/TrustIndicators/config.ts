@@ -11,6 +11,20 @@ export const TrustIndicators: Block = {
   fields: [
     headingField,
     {
+      name: 'headingAlign',
+      type: 'select',
+      label: 'Heading alignment',
+      defaultValue: 'left',
+      options: [
+        { label: 'Left', value: 'left' },
+        { label: 'Center', value: 'center' },
+        { label: 'Right', value: 'right' },
+      ],
+      admin: {
+        description: 'Place the heading on the left, center, or right of the rule line.',
+      },
+    },
+    {
       name: 'logos',
       type: 'array',
       label: 'Client Logos',

@@ -293,6 +293,10 @@ export interface Page {
           }
         | {
             heading?: string | null;
+            /**
+             * Place the heading on the left, center, or right of the rule line.
+             */
+            headingAlign?: ('left' | 'center' | 'right') | null;
             logos?:
               | {
                   logo: number | Media;
@@ -309,11 +313,32 @@ export interface Page {
             eyebrow?: string | null;
             heading?: string | null;
             description?: string | null;
+            /**
+             * Portrait cards shown in the main row. Add a photo, name, and role.
+             */
             members?:
               | {
                   name: string;
                   role: string;
                   photo?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Turn on to show the Operations & Specialists block grid below the portraits.
+             */
+            showExtraMembers?: boolean | null;
+            /**
+             * e.g. OPERATIONS & SPECIALISTS
+             */
+            extraHeading?: string | null;
+            /**
+             * Text-only blocks: name and role. No photo.
+             */
+            extraMembers?:
+              | {
+                  name: string;
+                  role: string;
                   id?: string | null;
                 }[]
               | null;
@@ -1478,6 +1503,7 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               heading?: T;
+              headingAlign?: T;
               logos?:
                 | T
                 | {
@@ -1501,6 +1527,15 @@ export interface PagesSelect<T extends boolean = true> {
                     name?: T;
                     role?: T;
                     photo?: T;
+                    id?: T;
+                  };
+              showExtraMembers?: T;
+              extraHeading?: T;
+              extraMembers?:
+                | T
+                | {
+                    name?: T;
+                    role?: T;
                     id?: T;
                   };
               id?: T;

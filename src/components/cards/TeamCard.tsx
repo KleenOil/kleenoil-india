@@ -16,8 +16,8 @@ type TeamCardProps = {
 
 export function TeamCard({ member, className }: TeamCardProps) {
   return (
-    <article data-reveal-item className={cn('surface-card flex flex-col gap-5', className)}>
-      <div className="relative aspect-[3/4] overflow-hidden rounded-xl border-2 border-border-subtle bg-brand-soft">
+    <article data-reveal-item className={cn('flex flex-col gap-4', className)}>
+      <div className="relative aspect-[3/4] overflow-hidden rounded-xl border border-brand-dim bg-brand-soft">
         {member.imageUrl ? (
           <Image
             src={member.imageUrl}
@@ -34,11 +34,11 @@ export function TeamCard({ member, className }: TeamCardProps) {
           </div>
         )}
       </div>
-      <div className="flex flex-col gap-1 p-4">
-        <h3 className="font-heading text-xl font-bold tracking-tight text-text-primary">
+      <div className="flex flex-col gap-1">
+        <h3 className="font-heading text-lg font-bold tracking-tight text-text-primary md:text-xl">
           {member.name}
         </h3>
-        <p className="font-mono text-[11px] tracking-wide text-text-secondary uppercase">
+        <p className="text-[13px] leading-snug tracking-wide text-text-secondary uppercase">
           {member.role}
         </p>
       </div>

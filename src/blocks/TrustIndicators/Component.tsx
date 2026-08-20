@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { DEFAULT_TRUST_INDICATORS } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
+import { cn } from '@/lib/utils';
 import type { Media } from '@/payload-types';
 
 type TrustLogo = {
@@ -11,10 +12,13 @@ type TrustLogo = {
   url?: string | null;
 };
 
+export type TrustHeadingAlign = 'left' | 'center' | 'right';
+
 export type TrustIndicatorsBlockData = {
   blockType: 'trust-indicators';
   eyebrow?: string | null;
   heading?: string | null;
+  headingAlign?: TrustHeadingAlign | null;
   description?: string | null;
   logos?: TrustLogo[] | null;
 };
@@ -23,8 +27,29 @@ type TrustIndicatorsBlockProps = {
   block?: TrustIndicatorsBlockData | null;
 };
 
+function resolveHeadingAlign(value: TrustHeadingAlign | null | undefined): TrustHeadingAlign {
+  if (value === 'center' || value === 'right' || value === 'left') {
+    return value;
+  }
+
+  return DEFAULT_TRUST_INDICATORS.headingAlign;
+}
+
+function HeadingRule({ fromEnd }: { fromEnd?: boolean }) {
+  return (
+    <span
+      className={cn(
+        'motion-line-grow h-px flex-1 bg-border-subtle',
+        fromEnd && 'motion-line-grow-from-end',
+      )}
+      aria-hidden
+    />
+  );
+}
+
 export function TrustIndicatorsBlock({ block }: TrustIndicatorsBlockProps) {
   const heading = block?.heading || DEFAULT_TRUST_INDICATORS.heading;
+  const headingAlign = resolveHeadingAlign(block?.headingAlign);
 
   const cmsLogos =
     block?.logos
@@ -58,17 +83,23 @@ export function TrustIndicatorsBlock({ block }: TrustIndicatorsBlockProps) {
       <div className="mx-auto w-full max-w-[1440px] px-6 pb-16 lg:px-[100px] lg:pb-[120px]">
         <div className="flex flex-col gap-7 border-t border-border-subtle pt-6">
           <div data-reveal-part className="flex items-center gap-5">
-            <p className="shrink-0 font-mono text-[11px] font-bold tracking-[2px] text-text-tertiary uppercase">
+            {headingAlign !== 'left' ? <HeadingRule fromEnd /> : null}
+            <p
+              className={cn(
+                'shrink-0 font-mono text-[11px] font-bold tracking-[2px] text-text-tertiary uppercase',
+                headingAlign === 'center' && 'text-center',
+              )}
+            >
               {heading}
             </p>
-            <span className="motion-line-grow h-px flex-1 bg-border-subtle" aria-hidden />
+            {headingAlign !== 'right' ? <HeadingRule /> : null}
           </div>
 
           <div
             data-reveal-logos
             className="flex flex-wrap items-center justify-between gap-x-10 gap-y-6"
           >
-            {logos.map((logo) => {
+            {logos.map((logo, index) => {
               const content = logo.imageUrl ? (
                 <Image
                   src={logo.imageUrl}
@@ -86,7 +117,7 @@ export function TrustIndicatorsBlock({ block }: TrustIndicatorsBlockProps) {
               if (logo.href) {
                 return (
                   <Link
-                    key={logo.name}
+                    key={`${logo.name}-${index}`}
                     href={logo.href}
                     className="transition-transform duration-300 hover:-translate-y-0.5"
                   >
@@ -95,7 +126,7 @@ export function TrustIndicatorsBlock({ block }: TrustIndicatorsBlockProps) {
                 );
               }
 
-              return <div key={logo.name}>{content}</div>;
+              return <div key={`${logo.name}-${index}`}>{content}</div>;
             })}
           </div>
         </div>

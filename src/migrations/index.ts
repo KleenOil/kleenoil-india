@@ -14,6 +14,8 @@ import * as migration_20260819_080000_distribution_network_show_map from './2026
 import * as migration_20260820_021500_pdp_contamination_columns from './20260820_021500_pdp_contamination_columns';
 import * as migration_20260820_025400_pdp_hero_quick_specs_per_row from './20260820_025400_pdp_hero_quick_specs_per_row';
 import * as migration_20260820_133000_navigation_mega_menu from './20260820_133000_navigation_mega_menu';
+import * as migration_20260820_141500_team_extra_members from './20260820_141500_team_extra_members';
+import * as migration_20260820_154800_trust_indicators_heading_align from './20260820_154800_trust_indicators_heading_align';
 
 export const migrations = [
   {
@@ -95,5 +97,15 @@ export const migrations = [
     up: migration_20260820_133000_navigation_mega_menu.up,
     down: migration_20260820_133000_navigation_mega_menu.down,
     name: '20260820_133000_navigation_mega_menu',
+  },
+  {
+    up: migration_20260820_141500_team_extra_members.up,
+    down: migration_20260820_141500_team_extra_members.down,
+    name: '20260820_141500_team_extra_members',
+  },
+  {
+    up: migration_20260820_154800_trust_indicators_heading_align.up,
+    down: migration_20260820_154800_trust_indicators_heading_align.down,
+    name: '20260820_154800_trust_indicators_heading_align',
   },
 ];

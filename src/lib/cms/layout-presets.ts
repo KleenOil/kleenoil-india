@@ -104,6 +104,7 @@ const BLOCK_SEEDS: Record<string, () => LayoutBlock> = {
   'trust-indicators': () => ({
     blockType: 'trust-indicators',
     heading: DEFAULT_TRUST_INDICATORS.heading,
+    headingAlign: DEFAULT_TRUST_INDICATORS.headingAlign,
     logos: [],
   }),
   team: () => ({
@@ -112,6 +113,9 @@ const BLOCK_SEEDS: Record<string, () => LayoutBlock> = {
     heading: DEFAULT_TEAM.heading,
     description: DEFAULT_TEAM.description,
     members: DEFAULT_TEAM.members.map(({ name, role }) => ({ name, role })),
+    showExtraMembers: true,
+    extraHeading: DEFAULT_TEAM.extraHeading,
+    extraMembers: DEFAULT_TEAM.extraMembers.map(({ name, role }) => ({ name, role })),
   }),
   'whats-new': () => ({
     blockType: 'whats-new',
