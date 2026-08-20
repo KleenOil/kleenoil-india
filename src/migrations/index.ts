@@ -13,6 +13,7 @@ import * as migration_20260818_165000_featured_case_study_cards from './20260818
 import * as migration_20260819_080000_distribution_network_show_map from './20260819_080000_distribution_network_show_map';
 import * as migration_20260820_021500_pdp_contamination_columns from './20260820_021500_pdp_contamination_columns';
 import * as migration_20260820_025400_pdp_hero_quick_specs_per_row from './20260820_025400_pdp_hero_quick_specs_per_row';
+import * as migration_20260820_133000_navigation_mega_menu from './20260820_133000_navigation_mega_menu';
 
 export const migrations = [
   {
@@ -89,5 +90,10 @@ export const migrations = [
     up: migration_20260820_025400_pdp_hero_quick_specs_per_row.up,
     down: migration_20260820_025400_pdp_hero_quick_specs_per_row.down,
     name: '20260820_025400_pdp_hero_quick_specs_per_row',
+  },
+  {
+    up: migration_20260820_133000_navigation_mega_menu.up,
+    down: migration_20260820_133000_navigation_mega_menu.down,
+    name: '20260820_133000_navigation_mega_menu',
   },
 ];

@@ -1,6 +1,7 @@
 import type { Block } from 'payload';
 
 import { linkField, sectionHeaderFields } from '../shared';
+import { withClientCondition } from '@/fields/withClientCondition';
 
 export const FeaturedProducts: Block = {
   slug: 'featured-products',
@@ -51,16 +52,18 @@ export const FeaturedProducts: Block = {
             description: 'Optional. When set, the card links to this product’s detail page.',
           },
         },
-        {
-          name: 'href',
-          type: 'text',
-          label: 'Custom link',
-          admin: {
-            description:
-              'Optional URL when no product is linked. Leave empty to keep the card not clickable.',
-            condition: (_, siblingData) => !siblingData?.product,
+        withClientCondition(
+          {
+            name: 'href',
+            type: 'text',
+            label: 'Custom link',
+            admin: {
+              description:
+                'Optional URL when no product is linked. Leave empty to keep the card not clickable.',
+            },
           },
-        },
+          { sibling: 'product', falsy: true },
+        ),
       ],
     },
     {

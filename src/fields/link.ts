@@ -1,5 +1,7 @@
 import type { Field } from 'payload';
 
+import { withClientCondition } from '@/fields/withClientCondition';
+
 /** Shared nav/footer link fields (internal page or custom URL). */
 export const linkFields: Field[] = [
   {
@@ -19,24 +21,26 @@ export const linkFields: Field[] = [
     name: 'label',
     type: 'text',
   },
-  {
-    name: 'page',
-    type: 'relationship',
-    relationTo: 'pages',
-    admin: {
-      condition: (_, siblingData) => siblingData?.type === 'page',
+  withClientCondition(
+    {
+      name: 'page',
+      type: 'relationship',
+      relationTo: 'pages',
     },
-  },
-  {
-    name: 'url',
-    type: 'text',
-    label: 'Custom URL',
-    admin: {
-      condition: (_, siblingData) => siblingData?.type === 'custom',
-      description:
-        'Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.',
+    { sibling: 'type', equals: 'page' },
+  ),
+  withClientCondition(
+    {
+      name: 'url',
+      type: 'text',
+      label: 'Custom URL',
+      admin: {
+        description:
+          'Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.',
+      },
     },
-  },
+    { sibling: 'type', equals: 'custom' },
+  ),
   {
     name: 'openInNewTab',
     type: 'checkbox',
@@ -102,8 +106,12 @@ export function linkArrayField(
   };
 }
 
+type NavItemFieldOptions = {
+  allowMegaMenu?: boolean;
+};
+
 /** Nested menu item used by Navigation and Footer globals. */
-export function navItemFields(depth = 0): Field[] {
+export function navItemFields(depth = 0, options: NavItemFieldOptions = {}): Field[] {
   const fields: Field[] = [
     {
       name: 'label',
@@ -123,21 +131,21 @@ export function navItemFields(depth = 0): Field[] {
         layout: 'horizontal',
       },
     },
-    {
-      name: 'page',
-      type: 'relationship',
-      relationTo: 'pages',
-      admin: {
-        condition: (_, siblingData) => siblingData?.type === 'page',
+    withClientCondition(
+      {
+        name: 'page',
+        type: 'relationship',
+        relationTo: 'pages',
       },
-    },
-    {
-      name: 'url',
-      type: 'text',
-      admin: {
-        condition: (_, siblingData) => siblingData?.type === 'custom',
+      { sibling: 'type', equals: 'page' },
+    ),
+    withClientCondition(
+      {
+        name: 'url',
+        type: 'text',
       },
-    },
+      { sibling: 'type', equals: 'custom' },
+    ),
     {
       name: 'openInNewTab',
       type: 'checkbox',
@@ -145,17 +153,86 @@ export function navItemFields(depth = 0): Field[] {
     },
   ];
 
-  if (depth < 1) {
-    fields.push({
-      name: 'children',
-      type: 'array',
-      label: 'Dropdown Items',
-      admin: {
-        initCollapsed: true,
-        description: 'Optional nested links (one level).',
+  if (depth < 1 && options.allowMegaMenu) {
+    fields.push(
+      {
+        name: 'enableMegaMenu',
+        type: 'checkbox',
+        label: 'Mega dropdown',
+        defaultValue: false,
+        admin: {
+          description:
+            'Desktop: product grid with hover image swap. Mobile: the same products as a normal list.',
+        },
       },
-      fields: navItemFields(depth + 1),
-    });
+      withClientCondition(
+        {
+          name: 'megaProducts',
+          type: 'array',
+          label: 'Mega Menu Products',
+          labels: {
+            singular: 'Product',
+            plural: 'Products',
+          },
+          admin: {
+            description: 'Each row picks one product. The first two images and the title are used.',
+            initCollapsed: true,
+          },
+          fields: [
+            {
+              name: 'product',
+              type: 'relationship',
+              relationTo: 'products',
+              required: true,
+            },
+          ],
+        },
+        { sibling: 'enableMegaMenu', truthy: true },
+      ),
+      withClientCondition(
+        {
+          name: 'productsPerRow',
+          type: 'number',
+          label: 'Products per row',
+          min: 1,
+          max: 12,
+          admin: {
+            description: 'Leave empty for auto — products spread equally and wrap by screen size.',
+            step: 1,
+          },
+        },
+        { sibling: 'enableMegaMenu', truthy: true },
+      ),
+    );
+  }
+
+  if (depth < 1) {
+    fields.push(
+      options.allowMegaMenu
+        ? withClientCondition(
+            {
+              name: 'children',
+              type: 'array',
+              label: 'Dropdown Items',
+              admin: {
+                initCollapsed: true,
+                description: 'Optional nested links (one level). Hidden when mega dropdown is on.',
+              },
+              fields: navItemFields(depth + 1),
+            },
+            { sibling: 'enableMegaMenu', falsy: true },
+          )
+        : {
+            name: 'children',
+            type: 'array',
+            label: 'Dropdown Items',
+            admin: {
+              initCollapsed: true,
+              description: 'Optional nested links (one level).',
+            },
+            fields: navItemFields(depth + 1),
+          },
+    );
   }
 
   return fields;

@@ -15,7 +15,7 @@ export const Navigation: GlobalConfig = {
       name: 'mainMenu',
       type: 'array',
       label: 'Main Menu',
-      fields: navItemFields(),
+      fields: navItemFields(0, { allowMegaMenu: true }),
     },
     {
       name: 'utilityMenu',

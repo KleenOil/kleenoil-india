@@ -14,6 +14,10 @@ type MaybeLinkProps = {
   className?: string;
   onClick?: MouseEventHandler<HTMLAnchorElement | HTMLDivElement>;
   tabIndex?: number;
+  id?: string;
+  role?: string;
+  'aria-expanded'?: boolean;
+  'aria-haspopup'?: boolean | 'false' | 'true' | 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
   'data-reveal-item'?: string | boolean;
   'data-reveal-part'?: string | boolean;
 };

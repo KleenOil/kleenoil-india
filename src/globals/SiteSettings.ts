@@ -2,6 +2,7 @@ import type { GlobalConfig } from 'payload';
 
 import { superAdminOnly } from '@/access/roles';
 import { linkField } from '@/fields/link';
+import { withClientCondition } from '@/fields/withClientCondition';
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
@@ -125,13 +126,13 @@ export const SiteSettings: GlobalConfig = {
                   type: 'text',
                   required: true,
                 },
-                {
-                  name: 'label',
-                  type: 'text',
-                  admin: {
-                    condition: (_, siblingData) => siblingData?.platform === 'other',
+                withClientCondition(
+                  {
+                    name: 'label',
+                    type: 'text',
                   },
-                },
+                  { sibling: 'platform', equals: 'other' },
+                ),
               ],
             },
           ],

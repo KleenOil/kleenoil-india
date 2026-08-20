@@ -1,6 +1,7 @@
 import type { Block } from 'payload';
 
 import { sectionHeaderFields } from '../shared';
+import { withClientCondition } from '@/fields/withClientCondition';
 
 export const DistributionNetwork: Block = {
   slug: 'distribution-network',
@@ -19,17 +20,19 @@ export const DistributionNetwork: Block = {
         description: 'Turn off to hide the India map and keep stats, hubs, and HQ.',
       },
     },
-    {
-      name: 'mapImage',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Map Image (optional override)',
-      admin: {
-        description:
-          'Leave empty to use the interactive India map. Upload only if you want a static image instead.',
-        condition: (_, siblingData) => siblingData?.showMap !== false,
+    withClientCondition(
+      {
+        name: 'mapImage',
+        type: 'upload',
+        relationTo: 'media',
+        label: 'Map Image (optional override)',
+        admin: {
+          description:
+            'Leave empty to use the interactive India map. Upload only if you want a static image instead.',
+        },
       },
-    },
+      { sibling: 'showMap', notEquals: false },
+    ),
     {
       name: 'stats',
       type: 'array',

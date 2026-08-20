@@ -8,34 +8,8 @@ import {
   type FooterColumn,
   type NavLink,
 } from '@/lib/cms/defaults';
-import { resolveLink } from '@/lib/cms/links';
+import { mapMainNavItems, mapNavLinks, type NavItem } from '@/lib/cms/nav';
 import type { Footer, Navigation, SiteSetting } from '@/payload-types';
-
-function mapNavItems(
-  items: Navigation['mainMenu'] | Navigation['utilityMenu'] | null | undefined,
-): NavLink[] {
-  if (!items?.length) {
-    return [];
-  }
-
-  return items
-    .map((item) => {
-      const resolved = resolveLink({
-        type: item.type,
-        label: item.label,
-        url: item.url,
-        page: item.page,
-        openInNewTab: item.openInNewTab,
-      });
-
-      if (!resolved) {
-        return null;
-      }
-
-      return { label: resolved.label, href: resolved.href };
-    })
-    .filter((item): item is NavLink => Boolean(item));
-}
 
 export type SiteChrome = {
   site: {
@@ -44,7 +18,8 @@ export type SiteChrome = {
     footerTagline: string;
     copyright: string;
   };
-  mainNav: NavLink[];
+  mainNav: NavItem[];
+  mobileNav: NavItem[];
   utilityNav: NavLink[];
   footerColumns: FooterColumn[];
   legalLinks: NavLink[];
@@ -65,18 +40,19 @@ export async function getSiteChrome(): Promise<SiteChrome> {
     const nav = navigation as Navigation | null;
     const footerData = footer as Footer | null;
 
-    const mainNav = mapNavItems(nav?.mainMenu);
-    const utilityNav = mapNavItems(nav?.utilityMenu);
+    const mainNav = await mapMainNavItems(nav?.mainMenu);
+    const mobileOverride = await mapMainNavItems(nav?.mobileMenu);
+    const utilityNav = mapNavLinks(nav?.utilityMenu);
 
     const footerColumns: FooterColumn[] =
       footerData?.columns
         ?.map((column) => ({
           title: column.title,
-          links: mapNavItems(column.links),
+          links: mapNavLinks(column.links),
         }))
         .filter((column) => column.links.length > 0) ?? [];
 
-    const legalLinks = mapNavItems(footerData?.bottomBar?.legalLinks);
+    const legalLinks = mapNavLinks(footerData?.bottomBar?.legalLinks);
 
     return {
       site: {
@@ -86,6 +62,11 @@ export async function getSiteChrome(): Promise<SiteChrome> {
         copyright: footerData?.bottomBar?.copyrightText || DEFAULT_SITE.copyright,
       },
       mainNav: mainNav.length ? mainNav : DEFAULT_MAIN_NAV,
+      mobileNav: mobileOverride.length
+        ? mobileOverride
+        : mainNav.length
+          ? mainNav
+          : DEFAULT_MAIN_NAV,
       utilityNav: utilityNav.length ? utilityNav : DEFAULT_UTILITY_NAV,
       footerColumns: footerColumns.length ? footerColumns : DEFAULT_FOOTER_COLUMNS,
       legalLinks: legalLinks.length ? legalLinks : DEFAULT_LEGAL_LINKS,
@@ -96,6 +77,7 @@ export async function getSiteChrome(): Promise<SiteChrome> {
     return {
       site: DEFAULT_SITE,
       mainNav: DEFAULT_MAIN_NAV,
+      mobileNav: DEFAULT_MAIN_NAV,
       utilityNav: DEFAULT_UTILITY_NAV,
       footerColumns: DEFAULT_FOOTER_COLUMNS,
       legalLinks: DEFAULT_LEGAL_LINKS,

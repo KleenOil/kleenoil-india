@@ -3,6 +3,7 @@
 export type NavLink = {
   label: string;
   href: string;
+  openInNewTab?: boolean;
 };
 
 export type FooterColumn = {

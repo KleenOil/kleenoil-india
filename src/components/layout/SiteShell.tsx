@@ -7,7 +7,12 @@ export async function SiteShell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <Header site={chrome.site} mainNav={chrome.mainNav} utilityNav={chrome.utilityNav} />
+      <Header
+        site={chrome.site}
+        mainNav={chrome.mainNav}
+        mobileNav={chrome.mobileNav}
+        utilityNav={chrome.utilityNav}
+      />
       <main className="relative min-h-[50vh]">
         <div
           id="header-scroll-sentinel"

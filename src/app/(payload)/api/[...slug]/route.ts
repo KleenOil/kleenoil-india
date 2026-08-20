@@ -18,6 +18,8 @@ export const PATCH = REST_PATCH(config);
 export const PUT = REST_PUT(config);
 export const OPTIONS = REST_OPTIONS(config);
 
+export const dynamic = 'force-dynamic';
+
 // Payload admin list views make several sequential DB calls. Vercel Hobby's
 // default 10s limit can abort those mid-flight and leave a blank pane.
 export const maxDuration = 60;

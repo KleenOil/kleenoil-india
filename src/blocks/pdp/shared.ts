@@ -1,6 +1,7 @@
 import type { Field } from 'payload';
 
 import { eyebrowField, headingField, descriptionField, linkArrayField, linkField } from '../shared';
+import { withClientCondition } from '@/fields/withClientCondition';
 
 /** Common vs product-specific data toggle for every PDP section. */
 export const dataSourceField: Field = {
@@ -28,23 +29,7 @@ export function withDataSource(fields: Field[]): Field[] {
         return field;
       }
 
-      const existingCondition = field.admin?.condition;
-
-      return {
-        ...field,
-        admin: {
-          ...(field.admin ?? {}),
-          condition: (data, siblingData, context) => {
-            if (siblingData?.dataSource !== 'custom') {
-              return false;
-            }
-            if (typeof existingCondition === 'function') {
-              return existingCondition(data, siblingData, context);
-            }
-            return true;
-          },
-        },
-      } as Field;
+      return withClientCondition(field, { sibling: 'dataSource', equals: 'custom' });
     }),
   ];
 }

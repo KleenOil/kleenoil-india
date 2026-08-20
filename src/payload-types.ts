@@ -2362,7 +2362,24 @@ export interface Navigation {
         url?: string | null;
         openInNewTab?: boolean | null;
         /**
-         * Optional nested links (one level).
+         * Desktop: product grid with hover image swap. Mobile: the same products as a normal list.
+         */
+        enableMegaMenu?: boolean | null;
+        /**
+         * Each row picks one product. The first two images and the title are used.
+         */
+        megaProducts?:
+          | {
+              product: number | Product;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Leave empty for auto — products spread equally and wrap by screen size.
+         */
+        productsPerRow?: number | null;
+        /**
+         * Optional nested links (one level). Hidden when mega dropdown is on.
          */
         children?:
           | {
@@ -2628,6 +2645,14 @@ export interface NavigationSelect<T extends boolean = true> {
         page?: T;
         url?: T;
         openInNewTab?: T;
+        enableMegaMenu?: T;
+        megaProducts?:
+          | T
+          | {
+              product?: T;
+              id?: T;
+            };
+        productsPerRow?: T;
         children?:
           | T
           | {
