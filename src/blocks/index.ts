@@ -2,6 +2,11 @@ import type { Block } from 'payload';
 
 import { AboutOrigin } from './AboutOrigin/config';
 import { AboutStory } from './AboutStory/config';
+import { ArticlesFeatured } from './ArticlesFeatured/config';
+import { ArticlesHero } from './ArticlesHero/config';
+import { ArticlesIndex } from './ArticlesIndex/config';
+import { CareersHero } from './CareersHero/config';
+import { CareersIndex } from './CareersIndex/config';
 import { ContactPreview } from './ContactPreview/config';
 import { CTA } from './CTA/config';
 import { DistributionNetwork } from './DistributionNetwork/config';
@@ -23,6 +28,11 @@ import { WhatsNew } from './WhatsNew/config';
 /** Payload block configs registered on the Pages collection. */
 export const pageBlocks: Block[] = [
   Hero,
+  ArticlesHero,
+  ArticlesFeatured,
+  ArticlesIndex,
+  CareersHero,
+  CareersIndex,
   Manifesto,
   AboutOrigin,
   AboutStory,

@@ -19,6 +19,14 @@ function buildPublicPath(
     return `/products/${cleaned}`;
   }
 
+  if (collectionSlug === 'posts') {
+    return `/blog/${cleaned}`;
+  }
+
+  if (collectionSlug === 'jobs') {
+    return `/careers?job=${cleaned}`;
+  }
+
   if (cleaned === 'home') {
     return '/';
   }

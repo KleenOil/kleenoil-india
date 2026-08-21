@@ -16,6 +16,12 @@ import * as migration_20260820_025400_pdp_hero_quick_specs_per_row from './20260
 import * as migration_20260820_133000_navigation_mega_menu from './20260820_133000_navigation_mega_menu';
 import * as migration_20260820_141500_team_extra_members from './20260820_141500_team_extra_members';
 import * as migration_20260820_154800_trust_indicators_heading_align from './20260820_154800_trust_indicators_heading_align';
+import * as migration_20260822_010000_posts_and_articles_blocks from './20260822_010000_posts_and_articles_blocks';
+import * as migration_20260822_012800_post_author_fields from './20260822_012800_post_author_fields';
+import * as migration_20260822_014500_post_article_toc_and_ctas from './20260822_014500_post_article_toc_and_ctas';
+import * as migration_20260822_021800_jobs_and_careers_blocks from './20260822_021800_jobs_and_careers_blocks';
+import * as migration_20260822_030400_job_details_richtext from './20260822_030400_job_details_richtext';
+import * as migration_20260822_033000_post_related_and_closing_cta from './20260822_033000_post_related_and_closing_cta';
 
 export const migrations = [
   {
@@ -107,5 +113,35 @@ export const migrations = [
     up: migration_20260820_154800_trust_indicators_heading_align.up,
     down: migration_20260820_154800_trust_indicators_heading_align.down,
     name: '20260820_154800_trust_indicators_heading_align',
+  },
+  {
+    up: migration_20260822_010000_posts_and_articles_blocks.up,
+    down: migration_20260822_010000_posts_and_articles_blocks.down,
+    name: '20260822_010000_posts_and_articles_blocks',
+  },
+  {
+    up: migration_20260822_012800_post_author_fields.up,
+    down: migration_20260822_012800_post_author_fields.down,
+    name: '20260822_012800_post_author_fields',
+  },
+  {
+    up: migration_20260822_014500_post_article_toc_and_ctas.up,
+    down: migration_20260822_014500_post_article_toc_and_ctas.down,
+    name: '20260822_014500_post_article_toc_and_ctas',
+  },
+  {
+    up: migration_20260822_021800_jobs_and_careers_blocks.up,
+    down: migration_20260822_021800_jobs_and_careers_blocks.down,
+    name: '20260822_021800_jobs_and_careers_blocks',
+  },
+  {
+    up: migration_20260822_030400_job_details_richtext.up,
+    down: migration_20260822_030400_job_details_richtext.down,
+    name: '20260822_030400_job_details_richtext',
+  },
+  {
+    up: migration_20260822_033000_post_related_and_closing_cta.up,
+    down: migration_20260822_033000_post_related_and_closing_cta.down,
+    name: '20260822_033000_post_related_and_closing_cta',
   },
 ];

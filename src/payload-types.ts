@@ -70,6 +70,8 @@ export interface Config {
     users: User;
     media: Media;
     pages: Page;
+    posts: Post;
+    jobs: Job;
     'product-templates': ProductTemplate;
     products: Product;
     'payload-kv': PayloadKv;
@@ -82,6 +84,8 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
+    jobs: JobsSelect<false> | JobsSelect<true>;
     'product-templates': ProductTemplatesSelect<false> | ProductTemplatesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -235,6 +239,85 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'hero';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            subheadline?: string | null;
+            image?: (number | null) | Media;
+            cta: {
+              type: 'page' | 'custom';
+              label?: string | null;
+              page?: (number | null) | Page;
+              /**
+               * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+               */
+              url?: string | null;
+              openInNewTab?: boolean | null;
+              appearance?: ('primary' | 'secondary' | 'ghost') | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'articles-hero';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            /**
+             * Optional. Leave empty to feature the latest article automatically.
+             */
+            featuredPost?: (number | null) | Post;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'articles-featured';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            /**
+             * Every published article is included automatically. Add any article here to remove it from this section.
+             */
+            hiddenPosts?:
+              | {
+                  post: number | Post;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'articles-index';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            subheadline?: string | null;
+            /**
+             * Shown in the open-roles panel, e.g. Gurugram  ·  Delhi  ·  Mumbai  ·  Chennai.
+             */
+            cities?: string | null;
+            image?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'careers-hero';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            /**
+             * Every posted role is included automatically. Add a job here to remove it from this section.
+             */
+            hiddenJobs?:
+              | {
+                  job: number | Job;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'careers-index';
           }
         | {
             quote: string;
@@ -749,6 +832,235 @@ export interface Page {
     noFollow?: boolean | null;
   };
   publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Journal articles. New posts appear on the Articles listing automatically unless hidden.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: number;
+  title: string;
+  /**
+   * Short summary used on article cards and the featured story.
+   */
+  excerpt?: string | null;
+  /**
+   * Shown as the card tag, e.g. FILTRATION or OIL COST.
+   */
+  category?: string | null;
+  featuredImage?: (number | null) | Media;
+  /**
+   * Shown in the article sidebar. Defaults to Kleenoil Engineering.
+   */
+  authorName?: string | null;
+  /**
+   * Short line under the author name.
+   */
+  authorRole?: string | null;
+  /**
+   * Leave empty to list every Heading 2/3 from the body. Add rows to pick which sections appear and how they are labelled.
+   */
+  tableOfContents?:
+    | {
+        label: string;
+        /**
+         * Paste the exact Heading 2/3 from the body this link should scroll to. Leave empty to match Link text.
+         */
+        heading?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  heroCta: {
+    type: 'page' | 'custom';
+    label?: string | null;
+    page?: (number | null) | Page;
+    /**
+     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+     */
+    url?: string | null;
+    openInNewTab?: boolean | null;
+  };
+  sidebarCta: {
+    heading?: string | null;
+    description?: string | null;
+    link: {
+      type: 'page' | 'custom';
+      label?: string | null;
+      page?: (number | null) | Page;
+      /**
+       * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+       */
+      url?: string | null;
+      openInNewTab?: boolean | null;
+    };
+  };
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  relatedSection: {
+    /**
+     * Defaults to Keep reading.
+     */
+    eyebrow?: string | null;
+    /**
+     * Defaults to More from the journal.
+     */
+    heading?: string | null;
+    viewAll: {
+      type: 'page' | 'custom';
+      label?: string | null;
+      page?: (number | null) | Page;
+      /**
+       * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+       */
+      url?: string | null;
+      openInNewTab?: boolean | null;
+      appearance?: ('primary' | 'secondary' | 'ghost') | null;
+    };
+    /**
+     * Pick up to three. Leave empty to fill with the latest other articles automatically.
+     */
+    posts?:
+      | {
+          post: number | Post;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  /**
+   * Split quotation band under related articles. Empty fields use the defaults from the design.
+   */
+  closingCta?: {
+    eyebrow?: string | null;
+    /**
+     * Use a line break to split the heading onto two lines.
+     */
+    heading?: string | null;
+    description?: string | null;
+    ctas?:
+      | {
+          link: {
+            type: 'page' | 'custom';
+            label?: string | null;
+            page?: (number | null) | Page;
+            /**
+             * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+             */
+            url?: string | null;
+            openInNewTab?: boolean | null;
+            appearance?: ('primary' | 'secondary' | 'ghost') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  /**
+   * Search engine and social sharing metadata for this document.
+   */
+  seo?: {
+    /**
+     * Overrides the default page title in search results.
+     */
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+    ogImage?: (number | null) | Media;
+    /**
+     * Optional override. Leave blank to use the default URL.
+     */
+    canonicalUrl?: string | null;
+    /**
+     * Prevent search engines from indexing this page.
+     */
+    noIndex?: boolean | null;
+    noFollow?: boolean | null;
+  };
+  slug: string;
+  publishedAt?: string | null;
+  /**
+   * On by default. Turn off to keep this article live but remove it from the journal grid.
+   */
+  showInJournal?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Open roles. New postings appear on the Careers page automatically unless hidden.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jobs".
+ */
+export interface Job {
+  id: number;
+  /**
+   * Job title on the card and in the modal, e.g. Service Engineer — Field.
+   */
+  title: string;
+  /**
+   * Card tag, e.g. ENGINEERING or SALES.
+   */
+  department?: string | null;
+  /**
+   * e.g. Gurugram or New Delhi.
+   */
+  location?: string | null;
+  /**
+   * e.g. Full-time or Contract.
+   */
+  employmentType?: string | null;
+  /**
+   * Short copy on the card. Truncated to two lines on the site.
+   */
+  excerpt?: string | null;
+  /**
+   * Full job description for the modal. Use headings, lists, and links as needed.
+   */
+  details?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  apply: {
+    type: 'page' | 'custom';
+    label?: string | null;
+    page?: (number | null) | Page;
+    /**
+     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+     */
+    url?: string | null;
+    openInNewTab?: boolean | null;
+  };
+  slug: string;
+  publishedAt?: string | null;
+  /**
+   * On by default. Turn off to keep this posting but hide it from the grid.
+   */
+  showOnCareers?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1308,6 +1620,14 @@ export interface PayloadLockedDocument {
         value: number | Page;
       } | null)
     | ({
+        relationTo: 'posts';
+        value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'jobs';
+        value: number | Job;
+      } | null)
+    | ({
         relationTo: 'product-templates';
         value: number | ProductTemplate;
       } | null)
@@ -1437,6 +1757,77 @@ export interface PagesSelect<T extends boolean = true> {
                 | {
                     value?: T;
                     label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'articles-hero'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheadline?: T;
+              image?: T;
+              cta?:
+                | T
+                | {
+                    type?: T;
+                    label?: T;
+                    page?: T;
+                    url?: T;
+                    openInNewTab?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'articles-featured'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              featuredPost?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'articles-index'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              hiddenPosts?:
+                | T
+                | {
+                    post?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'careers-hero'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheadline?: T;
+              cities?: T;
+              image?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'careers-index'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              hiddenJobs?:
+                | T
+                | {
+                    job?: T;
                     id?: T;
                   };
               id?: T;
@@ -1858,6 +2249,135 @@ export interface PagesSelect<T extends boolean = true> {
         noFollow?: T;
       };
   publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  title?: T;
+  excerpt?: T;
+  category?: T;
+  featuredImage?: T;
+  authorName?: T;
+  authorRole?: T;
+  tableOfContents?:
+    | T
+    | {
+        label?: T;
+        heading?: T;
+        id?: T;
+      };
+  heroCta?:
+    | T
+    | {
+        type?: T;
+        label?: T;
+        page?: T;
+        url?: T;
+        openInNewTab?: T;
+      };
+  sidebarCta?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              label?: T;
+              page?: T;
+              url?: T;
+              openInNewTab?: T;
+            };
+      };
+  content?: T;
+  relatedSection?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        viewAll?:
+          | T
+          | {
+              type?: T;
+              label?: T;
+              page?: T;
+              url?: T;
+              openInNewTab?: T;
+              appearance?: T;
+            };
+        posts?:
+          | T
+          | {
+              post?: T;
+              id?: T;
+            };
+      };
+  closingCta?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        description?: T;
+        ctas?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    label?: T;
+                    page?: T;
+                    url?: T;
+                    openInNewTab?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+      };
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        canonicalUrl?: T;
+        noIndex?: T;
+        noFollow?: T;
+      };
+  slug?: T;
+  publishedAt?: T;
+  showInJournal?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jobs_select".
+ */
+export interface JobsSelect<T extends boolean = true> {
+  title?: T;
+  department?: T;
+  location?: T;
+  employmentType?: T;
+  excerpt?: T;
+  details?: T;
+  apply?:
+    | T
+    | {
+        type?: T;
+        label?: T;
+        page?: T;
+        url?: T;
+        openInNewTab?: T;
+      };
+  slug?: T;
+  publishedAt?: T;
+  showOnCareers?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -1,6 +1,14 @@
 import { AboutOriginBlock, type AboutOriginBlockData } from '@/blocks/AboutOrigin/Component';
 import { AboutStoryBlock, type AboutStoryBlockData } from '@/blocks/AboutStory/Component';
 import {
+  ArticlesFeaturedBlock,
+  type ArticlesFeaturedBlockData,
+} from '@/blocks/ArticlesFeatured/Component';
+import { ArticlesHeroBlock, type ArticlesHeroBlockData } from '@/blocks/ArticlesHero/Component';
+import { ArticlesIndexBlock, type ArticlesIndexBlockData } from '@/blocks/ArticlesIndex/Component';
+import { CareersHeroBlock, type CareersHeroBlockData } from '@/blocks/CareersHero/Component';
+import { CareersIndexBlock, type CareersIndexBlockData } from '@/blocks/CareersIndex/Component';
+import {
   ContactPreviewBlock,
   type ContactPreviewBlockData,
 } from '@/blocks/ContactPreview/Component';
@@ -117,6 +125,41 @@ export function RenderBlocks({
             return wrapReveal(key, <HeroBlock block={block as HeroBlockData} />, motion, {
               variant: 'hero',
             });
+          case 'articles-hero':
+            return wrapReveal(
+              key,
+              <ArticlesHeroBlock block={block as ArticlesHeroBlockData} />,
+              motion,
+              { variant: 'hero' },
+            );
+          case 'articles-featured':
+            return wrapReveal(
+              key,
+              <ArticlesFeaturedBlock block={block as ArticlesFeaturedBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'articles-index':
+            return wrapReveal(
+              key,
+              <ArticlesIndexBlock block={block as ArticlesIndexBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'careers-hero':
+            return wrapReveal(
+              key,
+              <CareersHeroBlock block={block as CareersHeroBlockData} />,
+              motion,
+              { variant: 'hero' },
+            );
+          case 'careers-index':
+            return wrapReveal(
+              key,
+              <CareersIndexBlock block={block as CareersIndexBlockData} />,
+              motion,
+              { stagger: true },
+            );
           case 'manifesto':
             return wrapReveal(key, <ManifestoBlock block={block as ManifestoBlockData} />, motion, {
               stagger: true,

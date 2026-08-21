@@ -519,6 +519,265 @@ export const DEFAULT_ABOUT_ORIGIN = {
   ],
 };
 
+export const DEFAULT_ARTICLE_PAGE = {
+  heroCta: {
+    label: 'Request an estimate',
+    href: '/contact',
+    appearance: 'primary' as const,
+    openInNewTab: false,
+  },
+  sidebarCta: {
+    heading: 'Want the number for your plant?',
+    description: 'Talk to a Kleenoil engineer for an estimate on oil life and downtime.',
+    link: {
+      label: 'Request an estimate',
+      href: '/contact',
+      appearance: 'secondary' as const,
+      openInNewTab: false,
+    },
+  },
+  related: {
+    eyebrow: 'Keep reading',
+    heading: 'More from the journal.',
+    viewAll: {
+      label: 'All articles',
+      href: '/blog',
+      appearance: 'ghost' as const,
+      openInNewTab: false,
+    },
+  },
+  closingCta: {
+    eyebrow: 'Request a quotation',
+    heading: 'Ready to save money and\nextend equipment life?',
+    description:
+      'More than 2,000 customers trust Kleenoil to increase fluid life and measure contamination before it becomes downtime.',
+    ctas: [
+      {
+        label: 'Request a quotation',
+        href: '/contact',
+        appearance: 'primary' as const,
+        openInNewTab: false,
+      },
+      {
+        label: 'Contact us',
+        href: '/contact',
+        appearance: 'secondary' as const,
+        openInNewTab: false,
+      },
+    ],
+  },
+};
+
+export const DEFAULT_CAREERS_HERO = {
+  eyebrow: 'CAREERS',
+  heading: 'Work where the oil stays clean.',
+  subheadline:
+    'Engineers, technicians and field specialists who keep plants running — from Gurugram to the shop floor.',
+  cities: 'Gurugram  ·  Delhi  ·  Mumbai  ·  Chennai',
+  imageUrl:
+    'https://images.unsplash.com/photo-1777614053227-734ca556669b?auto=format&fit=crop&w=1920&q=80',
+};
+
+export const DEFAULT_CAREERS_INDEX = {
+  eyebrow: 'OPEN POSITIONS',
+  heading: 'Roles on the plant floor.',
+};
+
+export const DEFAULT_JOB_APPLY = {
+  label: 'Apply for this role',
+  href: '/contact',
+  appearance: 'primary' as const,
+  openInNewTab: false,
+};
+
+export const DEFAULT_JOBS = [
+  {
+    slug: 'service-engineer-field',
+    title: 'Service Engineer — Field',
+    department: 'ENGINEERING',
+    location: 'Gurugram',
+    employmentType: 'Full-time',
+    excerpt: 'Install, audit and keep Kleenoil systems running on plant floors across India.',
+    aboutTheRole:
+      'You will be the engineer plants call when oil cleanliness is costing them uptime. Install Kleenoil bypass systems, run first-oil reports, and stay on site until the circuit is stable.',
+    whatYouWillDo:
+      'Commission new units on hydraulic and lubrication systems. Train maintenance teams on sampling and change-out. File contamination reports that sales and applications can act on. Travel to plants across north and west India.',
+    whatYouBring:
+      'A diploma or degree in mechanical / mechatronics. 2+ years on industrial hydraulics or rotating equipment. Comfort on a plant floor, not only a desk. Hindi and English. A valid driving licence.',
+    whatWeOffer:
+      'Field kit and travel covered. Training on Kleenoil, Eclipse Magnetics and Filtertechnik kit. A Gurugram base with days on site, not a cubicle quota.',
+  },
+  {
+    slug: 'sales-engineer-industrial',
+    title: 'Sales Engineer — Industrial',
+    department: 'SALES',
+    location: 'Mumbai',
+    employmentType: 'Full-time',
+    excerpt:
+      'Specify filtration systems for plants and close the technical sale with engineering teams.',
+    aboutTheRole:
+      'You sit between plant engineering and Kleenoil product. Specify the right unit, defend the cleanliness case, and close with the people who sign capex.',
+    whatYouWillDo:
+      'Run site surveys and oil reports. Build quotes with applications. Follow the deal from first visit to commissioning. Keep Mumbai and west-coast accounts moving.',
+    whatYouBring:
+      'Engineering background and 3+ years selling capital equipment to industry. Comfort talking ISO codes, not only price. Marathi or Hindi with English.',
+    whatWeOffer:
+      'A defined territory, product training, and a team that can actually install what you sell.',
+  },
+  {
+    slug: 'production-technician',
+    title: 'Production Technician',
+    department: 'PRODUCTION',
+    location: 'New Delhi',
+    employmentType: 'Full-time',
+    excerpt:
+      'Build, test and ship Kleenoil units from the workshop — precision work, not a production line.',
+    aboutTheRole:
+      'You build the machines that leave the workshop. Assembly, pressure test, finish, and pack — to a drawing, not a guess.',
+    whatYouWillDo:
+      'Assemble bypass units and vacuum systems. Pressure-test circuits. Log serials and ship with the right spares kit.',
+    whatYouBring:
+      'ITI or diploma in fitting / mechanical. Hands that can follow a drawing. Pride in a clean, leak-free unit.',
+    whatWeOffer:
+      'A Delhi workshop, overtime on real shipments, and training on every Kleenoil family we build.',
+  },
+  {
+    slug: 'application-engineer-hydraulics',
+    title: 'Application Engineer — Hydraulics',
+    department: 'ENGINEERING',
+    location: 'Gurugram',
+    employmentType: 'Full-time',
+    excerpt:
+      'Match contamination control to real machines. Plant visits, oil reports, and system design.',
+    aboutTheRole:
+      'You turn a dirty circuit into a specified Kleenoil system — flow, ISO target, and the unit that will hold it.',
+    whatYouWillDo:
+      'Read plant schematics. Specify housings, media, and vacuum. Write the application note sales can stand behind.',
+    whatYouBring:
+      'Degree in mechanical or hydraulics. 3+ years on industrial lubrication or filtration. Clear written English.',
+    whatWeOffer: 'Plant time, lab support, and a seat next to the people who build the machines.',
+  },
+  {
+    slug: 'regional-manager-south',
+    title: 'Regional Manager — South',
+    department: 'LEADERSHIP',
+    location: 'Chennai',
+    employmentType: 'Full-time',
+    excerpt:
+      'Own the south India book: distributors, key accounts, and the engineers who support them.',
+    aboutTheRole:
+      'South India is yours — distributors, OEM accounts, and the service bench that keeps them.',
+    whatYouWillDo:
+      'Build the channel. Hire and coach field engineers. Hold the forecast and the plant relationships.',
+    whatYouBring:
+      '8+ years in industrial sales or service leadership. Tamil or Telugu with English. A record of growing a region, not only a list.',
+    whatWeOffer: 'A Chennai base, a real P&L, and product that plants already ask for by name.',
+  },
+  {
+    slug: 'quality-inspector',
+    title: 'Quality Inspector',
+    department: 'QUALITY',
+    location: 'New Delhi',
+    employmentType: 'Full-time',
+    excerpt: 'Inspect incoming parts and finished units against Kleenoil and ISO 9001 tolerances.',
+    aboutTheRole:
+      'Nothing ships that you would not put your stamp on. Incoming parts and finished units against drawing and ISO 9001.',
+    whatYouWillDo:
+      'Incoming inspection, in-process checks, and final test sign-off. Raise NCRs and close them with production.',
+    whatYouBring:
+      'Quality experience in a mechanical workshop. Comfort with gauges, pressure tests, and a paper trail.',
+    whatWeOffer: 'A Delhi shop, ISO process, and a quality lead who still walks the floor.',
+  },
+];
+
+export const DEFAULT_ARTICLES_HERO = {
+  eyebrow: 'THE JOURNAL',
+  heading: 'Insights from the\nfiltration floor.',
+  subheadline: 'Field notes from Kleenoil engineers.',
+  cta: {
+    label: 'Read the latest',
+    href: '#journal-index',
+    appearance: 'primary' as const,
+    openInNewTab: false,
+  },
+  imageUrl:
+    'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80',
+};
+
+export const DEFAULT_ARTICLES_FEATURED = {
+  eyebrow: 'LEAD STORY',
+  heading: 'The cost of dirty oil,\nspelled out in rupees.',
+  description:
+    'Lead story from the Kleenoil journal — the article plants share with maintenance heads.',
+  article: {
+    tag: 'OIL COST',
+    date: '27 Mar 2026',
+    title: 'How much does dirty oil cost your plant every year?',
+    excerpt:
+      'Most plants don’t think about oil until something goes wrong. Machines slow down, valves start sticking, and dirty oil is already draining money.',
+    href: '/blog/the-hidden-cost-sitting-inside-your-machines',
+    imageUrl:
+      'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1200&q=80',
+  },
+};
+
+export const DEFAULT_ARTICLES_INDEX = {
+  eyebrow: 'ALL ARTICLES',
+  heading: 'From the Kleenoil journal.',
+  description: 'Field notes, plant calculations, and filtration practice — newest first.',
+  articles: [
+    {
+      tag: 'OIL COST',
+      date: '27 Mar 2026',
+      publishedAt: '2026-03-27',
+      title: 'How much does dirty oil cost your plant every year?',
+      excerpt:
+        'Most plants ignore oil until something fails. Dirty oil is already costing production, parts, and energy.',
+      href: '/blog/the-hidden-cost-sitting-inside-your-machines',
+    },
+    {
+      tag: 'FILTRATION',
+      date: '18 Mar 2026',
+      publishedAt: '2026-03-18',
+      title: 'High-pressure magnetic filtration for hydraulic circuits',
+      excerpt: 'Where magnets outperform mesh when ferrous fines keep circulating.',
+      href: '/blog',
+    },
+    {
+      tag: 'MAINTENANCE',
+      date: '9 Mar 2026',
+      publishedAt: '2026-03-09',
+      title: 'Solving servo valve failures before they idle the line',
+      excerpt: 'Contamination, varnish, and the cleanliness target that actually holds.',
+      href: '/blog',
+    },
+    {
+      tag: 'OPERATIONS',
+      date: '28 Feb 2026',
+      publishedAt: '2026-02-28',
+      title: 'How winter changes oil viscosity — and what to do about it',
+      excerpt: 'Cold starts, thicker fluid, and why bypass filtration still matters in January.',
+      href: '/blog',
+    },
+    {
+      tag: 'SUSTAINABILITY',
+      date: '14 Feb 2026',
+      publishedAt: '2026-02-14',
+      title: 'Can reducing your carbon footprint start with cleaner oil?',
+      excerpt: 'Fewer oil changes, less disposal, and the energy cost of dirty fluid.',
+      href: '/blog',
+    },
+    {
+      tag: 'HYDRAULICS',
+      date: '2 Feb 2026',
+      publishedAt: '2026-02-02',
+      title: 'Hydraulic filtration for the moulding floor',
+      excerpt: 'A practical cleanliness programme for high-cycle presses.',
+      href: '/blog',
+    },
+  ],
+};
+
 export const DEFAULT_WHATS_NEW = {
   eyebrow: "What's new",
   heading: 'News, events and product updates.',
