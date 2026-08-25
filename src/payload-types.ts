@@ -3474,7 +3474,13 @@ export interface SiteSetting {
   id: number;
   companyName: string;
   companyTagline?: string | null;
+  /**
+   * Full wordmark for the navbar and footer. When set, this image is used instead of the letter mark and is shown in full (not cropped).
+   */
   logo?: (number | null) | Media;
+  /**
+   * Used in the navbar and footer when no full logo is uploaded. Shown in full, not cropped.
+   */
   logoMark?: (number | null) | Media;
   favicon?: (number | null) | Media;
   defaultCta: {

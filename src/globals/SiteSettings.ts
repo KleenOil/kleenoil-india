@@ -32,12 +32,21 @@ export const SiteSettings: GlobalConfig = {
               name: 'logo',
               type: 'upload',
               relationTo: 'media',
+              label: 'Logo',
+              admin: {
+                description:
+                  'Full wordmark for the navbar and footer. When set, this image is used instead of the letter mark and is shown in full (not cropped).',
+              },
             },
             {
               name: 'logoMark',
               type: 'upload',
               relationTo: 'media',
-              label: 'Logo Mark',
+              label: 'Logo mark',
+              admin: {
+                description:
+                  'Used in the navbar and footer when no full logo is uploaded. Shown in full, not cropped.',
+              },
             },
             {
               name: 'favicon',

@@ -18,7 +18,13 @@ export function Footer({ site, columns, legalLinks }: FooterProps) {
       <div className="mx-auto w-full max-w-[1440px] px-6 pb-10 pt-[100px] lg:px-[100px]">
         <div className="flex flex-col gap-16 lg:flex-row lg:gap-20">
           <div className="max-w-[380px] space-y-7">
-            <Logo companyName={site.companyName} tagline={site.companyTagline} />
+            <Logo
+              companyName={site.companyName}
+              tagline={site.companyTagline}
+              logo={site.logo}
+              logoMark={site.logoMark}
+              size="footer"
+            />
             <p className="text-sm leading-relaxed text-text-secondary">{site.footerTagline}</p>
           </div>
 

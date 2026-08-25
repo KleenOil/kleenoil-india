@@ -1,3 +1,4 @@
+import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
 import { getPayloadClient } from '@/lib/payload';
 import {
   DEFAULT_FOOTER_COLUMNS,
@@ -9,7 +10,15 @@ import {
   type NavLink,
 } from '@/lib/cms/defaults';
 import { mapMainNavItems, mapNavLinks, type NavItem } from '@/lib/cms/nav';
-import type { Footer, Navigation, SiteSetting } from '@/payload-types';
+import type { Footer, Media, Navigation, SiteSetting } from '@/payload-types';
+
+export type SiteLogoImage = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  mimeType?: string | null;
+};
 
 export type SiteChrome = {
   site: {
@@ -17,6 +26,8 @@ export type SiteChrome = {
     companyTagline: string;
     footerTagline: string;
     copyright: string;
+    logo: SiteLogoImage | null;
+    logoMark: SiteLogoImage | null;
   };
   mainNav: NavItem[];
   mobileNav: NavItem[];
@@ -24,6 +35,30 @@ export type SiteChrome = {
   footerColumns: FooterColumn[];
   legalLinks: NavLink[];
   enableSearch: boolean;
+};
+
+function toSiteLogo(
+  media: number | Media | null | undefined,
+  fallbackAlt: string,
+): SiteLogoImage | null {
+  const src = getMediaUrl(media);
+  if (!src || !media || typeof media === 'number') {
+    return null;
+  }
+
+  return {
+    src,
+    alt: getMediaAlt(media, fallbackAlt),
+    width: Math.max(1, media.width ?? 240),
+    height: Math.max(1, media.height ?? 48),
+    mimeType: media.mimeType,
+  };
+}
+
+const FALLBACK_SITE: SiteChrome['site'] = {
+  ...DEFAULT_SITE,
+  logo: null,
+  logoMark: null,
 };
 
 export async function getSiteChrome(): Promise<SiteChrome> {
@@ -60,6 +95,8 @@ export async function getSiteChrome(): Promise<SiteChrome> {
         companyTagline: settings?.companyTagline || DEFAULT_SITE.companyTagline,
         footerTagline: DEFAULT_SITE.footerTagline,
         copyright: footerData?.bottomBar?.copyrightText || DEFAULT_SITE.copyright,
+        logo: toSiteLogo(settings?.logo, settings?.companyName || DEFAULT_SITE.companyName),
+        logoMark: toSiteLogo(settings?.logoMark, settings?.companyName || DEFAULT_SITE.companyName),
       },
       mainNav: mainNav.length ? mainNav : DEFAULT_MAIN_NAV,
       mobileNav: mobileOverride.length
@@ -75,7 +112,7 @@ export async function getSiteChrome(): Promise<SiteChrome> {
   } catch (error) {
     console.error('[cms] getSiteChrome failed', error);
     return {
-      site: DEFAULT_SITE,
+      site: FALLBACK_SITE,
       mainNav: DEFAULT_MAIN_NAV,
       mobileNav: DEFAULT_MAIN_NAV,
       utilityNav: DEFAULT_UTILITY_NAV,

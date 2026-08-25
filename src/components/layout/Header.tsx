@@ -9,13 +9,11 @@ import { CtaButton } from '@/components/ui/cta-button';
 import { MaybeLink, hasHref } from '@/components/ui/maybe-link';
 import { getMobileSubLinks, hasDropdown, hasMegaMenu, type NavItem } from '@/lib/cms/nav-types';
 import type { NavLink } from '@/lib/cms/defaults';
+import type { SiteChrome } from '@/lib/cms/site';
 import { cn } from '@/lib/utils';
 
 type HeaderProps = {
-  site: {
-    companyName: string;
-    companyTagline: string;
-  };
+  site: SiteChrome['site'];
   mainNav: NavItem[];
   mobileNav: NavItem[];
   utilityNav: NavLink[];
@@ -147,7 +145,13 @@ export function Header({ site, mainNav, mobileNav, utilityNav }: HeaderProps) {
     >
       <div className="site-header-inner mx-auto flex w-full max-w-[1440px] items-center justify-between px-6 py-5 lg:px-16">
         <div onMouseEnter={() => setOpenKey(null)}>
-          <Logo companyName={site.companyName} tagline={site.companyTagline} />
+          <Logo
+            companyName={site.companyName}
+            tagline={site.companyTagline}
+            logo={site.logo}
+            logoMark={site.logoMark}
+            priority
+          />
         </div>
 
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Main">
@@ -217,7 +221,12 @@ export function Header({ site, mainNav, mobileNav, utilityNav }: HeaderProps) {
         )}
       >
         <div className="flex items-center justify-between border-b border-border-subtle px-6 py-5">
-          <Logo companyName={site.companyName} tagline={site.companyTagline} />
+          <Logo
+            companyName={site.companyName}
+            tagline={site.companyTagline}
+            logo={site.logo}
+            logoMark={site.logoMark}
+          />
           <button
             type="button"
             className="inline-flex size-10 items-center justify-center rounded-lg border border-border-subtle text-text-primary"
