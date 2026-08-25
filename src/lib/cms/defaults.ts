@@ -1191,3 +1191,54 @@ export const DEFAULT_CS_CTA = {
     { label: 'Contact us', href: '/contact', appearance: 'secondary' as const },
   ],
 };
+
+export const DEFAULT_CONTACT_HERO = {
+  eyebrow: 'BOOK A CONSULTATION',
+  heading: 'Thirty minutes with an engineer.\nNot a sales call.',
+  subheadline:
+    'Tell us the plant, the oil, and the problem. A Kleenoil engineer maps ISO, drain interval, and a bypass fit — then you decide.',
+  phoneLabel: 'Prefer to call',
+  phoneNumber: '+91 20 2742 0000',
+  imageUrl:
+    'https://images.unsplash.com/photo-1738162837389-3b02d6dd507b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODc2NTk2NjJ8&ixlib=rb-4.1.0&q=80&w=1080',
+  benefits: [
+    'Live ISO readout of the oil you run today',
+    'Bypass fit for one critical machine — no plant shutdown',
+    'Written next step within one business day',
+  ],
+  formTitle: 'Request a 30-minute slot',
+  formLead: 'An engineer replies within one business day with a time that fits your shift.',
+  submitLabel: 'Book this consultation',
+  finePrint: 'No brochure deck. You get a written next step — even if Kleenoil is not the fit.',
+};
+
+export const DEFAULT_CONTACT_PROCESS = {
+  eyebrow: 'HOW IT WORKS',
+  heading: 'What the consultation actually is.',
+  steps: [
+    {
+      title: 'You send the plant',
+      description:
+        'Name the machine, the oil, and the failure. A photo of the sample bottle is enough.',
+    },
+    {
+      title: 'We read the oil',
+      description:
+        'An engineer maps ISO / NAS, drain interval, and whether bypass belongs on that circuit.',
+    },
+    {
+      title: 'You get a next step',
+      description: 'A 30-minute call plus a written fit — install path, or an honest no.',
+    },
+  ],
+};
+
+export const DEFAULT_CONTACT_CHANNELS = {
+  eyebrow: 'ALREADY KNOW WHO TO ASK',
+  heading: 'Reach the desk directly.',
+  items: [
+    { label: 'Pune HQ', value: 'Plot 12, MIDC Bhosari, Pune 411026' },
+    { label: 'Engineering desk', value: '+91 20 2742 0000', href: 'tel:+912027420000' },
+    { label: 'Mail', value: 'consult@kleenoil.in', href: 'mailto:consult@kleenoil.in' },
+  ],
+};

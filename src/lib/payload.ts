@@ -8,12 +8,22 @@ type GlobalWithPayload = typeof globalThis & {
   __kleenoilPayload?: {
     client: Payload | null;
     promise: Promise<Payload> | null;
+    signature: string;
   };
 };
 
+function configSignature(): string {
+  return (
+    (config as { collections?: Array<{ slug: string }> }).collections
+      ?.map((collection) => collection.slug)
+      .join(',') ?? ''
+  );
+}
+
 const globalCache: GlobalWithPayload = globalThis as GlobalWithPayload;
-if (!globalCache.__kleenoilPayload) {
-  globalCache.__kleenoilPayload = { client: null, promise: null };
+const signature = configSignature();
+if (!globalCache.__kleenoilPayload || globalCache.__kleenoilPayload.signature !== signature) {
+  globalCache.__kleenoilPayload = { client: null, promise: null, signature };
 }
 
 export async function getPayloadClient(): Promise<Payload> {

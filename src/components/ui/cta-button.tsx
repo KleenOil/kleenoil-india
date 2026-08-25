@@ -11,6 +11,8 @@ type CtaButtonProps = {
   className?: string;
   showIcon?: boolean;
   onClick?: () => void;
+  type?: 'button' | 'submit';
+  disabled?: boolean;
 };
 
 export function CtaButton({
@@ -21,47 +23,60 @@ export function CtaButton({
   className,
   showIcon = true,
   onClick,
+  type,
+  disabled = false,
 }: CtaButtonProps) {
   const Icon = appearance === 'secondary' ? ArrowRight : ArrowUpRight;
   const linked = hasHref(href);
+  const interactive = linked || Boolean(type);
+  const classNames = cn(
+    'group inline-flex items-center justify-center gap-2.5 rounded-[10px] border-2 px-8 py-[18px] font-heading text-base font-bold transition-colors duration-300',
+    interactive &&
+      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/40',
+    appearance === 'primary' &&
+      'border-brand-primary bg-brand-primary text-white shadow-[0_8px_24px_#00663344]',
+    appearance === 'primary' &&
+      interactive &&
+      !disabled &&
+      'hover:bg-transparent hover:text-brand-primary hover:shadow-none',
+    appearance === 'secondary' && 'border-brand-primary bg-transparent text-brand-primary',
+    appearance === 'secondary' &&
+      interactive &&
+      !disabled &&
+      'hover:bg-brand-primary hover:text-white hover:shadow-[0_8px_24px_#00663344]',
+    appearance === 'ghost' && 'border-transparent px-0 py-3 text-sm font-medium text-brand-primary',
+    appearance === 'ghost' && interactive && !disabled && 'hover:opacity-80',
+    disabled && 'cursor-not-allowed opacity-60',
+    className,
+  );
+
+  const icon = showIcon ? (
+    <Icon
+      className={cn(
+        'size-4 transition-transform duration-300 ease-out',
+        interactive &&
+          !disabled &&
+          (appearance === 'secondary'
+            ? 'group-hover:translate-x-1'
+            : 'group-hover:translate-x-0.5 group-hover:-translate-y-0.5'),
+      )}
+      aria-hidden
+    />
+  ) : null;
+
+  if (type) {
+    return (
+      <button type={type} disabled={disabled} onClick={onClick} className={classNames}>
+        {children}
+        {icon}
+      </button>
+    );
+  }
 
   return (
-    <MaybeLink
-      href={href}
-      openInNewTab={openInNewTab}
-      onClick={onClick}
-      className={cn(
-        'group inline-flex items-center justify-center gap-2.5 rounded-[10px] border-2 px-8 py-[18px] font-heading text-base font-bold transition-colors duration-300',
-        linked &&
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/40',
-        appearance === 'primary' &&
-          'border-brand-primary bg-brand-primary text-white shadow-[0_8px_24px_#00663344]',
-        appearance === 'primary' &&
-          linked &&
-          'hover:bg-transparent hover:text-brand-primary hover:shadow-none',
-        appearance === 'secondary' && 'border-brand-primary bg-transparent text-brand-primary',
-        appearance === 'secondary' &&
-          linked &&
-          'hover:bg-brand-primary hover:text-white hover:shadow-[0_8px_24px_#00663344]',
-        appearance === 'ghost' &&
-          'border-transparent px-0 py-3 text-sm font-medium text-brand-primary',
-        appearance === 'ghost' && linked && 'hover:opacity-80',
-        className,
-      )}
-    >
+    <MaybeLink href={href} openInNewTab={openInNewTab} onClick={onClick} className={classNames}>
       {children}
-      {showIcon ? (
-        <Icon
-          className={cn(
-            'size-4 transition-transform duration-300 ease-out',
-            linked &&
-              (appearance === 'secondary'
-                ? 'group-hover:translate-x-1'
-                : 'group-hover:translate-x-0.5 group-hover:-translate-y-0.5'),
-          )}
-          aria-hidden
-        />
-      ) : null}
+      {icon}
     </MaybeLink>
   );
 }

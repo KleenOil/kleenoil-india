@@ -6,6 +6,7 @@ import sharp from 'sharp';
 import { fileURLToPath } from 'url';
 
 import { Jobs } from './collections/Jobs';
+import { Leads } from './collections/Leads';
 import { Media } from './collections/Media';
 import { Pages } from './collections/Pages';
 import { Posts } from './collections/Posts';
@@ -38,7 +39,7 @@ export default buildConfig({
       titleSuffix: ' | CMS',
     },
   },
-  collections: [Users, Media, Pages, Posts, CaseStudies, Jobs, ProductTemplates, Products],
+  collections: [Users, Media, Pages, Posts, CaseStudies, Jobs, Leads, ProductTemplates, Products],
   globals: [SiteSettings, Navigation, Footer, ContactInfo, SeoDefaults],
   editor: lexicalEditor(),
   secret: env.PAYLOAD_SECRET,
@@ -49,8 +50,9 @@ export default buildConfig({
     pool: {
       connectionString: env.DATABASE_URL,
     },
-    // Vercel never auto-pushes schema; new block tables/columns must ship as migrations.
-    push: !process.env.VERCEL,
+    // Schema changes ship as migrations (Vercel never pushes). Local push is opt-in
+    // because it prompts to drop leftover draft columns and hangs the dev server.
+    push: process.env.PAYLOAD_DB_PUSH === 'true',
   }),
   sharp,
   plugins: [...getStoragePlugins(env)],

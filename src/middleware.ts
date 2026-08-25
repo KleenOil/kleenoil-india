@@ -4,7 +4,7 @@ import { buildSecurityHeaders } from '@/lib/security/headers';
 import { checkRateLimit, getClientIp } from '@/lib/security/rate-limit';
 
 /** Paths that receive rate limiting (forms and custom public APIs — not Payload admin). */
-const RATE_LIMITED_PATHS = ['/api/forms', '/api/search', '/api/revalidate'];
+const RATE_LIMITED_PATHS = ['/api/forms', '/api/search', '/api/revalidate', '/api/leads'];
 
 function shouldRateLimit(pathname: string): boolean {
   return RATE_LIMITED_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));

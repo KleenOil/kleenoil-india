@@ -138,6 +138,20 @@ export const SiteSettings: GlobalConfig = {
           ],
         },
         {
+          label: 'Leads',
+          fields: [
+            {
+              name: 'leadNotificationEmail',
+              type: 'text',
+              label: 'Lead notification email',
+              admin: {
+                description:
+                  'Inbox that receives consultation form submissions. Comma-separate for more than one. Falls back to EMAIL_TO_SALES in the environment if empty.',
+              },
+            },
+          ],
+        },
+        {
           label: 'Features',
           fields: [
             {

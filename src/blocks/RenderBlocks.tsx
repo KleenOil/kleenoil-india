@@ -13,9 +13,18 @@ import { CsFeaturedBlock, type CsFeaturedBlockData } from '@/blocks/CsFeatured/C
 import { CsHeroBlock, type CsHeroBlockData } from '@/blocks/CsHero/Component';
 import { CsIndexBlock, type CsIndexBlockData } from '@/blocks/CsIndex/Component';
 import {
+  ContactChannelsBlock,
+  type ContactChannelsBlockData,
+} from '@/blocks/ContactChannels/Component';
+import { ContactHeroBlock, type ContactHeroBlockData } from '@/blocks/ContactHero/Component';
+import {
   ContactPreviewBlock,
   type ContactPreviewBlockData,
 } from '@/blocks/ContactPreview/Component';
+import {
+  ContactProcessBlock,
+  type ContactProcessBlockData,
+} from '@/blocks/ContactProcess/Component';
 import { CtaBlock, type CtaBlockData } from '@/blocks/CTA/Component';
 import {
   DistributionNetworkBlock,
@@ -183,6 +192,26 @@ export function RenderBlocks({
             return wrapReveal(key, <CsCtaBlock block={block as CsCtaBlockData} />, motion, {
               variant: 'cta',
             });
+          case 'contact-hero':
+            return wrapReveal(
+              key,
+              <ContactHeroBlock block={block as ContactHeroBlockData} />,
+              motion,
+              { variant: 'hero' },
+            );
+          case 'contact-process':
+            return wrapReveal(
+              key,
+              <ContactProcessBlock block={block as ContactProcessBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'contact-channels':
+            return wrapReveal(
+              key,
+              <ContactChannelsBlock block={block as ContactChannelsBlockData} />,
+              motion,
+            );
           case 'manifesto':
             return wrapReveal(key, <ManifestoBlock block={block as ManifestoBlockData} />, motion, {
               stagger: true,

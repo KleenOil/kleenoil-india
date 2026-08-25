@@ -90,3 +90,43 @@ export async function getContactDetails(): Promise<ContactDetails> {
     return DEFAULT_CONTACT;
   }
 }
+
+/** CMS Contact Information only — no Bangalore placeholders. */
+export async function getCmsContactDetails(): Promise<ContactDetails | null> {
+  try {
+    const payload = await getPayloadClient();
+    const contactInfo = (await payload
+      .findGlobal({ slug: 'contact-info' })
+      .catch(() => null)) as ContactInfo | null;
+
+    if (!contactInfo) {
+      return null;
+    }
+
+    const addresses =
+      contactInfo.addresses?.map(formatAddress).filter((item) => item.lines.length > 0) ?? [];
+    const phones =
+      contactInfo.phones
+        ?.filter((phone) => phone.label && phone.number)
+        .map((phone) => ({
+          label: phone.label,
+          number: phone.number,
+        })) ?? [];
+    const emails =
+      contactInfo.emails
+        ?.filter((item) => item.label && item.email)
+        .map((item) => ({
+          label: item.label,
+          email: item.email,
+        })) ?? [];
+
+    if (!addresses.length && !phones.length && !emails.length) {
+      return null;
+    }
+
+    return { addresses, phones, emails };
+  } catch (error) {
+    console.error('[cms] getCmsContactDetails failed', error);
+    return null;
+  }
+}

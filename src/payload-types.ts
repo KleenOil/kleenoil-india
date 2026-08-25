@@ -73,6 +73,7 @@ export interface Config {
     posts: Post;
     'case-studies': CaseStudy;
     jobs: Job;
+    leads: Lead;
     'product-templates': ProductTemplate;
     products: Product;
     'payload-kv': PayloadKv;
@@ -88,6 +89,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     jobs: JobsSelect<false> | JobsSelect<true>;
+    leads: LeadsSelect<false> | LeadsSelect<true>;
     'product-templates': ProductTemplatesSelect<false> | ProductTemplatesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -441,6 +443,54 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'cs-cta';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            subheadline?: string | null;
+            image?: (number | null) | Media;
+            /**
+             * Defaults to Prefer to call.
+             */
+            phoneLabel?: string | null;
+            /**
+             * Leave empty to use the first number in Contact Information.
+             */
+            phoneNumber?: string | null;
+            benefits?:
+              | {
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            formTitle?: string | null;
+            formLead?: string | null;
+            submitLabel?: string | null;
+            finePrint?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contact-hero';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            steps?:
+              | {
+                  title: string;
+                  description: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contact-process';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contact-channels';
           }
         | {
             quote: string;
@@ -1875,6 +1925,27 @@ export interface ProductTemplate {
   createdAt: string;
 }
 /**
+ * Consultation form submissions. Form fields are locked; status can be moved between New, Contacted, and Closed.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads".
+ */
+export interface Lead {
+  id: number;
+  name: string;
+  email: string;
+  company?: string | null;
+  plant?: string | null;
+  industry?: ('automotive' | 'steel' | 'marine' | 'power' | 'cement' | 'rail') | null;
+  timing?: ('this-week' | 'next-two-weeks' | 'flexible') | null;
+  message?: string | null;
+  status: 'new' | 'contacted' | 'closed';
+  statusChangedAt?: string | null;
+  source?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -1921,6 +1992,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'jobs';
         value: number | Job;
+      } | null)
+    | ({
+        relationTo: 'leads';
+        value: number | Lead;
       } | null)
     | ({
         relationTo: 'product-templates';
@@ -2229,6 +2304,51 @@ export interface PagesSelect<T extends boolean = true> {
                         };
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        'contact-hero'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheadline?: T;
+              image?: T;
+              phoneLabel?: T;
+              phoneNumber?: T;
+              benefits?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              formTitle?: T;
+              formLead?: T;
+              submitLabel?: T;
+              finePrint?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'contact-process'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              steps?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'contact-channels'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
               id?: T;
               blockName?: T;
             };
@@ -2810,6 +2930,24 @@ export interface JobsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads_select".
+ */
+export interface LeadsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  company?: T;
+  plant?: T;
+  industry?: T;
+  timing?: T;
+  message?: T;
+  status?: T;
+  statusChangedAt?: T;
+  source?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "product-templates_select".
  */
 export interface ProductTemplatesSelect<T extends boolean = true> {
@@ -3372,6 +3510,10 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Inbox that receives consultation form submissions. Comma-separate for more than one. Falls back to EMAIL_TO_SALES in the environment if empty.
+   */
+  leadNotificationEmail?: string | null;
   features?: {
     enableSearch?: boolean | null;
     enableBlog?: boolean | null;
@@ -3653,6 +3795,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  leadNotificationEmail?: T;
   features?:
     | T
     | {

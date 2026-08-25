@@ -7,7 +7,10 @@ import { ArticlesHero } from './ArticlesHero/config';
 import { ArticlesIndex } from './ArticlesIndex/config';
 import { CareersHero } from './CareersHero/config';
 import { CareersIndex } from './CareersIndex/config';
+import { ContactChannels } from './ContactChannels/config';
+import { ContactHero } from './ContactHero/config';
 import { ContactPreview } from './ContactPreview/config';
+import { ContactProcess } from './ContactProcess/config';
 import { CsCta } from './CsCta/config';
 import { CsFeatured } from './CsFeatured/config';
 import { CsHero } from './CsHero/config';
@@ -41,6 +44,9 @@ export const pageBlocks: Block[] = [
   CsFeatured,
   CsIndex,
   CsCta,
+  ContactHero,
+  ContactProcess,
+  ContactChannels,
   Manifesto,
   AboutOrigin,
   AboutStory,

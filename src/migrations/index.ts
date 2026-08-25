@@ -28,6 +28,8 @@ import * as migration_20260825_140000_cs_page_blocks from './20260825_140000_cs_
 import * as migration_20260825_150000_case_study_pdf from './20260825_150000_case_study_pdf';
 import * as migration_20260825_160000_hero_slider from './20260825_160000_hero_slider';
 import * as migration_20260825_170000_hero_slide_interval from './20260825_170000_hero_slide_interval';
+import * as migration_20260825_180000_leads_and_contact_blocks from './20260825_180000_leads_and_contact_blocks';
+import * as migration_20260825_190000_leads_status_changed_at from './20260825_190000_leads_status_changed_at';
 
 export const migrations = [
   {
@@ -179,5 +181,15 @@ export const migrations = [
     up: migration_20260825_170000_hero_slide_interval.up,
     down: migration_20260825_170000_hero_slide_interval.down,
     name: '20260825_170000_hero_slide_interval',
+  },
+  {
+    up: migration_20260825_180000_leads_and_contact_blocks.up,
+    down: migration_20260825_180000_leads_and_contact_blocks.down,
+    name: '20260825_180000_leads_and_contact_blocks',
+  },
+  {
+    up: migration_20260825_190000_leads_status_changed_at.up,
+    down: migration_20260825_190000_leads_status_changed_at.down,
+    name: '20260825_190000_leads_status_changed_at',
   },
 ];
