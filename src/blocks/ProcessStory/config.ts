@@ -27,6 +27,15 @@ export const ProcessStory: Block = {
             description: 'Pill under the description, e.g. PARTICULATE > 18μm.',
           },
         },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Step image',
+          admin: {
+            description: 'Replaces the default illustration for this step. Leave empty to keep it.',
+          },
+        },
       ],
     },
   ],

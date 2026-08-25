@@ -19,6 +19,7 @@ export const DEFAULT_PDP_HERO = {
     { value: '24/7', label: 'DUTY' },
   ],
   quickSpecsPerRow: 'auto' as const,
+  selectorLabel: 'SELECT MODEL',
   ctas: [
     { label: 'Contact to buy', href: '/contact', appearance: 'primary' as const },
     { label: 'Download specs', href: '/resources', appearance: 'secondary' as const },

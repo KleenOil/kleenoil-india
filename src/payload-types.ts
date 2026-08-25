@@ -707,6 +707,10 @@ export interface Page {
                    * Pill under the description, e.g. PARTICULATE > 18μm.
                    */
                   spec?: string | null;
+                  /**
+                   * Replaces the default illustration for this step. Leave empty to keep it.
+                   */
+                  image?: (number | null) | Media;
                   id?: string | null;
                 }[]
               | null;
@@ -1143,6 +1147,64 @@ export interface Product {
                   id?: string | null;
                 }[]
               | null;
+            /**
+             * When on, visitors pick a model and the gallery, title, summary, and specs update to that variant.
+             */
+            enableVariants?: boolean | null;
+            /**
+             * Chips match the PDP design. Dropdown is a compact select for longer model lists.
+             */
+            selectorStyle?: ('chips' | 'dropdown') | null;
+            /**
+             * Defaults to SELECT MODEL.
+             */
+            selectorLabel?: string | null;
+            /**
+             * Each model can have its own images and specs. Leave a field empty to fall back to the Hero tab.
+             */
+            variants?:
+              | {
+                  /**
+                   * e.g. Kleenoil SMFS 1XSDU 9788
+                   */
+                  name: string;
+                  /**
+                   * Short chip label, e.g. 1X
+                   */
+                  code?: string | null;
+                  /**
+                   * e.g. SMFS or MFS
+                   */
+                  series?: string | null;
+                  /**
+                   * e.g. Series SMFS · Cartridge 9788 · Static / Mobile
+                   */
+                  meta?: string | null;
+                  isDefault?: boolean | null;
+                  badge?: string | null;
+                  title?: string | null;
+                  summary?: string | null;
+                  /**
+                   * Images for this model. Leave empty to keep the Hero tab gallery.
+                   */
+                  gallery?: (number | Media)[] | null;
+                  /**
+                   * Leave empty to keep the Hero tab specs.
+                   */
+                  quickSpecs?:
+                    | {
+                        value: string;
+                        label: string;
+                        /**
+                         * When enabled, the value counts up when this spec scrolls into view (works best with numeric values like 99.9% or 5×).
+                         */
+                        animateCounter?: boolean | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'pdp-hero';
@@ -1416,6 +1478,64 @@ export interface ProductTemplate {
                     openInNewTab?: boolean | null;
                     appearance?: ('primary' | 'secondary' | 'ghost') | null;
                   };
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * When on, visitors pick a model and the gallery, title, summary, and specs update to that variant.
+             */
+            enableVariants?: boolean | null;
+            /**
+             * Chips match the PDP design. Dropdown is a compact select for longer model lists.
+             */
+            selectorStyle?: ('chips' | 'dropdown') | null;
+            /**
+             * Defaults to SELECT MODEL.
+             */
+            selectorLabel?: string | null;
+            /**
+             * Each model can have its own images and specs. Leave a field empty to fall back to the Hero tab.
+             */
+            variants?:
+              | {
+                  /**
+                   * e.g. Kleenoil SMFS 1XSDU 9788
+                   */
+                  name: string;
+                  /**
+                   * Short chip label, e.g. 1X
+                   */
+                  code?: string | null;
+                  /**
+                   * e.g. SMFS or MFS
+                   */
+                  series?: string | null;
+                  /**
+                   * e.g. Series SMFS · Cartridge 9788 · Static / Mobile
+                   */
+                  meta?: string | null;
+                  isDefault?: boolean | null;
+                  badge?: string | null;
+                  title?: string | null;
+                  summary?: string | null;
+                  /**
+                   * Images for this model. Leave empty to keep the Hero tab gallery.
+                   */
+                  gallery?: (number | Media)[] | null;
+                  /**
+                   * Leave empty to keep the Hero tab specs.
+                   */
+                  quickSpecs?:
+                    | {
+                        value: string;
+                        label: string;
+                        /**
+                         * When enabled, the value counts up when this spec scrolls into view (works best with numeric values like 99.9% or 5×).
+                         */
+                        animateCounter?: boolean | null;
+                        id?: string | null;
+                      }[]
+                    | null;
                   id?: string | null;
                 }[]
               | null;
@@ -2160,6 +2280,7 @@ export interface PagesSelect<T extends boolean = true> {
                     title?: T;
                     description?: T;
                     spec?: T;
+                    image?: T;
                     id?: T;
                   };
               id?: T;
@@ -2423,6 +2544,31 @@ export interface ProductTemplatesSelect<T extends boolean = true> {
                         };
                     id?: T;
                   };
+              enableVariants?: T;
+              selectorStyle?: T;
+              selectorLabel?: T;
+              variants?:
+                | T
+                | {
+                    name?: T;
+                    code?: T;
+                    series?: T;
+                    meta?: T;
+                    isDefault?: T;
+                    badge?: T;
+                    title?: T;
+                    summary?: T;
+                    gallery?: T;
+                    quickSpecs?:
+                      | T
+                      | {
+                          value?: T;
+                          label?: T;
+                          animateCounter?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -2629,6 +2775,31 @@ export interface ProductsSelect<T extends boolean = true> {
                           url?: T;
                           openInNewTab?: T;
                           appearance?: T;
+                        };
+                    id?: T;
+                  };
+              enableVariants?: T;
+              selectorStyle?: T;
+              selectorLabel?: T;
+              variants?:
+                | T
+                | {
+                    name?: T;
+                    code?: T;
+                    series?: T;
+                    meta?: T;
+                    isDefault?: T;
+                    badge?: T;
+                    title?: T;
+                    summary?: T;
+                    gallery?: T;
+                    quickSpecs?:
+                      | T
+                      | {
+                          value?: T;
+                          label?: T;
+                          animateCounter?: T;
+                          id?: T;
                         };
                     id?: T;
                   };

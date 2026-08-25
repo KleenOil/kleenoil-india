@@ -2,6 +2,7 @@ import { ProcessStageCard } from '@/components/cards/ProcessStageCard';
 import type { ProcessStageData } from '@/components/cards/ProcessStageCard';
 import { SectionHeader } from '@/components/sections/SectionHeader';
 import { DEFAULT_PROCESS_STORY } from '@/lib/cms/defaults';
+import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
 
 type ProcessStep = {
@@ -9,7 +10,7 @@ type ProcessStep = {
   title?: string | null;
   description?: string | null;
   spec?: string | null;
-  icon?: number | Media | null;
+  image?: number | Media | null;
 };
 
 export type ProcessStoryBlockData = {
@@ -37,6 +38,8 @@ function mapCmsStep(step: ProcessStep, index: number): ProcessStageData | null {
     description: step.description || fallback?.description || '',
     spec: step.spec || fallback?.spec || '',
     theme: fallback?.theme || 'contaminated',
+    imageUrl: getMediaUrl(step.image),
+    imageAlt: getMediaAlt(step.image, step.title),
   };
 }
 

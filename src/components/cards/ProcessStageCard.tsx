@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { cn } from '@/lib/utils';
 
 export type ProcessStageData = {
@@ -6,6 +8,8 @@ export type ProcessStageData = {
   description: string;
   spec: string;
   theme: 'contaminated' | 'coalescer' | 'depth' | 'pristine';
+  imageUrl?: string | null;
+  imageAlt?: string;
 };
 
 const themeStyles: Record<
@@ -50,22 +54,38 @@ export function ProcessStageCard({ stage, className }: ProcessStageCardProps) {
           styles.visual,
         )}
       >
-        <div className="relative flex flex-col items-center">
-          <div className="mb-1 h-2 w-12 rounded-sm bg-white/20" />
-          <div className="h-8 w-10 rounded-t-md border-2 border-white/20 bg-white/10" />
-          <div
-            className={cn(
-              'relative h-44 w-20 overflow-hidden rounded-b-[2.5rem] border-2 border-white/20 bg-gradient-to-b',
-              styles.liquid,
-            )}
-          >
-            <div className="absolute inset-x-3 bottom-3 top-8 rounded-b-[2rem] bg-gradient-to-t from-black/20 to-transparent" />
-            <div className={cn('absolute left-4 top-14 size-1 rounded-full', styles.particles)} />
-            <div className={cn('absolute left-8 top-16 size-1.5 rounded-full', styles.particles)} />
-            <div className={cn('absolute right-6 top-12 size-2 rounded-full', styles.particles)} />
-            <div className={cn('absolute right-4 top-20 size-1 rounded-full', styles.particles)} />
+        {stage.imageUrl ? (
+          <Image
+            src={stage.imageUrl}
+            alt={stage.imageAlt || stage.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
+          />
+        ) : (
+          <div className="relative flex flex-col items-center">
+            <div className="mb-1 h-2 w-12 rounded-sm bg-white/20" />
+            <div className="h-8 w-10 rounded-t-md border-2 border-white/20 bg-white/10" />
+            <div
+              className={cn(
+                'relative h-44 w-20 overflow-hidden rounded-b-[2.5rem] border-2 border-white/20 bg-gradient-to-b',
+                styles.liquid,
+              )}
+            >
+              <div className="absolute inset-x-3 bottom-3 top-8 rounded-b-[2rem] bg-gradient-to-t from-black/20 to-transparent" />
+              <div className={cn('absolute left-4 top-14 size-1 rounded-full', styles.particles)} />
+              <div
+                className={cn('absolute left-8 top-16 size-1.5 rounded-full', styles.particles)}
+              />
+              <div
+                className={cn('absolute right-6 top-12 size-2 rounded-full', styles.particles)}
+              />
+              <div
+                className={cn('absolute right-4 top-20 size-1 rounded-full', styles.particles)}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <div className="flex flex-col gap-3.5 rounded-2xl border border-border-subtle bg-surface-elevated/70 p-5 shadow-[0_6px_20px_#00663310]">

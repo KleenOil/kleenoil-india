@@ -11,6 +11,8 @@ import { getMediaAlt, getMediaUrl, resolveCtaList, type CmsLink } from '@/lib/cm
 import type { Media } from '@/payload-types';
 import { cn } from '@/lib/utils';
 
+import { VariantSelector, type HeroVariantOption } from './VariantSelector';
+
 type QuickSpecsPerRow = 'auto' | 'one' | 'two' | 'three' | 'four';
 
 type SpecItem = {
@@ -23,6 +25,15 @@ type CtaItem = {
   link?: CmsLink | null;
 };
 
+export type PdpHeroVariant = HeroVariantOption & {
+  isDefault?: boolean | null;
+  badge?: string | null;
+  title?: string | null;
+  summary?: string | null;
+  gallery?: (number | Media)[] | null;
+  quickSpecs?: SpecItem[] | null;
+};
+
 export type PdpHeroBlockData = {
   blockType: 'pdp-hero';
   badge?: string | null;
@@ -33,6 +44,10 @@ export type PdpHeroBlockData = {
   quickSpecs?: SpecItem[] | null;
   quickSpecsPerRow?: QuickSpecsPerRow | null;
   ctas?: CtaItem[] | null;
+  enableVariants?: boolean | null;
+  selectorStyle?: 'chips' | 'dropdown' | null;
+  selectorLabel?: string | null;
+  variants?: PdpHeroVariant[] | null;
 };
 
 type PdpHeroProps = {
@@ -41,19 +56,48 @@ type PdpHeroProps = {
   featuredImageUrl?: string | null;
 };
 
-export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroProps) {
-  const badge = block?.badge || DEFAULT_PDP_HERO.badge;
-  const eyebrow = block?.eyebrow || DEFAULT_PDP_HERO.eyebrow;
-  const title = block?.title || productName || DEFAULT_PDP_HERO.title;
-  const summary = block?.summary || DEFAULT_PDP_HERO.summary;
+type GalleryItem = { url: string; alt: string };
 
-  const cmsGallery =
-    block?.gallery
+function usableSpecs(items?: SpecItem[] | null): SpecItem[] {
+  return items?.filter((spec) => spec.value && spec.label) ?? [];
+}
+
+function galleryFromMedia(
+  items: (number | Media)[] | null | undefined,
+  alt: string,
+): GalleryItem[] {
+  return (
+    items
       ?.map((item) => ({
         url: getMediaUrl(item),
-        alt: getMediaAlt(item, title),
+        alt: getMediaAlt(item, alt),
       }))
-      .filter((item): item is { url: string; alt: string } => Boolean(item.url)) ?? [];
+      .filter((item): item is GalleryItem => Boolean(item.url)) ?? []
+  );
+}
+
+function defaultVariantIndex(variants: PdpHeroVariant[]): number {
+  const index = variants.findIndex((variant) => variant.isDefault);
+  return index >= 0 ? index : 0;
+}
+
+export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroProps) {
+  const variants = block?.enableVariants
+    ? (block.variants?.filter((variant) => variant.name) ?? [])
+    : [];
+  const [variantIndex, setVariantIndex] = useState(() => defaultVariantIndex(variants));
+  const [active, setActive] = useState(0);
+
+  const selected = variants[variantIndex] ?? variants[0] ?? null;
+
+  const eyebrow = block?.eyebrow || DEFAULT_PDP_HERO.eyebrow;
+  const title = selected?.title || block?.title || productName || DEFAULT_PDP_HERO.title;
+  const summary = selected?.summary || block?.summary || DEFAULT_PDP_HERO.summary;
+  const badge = selected?.badge || block?.badge || DEFAULT_PDP_HERO.badge;
+
+  const variantGallery = galleryFromMedia(selected?.gallery, title);
+  const heroGallery = galleryFromMedia(block?.gallery, title);
+  const cmsGallery = variantGallery.length > 0 ? variantGallery : heroGallery;
 
   const gallery =
     cmsGallery.length > 0
@@ -66,12 +110,16 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
           })),
         ].slice(0, 4);
 
-  const [active, setActive] = useState(0);
-  const activeImage = gallery[active] ?? gallery[0];
+  const activeImage = gallery[Math.min(active, gallery.length - 1)] ?? gallery[0];
 
-  const specs: SpecItem[] = block?.quickSpecs?.filter((s) => s.value && s.label)?.length
-    ? block.quickSpecs.filter((s) => s.value && s.label)
-    : DEFAULT_PDP_HERO.quickSpecs.map((spec) => ({ ...spec, animateCounter: false }));
+  const variantSpecs = usableSpecs(selected?.quickSpecs);
+  const heroSpecs = usableSpecs(block?.quickSpecs);
+  const specs: SpecItem[] =
+    variantSpecs.length > 0
+      ? variantSpecs
+      : heroSpecs.length > 0
+        ? heroSpecs
+        : DEFAULT_PDP_HERO.quickSpecs.map((spec) => ({ ...spec, animateCounter: false }));
 
   const perRow = block?.quickSpecsPerRow || DEFAULT_PDP_HERO.quickSpecsPerRow;
   const lockedColumns: Record<string, number> = {
@@ -83,6 +131,11 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
   const specColumns = lockedColumns[perRow] ?? Math.min(Math.max(specs.length, 1), 4);
 
   const ctas = resolveCtaList(block?.ctas, DEFAULT_PDP_HERO.ctas);
+
+  const selectVariant = (index: number) => {
+    setVariantIndex(index);
+    setActive(0);
+  };
 
   return (
     <section className="bg-background">
@@ -139,6 +192,16 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
           <p className="max-w-xl text-base leading-relaxed text-text-secondary md:text-[17px]">
             {summary}
           </p>
+
+          {variants.length > 0 ? (
+            <VariantSelector
+              label={block?.selectorLabel || 'SELECT MODEL'}
+              style={block?.selectorStyle === 'dropdown' ? 'dropdown' : 'chips'}
+              variants={variants}
+              selectedIndex={Math.min(variantIndex, variants.length - 1)}
+              onSelect={selectVariant}
+            />
+          ) : null}
 
           <div
             className="grid gap-4"

@@ -134,7 +134,7 @@ async function loadMegaProductCards(items: CmsNavRow[]): Promise<Map<number, Meg
     const result = await payload.find({
       collection: 'products',
       where: { id: { in: ids } },
-      depth: 2,
+      depth: 3,
       limit: ids.length,
       pagination: false,
     });
@@ -157,7 +157,7 @@ async function loadMegaProductCards(items: CmsNavRow[]): Promise<Map<number, Meg
           return (await payload.findByID({
             collection: 'product-templates',
             id,
-            depth: 2,
+            depth: 3,
           })) as ProductTemplate;
         } catch {
           return null;
@@ -210,9 +210,22 @@ function firstTwoProductImages(
   }
 
   const hero = layout.find((block) => block.blockType === 'pdp-hero') as
-    { gallery?: (number | Media)[] | null } | undefined;
+    | {
+        gallery?: (number | Media)[] | null;
+        enableVariants?: boolean | null;
+        variants?: { isDefault?: boolean | null; gallery?: (number | Media)[] | null }[] | null;
+      }
+    | undefined;
 
-  for (const media of hero?.gallery ?? []) {
+  const defaultVariant = hero?.enableVariants
+    ? (hero.variants?.find((variant) => variant.isDefault) ?? hero.variants?.[0])
+    : null;
+  const gallery =
+    defaultVariant?.gallery && defaultVariant.gallery.length > 0
+      ? defaultVariant.gallery
+      : (hero?.gallery ?? []);
+
+  for (const media of gallery) {
     const url = getMediaUrl(media);
     if (url && !urls.includes(url)) {
       urls.push(url);

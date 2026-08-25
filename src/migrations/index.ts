@@ -22,6 +22,8 @@ import * as migration_20260822_014500_post_article_toc_and_ctas from './20260822
 import * as migration_20260822_021800_jobs_and_careers_blocks from './20260822_021800_jobs_and_careers_blocks';
 import * as migration_20260822_030400_job_details_richtext from './20260822_030400_job_details_richtext';
 import * as migration_20260822_033000_post_related_and_closing_cta from './20260822_033000_post_related_and_closing_cta';
+import * as migration_20260825_120000_pdp_hero_variants from './20260825_120000_pdp_hero_variants';
+import * as migration_20260825_130000_process_story_step_image from './20260825_130000_process_story_step_image';
 
 export const migrations = [
   {
@@ -143,5 +145,15 @@ export const migrations = [
     up: migration_20260822_033000_post_related_and_closing_cta.up,
     down: migration_20260822_033000_post_related_and_closing_cta.down,
     name: '20260822_033000_post_related_and_closing_cta',
+  },
+  {
+    up: migration_20260825_120000_pdp_hero_variants.up,
+    down: migration_20260825_120000_pdp_hero_variants.down,
+    name: '20260825_120000_pdp_hero_variants',
+  },
+  {
+    up: migration_20260825_130000_process_story_step_image.up,
+    down: migration_20260825_130000_process_story_step_image.down,
+    name: '20260825_130000_process_story_step_image',
   },
 ];

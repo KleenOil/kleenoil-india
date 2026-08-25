@@ -4,12 +4,66 @@ import { anyone, editorsAndAdmins } from '@/access/roles';
 import { pdpTemplateBlocks } from '@/blocks/pdp';
 import { slugField } from '@/fields/slug';
 
+const NESTED_ARRAY_KEYS = new Set([
+  'items',
+  'quickSpecs',
+  'steps',
+  'machines',
+  'columns',
+  'models',
+  'results',
+  'cards',
+  'ctas',
+  'trustBadges',
+  'variants',
+]);
+
+function stripIdsFromRows(rows: unknown[]): void {
+  for (const row of rows) {
+    if (!row || typeof row !== 'object') {
+      continue;
+    }
+
+    delete (row as { id?: unknown }).id;
+
+    for (const [key, value] of Object.entries(row as Record<string, unknown>)) {
+      if (NESTED_ARRAY_KEYS.has(key) && Array.isArray(value)) {
+        stripIdsFromRows(value);
+      }
+    }
+  }
+}
+
+function stripNestedArrayIds(layout: unknown): void {
+  if (!Array.isArray(layout)) {
+    return;
+  }
+
+  for (const block of layout) {
+    if (!block || typeof block !== 'object') {
+      continue;
+    }
+
+    for (const [key, value] of Object.entries(block as Record<string, unknown>)) {
+      if (!NESTED_ARRAY_KEYS.has(key) || !Array.isArray(value)) {
+        continue;
+      }
+
+      stripIdsFromRows(value);
+    }
+  }
+}
+
 const clearTemplateContaminationItems: CollectionBeforeChangeHook = async ({
   data,
   originalDoc,
   operation,
   req,
 }) => {
+  if (data) {
+    stripNestedArrayIds(data.layout);
+  }
+
   if (operation !== 'update' || originalDoc?.id == null) {
     return data;
   }

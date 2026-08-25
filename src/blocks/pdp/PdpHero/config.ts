@@ -1,9 +1,38 @@
 import type { Block, Field } from 'payload';
 
 import { linkArrayField } from '../../shared';
-import { withDataSource } from '../shared';
+import { dataSourceField } from '../shared';
+import { withClientCondition } from '@/fields/withClientCondition';
 
-const pdpHeroFields: Field[] = [
+const quickSpecFields: Field[] = [
+  { name: 'value', type: 'text', required: true },
+  { name: 'label', type: 'text', required: true },
+  {
+    name: 'animateCounter',
+    type: 'checkbox',
+    label: 'Animate value as counter',
+    defaultValue: false,
+    admin: {
+      description:
+        'When enabled, the value counts up when this spec scrolls into view (works best with numeric values like 99.9% or 5×).',
+    },
+  },
+];
+
+const galleryField: Field = {
+  name: 'gallery',
+  type: 'upload',
+  relationTo: 'media',
+  hasMany: true,
+  maxRows: 8,
+  label: 'Gallery',
+  admin: {
+    description: 'Select or upload multiple images at once. Reorder as needed.',
+    isSortable: true,
+  },
+};
+
+const heroContentFields: Field[] = [
   {
     name: 'badge',
     type: 'text',
@@ -27,18 +56,7 @@ const pdpHeroFields: Field[] = [
     type: 'textarea',
     label: 'Summary',
   },
-  {
-    name: 'gallery',
-    type: 'upload',
-    relationTo: 'media',
-    hasMany: true,
-    maxRows: 8,
-    label: 'Gallery',
-    admin: {
-      description: 'Select or upload multiple images at once. Reorder as needed.',
-      isSortable: true,
-    },
-  },
+  galleryField,
   {
     name: 'quickSpecsPerRow',
     type: 'select',
@@ -61,22 +79,153 @@ const pdpHeroFields: Field[] = [
     type: 'array',
     label: 'Quick Specs',
     maxRows: 8,
-    fields: [
-      { name: 'value', type: 'text', required: true },
-      { name: 'label', type: 'text', required: true },
-      {
-        name: 'animateCounter',
-        type: 'checkbox',
-        label: 'Animate value as counter',
-        defaultValue: false,
-        admin: {
-          description:
-            'When enabled, the value counts up when this spec scrolls into view (works best with numeric values like 99.9% or 5×).',
+    fields: quickSpecFields,
+  },
+  linkArrayField({ name: 'ctas', label: 'CTAs', maxRows: 2 }),
+];
+
+const variantFields: Field[] = [
+  {
+    name: 'enableVariants',
+    type: 'checkbox',
+    label: 'Enable model variants',
+    defaultValue: false,
+    admin: {
+      description:
+        'When on, visitors pick a model and the gallery, title, summary, and specs update to that variant.',
+    },
+  },
+  withClientCondition(
+    {
+      name: 'selectorStyle',
+      type: 'select',
+      label: 'Variant selector',
+      defaultValue: 'chips',
+      options: [
+        { label: 'Chips', value: 'chips' },
+        { label: 'Dropdown', value: 'dropdown' },
+      ],
+      admin: {
+        description:
+          'Chips match the PDP design. Dropdown is a compact select for longer model lists.',
+      },
+    },
+    { sibling: 'enableVariants', truthy: true },
+  ),
+  withClientCondition(
+    {
+      name: 'selectorLabel',
+      type: 'text',
+      label: 'Selector label',
+      admin: {
+        description: 'Defaults to SELECT MODEL.',
+      },
+    },
+    { sibling: 'enableVariants', truthy: true },
+  ),
+  withClientCondition(
+    {
+      name: 'variants',
+      type: 'array',
+      label: 'Models',
+      labels: {
+        singular: 'Model',
+        plural: 'Models',
+      },
+      admin: {
+        description:
+          'Each model can have its own images and specs. Leave a field empty to fall back to the Hero tab.',
+        initCollapsed: true,
+      },
+      fields: [
+        {
+          name: 'name',
+          type: 'text',
+          required: true,
+          label: 'Model name',
+          admin: { description: 'e.g. Kleenoil SMFS 1XSDU 9788' },
         },
+        {
+          name: 'code',
+          type: 'text',
+          label: 'Code',
+          admin: { description: 'Short chip label, e.g. 1X' },
+        },
+        {
+          name: 'series',
+          type: 'text',
+          label: 'Series',
+          admin: { description: 'e.g. SMFS or MFS' },
+        },
+        {
+          name: 'meta',
+          type: 'text',
+          label: 'Detail line',
+          admin: { description: 'e.g. Series SMFS · Cartridge 9788 · Static / Mobile' },
+        },
+        {
+          name: 'isDefault',
+          type: 'checkbox',
+          label: 'Default selected',
+          defaultValue: false,
+        },
+        {
+          name: 'badge',
+          type: 'text',
+          label: 'Gallery badge override',
+        },
+        {
+          name: 'title',
+          type: 'textarea',
+          label: 'Title override',
+        },
+        {
+          name: 'summary',
+          type: 'textarea',
+          label: 'Summary override',
+        },
+        {
+          ...galleryField,
+          label: 'Variant gallery',
+          admin: {
+            description: 'Images for this model. Leave empty to keep the Hero tab gallery.',
+            isSortable: true,
+          },
+        },
+        {
+          name: 'quickSpecs',
+          type: 'array',
+          label: 'Quick specs override',
+          maxRows: 8,
+          admin: {
+            description: 'Leave empty to keep the Hero tab specs.',
+            initCollapsed: true,
+          },
+          fields: quickSpecFields,
+        },
+      ],
+    },
+    { sibling: 'enableVariants', truthy: true },
+  ),
+];
+
+const pdpHeroFields: Field[] = [
+  {
+    type: 'tabs',
+    tabs: [
+      {
+        label: 'Hero',
+        description: 'Default copy, gallery, specs, and buttons.',
+        fields: heroContentFields,
+      },
+      {
+        label: 'Variants',
+        description:
+          'Optional models. Changing a model swaps images and the fields you fill per row.',
+        fields: variantFields,
       },
     ],
   },
-  linkArrayField({ name: 'ctas', label: 'CTAs', maxRows: 2 }),
 ];
 
 function heroBlock(fields: Field[]): Block {
@@ -90,8 +239,28 @@ function heroBlock(fields: Field[]): Block {
   };
 }
 
+function applyCustomCondition(fields: Field[]): Field[] {
+  return fields.map((field) => {
+    if (field.type === 'tabs' && 'tabs' in field) {
+      return {
+        ...field,
+        tabs: field.tabs.map((tab) => ({
+          ...tab,
+          fields: applyCustomCondition(tab.fields),
+        })),
+      };
+    }
+
+    if (!('name' in field) || field.name === 'dataSource') {
+      return field;
+    }
+
+    return withClientCondition(field, { sibling: 'dataSource', equals: 'custom' });
+  });
+}
+
 /** Template editor — all fields always visible. */
 export const PdpHeroTemplate = heroBlock(pdpHeroFields);
 
 /** Product editor — Common/Custom toggle. */
-export const PdpHero = heroBlock(withDataSource(pdpHeroFields));
+export const PdpHero = heroBlock([dataSourceField, ...applyCustomCondition(pdpHeroFields)]);

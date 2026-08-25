@@ -97,7 +97,24 @@ const NESTED_ARRAY_KEYS = new Set([
   'cards',
   'ctas',
   'trustBadges',
+  'variants',
 ]);
+
+function stripIdsFromRows(rows: unknown[]): void {
+  for (const row of rows) {
+    if (!row || typeof row !== 'object') {
+      continue;
+    }
+
+    delete (row as { id?: unknown }).id;
+
+    for (const [key, value] of Object.entries(row as Record<string, unknown>)) {
+      if (NESTED_ARRAY_KEYS.has(key) && Array.isArray(value)) {
+        stripIdsFromRows(value);
+      }
+    }
+  }
+}
 
 function stripNestedArrayIds(layout: unknown): void {
   if (!Array.isArray(layout)) {
@@ -114,11 +131,7 @@ function stripNestedArrayIds(layout: unknown): void {
         continue;
       }
 
-      for (const row of value) {
-        if (row && typeof row === 'object' && 'id' in row) {
-          delete (row as { id?: unknown }).id;
-        }
-      }
+      stripIdsFromRows(value);
     }
   }
 }

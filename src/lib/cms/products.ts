@@ -13,7 +13,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
       collection: 'products',
       where: { slug: { equals: slug } },
       limit: 1,
-      depth: 2,
+      depth: 3,
     });
 
     return (result.docs[0] as Product | undefined) ?? null;
