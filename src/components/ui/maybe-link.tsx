@@ -18,6 +18,7 @@ type MaybeLinkProps = {
   role?: string;
   'aria-expanded'?: boolean;
   'aria-haspopup'?: boolean | 'false' | 'true' | 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
+  'aria-label'?: string;
   'data-reveal-item'?: string | boolean;
   'data-reveal-part'?: string | boolean;
 };
@@ -34,14 +35,28 @@ export function MaybeLink({
   const destination = href?.trim() ?? '';
 
   if (destination) {
+    if (openInNewTab) {
+      return (
+        <a
+          href={destination}
+          className={className}
+          onClick={onClick}
+          tabIndex={tabIndex}
+          target="_blank"
+          rel="noopener noreferrer"
+          {...rest}
+        >
+          {children}
+        </a>
+      );
+    }
+
     return (
       <Link
         href={destination}
         className={className}
         onClick={onClick}
         tabIndex={tabIndex}
-        target={openInNewTab ? '_blank' : undefined}
-        rel={openInNewTab ? 'noopener noreferrer' : undefined}
         {...rest}
       >
         {children}

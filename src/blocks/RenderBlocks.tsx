@@ -8,6 +8,10 @@ import { ArticlesHeroBlock, type ArticlesHeroBlockData } from '@/blocks/Articles
 import { ArticlesIndexBlock, type ArticlesIndexBlockData } from '@/blocks/ArticlesIndex/Component';
 import { CareersHeroBlock, type CareersHeroBlockData } from '@/blocks/CareersHero/Component';
 import { CareersIndexBlock, type CareersIndexBlockData } from '@/blocks/CareersIndex/Component';
+import { CsCtaBlock, type CsCtaBlockData } from '@/blocks/CsCta/Component';
+import { CsFeaturedBlock, type CsFeaturedBlockData } from '@/blocks/CsFeatured/Component';
+import { CsHeroBlock, type CsHeroBlockData } from '@/blocks/CsHero/Component';
+import { CsIndexBlock, type CsIndexBlockData } from '@/blocks/CsIndex/Component';
 import {
   ContactPreviewBlock,
   type ContactPreviewBlockData,
@@ -160,6 +164,25 @@ export function RenderBlocks({
               motion,
               { stagger: true },
             );
+          case 'cs-hero':
+            return wrapReveal(key, <CsHeroBlock block={block as CsHeroBlockData} />, motion, {
+              variant: 'hero',
+            });
+          case 'cs-featured':
+            return wrapReveal(
+              key,
+              <CsFeaturedBlock block={block as CsFeaturedBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'cs-index':
+            return wrapReveal(key, <CsIndexBlock block={block as CsIndexBlockData} />, motion, {
+              stagger: true,
+            });
+          case 'cs-cta':
+            return wrapReveal(key, <CsCtaBlock block={block as CsCtaBlockData} />, motion, {
+              variant: 'cta',
+            });
           case 'manifesto':
             return wrapReveal(key, <ManifestoBlock block={block as ManifestoBlockData} />, motion, {
               stagger: true,

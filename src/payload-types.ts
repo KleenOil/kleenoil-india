@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     pages: Page;
     posts: Post;
+    'case-studies': CaseStudy;
     jobs: Job;
     'product-templates': ProductTemplate;
     products: Product;
@@ -85,6 +86,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     jobs: JobsSelect<false> | JobsSelect<true>;
     'product-templates': ProductTemplatesSelect<false> | ProductTemplatesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
@@ -203,14 +205,14 @@ export interface Page {
     | (
         | {
             /**
-             * Panel = split content + image. Immersive = full-bleed industrial hero used on About.
+             * Panel = split content + image. Immersive = full-bleed. Slider = automatic specimen-rail slides.
              */
-            variant?: ('panel' | 'immersive') | null;
+            variant?: ('panel' | 'immersive' | 'slider') | null;
             eyebrow?: string | null;
             /**
              * Primary hero headline. Use line breaks for multi-line titles.
              */
-            headline: string;
+            headline?: string | null;
             subheadline?: string | null;
             image?: (number | null) | Media;
             ctas?:
@@ -233,6 +235,40 @@ export interface Page {
               | {
                   value: string;
                   label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * How long each slide stays before advancing. Visitors can still use arrows.
+             */
+            slideInterval?: ('4' | '6' | '8' | '10' | '0') | null;
+            /**
+             * The rail at the bottom uses index label + stat.
+             */
+            slides?:
+              | {
+                  indexLabel: string;
+                  stat: string;
+                  eyebrow?: string | null;
+                  headline: string;
+                  subheadline?: string | null;
+                  image?: (number | null) | Media;
+                  ctas?:
+                    | {
+                        link: {
+                          type: 'page' | 'custom';
+                          label?: string | null;
+                          page?: (number | null) | Page;
+                          /**
+                           * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+                           */
+                          url?: string | null;
+                          openInNewTab?: boolean | null;
+                          appearance?: ('primary' | 'secondary' | 'ghost') | null;
+                        };
+                        id?: string | null;
+                      }[]
+                    | null;
                   id?: string | null;
                 }[]
               | null;
@@ -318,6 +354,93 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'careers-index';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            subheadline?: string | null;
+            /**
+             * Large word behind the copy. Defaults to PROOF.
+             */
+            watermark?: string | null;
+            image?: (number | null) | Media;
+            cta: {
+              type: 'page' | 'custom';
+              label?: string | null;
+              page?: (number | null) | Page;
+              /**
+               * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+               */
+              url?: string | null;
+              openInNewTab?: boolean | null;
+              appearance?: ('primary' | 'secondary' | 'ghost') | null;
+            };
+            /**
+             * Bar along the bottom of the banner. Up to four values.
+             */
+            stats?:
+              | {
+                  value: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cs-hero';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            /**
+             * Optional. Leave empty to feature the latest published study.
+             */
+            featuredStudy?: (number | null) | CaseStudy;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cs-featured';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            /**
+             * Every published study is included automatically. Add any study here to remove it from this section.
+             */
+            hiddenStudies?:
+              | {
+                  study: number | CaseStudy;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cs-index';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            subtext?: string | null;
+            ctas?:
+              | {
+                  link: {
+                    type: 'page' | 'custom';
+                    label?: string | null;
+                    page?: (number | null) | Page;
+                    /**
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+                     */
+                    url?: string | null;
+                    openInNewTab?: boolean | null;
+                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cs-cta';
           }
         | {
             quote: string;
@@ -1069,6 +1192,54 @@ export interface Job {
   createdAt: string;
 }
 /**
+ * Plant results. New studies appear on the Case Studies page automatically unless hidden.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies".
+ */
+export interface CaseStudy {
+  id: number;
+  /**
+   * Card and featured headline unless you set a featured headline below.
+   */
+  title: string;
+  slug: string;
+  sector: 'automotive' | 'steel' | 'marine' | 'power' | 'cement' | 'rail';
+  /**
+   * e.g. CASE STUDY / AUTOMOTIVE. Defaults from the sector if empty.
+   */
+  tag?: string | null;
+  /**
+   * Shown on the featured card, e.g. Tier-1 OEM  ·  North India.
+   */
+  location?: string | null;
+  excerpt?: string | null;
+  /**
+   * Optional override used only in the CS Featured section.
+   */
+  featuredHeadline?: string | null;
+  featuredImage?: (number | null) | Media;
+  /**
+   * Opened when a visitor clicks the card or Read the case study.
+   */
+  pdf?: (number | null) | Media;
+  metrics?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Used only if no PDF is uploaded. Leave empty to keep cards unlinked.
+   */
+  href?: string | null;
+  showOnListing?: boolean | null;
+  publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "products".
  */
@@ -1744,6 +1915,10 @@ export interface PayloadLockedDocument {
         value: number | Post;
       } | null)
     | ({
+        relationTo: 'case-studies';
+        value: number | CaseStudy;
+      } | null)
+    | ({
         relationTo: 'jobs';
         value: number | Job;
       } | null)
@@ -1879,6 +2054,33 @@ export interface PagesSelect<T extends boolean = true> {
                     label?: T;
                     id?: T;
                   };
+              slideInterval?: T;
+              slides?:
+                | T
+                | {
+                    indexLabel?: T;
+                    stat?: T;
+                    eyebrow?: T;
+                    headline?: T;
+                    subheadline?: T;
+                    image?: T;
+                    ctas?:
+                      | T
+                      | {
+                          link?:
+                            | T
+                            | {
+                                type?: T;
+                                label?: T;
+                                page?: T;
+                                url?: T;
+                                openInNewTab?: T;
+                                appearance?: T;
+                              };
+                          id?: T;
+                        };
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -1948,6 +2150,83 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     job?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'cs-hero'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheadline?: T;
+              watermark?: T;
+              image?: T;
+              cta?:
+                | T
+                | {
+                    type?: T;
+                    label?: T;
+                    page?: T;
+                    url?: T;
+                    openInNewTab?: T;
+                    appearance?: T;
+                  };
+              stats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'cs-featured'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              featuredStudy?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'cs-index'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              hiddenStudies?:
+                | T
+                | {
+                    study?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'cs-cta'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subtext?: T;
+              ctas?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          label?: T;
+                          page?: T;
+                          url?: T;
+                          openInNewTab?: T;
+                          appearance?: T;
+                        };
                     id?: T;
                   };
               id?: T;
@@ -2473,6 +2752,33 @@ export interface PostsSelect<T extends boolean = true> {
   slug?: T;
   publishedAt?: T;
   showInJournal?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies_select".
+ */
+export interface CaseStudiesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  sector?: T;
+  tag?: T;
+  location?: T;
+  excerpt?: T;
+  featuredHeadline?: T;
+  featuredImage?: T;
+  pdf?: T;
+  metrics?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  href?: T;
+  showOnListing?: T;
+  publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

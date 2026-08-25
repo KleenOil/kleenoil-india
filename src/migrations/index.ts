@@ -24,6 +24,10 @@ import * as migration_20260822_030400_job_details_richtext from './20260822_0304
 import * as migration_20260822_033000_post_related_and_closing_cta from './20260822_033000_post_related_and_closing_cta';
 import * as migration_20260825_120000_pdp_hero_variants from './20260825_120000_pdp_hero_variants';
 import * as migration_20260825_130000_process_story_step_image from './20260825_130000_process_story_step_image';
+import * as migration_20260825_140000_cs_page_blocks from './20260825_140000_cs_page_blocks';
+import * as migration_20260825_150000_case_study_pdf from './20260825_150000_case_study_pdf';
+import * as migration_20260825_160000_hero_slider from './20260825_160000_hero_slider';
+import * as migration_20260825_170000_hero_slide_interval from './20260825_170000_hero_slide_interval';
 
 export const migrations = [
   {
@@ -155,5 +159,25 @@ export const migrations = [
     up: migration_20260825_130000_process_story_step_image.up,
     down: migration_20260825_130000_process_story_step_image.down,
     name: '20260825_130000_process_story_step_image',
+  },
+  {
+    up: migration_20260825_140000_cs_page_blocks.up,
+    down: migration_20260825_140000_cs_page_blocks.down,
+    name: '20260825_140000_cs_page_blocks',
+  },
+  {
+    up: migration_20260825_150000_case_study_pdf.up,
+    down: migration_20260825_150000_case_study_pdf.down,
+    name: '20260825_150000_case_study_pdf',
+  },
+  {
+    up: migration_20260825_160000_hero_slider.up,
+    down: migration_20260825_160000_hero_slider.down,
+    name: '20260825_160000_hero_slider',
+  },
+  {
+    up: migration_20260825_170000_hero_slide_interval.up,
+    down: migration_20260825_170000_hero_slide_interval.down,
+    name: '20260825_170000_hero_slide_interval',
   },
 ];

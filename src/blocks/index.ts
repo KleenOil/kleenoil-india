@@ -8,6 +8,10 @@ import { ArticlesIndex } from './ArticlesIndex/config';
 import { CareersHero } from './CareersHero/config';
 import { CareersIndex } from './CareersIndex/config';
 import { ContactPreview } from './ContactPreview/config';
+import { CsCta } from './CsCta/config';
+import { CsFeatured } from './CsFeatured/config';
+import { CsHero } from './CsHero/config';
+import { CsIndex } from './CsIndex/config';
 import { CTA } from './CTA/config';
 import { DistributionNetwork } from './DistributionNetwork/config';
 import { FaqAccordion } from './FaqAccordion/config';
@@ -33,6 +37,10 @@ export const pageBlocks: Block[] = [
   ArticlesIndex,
   CareersHero,
   CareersIndex,
+  CsHero,
+  CsFeatured,
+  CsIndex,
+  CsCta,
   Manifesto,
   AboutOrigin,
   AboutStory,

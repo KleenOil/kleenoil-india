@@ -9,6 +9,7 @@ import { Jobs } from './collections/Jobs';
 import { Media } from './collections/Media';
 import { Pages } from './collections/Pages';
 import { Posts } from './collections/Posts';
+import { CaseStudies } from './collections/CaseStudies';
 import { Products } from './collections/Products';
 import { ProductTemplates } from './collections/ProductTemplates';
 import { Users } from './collections/Users';
@@ -37,7 +38,7 @@ export default buildConfig({
       titleSuffix: ' | CMS',
     },
   },
-  collections: [Users, Media, Pages, Posts, Jobs, ProductTemplates, Products],
+  collections: [Users, Media, Pages, Posts, CaseStudies, Jobs, ProductTemplates, Products],
   globals: [SiteSettings, Navigation, Footer, ContactInfo, SeoDefaults],
   editor: lexicalEditor(),
   secret: env.PAYLOAD_SECRET,

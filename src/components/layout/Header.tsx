@@ -57,6 +57,19 @@ export function Header({ site, mainNav, mobileNav, utilityNav }: HeaderProps) {
       return;
     }
 
+    const syncHeaderHeight = () => {
+      if (header.classList.contains('header-scrolled')) {
+        return;
+      }
+
+      document.documentElement.style.setProperty('--header-height', `${header.offsetHeight}px`);
+    };
+
+    syncHeaderHeight();
+
+    const resizeObserver = new ResizeObserver(syncHeaderHeight);
+    resizeObserver.observe(header);
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry) {
@@ -68,8 +81,13 @@ export function Header({ site, mainNav, mobileNav, utilityNav }: HeaderProps) {
     );
 
     observer.observe(sentinel);
+    window.addEventListener('resize', syncHeaderHeight);
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', syncHeaderHeight);
+    };
   }, []);
 
   useEffect(() => {

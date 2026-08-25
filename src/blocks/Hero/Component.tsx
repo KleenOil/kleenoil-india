@@ -4,9 +4,11 @@ import { ParallaxMedia } from '@/components/motion/ParallaxMedia';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
 import { Eyebrow } from '@/components/ui/eyebrow';
 import { CtaButton } from '@/components/ui/cta-button';
-import { DEFAULT_HERO, DEFAULT_IMMERSIVE_HERO } from '@/lib/cms/defaults';
+import { DEFAULT_HERO, DEFAULT_HERO_SLIDER, DEFAULT_IMMERSIVE_HERO } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl, resolveCtaList } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
+
+import { HeroSlider, type HeroSlideView } from './Slider';
 
 type HeroMetaStat = {
   value?: string | null;
@@ -26,13 +28,23 @@ type HeroCtaItem = {
 
 export type HeroBlockData = {
   blockType: 'hero';
-  variant?: 'panel' | 'immersive' | null;
+  variant?: 'panel' | 'immersive' | 'slider' | null;
   eyebrow?: string | null;
   headline?: string | null;
   subheadline?: string | null;
   image?: number | Media | null;
   ctas?: HeroCtaItem[] | null;
   metaStats?: HeroMetaStat[] | null;
+  slideInterval?: '4' | '6' | '8' | '10' | '0' | null;
+  slides?: Array<{
+    indexLabel?: string | null;
+    stat?: string | null;
+    eyebrow?: string | null;
+    headline?: string | null;
+    subheadline?: string | null;
+    image?: number | Media | null;
+    ctas?: HeroCtaItem[] | null;
+  }> | null;
 };
 
 type HeroProps = {
@@ -40,6 +52,37 @@ type HeroProps = {
 };
 
 export function HeroBlock({ block }: HeroProps) {
+  if (block?.variant === 'slider') {
+    const mapped = (block.slides ?? [])
+      .map((slide): HeroSlideView | null => {
+        if (!slide.headline?.trim() || !slide.indexLabel?.trim() || !slide.stat?.trim()) {
+          return null;
+        }
+
+        return {
+          indexLabel: slide.indexLabel.trim(),
+          stat: slide.stat.trim(),
+          eyebrow: slide.eyebrow?.trim() || '',
+          headline: slide.headline,
+          subheadline: slide.subheadline?.trim() || '',
+          imageUrl: getMediaUrl(slide.image),
+          imageAlt: getMediaAlt(slide.image, slide.headline),
+          ctas: resolveCtaList(slide.ctas, DEFAULT_HERO_SLIDER[0]?.ctas ?? []),
+        };
+      })
+      .filter((slide): slide is HeroSlideView => Boolean(slide));
+
+    const slides =
+      mapped.length > 0
+        ? mapped.map((slide, index) => ({
+            ...slide,
+            imageUrl: slide.imageUrl || DEFAULT_HERO_SLIDER[index]?.imageUrl || null,
+          }))
+        : DEFAULT_HERO_SLIDER;
+
+    return <HeroSlider slides={slides} intervalSeconds={Number(block.slideInterval ?? 6)} />;
+  }
+
   const isImmersive = block?.variant === 'immersive';
   const defaults = isImmersive ? DEFAULT_IMMERSIVE_HERO : DEFAULT_HERO;
 

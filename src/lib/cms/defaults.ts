@@ -112,6 +112,69 @@ export const DEFAULT_IMMERSIVE_HERO = {
     'https://images.unsplash.com/photo-1600683550547-2c38a96fb400?auto=format&fit=crop&w=1920&q=80',
 };
 
+export const DEFAULT_HERO_SLIDER = [
+  {
+    indexLabel: 'OIL LIFE',
+    stat: '5×',
+    eyebrow: '01  /  OIL LIFE',
+    headline: 'Clean oil.\nLonger machines.',
+    subheadline:
+      'Bypass filtration that stretches drain intervals 5× and keeps ISO codes inside OEM limits — without changing how the plant already runs.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1760822600310-a33e3ec3e31c?auto=format&fit=crop&w=1920&q=80',
+    imageAlt: 'Industrial machinery on a factory floor',
+    ctas: [
+      { label: 'Explore products', href: '/products', appearance: 'primary' as const },
+      { label: 'See a result', href: '/case-studies', appearance: 'secondary' as const },
+    ],
+  },
+  {
+    indexLabel: 'DOWNTIME',
+    stat: '68%',
+    eyebrow: '02  /  DOWNTIME',
+    headline: 'Stop the\nunplanned stop.',
+    subheadline:
+      'Cleaner hydraulics mean fewer seized valves, fewer night calls, and a line that holds its shift.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80',
+    imageAlt: 'Plant floor equipment in operation',
+    ctas: [
+      { label: 'Explore products', href: '/products', appearance: 'primary' as const },
+      { label: 'See a result', href: '/case-studies', appearance: 'secondary' as const },
+    ],
+  },
+  {
+    indexLabel: 'ISO CODE',
+    stat: '14/12/9',
+    eyebrow: '03  /  ISO CODE',
+    headline: 'Hold the code\non the line.',
+    subheadline:
+      'Particle counts stay inside OEM windows so warranties, labs, and auditors read the same story.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1920&q=80',
+    imageAlt: 'Precision industrial equipment',
+    ctas: [
+      { label: 'Explore products', href: '/products', appearance: 'primary' as const },
+      { label: 'See a result', href: '/case-studies', appearance: 'secondary' as const },
+    ],
+  },
+  {
+    indexLabel: 'PLANTS',
+    stat: '2,000+',
+    eyebrow: '04  /  PLANTS',
+    headline: 'One standard.\nEvery site.',
+    subheadline:
+      'The same Kleenoil bypass architecture across mills, OEMs, fleets, and power — proven on more than 2,000 plants.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1920&q=80',
+    imageAlt: 'Industrial plant exterior',
+    ctas: [
+      { label: 'Explore products', href: '/products', appearance: 'primary' as const },
+      { label: 'See a result', href: '/case-studies', appearance: 'secondary' as const },
+    ],
+  },
+];
+
 export const DEFAULT_STATISTICS = {
   eyebrow: 'BY THE NUMBERS',
   heading: 'Four decades of\nengineering trust.',
@@ -988,5 +1051,143 @@ export const DEFAULT_FEATURED_SERVICES = {
         'IoT-enabled dashboards for real-time fluid health, filter life tracking, and predictive maintenance alerts.',
       href: '/services',
     },
+  ],
+};
+
+export const DEFAULT_CS_HERO = {
+  eyebrow: 'CASE STUDIES',
+  heading: 'Proof from the plant floor.',
+  subheadline:
+    'Measured results from OEMs, steel mills, and fleets running Kleenoil bypass filtration.',
+  watermark: 'PROOF',
+  cta: {
+    label: 'Read a result',
+    href: '#cs-index',
+    appearance: 'primary' as const,
+    openInNewTab: false,
+  },
+  imageUrl:
+    'https://images.unsplash.com/photo-1615660556635-0f12c86e59a5?auto=format&fit=crop&w=1920&q=80',
+  stats: [
+    { value: '68%', label: 'DOWNTIME CUT' },
+    { value: '5×', label: 'OIL LIFE' },
+    { value: '$1.2M', label: 'ANNUAL SAVINGS' },
+    { value: '2,000+', label: 'PLANTS ON FILE' },
+  ],
+};
+
+export const DEFAULT_CS_FEATURED = {
+  eyebrow: 'FEATURED RESULT',
+  heading: 'The number plants remember.',
+  description: 'Lead result from the Kleenoil file — the case plants share with maintenance heads.',
+  study: {
+    tag: 'AUTOMOTIVE',
+    location: 'Tier-1 OEM  ·  North India',
+    title: '68% reduction in unplanned downtime at a Tier-1 OEM plant.',
+    excerpt:
+      'Twelve Kleenoil bypass units on hydraulic systems. ISO cleanliness held. Oil drain intervals stretched from 12 months.',
+    href: '#cs-index',
+    imageUrl:
+      'https://images.unsplash.com/photo-1701328778019-e95dedbf5346?auto=format&fit=crop&w=1200&q=80',
+    metrics: [
+      { value: '68%', label: 'DOWNTIME' },
+      { value: '5×', label: 'OIL LIFE' },
+      { value: '$1.2M', label: 'SAVINGS' },
+    ],
+  },
+};
+
+export const DEFAULT_CS_INDEX = {
+  eyebrow: 'ALL RESULTS',
+  heading: 'From every sector we serve.',
+  caseStudies: [
+    {
+      sector: 'automotive' as const,
+      tag: 'CASE STUDY / AUTOMOTIVE',
+      title: '68% reduction in unplanned downtime at Tier-1 OEM plant',
+      description: 'Deployed 12 Kleenoil bypass filtration units across hydraulic systems.',
+      href: '',
+      metrics: [
+        { value: '68%', label: 'DOWNTIME REDUCED' },
+        { value: '5×', label: 'OIL LIFE EXTENDED' },
+        { value: '$1.2M', label: 'ANNUAL SAVINGS' },
+      ],
+    },
+    {
+      sector: 'steel' as const,
+      tag: 'CASE STUDY / STEEL',
+      title: '40% fewer oil change-outs on a hot-strip mill',
+      description:
+        'Bypass filtration on gearbox and hydraulic circuits through a 24-month campaign.',
+      href: '',
+      metrics: [
+        { value: '40%', label: 'FEWER DRAINS' },
+        { value: 'NAS 6', label: 'HELD IN SPEC' },
+        { value: '18 mo', label: 'UNPLANNED ZERO' },
+      ],
+    },
+    {
+      sector: 'marine' as const,
+      tag: 'CASE STUDY / MARINE',
+      title: 'ISO 14/12/9 held across a 90-day voyage',
+      description:
+        'Engine and hydraulic oil stayed in spec for a bulk carrier without a mid-voyage drain.',
+      href: '',
+      metrics: [
+        { value: '90 d', label: 'IN SPEC AT SEA' },
+        { value: '14/12/9', label: 'ISO CODE HELD' },
+        { value: '0', label: 'MID-VOYAGE DRAINS' },
+      ],
+    },
+    {
+      sector: 'power' as const,
+      tag: 'CASE STUDY / POWER',
+      title: 'Turbine oil still in spec after 36 months',
+      description:
+        'Kleenoil on a 210 MW unit cut varnish and kept particle counts inside OEM limits.',
+      href: '',
+      metrics: [
+        { value: '36 mo', label: 'OIL IN SERVICE' },
+        { value: '70%', label: 'VARNISH DROP' },
+        { value: '₹2.4Cr', label: 'AVOIDED CHANGE' },
+      ],
+    },
+    {
+      sector: 'cement' as const,
+      tag: 'CASE STUDY / CEMENT',
+      title: 'Kiln hydraulics: varnish dropped 70% in six months',
+      description:
+        'High-heat hydraulics on a rotary kiln held cleanliness through monsoon humidity.',
+      href: '',
+      metrics: [
+        { value: '70%', label: 'VARNISH DROP' },
+        { value: '6 mo', label: 'TO TARGET' },
+        { value: '3×', label: 'SEAL LIFE' },
+      ],
+    },
+    {
+      sector: 'rail' as const,
+      tag: 'CASE STUDY / RAIL',
+      title: 'Gearbox oil life doubled on a 40-loco fleet',
+      description:
+        'Bypass units on traction gearboxes cut metal debris and stretched drain intervals.',
+      href: '',
+      metrics: [
+        { value: '2×', label: 'OIL LIFE' },
+        { value: '40', label: 'LOCOS FITTED' },
+        { value: '55%', label: 'WEAR CUT' },
+      ],
+    },
+  ],
+};
+
+export const DEFAULT_CS_CTA = {
+  eyebrow: 'REQUEST AN ESTIMATE',
+  heading: 'Ready to save money and\nextend equipment life?',
+  subtext:
+    'More than 2,000 customers trust Kleenoil to increase fluid life and meet demanding plant targets.',
+  ctas: [
+    { label: 'Request an estimate', href: '/contact', appearance: 'primary' as const },
+    { label: 'Contact us', href: '/contact', appearance: 'secondary' as const },
   ],
 };

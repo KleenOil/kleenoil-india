@@ -11,6 +11,7 @@ export type CaseStudyCardData = {
   title: string;
   description: string;
   href?: string | null;
+  openInNewTab?: boolean;
   metrics: CaseStudyMetric[];
 };
 
@@ -23,9 +24,16 @@ export function CaseStudyCard({ caseStudy, className }: CaseStudyCardProps) {
   return (
     <MaybeLink
       href={caseStudy.href}
+      openInNewTab={caseStudy.openInNewTab}
+      aria-label={
+        caseStudy.href && caseStudy.openInNewTab
+          ? `Open case study PDF: ${caseStudy.title}`
+          : undefined
+      }
       data-reveal-item
       className={cn(
         'group surface-card flex flex-col overflow-hidden rounded-2xl border-2 border-border-subtle bg-surface-elevated/70',
+        caseStudy.href && 'transition-colors hover:border-brand-primary/40',
         className,
       )}
     >
