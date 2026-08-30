@@ -3534,6 +3534,9 @@ export interface SiteSetting {
  */
 export interface Navigation {
   id: number;
+  /**
+   * Left-to-right bar items. For a mega panel: turn on Mega dropdown, then add Columns (max 2). Leave Mega off for a plain link (Sustainability, Careers).
+   */
   mainMenu?:
     | {
         label: string;
@@ -3542,11 +3545,61 @@ export interface Navigation {
         url?: string | null;
         openInNewTab?: boolean | null;
         /**
-         * Desktop: product grid with hover image swap. Mobile: the same products as a normal list.
+         * Desktop: full-width panel under the bar. Add 1–2 columns below. Mobile uses the same links as a list.
          */
         enableMegaMenu?: boolean | null;
         /**
-         * Each row picks one product. The first two images and the title are used.
+         * One or two columns. Typical setups: Products + Services, Industry + Applications, Profile + News.
+         */
+        megaColumns?:
+          | {
+              /**
+               * Eyebrow, e.g. PRODUCTS or INDUSTRY.
+               */
+              heading?: string | null;
+              /**
+               * Product tiles = catalogue cards. Text list = title + copy (Services, Applications). Image list = thumb + name (Industry, News). Profile = one image + story.
+               */
+              layout: 'product-tiles' | 'text-list' | 'image-list' | 'profile';
+              products?:
+                | {
+                    product: number | Product;
+                    id?: string | null;
+                  }[]
+                | null;
+              items?:
+                | {
+                    label: string;
+                    /**
+                     * Used on text lists. Optional on image lists.
+                     */
+                    description?: string | null;
+                    /**
+                     * Shown on image lists (industry thumbs, news cards).
+                     */
+                    image?: (number | null) | Media;
+                    type?: ('page' | 'custom') | null;
+                    page?: (number | null) | Page;
+                    url?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              profileImage?: (number | null) | Media;
+              /**
+               * e.g. Since 1988
+               */
+              profileTitle?: string | null;
+              profileCopy?: string | null;
+              /**
+               * e.g. Talk to an engineer →
+               */
+              ctaLabel?: string | null;
+              ctaUrl?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Only used if Columns is empty. Prefer Columns → Product tiles for the new menu.
          */
         megaProducts?:
           | {
@@ -3554,10 +3607,6 @@ export interface Navigation {
               id?: string | null;
             }[]
           | null;
-        /**
-         * Leave empty for auto — products spread equally and wrap by screen size.
-         */
-        productsPerRow?: number | null;
         /**
          * Optional nested links (one level). Hidden when mega dropdown is on.
          */
@@ -3827,13 +3876,41 @@ export interface NavigationSelect<T extends boolean = true> {
         url?: T;
         openInNewTab?: T;
         enableMegaMenu?: T;
+        megaColumns?:
+          | T
+          | {
+              heading?: T;
+              layout?: T;
+              products?:
+                | T
+                | {
+                    product?: T;
+                    id?: T;
+                  };
+              items?:
+                | T
+                | {
+                    label?: T;
+                    description?: T;
+                    image?: T;
+                    type?: T;
+                    page?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              profileImage?: T;
+              profileTitle?: T;
+              profileCopy?: T;
+              ctaLabel?: T;
+              ctaUrl?: T;
+              id?: T;
+            };
         megaProducts?:
           | T
           | {
               product?: T;
               id?: T;
             };
-        productsPerRow?: T;
         children?:
           | T
           | {

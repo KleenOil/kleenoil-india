@@ -15,6 +15,10 @@ export const Navigation: GlobalConfig = {
       name: 'mainMenu',
       type: 'array',
       label: 'Main Menu',
+      admin: {
+        description:
+          'Left-to-right bar items. For a mega panel: turn on Mega dropdown, then add Columns (max 2). Leave Mega off for a plain link (Sustainability, Careers).',
+      },
       fields: navItemFields(0, { allowMegaMenu: true }),
     },
     {

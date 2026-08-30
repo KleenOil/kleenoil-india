@@ -199,8 +199,7 @@ export function Header({ site, mainNav, mobileNav, utilityNav }: HeaderProps) {
           <MegaMenuPanel
             key={itemKey}
             open={openKey === itemKey}
-            products={item.products ?? []}
-            productsPerRow={item.productsPerRow}
+            columns={item.megaColumns ?? []}
             labelledBy={`nav-trigger-${itemKey}`}
           />
         );
@@ -296,9 +295,10 @@ function DesktopNavItem({ item, itemKey, openKey, onOpen, onClose }: DesktopNavI
         href={item.href}
         openInNewTab={item.openInNewTab}
         className={cn(
-          'inline-flex items-center gap-1.5 text-sm font-semibold tracking-wide text-text-secondary',
-          (hasHref(item.href) || expandable) && 'transition-colors hover:text-text-primary',
-          open && 'text-text-primary',
+          'nav-link group/nav-item relative inline-flex items-center gap-1.5 pb-1.5 text-sm font-semibold tracking-wide',
+          'text-text-secondary transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]',
+          (hasHref(item.href) || expandable) && 'hover:text-brand-primary',
+          open && 'text-brand-primary',
         )}
         aria-expanded={expandable ? open : undefined}
         aria-haspopup={expandable ? (mega ? 'dialog' : 'menu') : undefined}
@@ -316,19 +316,23 @@ function DesktopNavItem({ item, itemKey, openKey, onOpen, onClose }: DesktopNavI
         }
       >
         {item.label}
-        {expandable ? (
+        {dropdown ? (
           <ChevronDown
-            className={cn('size-3.5 transition-transform duration-200', open && 'rotate-180')}
+            className={cn(
+              'size-3.5 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]',
+              open && 'rotate-180',
+            )}
             aria-hidden
           />
         ) : null}
+        <span className={cn('nav-link-underline', open && 'is-active')} aria-hidden />
       </MaybeLink>
 
       {dropdown ? (
         <div
           className={cn(
             'absolute left-1/2 top-full z-50 pt-4 -translate-x-1/2',
-            'transition-[opacity,transform,visibility] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
+            'transition-[opacity,transform,visibility] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
             open
               ? 'visible translate-y-0 opacity-100'
               : 'invisible pointer-events-none -translate-y-1 opacity-0',

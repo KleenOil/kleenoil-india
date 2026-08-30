@@ -1,6 +1,6 @@
 import type { NavLink } from '@/lib/cms/defaults';
-import { getMediaUrl, resolveLink } from '@/lib/cms/links';
-import type { MegaProductCard, NavItem } from '@/lib/cms/nav-types';
+import { getMediaAlt, getMediaUrl, resolveLink } from '@/lib/cms/links';
+import type { MegaColumn, MegaColumnItem, MegaProductCard, NavItem } from '@/lib/cms/nav-types';
 import { getPayloadClient } from '@/lib/payload';
 import { resolvePdpLayout, type PdpLayoutBlock } from '@/lib/cms/resolve-pdp-layout';
 import type { Media, Navigation, Product, ProductTemplate } from '@/payload-types';
@@ -17,6 +17,7 @@ type CmsNavRow = {
   openInNewTab?: boolean | null;
   enableMegaMenu?: boolean | null;
   megaProducts?: CmsNavItem['megaProducts'];
+  megaColumns?: CmsNavItem['megaColumns'];
   productsPerRow?: number | null;
   children?: CmsNavItem['children'];
 };
@@ -72,14 +73,9 @@ export async function mapMainNavItems(items: CmsNavRow[] | null | undefined): Pr
     }
 
     const enableMegaMenu = Boolean(item.enableMegaMenu);
-    const products = enableMegaMenu
-      ? (item.megaProducts ?? [])
-          .map((row) => {
-            const productId =
-              typeof row.product === 'object' && row.product ? row.product.id : row.product;
-            return typeof productId === 'number' ? cardsByProductId.get(productId) : null;
-          })
-          .filter((card): card is MegaProductCard => Boolean(card))
+    const products = enableMegaMenu ? mapProductRows(item.megaProducts, cardsByProductId) : [];
+    const megaColumns = enableMegaMenu
+      ? mapMegaColumns(item.megaColumns, cardsByProductId, products)
       : [];
 
     const children =
@@ -91,14 +87,122 @@ export async function mapMainNavItems(items: CmsNavRow[] | null | undefined): Pr
 
     mapped.push({
       ...link,
-      enableMegaMenu: enableMegaMenu && products.length > 0,
+      enableMegaMenu: enableMegaMenu && (megaColumns.length > 0 || products.length > 0),
       productsPerRow: normalizeProductsPerRow(item.productsPerRow),
       children,
       products,
+      megaColumns,
     });
   }
 
   return mapped;
+}
+
+type CmsProductRow = { product?: number | Product | null } | null | undefined;
+
+function productIdFromRow(row: CmsProductRow): number | null {
+  if (!row?.product) {
+    return null;
+  }
+
+  return typeof row.product === 'object' ? row.product.id : row.product;
+}
+
+function productIdsFromRows(rows: CmsProductRow[] | null | undefined): number[] {
+  return (rows ?? [])
+    .map((row) => productIdFromRow(row))
+    .filter((id): id is number => typeof id === 'number');
+}
+
+function mapProductRows(
+  rows: CmsProductRow[] | null | undefined,
+  cardsByProductId: Map<number, MegaProductCard>,
+): MegaProductCard[] {
+  return (rows ?? [])
+    .map((row) => {
+      const id = productIdFromRow(row);
+      return typeof id === 'number' ? cardsByProductId.get(id) : null;
+    })
+    .filter((card): card is MegaProductCard => Boolean(card));
+}
+
+function mapMegaColumns(
+  columns: CmsNavItem['megaColumns'],
+  cardsByProductId: Map<number, MegaProductCard>,
+  fallbackProducts: MegaProductCard[],
+): MegaColumn[] {
+  const mapped: MegaColumn[] = [];
+
+  for (const column of columns ?? []) {
+    const layout = column.layout ?? 'text-list';
+    const products = mapProductRows(column.products, cardsByProductId);
+    const items: MegaColumnItem[] = [];
+
+    for (const item of column.items ?? []) {
+      const resolved = resolveLink({
+        type: item.type ?? 'custom',
+        label: item.label,
+        url: item.url,
+        page: item.page,
+      });
+      if (!resolved && !item.label) {
+        continue;
+      }
+
+      items.push({
+        label: resolved?.label || item.label,
+        href: resolved?.href ?? '',
+        description: item.description ?? undefined,
+        imageUrl: getMediaUrl(item.image),
+        imageAlt: getMediaAlt(item.image, item.label),
+      });
+    }
+
+    const hasContent =
+      products.length > 0 ||
+      items.length > 0 ||
+      Boolean(column.profileTitle || column.profileCopy || getMediaUrl(column.profileImage));
+
+    if (!hasContent) {
+      continue;
+    }
+
+    mapped.push({
+      heading: column.heading ?? undefined,
+      layout,
+      products,
+      items,
+      profile:
+        layout === 'profile'
+          ? {
+              title: column.profileTitle ?? undefined,
+              copy: column.profileCopy ?? undefined,
+              imageUrl: getMediaUrl(column.profileImage),
+              imageAlt: getMediaAlt(column.profileImage, column.profileTitle ?? 'Company profile'),
+            }
+          : undefined,
+      cta:
+        column.ctaLabel && column.ctaUrl ? { label: column.ctaLabel, href: column.ctaUrl } : null,
+    });
+  }
+
+  if (mapped.length) {
+    return mapped;
+  }
+
+  if (fallbackProducts.length) {
+    return [
+      {
+        heading: 'Products',
+        layout: 'product-tiles',
+        products: fallbackProducts,
+        items: [],
+        cta: null,
+      },
+    ];
+  }
+
+  return [];
 }
 
 function normalizeProductsPerRow(value: unknown): number | null {
@@ -115,11 +219,10 @@ async function loadMegaProductCards(items: CmsNavRow[]): Promise<Map<number, Meg
     ...new Set(
       items.flatMap((item) =>
         item.enableMegaMenu
-          ? (item.megaProducts ?? [])
-              .map((row) =>
-                typeof row.product === 'object' && row.product ? row.product.id : row.product,
-              )
-              .filter((id): id is number => typeof id === 'number')
+          ? [
+              ...productIdsFromRows(item.megaProducts),
+              ...(item.megaColumns ?? []).flatMap((column) => productIdsFromRows(column.products)),
+            ]
           : [],
       ),
     ),

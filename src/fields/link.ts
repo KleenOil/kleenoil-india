@@ -106,6 +106,153 @@ export function linkArrayField(
   };
 }
 
+function megaColumnsField(): Field {
+  return {
+    name: 'megaColumns',
+    type: 'array',
+    label: 'Columns',
+    labels: { singular: 'Column', plural: 'Columns' },
+    maxRows: 2,
+    admin: {
+      initCollapsed: true,
+      description:
+        'One or two columns. Typical setups: Products + Services, Industry + Applications, Profile + News.',
+    },
+    fields: [
+      {
+        name: 'heading',
+        type: 'text',
+        label: 'Column heading',
+        admin: {
+          description: 'Eyebrow, e.g. PRODUCTS or INDUSTRY.',
+        },
+      },
+      {
+        name: 'layout',
+        type: 'select',
+        required: true,
+        defaultValue: 'text-list',
+        options: [
+          { label: 'Product tiles', value: 'product-tiles' },
+          { label: 'Text list', value: 'text-list' },
+          { label: 'Image list', value: 'image-list' },
+          { label: 'Profile', value: 'profile' },
+        ],
+        admin: {
+          description:
+            'Product tiles = catalogue cards. Text list = title + copy (Services, Applications). Image list = thumb + name (Industry, News). Profile = one image + story.',
+        },
+      },
+      withClientCondition(
+        {
+          name: 'products',
+          type: 'array',
+          label: 'Products',
+          labels: { singular: 'Product', plural: 'Products' },
+          admin: { initCollapsed: true },
+          fields: [
+            {
+              name: 'product',
+              type: 'relationship',
+              relationTo: 'products',
+              required: true,
+            },
+          ],
+        },
+        { sibling: 'layout', equals: 'product-tiles' },
+      ),
+      withClientCondition(
+        withClientCondition(
+          {
+            name: 'items',
+            type: 'array',
+            label: 'Items',
+            labels: { singular: 'Item', plural: 'Items' },
+            admin: { initCollapsed: true },
+            fields: [
+              { name: 'label', type: 'text', required: true },
+              {
+                name: 'description',
+                type: 'textarea',
+                admin: { description: 'Used on text lists. Optional on image lists.' },
+              },
+              {
+                name: 'image',
+                type: 'upload',
+                relationTo: 'media',
+                admin: { description: 'Shown on image lists (industry thumbs, news cards).' },
+              },
+              {
+                name: 'type',
+                type: 'radio',
+                defaultValue: 'custom',
+                options: [
+                  { label: 'Internal Page', value: 'page' },
+                  { label: 'Custom URL', value: 'custom' },
+                ],
+                admin: { layout: 'horizontal' },
+              },
+              withClientCondition(
+                { name: 'page', type: 'relationship', relationTo: 'pages' },
+                { sibling: 'type', equals: 'page' },
+              ),
+              withClientCondition(
+                { name: 'url', type: 'text', label: 'URL' },
+                { sibling: 'type', equals: 'custom' },
+              ),
+            ],
+          },
+          { sibling: 'layout', notEquals: 'product-tiles' },
+        ),
+        { sibling: 'layout', notEquals: 'profile' },
+      ),
+      withClientCondition(
+        {
+          name: 'profileImage',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Profile image',
+        },
+        { sibling: 'layout', equals: 'profile' },
+      ),
+      withClientCondition(
+        {
+          name: 'profileTitle',
+          type: 'text',
+          label: 'Profile title',
+          admin: { description: 'e.g. Since 1988' },
+        },
+        { sibling: 'layout', equals: 'profile' },
+      ),
+      withClientCondition(
+        {
+          name: 'profileCopy',
+          type: 'textarea',
+          label: 'Profile copy',
+        },
+        { sibling: 'layout', equals: 'profile' },
+      ),
+      withClientCondition(
+        {
+          name: 'ctaLabel',
+          type: 'text',
+          label: 'Column CTA label',
+          admin: { description: 'e.g. Talk to an engineer →' },
+        },
+        { sibling: 'layout', notEquals: 'product-tiles' },
+      ),
+      withClientCondition(
+        {
+          name: 'ctaUrl',
+          type: 'text',
+          label: 'Column CTA URL',
+        },
+        { sibling: 'layout', notEquals: 'product-tiles' },
+      ),
+    ],
+  };
+}
+
 type NavItemFieldOptions = {
   allowMegaMenu?: boolean;
 };
@@ -162,20 +309,22 @@ export function navItemFields(depth = 0, options: NavItemFieldOptions = {}): Fie
         defaultValue: false,
         admin: {
           description:
-            'Desktop: product grid with hover image swap. Mobile: the same products as a normal list.',
+            'Desktop: full-width panel under the bar. Add 1–2 columns below. Mobile uses the same links as a list.',
         },
       },
+      withClientCondition(megaColumnsField(), { sibling: 'enableMegaMenu', truthy: true }),
       withClientCondition(
         {
           name: 'megaProducts',
           type: 'array',
-          label: 'Mega Menu Products',
+          label: 'Legacy product grid',
           labels: {
             singular: 'Product',
             plural: 'Products',
           },
           admin: {
-            description: 'Each row picks one product. The first two images and the title are used.',
+            description:
+              'Only used if Columns is empty. Prefer Columns → Product tiles for the new menu.',
             initCollapsed: true,
           },
           fields: [
@@ -186,20 +335,6 @@ export function navItemFields(depth = 0, options: NavItemFieldOptions = {}): Fie
               required: true,
             },
           ],
-        },
-        { sibling: 'enableMegaMenu', truthy: true },
-      ),
-      withClientCondition(
-        {
-          name: 'productsPerRow',
-          type: 'number',
-          label: 'Products per row',
-          min: 1,
-          max: 12,
-          admin: {
-            description: 'Leave empty for auto — products spread equally and wrap by screen size.',
-            step: 1,
-          },
         },
         { sibling: 'enableMegaMenu', truthy: true },
       ),

@@ -20,11 +20,11 @@ export const DEFAULT_SITE = {
 };
 
 export const DEFAULT_MAIN_NAV: NavLink[] = [
-  { label: 'Products', href: '/products' },
-  { label: 'Industries', href: '/industries' },
-  { label: 'Solutions', href: '/services' },
-  { label: 'About', href: '/about' },
-  { label: 'Resources', href: '/resources' },
+  { label: 'Products & Services', href: '/products' },
+  { label: 'Solutions', href: '/industries' },
+  { label: 'About Us', href: '/about' },
+  { label: 'Sustainability', href: '/about' },
+  { label: 'Careers', href: '/careers' },
 ];
 
 export const DEFAULT_UTILITY_NAV: NavLink[] = [{ label: 'Contact', href: '/contact' }];

@@ -30,6 +30,7 @@ import * as migration_20260825_160000_hero_slider from './20260825_160000_hero_s
 import * as migration_20260825_170000_hero_slide_interval from './20260825_170000_hero_slide_interval';
 import * as migration_20260825_180000_leads_and_contact_blocks from './20260825_180000_leads_and_contact_blocks';
 import * as migration_20260825_190000_leads_status_changed_at from './20260825_190000_leads_status_changed_at';
+import * as migration_20260830_140000_nav_mega_columns from './20260830_140000_nav_mega_columns';
 
 export const migrations = [
   {
@@ -191,5 +192,10 @@ export const migrations = [
     up: migration_20260825_190000_leads_status_changed_at.up,
     down: migration_20260825_190000_leads_status_changed_at.down,
     name: '20260825_190000_leads_status_changed_at',
+  },
+  {
+    up: migration_20260830_140000_nav_mega_columns.up,
+    down: migration_20260830_140000_nav_mega_columns.down,
+    name: '20260830_140000_nav_mega_columns',
   },
 ];

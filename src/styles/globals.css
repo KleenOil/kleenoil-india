@@ -306,6 +306,22 @@
   padding-bottom: 0.875rem;
 }
 
+.nav-link-underline {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background: var(--color-brand-primary);
+  transform: translateX(-50%);
+  transition: width 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group\/nav-item:hover .nav-link-underline,
+.nav-link-underline.is-active {
+  width: 1.5rem;
+}
+
 .mega-menu-panel {
   @apply absolute inset-x-0 top-full z-40;
   display: grid;
@@ -313,8 +329,8 @@
   pointer-events: none;
   visibility: hidden;
   transition:
-    grid-template-rows 320ms cubic-bezier(0.22, 1, 0.36, 1),
-    visibility 320ms;
+    grid-template-rows 400ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 400ms;
 }
 
 .mega-menu-panel.is-open {
@@ -329,22 +345,39 @@
 }
 
 .mega-menu-panel-body {
-  @apply border-t border-border-subtle bg-background;
+  @apply border-t border-brand-primary/40 bg-brand-deep;
   max-height: 70vh;
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
-  box-shadow: 0 18px 40px #00663314;
+  box-shadow: 0 24px 48px #00331933;
   opacity: 0;
-  transform: translate3d(0, -0.75rem, 0);
+  transform: translate3d(0, -0.6rem, 0);
   transition:
-    opacity 280ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .mega-menu-panel.is-open .mega-menu-panel-body {
   opacity: 1;
   transform: translate3d(0, 0, 0);
+}
+
+.mega-col {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition:
+    opacity 380ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mega-menu-panel.is-open .mega-col {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.mega-menu-panel.is-open .mega-col:nth-child(3) {
+  transition-delay: 70ms;
 }
 
 .hero-oil-fill {
@@ -364,6 +397,18 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .nav-link-underline,
+  .mega-menu-panel,
+  .mega-menu-panel-body,
+  .mega-col {
+    transition: none !important;
+  }
+
+  .mega-col {
+    opacity: 1;
+    transform: none;
+  }
+
   .hero-oil-fill {
     animation: none;
     width: 100%;
