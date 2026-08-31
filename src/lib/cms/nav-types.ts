@@ -30,23 +30,60 @@ export type MegaColumn = {
   cta?: { label: string; href: string } | null;
 };
 
+export type MegaPointer = {
+  value: string;
+  label: string;
+};
+
+export type MegaIntro = {
+  heading?: string;
+  description?: string;
+  pointers: MegaPointer[];
+};
+
+export type MegaNode = {
+  label: string;
+  href: string;
+  children: MegaNode[];
+};
+
 export type NavItem = NavLink & {
   enableMegaMenu?: boolean;
   productsPerRow?: number | null;
   children?: NavLink[];
   products?: MegaProductCard[];
   megaColumns?: MegaColumn[];
+  megaIntro?: MegaIntro;
+  megaTree?: MegaNode[];
 };
 
 export function hasMegaMenu(item: NavItem): boolean {
-  return Boolean(item.enableMegaMenu && (item.megaColumns?.length || item.products?.length));
+  return Boolean(
+    item.enableMegaMenu &&
+    (item.megaTree?.length || item.megaColumns?.length || item.products?.length),
+  );
 }
 
 export function hasDropdown(item: NavItem): boolean {
   return !hasMegaMenu(item) && Boolean(item.children?.length);
 }
 
+function flattenMegaNodes(nodes: MegaNode[] | undefined): NavLink[] {
+  if (!nodes?.length) {
+    return [];
+  }
+
+  return nodes.flatMap((node) => {
+    const self = node.href ? [{ label: node.label, href: node.href }] : [];
+    return [...self, ...flattenMegaNodes(node.children)];
+  });
+}
+
 export function getMobileSubLinks(item: NavItem): NavLink[] {
+  if (hasMegaMenu(item) && item.megaTree?.length) {
+    return flattenMegaNodes(item.megaTree);
+  }
+
   if (hasMegaMenu(item) && item.megaColumns?.length) {
     return item.megaColumns.flatMap((column) => {
       if (column.layout === 'product-tiles') {

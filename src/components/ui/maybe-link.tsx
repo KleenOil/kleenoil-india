@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { MouseEventHandler } from 'react';
+import type { FocusEventHandler, MouseEventHandler } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -13,6 +13,8 @@ type MaybeLinkProps = {
   children: React.ReactNode;
   className?: string;
   onClick?: MouseEventHandler<HTMLAnchorElement | HTMLDivElement>;
+  onMouseEnter?: MouseEventHandler<HTMLAnchorElement | HTMLDivElement>;
+  onFocus?: FocusEventHandler<HTMLAnchorElement | HTMLDivElement>;
   tabIndex?: number;
   id?: string;
   role?: string;
@@ -29,6 +31,8 @@ export function MaybeLink({
   children,
   className,
   onClick,
+  onMouseEnter,
+  onFocus,
   tabIndex,
   ...rest
 }: MaybeLinkProps) {
@@ -41,6 +45,8 @@ export function MaybeLink({
           href={destination}
           className={className}
           onClick={onClick}
+          onMouseEnter={onMouseEnter}
+          onFocus={onFocus}
           tabIndex={tabIndex}
           target="_blank"
           rel="noopener noreferrer"
@@ -56,6 +62,8 @@ export function MaybeLink({
         href={destination}
         className={className}
         onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        onFocus={onFocus}
         tabIndex={tabIndex}
         {...rest}
       >
@@ -68,6 +76,8 @@ export function MaybeLink({
     <div
       className={cn('cursor-default', className)}
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onFocus={onFocus}
       tabIndex={tabIndex}
       {...rest}
     >

@@ -3535,7 +3535,7 @@ export interface SiteSetting {
 export interface Navigation {
   id: number;
   /**
-   * Left-to-right bar items. For a mega panel: turn on Mega dropdown, then add Columns (max 2). Leave Mega off for a plain link (Sustainability, Careers).
+   * Left-to-right bar items. Mega dropdown: heading + pointers on the left, up to 3 hover levels on the right. Leave Mega off for a plain link (Sustainability, Careers).
    */
   mainMenu?:
     | {
@@ -3545,11 +3545,71 @@ export interface Navigation {
         url?: string | null;
         openInNewTab?: boolean | null;
         /**
-         * Desktop: full-width panel under the bar. Add 1–2 columns below. Mobile uses the same links as a list.
+         * Desktop: full-width panel. Add a heading, pointers, and a menu tree (up to 3 levels). Mobile uses the same links as a list.
          */
         enableMegaMenu?: boolean | null;
         /**
-         * One or two columns. Typical setups: Products + Services, Industry + Applications, Profile + News.
+         * Left column title, e.g. Products & Services.
+         */
+        megaHeading?: string | null;
+        megaDescription?: string | null;
+        /**
+         * Stat rows under the description, e.g. 1988 / Founded.
+         */
+        megaPointers?:
+          | {
+              value: string;
+              label: string;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Right side, up to 3 levels. Hover reveals the next column. First link with children opens by default.
+         */
+        megaLinks?:
+          | {
+              label: string;
+              type?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              /**
+               * Optional. Leave empty for a hover-only parent (no click).
+               */
+              url?: string | null;
+              /**
+               * Revealed when this row is hovered. Add Level 3 on a child to open a third column.
+               */
+              children?:
+                | {
+                    label: string;
+                    type?: ('page' | 'custom') | null;
+                    page?: (number | null) | Page;
+                    /**
+                     * Optional. Leave empty for a hover-only parent (no click).
+                     */
+                    url?: string | null;
+                    /**
+                     * Revealed when this row is hovered. Terminal links have no children.
+                     */
+                    items?:
+                      | {
+                          label: string;
+                          type?: ('page' | 'custom') | null;
+                          page?: (number | null) | Page;
+                          /**
+                           * Optional. Leave empty for a hover-only parent (no click).
+                           */
+                          url?: string | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * One or two columns. Typical setups: Products + Services, Industry + Applications, Profile + News. Legacy — Menu tree is preferred.
          */
         megaColumns?:
           | {
@@ -3599,7 +3659,7 @@ export interface Navigation {
             }[]
           | null;
         /**
-         * Only used if Columns is empty. Prefer Columns → Product tiles for the new menu.
+         * Legacy. Ignored when Menu tree has rows. Prefer Menu tree for the dual-tone panel.
          */
         megaProducts?:
           | {
@@ -3876,6 +3936,42 @@ export interface NavigationSelect<T extends boolean = true> {
         url?: T;
         openInNewTab?: T;
         enableMegaMenu?: T;
+        megaHeading?: T;
+        megaDescription?: T;
+        megaPointers?:
+          | T
+          | {
+              value?: T;
+              label?: T;
+              id?: T;
+            };
+        megaLinks?:
+          | T
+          | {
+              label?: T;
+              type?: T;
+              page?: T;
+              url?: T;
+              children?:
+                | T
+                | {
+                    label?: T;
+                    type?: T;
+                    page?: T;
+                    url?: T;
+                    items?:
+                      | T
+                      | {
+                          label?: T;
+                          type?: T;
+                          page?: T;
+                          url?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+            };
         megaColumns?:
           | T
           | {

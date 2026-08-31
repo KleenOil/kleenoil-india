@@ -199,7 +199,8 @@ export function Header({ site, mainNav, mobileNav, utilityNav }: HeaderProps) {
           <MegaMenuPanel
             key={itemKey}
             open={openKey === itemKey}
-            columns={item.megaColumns ?? []}
+            intro={item.megaIntro}
+            tree={item.megaTree ?? []}
             labelledBy={`nav-trigger-${itemKey}`}
           />
         );

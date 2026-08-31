@@ -1,6 +1,12 @@
 import type { NavLink } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl, resolveLink } from '@/lib/cms/links';
-import type { MegaColumn, MegaColumnItem, MegaProductCard, NavItem } from '@/lib/cms/nav-types';
+import type {
+  MegaColumn,
+  MegaColumnItem,
+  MegaNode,
+  MegaProductCard,
+  NavItem,
+} from '@/lib/cms/nav-types';
 import { getPayloadClient } from '@/lib/payload';
 import { resolvePdpLayout, type PdpLayoutBlock } from '@/lib/cms/resolve-pdp-layout';
 import type { Media, Navigation, Product, ProductTemplate } from '@/payload-types';
@@ -18,8 +24,21 @@ type CmsNavRow = {
   enableMegaMenu?: boolean | null;
   megaProducts?: CmsNavItem['megaProducts'];
   megaColumns?: CmsNavItem['megaColumns'];
+  megaHeading?: string | null;
+  megaDescription?: string | null;
+  megaPointers?: { value?: string | null; label?: string | null }[] | null;
+  megaLinks?: CmsMegaLink[] | null;
   productsPerRow?: number | null;
   children?: CmsNavItem['children'];
+};
+
+type CmsMegaLink = {
+  label: string;
+  type?: 'page' | 'custom' | null;
+  page?: CmsNavItem['page'];
+  url?: string | null;
+  children?: CmsMegaLink[] | null;
+  items?: CmsMegaLink[] | null;
 };
 
 export function mapNavLinks(
@@ -77,6 +96,24 @@ export async function mapMainNavItems(items: CmsNavRow[] | null | undefined): Pr
     const megaColumns = enableMegaMenu
       ? mapMegaColumns(item.megaColumns, cardsByProductId, products)
       : [];
+    const megaTree = enableMegaMenu
+      ? (() => {
+          const fromCms = mapMegaTree(item.megaLinks);
+          return fromCms.length ? fromCms : treeFromColumns(megaColumns);
+        })()
+      : [];
+    const megaIntro = enableMegaMenu
+      ? {
+          heading: item.megaHeading?.trim() || link.label,
+          description: item.megaDescription?.trim() || undefined,
+          pointers: (item.megaPointers ?? [])
+            .map((pointer) => ({
+              value: pointer.value?.trim() ?? '',
+              label: pointer.label?.trim() ?? '',
+            }))
+            .filter((pointer) => pointer.value && pointer.label),
+        }
+      : undefined;
 
     const children =
       !enableMegaMenu && item.children?.length
@@ -87,11 +124,14 @@ export async function mapMainNavItems(items: CmsNavRow[] | null | undefined): Pr
 
     mapped.push({
       ...link,
-      enableMegaMenu: enableMegaMenu && (megaColumns.length > 0 || products.length > 0),
+      enableMegaMenu:
+        enableMegaMenu && (megaTree.length > 0 || megaColumns.length > 0 || products.length > 0),
       productsPerRow: normalizeProductsPerRow(item.productsPerRow),
       children,
       products,
       megaColumns,
+      megaIntro,
+      megaTree,
     });
   }
 
@@ -203,6 +243,51 @@ function mapMegaColumns(
   }
 
   return [];
+}
+
+function mapMegaTree(links: CmsMegaLink[] | null | undefined): MegaNode[] {
+  const mapped: MegaNode[] = [];
+
+  for (const link of links ?? []) {
+    const resolved = resolveLink({
+      type: link.type ?? 'custom',
+      label: link.label,
+      url: link.url,
+      page: link.page,
+    });
+    if (!resolved) {
+      continue;
+    }
+
+    mapped.push({
+      label: resolved.label,
+      href: resolved.href,
+      children: mapMegaTree(link.children ?? link.items),
+    });
+  }
+
+  return mapped;
+}
+
+function treeFromColumns(columns: MegaColumn[]): MegaNode[] {
+  return columns.map((column) => {
+    const fromProducts = column.products.map((product) => ({
+      label: product.title,
+      href: product.href,
+      children: [],
+    }));
+    const fromItems = column.items.map((item) => ({
+      label: item.label,
+      href: item.href,
+      children: [],
+    }));
+
+    return {
+      label: column.heading || column.layout,
+      href: column.cta?.href ?? '',
+      children: fromProducts.length ? fromProducts : fromItems,
+    };
+  });
 }
 
 function normalizeProductsPerRow(value: unknown): number | null {

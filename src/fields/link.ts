@@ -106,6 +106,103 @@ export function linkArrayField(
   };
 }
 
+function megaLinkFields(depth: number): Field[] {
+  const fields: Field[] = [
+    {
+      name: 'label',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'type',
+      type: 'radio',
+      defaultValue: 'custom',
+      options: [
+        { label: 'Internal Page', value: 'page' },
+        { label: 'Custom URL', value: 'custom' },
+      ],
+      admin: { layout: 'horizontal' },
+    },
+    withClientCondition(
+      { name: 'page', type: 'relationship', relationTo: 'pages' },
+      { sibling: 'type', equals: 'page' },
+    ),
+    withClientCondition(
+      {
+        name: 'url',
+        type: 'text',
+        label: 'URL',
+        admin: {
+          description: 'Optional. Leave empty for a hover-only parent (no click).',
+        },
+      },
+      { sibling: 'type', equals: 'custom' },
+    ),
+  ];
+
+  if (depth < 2) {
+    const childName = depth === 0 ? 'children' : 'items';
+    fields.push({
+      name: childName,
+      type: 'array',
+      label: depth === 0 ? 'Level 2' : 'Level 3',
+      labels: { singular: 'Link', plural: 'Links' },
+      admin: {
+        initCollapsed: true,
+        description:
+          depth === 0
+            ? 'Revealed when this row is hovered. Add Level 3 on a child to open a third column.'
+            : 'Revealed when this row is hovered. Terminal links have no children.',
+      },
+      fields: megaLinkFields(depth + 1),
+    });
+  }
+
+  return fields;
+}
+
+function megaTreeFields(): Field[] {
+  return [
+    {
+      name: 'megaHeading',
+      type: 'text',
+      label: 'Panel heading',
+      admin: { description: 'Left column title, e.g. Products & Services.' },
+    },
+    {
+      name: 'megaDescription',
+      type: 'textarea',
+      label: 'Panel description',
+    },
+    {
+      name: 'megaPointers',
+      type: 'array',
+      label: 'Pointers',
+      labels: { singular: 'Pointer', plural: 'Pointers' },
+      admin: {
+        description: 'Stat rows under the description, e.g. 1988 / Founded.',
+        initCollapsed: true,
+      },
+      fields: [
+        { name: 'value', type: 'text', required: true, label: 'Value' },
+        { name: 'label', type: 'text', required: true, label: 'Label' },
+      ],
+    },
+    {
+      name: 'megaLinks',
+      type: 'array',
+      label: 'Menu tree',
+      labels: { singular: 'Level 1 link', plural: 'Level 1 links' },
+      admin: {
+        description:
+          'Right side, up to 3 levels. Hover reveals the next column. First link with children opens by default.',
+        initCollapsed: true,
+      },
+      fields: megaLinkFields(0),
+    },
+  ];
+}
+
 function megaColumnsField(): Field {
   return {
     name: 'megaColumns',
@@ -116,7 +213,7 @@ function megaColumnsField(): Field {
     admin: {
       initCollapsed: true,
       description:
-        'One or two columns. Typical setups: Products + Services, Industry + Applications, Profile + News.',
+        'One or two columns. Typical setups: Products + Services, Industry + Applications, Profile + News. Legacy — Menu tree is preferred.',
     },
     fields: [
       {
@@ -309,9 +406,12 @@ export function navItemFields(depth = 0, options: NavItemFieldOptions = {}): Fie
         defaultValue: false,
         admin: {
           description:
-            'Desktop: full-width panel under the bar. Add 1–2 columns below. Mobile uses the same links as a list.',
+            'Desktop: full-width panel. Add a heading, pointers, and a menu tree (up to 3 levels). Mobile uses the same links as a list.',
         },
       },
+      ...megaTreeFields().map((field) =>
+        withClientCondition(field, { sibling: 'enableMegaMenu', truthy: true }),
+      ),
       withClientCondition(megaColumnsField(), { sibling: 'enableMegaMenu', truthy: true }),
       withClientCondition(
         {
@@ -324,7 +424,7 @@ export function navItemFields(depth = 0, options: NavItemFieldOptions = {}): Fie
           },
           admin: {
             description:
-              'Only used if Columns is empty. Prefer Columns → Product tiles for the new menu.',
+              'Legacy. Ignored when Menu tree has rows. Prefer Menu tree for the dual-tone panel.',
             initCollapsed: true,
           },
           fields: [
