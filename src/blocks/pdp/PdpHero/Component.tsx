@@ -36,7 +36,6 @@ export type PdpHeroVariant = HeroVariantOption & {
   title?: string | null;
   summary?: string | null;
   gallery?: (number | Media)[] | null;
-  quickSpecs?: SpecItem[] | null;
   configSpecs?: ConfigSpecItem[] | null;
 };
 
@@ -140,14 +139,11 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
 
   const activeImage = gallery[Math.min(active, gallery.length - 1)] ?? gallery[0];
 
-  const variantSpecs = usableSpecs(selected?.quickSpecs);
   const heroSpecs = usableSpecs(block?.quickSpecs);
   const specs: SpecItem[] =
-    variantSpecs.length > 0
-      ? variantSpecs
-      : heroSpecs.length > 0
-        ? heroSpecs
-        : DEFAULT_PDP_HERO.quickSpecs.map((spec) => ({ ...spec, animateCounter: false }));
+    heroSpecs.length > 0
+      ? heroSpecs
+      : DEFAULT_PDP_HERO.quickSpecs.map((spec) => ({ ...spec, animateCounter: false }));
 
   const variantConfig = usableConfigSpecs(selected?.configSpecs);
   const heroConfig = usableConfigSpecs(block?.configSpecs);

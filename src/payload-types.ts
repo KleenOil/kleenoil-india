@@ -1385,7 +1385,7 @@ export interface Product {
                 }[]
               | null;
             /**
-             * When on, visitors pick a model and the gallery, title, summary, and specs update to that variant.
+             * When on, visitors pick a model and the gallery, title, summary, and configuration rows update to that variant.
              */
             enableVariants?: boolean | null;
             /**
@@ -1401,25 +1401,16 @@ export interface Product {
              */
             configSpecsLabel?: string | null;
             /**
-             * Each model can have its own images and specs. Leave a field empty to fall back to the Hero tab.
+             * Each model can have its own images and configuration rows. Leave a field empty to fall back to the Hero tab.
              */
             variants?:
               | {
                   /**
-                   * e.g. Kleenoil SMFS 1XSDU 9788
+                   * e.g. KF-LC-200 Standard
                    */
                   name: string;
-                  /**
-                   * Short chip label, e.g. 1X
-                   */
                   code?: string | null;
-                  /**
-                   * e.g. SMFS or MFS
-                   */
                   series?: string | null;
-                  /**
-                   * e.g. Series SMFS · Cartridge 9788 · Static / Mobile
-                   */
                   meta?: string | null;
                   isDefault?: boolean | null;
                   badge?: string | null;
@@ -1429,9 +1420,6 @@ export interface Product {
                    * Images for this model. Leave empty to keep the Hero tab gallery.
                    */
                   gallery?: (number | Media)[] | null;
-                  /**
-                   * Leave empty to keep the Hero tab specs.
-                   */
                   quickSpecs?:
                     | {
                         value: string;
@@ -1755,7 +1743,7 @@ export interface ProductTemplate {
                 }[]
               | null;
             /**
-             * When on, visitors pick a model and the gallery, title, summary, and specs update to that variant.
+             * When on, visitors pick a model and the gallery, title, summary, and configuration rows update to that variant.
              */
             enableVariants?: boolean | null;
             /**
@@ -1771,25 +1759,16 @@ export interface ProductTemplate {
              */
             configSpecsLabel?: string | null;
             /**
-             * Each model can have its own images and specs. Leave a field empty to fall back to the Hero tab.
+             * Each model can have its own images and configuration rows. Leave a field empty to fall back to the Hero tab.
              */
             variants?:
               | {
                   /**
-                   * e.g. Kleenoil SMFS 1XSDU 9788
+                   * e.g. KF-LC-200 Standard
                    */
                   name: string;
-                  /**
-                   * Short chip label, e.g. 1X
-                   */
                   code?: string | null;
-                  /**
-                   * e.g. SMFS or MFS
-                   */
                   series?: string | null;
-                  /**
-                   * e.g. Series SMFS · Cartridge 9788 · Static / Mobile
-                   */
                   meta?: string | null;
                   isDefault?: boolean | null;
                   badge?: string | null;
@@ -1799,9 +1778,6 @@ export interface ProductTemplate {
                    * Images for this model. Leave empty to keep the Hero tab gallery.
                    */
                   gallery?: (number | Media)[] | null;
-                  /**
-                   * Leave empty to keep the Hero tab specs.
-                   */
                   quickSpecs?:
                     | {
                         value: string;

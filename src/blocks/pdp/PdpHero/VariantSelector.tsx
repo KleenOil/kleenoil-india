@@ -7,9 +7,6 @@ import { cn } from '@/lib/utils';
 
 export type HeroVariantOption = {
   name: string;
-  code?: string | null;
-  series?: string | null;
-  meta?: string | null;
 };
 
 type VariantSelectorProps = {
@@ -19,14 +16,6 @@ type VariantSelectorProps = {
   selectedIndex: number;
   onSelect: (index: number) => void;
 };
-
-function variantTitle(variant: HeroVariantOption) {
-  return variant.name;
-}
-
-function variantMeta(variant: HeroVariantOption) {
-  return [variant.series, variant.meta].filter(Boolean).join(' · ');
-}
 
 export function VariantSelector({
   label,
@@ -89,8 +78,6 @@ function VariantRow({
   onSelect: () => void;
   layout: 'list' | 'chip';
 }) {
-  const meta = variantMeta(variant);
-
   return (
     <button
       type="button"
@@ -106,26 +93,14 @@ function VariantRow({
           : 'border-border-subtle bg-surface-elevated/70 hover:border-brand-primary/40',
       )}
     >
-      <span className="min-w-0">
-        <span
-          className={cn(
-            'block font-heading font-bold leading-[1.25] tracking-[-0.2px]',
-            layout === 'list' ? 'text-[15px]' : 'text-center text-[13px]',
-            active ? 'text-white' : 'text-text-primary',
-          )}
-        >
-          {variantTitle(variant)}
-        </span>
-        {layout === 'list' && meta ? (
-          <span
-            className={cn(
-              'mt-1 block font-mono text-[11px] font-medium tracking-[0.2px]',
-              active ? 'text-brand-soft' : 'text-text-tertiary',
-            )}
-          >
-            {meta}
-          </span>
-        ) : null}
+      <span
+        className={cn(
+          'min-w-0 font-heading font-bold leading-[1.25] tracking-[-0.2px]',
+          layout === 'list' ? 'text-[15px]' : 'text-center text-[13px]',
+          active ? 'text-white' : 'text-text-primary',
+        )}
+      >
+        {variant.name}
       </span>
       {layout === 'list' ? (
         active ? (
@@ -175,15 +150,8 @@ function DropdownList({
         onClick={() => setOpen((value) => !value)}
         className="flex w-full items-center justify-between gap-3 rounded-xl border border-border-subtle bg-surface-elevated px-4 py-3 text-left"
       >
-        <span className="min-w-0">
-          <span className="block truncate font-heading text-sm font-bold text-text-primary">
-            {selected?.code ? `${selected.code} — ${selected.name}` : selected?.name}
-          </span>
-          {selected?.series ? (
-            <span className="mt-0.5 block font-mono text-[10px] font-bold tracking-[0.8px] text-text-tertiary uppercase">
-              {selected.series}
-            </span>
-          ) : null}
+        <span className="block min-w-0 truncate font-heading text-sm font-bold text-text-primary">
+          {selected?.name}
         </span>
         <ChevronDown
           className={cn(
@@ -210,18 +178,11 @@ function DropdownList({
                     setOpen(false);
                   }}
                   className={cn(
-                    'flex w-full flex-col items-start px-4 py-2.5 text-left hover:bg-brand-soft/80',
+                    'flex w-full items-start px-4 py-2.5 text-left font-heading text-sm font-bold text-text-primary hover:bg-brand-soft/80',
                     active && 'bg-brand-soft',
                   )}
                 >
-                  <span className="font-heading text-sm font-bold text-text-primary">
-                    {variant.code ? `${variant.code} — ${variant.name}` : variant.name}
-                  </span>
-                  {variant.series || variant.meta ? (
-                    <span className="mt-0.5 font-mono text-[10px] tracking-[0.4px] text-text-secondary">
-                      {[variant.series, variant.meta].filter(Boolean).join(' · ')}
-                    </span>
-                  ) : null}
+                  {variant.name}
                 </button>
               </li>
             );

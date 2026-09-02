@@ -120,7 +120,7 @@ const variantFields: Field[] = [
     defaultValue: false,
     admin: {
       description:
-        'When on, visitors pick a model and the gallery, title, summary, and specs update to that variant.',
+        'When on, visitors pick a model and the gallery, title, summary, and configuration rows update to that variant.',
     },
   },
   withClientCondition(
@@ -173,7 +173,7 @@ const variantFields: Field[] = [
       },
       admin: {
         description:
-          'Each model can have its own images and specs. Leave a field empty to fall back to the Hero tab.',
+          'Each model can have its own images and configuration rows. Leave a field empty to fall back to the Hero tab.',
         initCollapsed: true,
       },
       fields: [
@@ -182,25 +182,25 @@ const variantFields: Field[] = [
           type: 'text',
           required: true,
           label: 'Model name',
-          admin: { description: 'e.g. Kleenoil SMFS 1XSDU 9788' },
+          admin: { description: 'e.g. KF-LC-200 Standard' },
         },
         {
           name: 'code',
           type: 'text',
           label: 'Code',
-          admin: { description: 'Short chip label, e.g. 1X' },
+          admin: { hidden: true },
         },
         {
           name: 'series',
           type: 'text',
           label: 'Series',
-          admin: { description: 'e.g. SMFS or MFS' },
+          admin: { hidden: true },
         },
         {
           name: 'meta',
           type: 'text',
           label: 'Detail line',
-          admin: { description: 'e.g. Series SMFS · Cartridge 9788 · Static / Mobile' },
+          admin: { hidden: true },
         },
         {
           name: 'isDefault',
@@ -237,8 +237,7 @@ const variantFields: Field[] = [
           label: 'Quick specs override',
           maxRows: 8,
           admin: {
-            description: 'Leave empty to keep the Hero tab specs.',
-            initCollapsed: true,
+            hidden: true,
           },
           fields: quickSpecFields,
         },

@@ -184,6 +184,9 @@ export const Products: CollectionConfig = {
     useAsTitle: 'name',
     defaultColumns: ['name', 'slug', 'template', 'updatedAt'],
     group: 'Content',
+    components: {
+      beforeListTable: ['/components/admin/ClearStaleNotFound#ClearStaleNotFound'],
+    },
   },
   // Products publish immediately on save. Drafts were causing new products to
   // "disappear" from the site because editors saved without ever clicking
