@@ -32,6 +32,7 @@ import * as migration_20260825_180000_leads_and_contact_blocks from './20260825_
 import * as migration_20260825_190000_leads_status_changed_at from './20260825_190000_leads_status_changed_at';
 import * as migration_20260830_140000_nav_mega_columns from './20260830_140000_nav_mega_columns';
 import * as migration_20260831_080000_nav_mega_tree from './20260831_080000_nav_mega_tree';
+import * as migration_20260903_010000_pdp_hero_config_specs from './20260903_010000_pdp_hero_config_specs';
 
 export const migrations = [
   {
@@ -203,5 +204,10 @@ export const migrations = [
     up: migration_20260831_080000_nav_mega_tree.up,
     down: migration_20260831_080000_nav_mega_tree.down,
     name: '20260831_080000_nav_mega_tree',
+  },
+  {
+    up: migration_20260903_010000_pdp_hero_config_specs.up,
+    down: migration_20260903_010000_pdp_hero_config_specs.down,
+    name: '20260903_010000_pdp_hero_config_specs',
   },
 ];

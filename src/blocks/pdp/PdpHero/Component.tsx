@@ -21,6 +21,11 @@ type SpecItem = {
   animateCounter?: boolean | null;
 };
 
+type ConfigSpecItem = {
+  label?: string | null;
+  value?: string | null;
+};
+
 type CtaItem = {
   link?: CmsLink | null;
 };
@@ -32,6 +37,7 @@ export type PdpHeroVariant = HeroVariantOption & {
   summary?: string | null;
   gallery?: (number | Media)[] | null;
   quickSpecs?: SpecItem[] | null;
+  configSpecs?: ConfigSpecItem[] | null;
 };
 
 export type PdpHeroBlockData = {
@@ -43,10 +49,12 @@ export type PdpHeroBlockData = {
   gallery?: (number | Media)[] | null;
   quickSpecs?: SpecItem[] | null;
   quickSpecsPerRow?: QuickSpecsPerRow | null;
+  configSpecs?: ConfigSpecItem[] | null;
   ctas?: CtaItem[] | null;
   enableVariants?: boolean | null;
-  selectorStyle?: 'chips' | 'dropdown' | null;
+  selectorStyle?: 'chips' | 'list' | 'dropdown' | null;
   selectorLabel?: string | null;
+  configSpecsLabel?: string | null;
   variants?: PdpHeroVariant[] | null;
 };
 
@@ -60,6 +68,26 @@ type GalleryItem = { url: string; alt: string };
 
 function usableSpecs(items?: SpecItem[] | null): SpecItem[] {
   return items?.filter((spec) => spec.value && spec.label) ?? [];
+}
+
+function usableConfigSpecs(items?: ConfigSpecItem[] | null): ConfigSpecItem[] {
+  return items?.filter((spec) => spec.label && spec.value) ?? [];
+}
+
+function selectorStyle(style: PdpHeroBlockData['selectorStyle']): 'chips' | 'list' | 'dropdown' {
+  if (style === 'list' || style === 'dropdown') {
+    return style;
+  }
+
+  return 'chips';
+}
+
+function selectorLabel(style: 'chips' | 'list' | 'dropdown', label?: string | null): string {
+  if (label) {
+    return label;
+  }
+
+  return style === 'list' ? 'SELECT CONFIGURATION' : DEFAULT_PDP_HERO.selectorLabel;
 }
 
 function galleryFromMedia(
@@ -121,6 +149,17 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
         ? heroSpecs
         : DEFAULT_PDP_HERO.quickSpecs.map((spec) => ({ ...spec, animateCounter: false }));
 
+  const variantConfig = usableConfigSpecs(selected?.configSpecs);
+  const heroConfig = usableConfigSpecs(block?.configSpecs);
+  const configSpecs: ConfigSpecItem[] =
+    variantConfig.length > 0
+      ? variantConfig
+      : heroConfig.length > 0
+        ? heroConfig
+        : variants.length > 0
+          ? DEFAULT_PDP_HERO.configSpecs
+          : [];
+
   const perRow = block?.quickSpecsPerRow || DEFAULT_PDP_HERO.quickSpecsPerRow;
   const lockedColumns: Record<string, number> = {
     one: 1,
@@ -131,6 +170,7 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
   const specColumns = lockedColumns[perRow] ?? Math.min(Math.max(specs.length, 1), 4);
 
   const ctas = resolveCtaList(block?.ctas, DEFAULT_PDP_HERO.ctas);
+  const style = selectorStyle(block?.selectorStyle);
 
   const selectVariant = (index: number) => {
     setVariantIndex(index);
@@ -195,12 +235,40 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
 
           {variants.length > 0 ? (
             <VariantSelector
-              label={block?.selectorLabel || 'SELECT MODEL'}
-              style={block?.selectorStyle === 'dropdown' ? 'dropdown' : 'chips'}
+              label={selectorLabel(style, block?.selectorLabel)}
+              style={style}
               variants={variants}
               selectedIndex={Math.min(variantIndex, variants.length - 1)}
               onSelect={selectVariant}
             />
+          ) : null}
+
+          {configSpecs.length > 0 ? (
+            <div className="flex flex-col">
+              <p className="font-mono text-[11px] font-bold tracking-[1.4px] text-text-tertiary uppercase">
+                {block?.configSpecsLabel || DEFAULT_PDP_HERO.configSpecsLabel}
+              </p>
+              {configSpecs.map((spec, index) => (
+                <div key={`${spec.label}-${spec.value}-${index}`}>
+                  <div
+                    className={cn(
+                      'flex items-baseline justify-between gap-4',
+                      index === 0 ? 'pb-3 pt-4' : 'py-3',
+                    )}
+                  >
+                    <span className="shrink-0 font-mono text-[11px] font-bold tracking-[0.4px] text-text-tertiary">
+                      {spec.label}
+                    </span>
+                    <span className="text-right text-sm font-semibold leading-snug text-text-primary">
+                      {spec.value}
+                    </span>
+                  </div>
+                  {index < configSpecs.length - 1 ? (
+                    <div className="h-px w-full bg-border-subtle" aria-hidden />
+                  ) : null}
+                </div>
+              ))}
+            </div>
           ) : null}
 
           <div

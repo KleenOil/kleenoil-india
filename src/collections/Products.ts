@@ -89,6 +89,7 @@ type PostgresDb = {
 const NESTED_ARRAY_KEYS = new Set([
   'items',
   'quickSpecs',
+  'configSpecs',
   'steps',
   'machines',
   'columns',

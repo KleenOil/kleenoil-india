@@ -1352,6 +1352,22 @@ export interface Product {
                   id?: string | null;
                 }[]
               | null;
+            /**
+             * Label/value rows under the model picker. Variants can override these.
+             */
+            configSpecs?:
+              | {
+                  /**
+                   * e.g. Type or Pump Flow Rate
+                   */
+                  label: string;
+                  /**
+                   * e.g. Centrifugal — Standard
+                   */
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
             ctas?:
               | {
                   link: {
@@ -1373,13 +1389,17 @@ export interface Product {
              */
             enableVariants?: boolean | null;
             /**
-             * Chips match the PDP design. Dropdown is a compact select for longer model lists.
+             * Chips = 2-column grid. List = full-width rows. Dropdown = compact select.
              */
-            selectorStyle?: ('chips' | 'dropdown') | null;
+            selectorStyle?: ('chips' | 'list' | 'dropdown') | null;
             /**
-             * Defaults to SELECT MODEL.
+             * Defaults to SELECT MODEL for chips, SELECT CONFIGURATION for list.
              */
             selectorLabel?: string | null;
+            /**
+             * Defaults to CONFIGURATION.
+             */
+            configSpecsLabel?: string | null;
             /**
              * Each model can have its own images and specs. Leave a field empty to fall back to the Hero tab.
              */
@@ -1420,6 +1440,22 @@ export interface Product {
                          * When enabled, the value counts up when this spec scrolls into view (works best with numeric values like 99.9% or 5×).
                          */
                         animateCounter?: boolean | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  /**
+                   * Leave empty to keep the Hero tab configuration rows.
+                   */
+                  configSpecs?:
+                    | {
+                        /**
+                         * e.g. Type or Pump Flow Rate
+                         */
+                        label: string;
+                        /**
+                         * e.g. Centrifugal — Standard
+                         */
+                        value: string;
                         id?: string | null;
                       }[]
                     | null;
@@ -1686,6 +1722,22 @@ export interface ProductTemplate {
                   id?: string | null;
                 }[]
               | null;
+            /**
+             * Label/value rows under the model picker. Variants can override these.
+             */
+            configSpecs?:
+              | {
+                  /**
+                   * e.g. Type or Pump Flow Rate
+                   */
+                  label: string;
+                  /**
+                   * e.g. Centrifugal — Standard
+                   */
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
             ctas?:
               | {
                   link: {
@@ -1707,13 +1759,17 @@ export interface ProductTemplate {
              */
             enableVariants?: boolean | null;
             /**
-             * Chips match the PDP design. Dropdown is a compact select for longer model lists.
+             * Chips = 2-column grid. List = full-width rows. Dropdown = compact select.
              */
-            selectorStyle?: ('chips' | 'dropdown') | null;
+            selectorStyle?: ('chips' | 'list' | 'dropdown') | null;
             /**
-             * Defaults to SELECT MODEL.
+             * Defaults to SELECT MODEL for chips, SELECT CONFIGURATION for list.
              */
             selectorLabel?: string | null;
+            /**
+             * Defaults to CONFIGURATION.
+             */
+            configSpecsLabel?: string | null;
             /**
              * Each model can have its own images and specs. Leave a field empty to fall back to the Hero tab.
              */
@@ -1754,6 +1810,22 @@ export interface ProductTemplate {
                          * When enabled, the value counts up when this spec scrolls into view (works best with numeric values like 99.9% or 5×).
                          */
                         animateCounter?: boolean | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  /**
+                   * Leave empty to keep the Hero tab configuration rows.
+                   */
+                  configSpecs?:
+                    | {
+                        /**
+                         * e.g. Type or Pump Flow Rate
+                         */
+                        label: string;
+                        /**
+                         * e.g. Centrifugal — Standard
+                         */
+                        value: string;
                         id?: string | null;
                       }[]
                     | null;
@@ -2973,6 +3045,13 @@ export interface ProductTemplatesSelect<T extends boolean = true> {
                     animateCounter?: T;
                     id?: T;
                   };
+              configSpecs?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
               ctas?:
                 | T
                 | {
@@ -2991,6 +3070,7 @@ export interface ProductTemplatesSelect<T extends boolean = true> {
               enableVariants?: T;
               selectorStyle?: T;
               selectorLabel?: T;
+              configSpecsLabel?: T;
               variants?:
                 | T
                 | {
@@ -3009,6 +3089,13 @@ export interface ProductTemplatesSelect<T extends boolean = true> {
                           value?: T;
                           label?: T;
                           animateCounter?: T;
+                          id?: T;
+                        };
+                    configSpecs?:
+                      | T
+                      | {
+                          label?: T;
+                          value?: T;
                           id?: T;
                         };
                     id?: T;
@@ -3207,6 +3294,13 @@ export interface ProductsSelect<T extends boolean = true> {
                     animateCounter?: T;
                     id?: T;
                   };
+              configSpecs?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
               ctas?:
                 | T
                 | {
@@ -3225,6 +3319,7 @@ export interface ProductsSelect<T extends boolean = true> {
               enableVariants?: T;
               selectorStyle?: T;
               selectorLabel?: T;
+              configSpecsLabel?: T;
               variants?:
                 | T
                 | {
@@ -3243,6 +3338,13 @@ export interface ProductsSelect<T extends boolean = true> {
                           value?: T;
                           label?: T;
                           animateCounter?: T;
+                          id?: T;
+                        };
+                    configSpecs?:
+                      | T
+                      | {
+                          label?: T;
+                          value?: T;
                           id?: T;
                         };
                     id?: T;

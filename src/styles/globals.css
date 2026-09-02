@@ -328,10 +328,11 @@
   grid-template-rows: 0fr;
   pointer-events: none;
   visibility: hidden;
+  box-shadow: 0 0 0 #0000;
   transition:
-    grid-template-rows 400ms cubic-bezier(0.22, 1, 0.36, 1),
-    visibility 400ms,
-    box-shadow 400ms cubic-bezier(0.22, 1, 0.36, 1);
+    grid-template-rows 480ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 480ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s 480ms;
 }
 
 .mega-menu-panel.is-open {
@@ -341,6 +342,10 @@
   box-shadow:
     0 24px 48px #00331924,
     0 8px 18px #00331914;
+  transition:
+    grid-template-rows 480ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 480ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s;
 }
 
 .mega-menu-panel-clip {
@@ -352,14 +357,13 @@
   @apply border-t border-border-subtle;
   width: 100%;
   max-height: 70vh;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   overscroll-behavior: contain;
   opacity: 0;
-  transform: translate3d(0, -0.6rem, 0);
+  transform: translate3d(0, -14px, 0);
   transition:
-    opacity 360ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 420ms cubic-bezier(0.16, 1, 0.3, 1) 30ms,
+    transform 480ms cubic-bezier(0.16, 1, 0.3, 1) 30ms;
 }
 
 .mega-menu-panel.is-open .mega-menu-panel-body {
@@ -369,6 +373,16 @@
 
 .mega-intro {
   background: var(--color-background);
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+  transition:
+    opacity 400ms cubic-bezier(0.16, 1, 0.3, 1) 70ms,
+    transform 440ms cubic-bezier(0.16, 1, 0.3, 1) 70ms;
+}
+
+.mega-menu-panel.is-open .mega-intro {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 .mega-levels {
@@ -376,19 +390,32 @@
 }
 
 .mega-level {
-  min-height: 22rem;
+  min-height: 0;
   border-left: 1px solid var(--color-border-subtle);
-  padding: 0.5rem 1.25rem;
+  padding: 0.5rem 1.25rem 1.5rem;
+  overflow: hidden;
   opacity: 0;
-  transform: translate3d(-10px, 0, 0);
+  transform: translate3d(-8px, 10px, 0);
   transition:
-    opacity 320ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.mega-level.is-on {
+.mega-menu-panel.is-open .mega-level.is-on {
   opacity: 1;
   transform: translate3d(0, 0, 0);
+}
+
+.mega-menu-panel.is-open .mega-level:nth-child(1) {
+  transition-delay: 90ms;
+}
+
+.mega-menu-panel.is-open .mega-level:nth-child(2) {
+  transition-delay: 150ms;
+}
+
+.mega-menu-panel.is-open .mega-level:nth-child(3) {
+  transition-delay: 210ms;
 }
 
 .mega-row {
@@ -471,6 +498,7 @@
   .nav-link-underline,
   .mega-menu-panel,
   .mega-menu-panel-body,
+  .mega-intro,
   .mega-level,
   .mega-row,
   .mega-row-underline,
@@ -478,6 +506,8 @@
     transition: none !important;
   }
 
+  .mega-menu-panel-body,
+  .mega-intro,
   .mega-level {
     opacity: 1;
     transform: none;

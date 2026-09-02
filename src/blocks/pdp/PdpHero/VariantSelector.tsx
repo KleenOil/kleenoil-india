@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { Check, ChevronDown, ChevronRight } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
@@ -14,11 +14,19 @@ export type HeroVariantOption = {
 
 type VariantSelectorProps = {
   label: string;
-  style: 'chips' | 'dropdown';
+  style: 'chips' | 'list' | 'dropdown';
   variants: HeroVariantOption[];
   selectedIndex: number;
   onSelect: (index: number) => void;
 };
+
+function variantTitle(variant: HeroVariantOption) {
+  return variant.name;
+}
+
+function variantMeta(variant: HeroVariantOption) {
+  return [variant.series, variant.meta].filter(Boolean).join(' · ');
+}
 
 export function VariantSelector({
   label,
@@ -41,63 +49,92 @@ export function VariantSelector({
 
       {style === 'dropdown' ? (
         <DropdownList variants={variants} selectedIndex={selectedIndex} onSelect={onSelect} />
+      ) : style === 'list' ? (
+        <div className="flex flex-col gap-2">
+          {variants.map((variant, index) => (
+            <VariantRow
+              key={`${variant.name}-${index}`}
+              variant={variant}
+              active={index === selectedIndex}
+              onSelect={() => onSelect(index)}
+              layout="list"
+            />
+          ))}
+        </div>
       ) : (
-        <div className="flex flex-wrap gap-2">
-          {variants.map((variant, index) => {
-            const active = index === selectedIndex;
-            return (
-              <button
-                key={`${variant.name}-${index}`}
-                type="button"
-                onClick={() => onSelect(index)}
-                aria-pressed={active}
-                className={cn(
-                  'inline-flex min-w-[72px] flex-col items-start rounded-lg border px-3 py-2 text-left transition-colors',
-                  active
-                    ? 'border-brand-primary bg-brand-primary'
-                    : 'border-border-subtle bg-[#E5EDE8]/70 hover:border-brand-primary/40',
-                )}
-              >
-                <span
-                  className={cn(
-                    'font-heading text-sm font-bold leading-tight',
-                    active ? 'text-white' : 'text-text-primary',
-                  )}
-                >
-                  {variant.code || variant.name}
-                </span>
-                {variant.series ? (
-                  <span
-                    className={cn(
-                      'font-mono text-[10px] font-bold tracking-[0.8px] uppercase',
-                      active ? 'text-brand-soft' : 'text-text-tertiary',
-                    )}
-                  >
-                    {variant.series}
-                  </span>
-                ) : null}
-              </button>
-            );
-          })}
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+          {variants.map((variant, index) => (
+            <VariantRow
+              key={`${variant.name}-${index}`}
+              variant={variant}
+              active={index === selectedIndex}
+              onSelect={() => onSelect(index)}
+              layout="chip"
+            />
+          ))}
         </div>
       )}
-
-      <div className="flex items-center justify-between gap-3 rounded-xl border border-brand-primary/15 bg-brand-soft px-4 py-3">
-        <div className="min-w-0">
-          <p className="truncate font-heading text-sm font-bold text-text-primary">
-            {selected.name}
-          </p>
-          {selected.meta ? (
-            <p className="mt-0.5 truncate font-mono text-[11px] tracking-[0.4px] text-text-secondary">
-              {selected.meta}
-            </p>
-          ) : null}
-        </div>
-        <span className="shrink-0 rounded-full bg-brand-primary px-2.5 py-1 font-mono text-[10px] font-bold tracking-[1px] text-white uppercase">
-          Selected
-        </span>
-      </div>
     </div>
+  );
+}
+
+function VariantRow({
+  variant,
+  active,
+  onSelect,
+  layout,
+}: {
+  variant: HeroVariantOption;
+  active: boolean;
+  onSelect: () => void;
+  layout: 'list' | 'chip';
+}) {
+  const meta = variantMeta(variant);
+
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      aria-pressed={active}
+      className={cn(
+        'flex border text-left transition-[color,background-color,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]',
+        layout === 'list'
+          ? 'w-full items-center justify-between gap-3 rounded-xl px-4 py-3.5'
+          : 'min-h-11 items-center justify-center rounded-xl px-3.5 py-3',
+        active
+          ? 'border-brand-primary bg-brand-primary'
+          : 'border-border-subtle bg-surface-elevated/70 hover:border-brand-primary/40',
+      )}
+    >
+      <span className="min-w-0">
+        <span
+          className={cn(
+            'block font-heading font-bold leading-[1.25] tracking-[-0.2px]',
+            layout === 'list' ? 'text-[15px]' : 'text-center text-[13px]',
+            active ? 'text-white' : 'text-text-primary',
+          )}
+        >
+          {variantTitle(variant)}
+        </span>
+        {layout === 'list' && meta ? (
+          <span
+            className={cn(
+              'mt-1 block font-mono text-[11px] font-medium tracking-[0.2px]',
+              active ? 'text-brand-soft' : 'text-text-tertiary',
+            )}
+          >
+            {meta}
+          </span>
+        ) : null}
+      </span>
+      {layout === 'list' ? (
+        active ? (
+          <Check className="size-4 shrink-0 text-white" aria-hidden />
+        ) : (
+          <ChevronRight className="size-4 shrink-0 text-text-tertiary" aria-hidden />
+        )
+      ) : null}
+    </button>
   );
 }
 

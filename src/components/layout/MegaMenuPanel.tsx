@@ -30,7 +30,7 @@ export function MegaMenuPanel(props: MegaMenuPanelProps) {
     return null;
   }
 
-  return <MegaMenuPanelView key={props.open ? 'open' : 'closed'} {...props} />;
+  return <MegaMenuPanelView {...props} />;
 }
 
 function MegaMenuPanelView({ open, intro, tree, labelledBy }: MegaMenuPanelProps) {
@@ -61,7 +61,7 @@ function MegaMenuPanelView({ open, intro, tree, labelledBy }: MegaMenuPanelProps
     >
       <div className="mega-menu-panel-clip">
         <div className="mega-menu-panel-body">
-          <div className="flex w-full min-h-[22rem]">
+          <div className="flex w-full items-stretch">
             <aside className="mega-intro flex w-[32%] shrink-0 flex-col gap-5 px-8 py-9 lg:px-16">
               {intro?.heading ? (
                 <h2 className="font-heading text-[2rem] leading-tight font-semibold text-text-primary">
@@ -91,20 +91,18 @@ function MegaMenuPanelView({ open, intro, tree, labelledBy }: MegaMenuPanelProps
             </aside>
 
             <div className="mega-levels grid min-w-0 flex-1 grid-cols-3">
-              <MegaLevel nodes={level1} activeIndex={activeL1} onHover={hoverLevel1} delay={0} />
+              <MegaLevel nodes={level1} activeIndex={activeL1} onHover={hoverLevel1} />
               <MegaLevel
                 key={`l2-${activeL1}`}
                 nodes={level2}
                 activeIndex={activeL2}
                 onHover={hoverLevel2}
-                delay={40}
               />
               <MegaLevel
                 key={`l3-${activeL1}-${activeL2}`}
                 nodes={level3}
                 activeIndex={null}
                 onHover={() => undefined}
-                delay={80}
               />
             </div>
           </div>
@@ -118,18 +116,13 @@ function MegaLevel({
   nodes,
   activeIndex,
   onHover,
-  delay,
 }: {
   nodes: MegaNode[];
   activeIndex: number | null;
   onHover: (index: number) => void;
-  delay: number;
 }) {
   return (
-    <div
-      className={cn('mega-level', nodes.length > 0 && 'is-on')}
-      style={{ transitionDelay: nodes.length ? `${delay}ms` : '0ms' }}
-    >
+    <div className={cn('mega-level', nodes.length > 0 && 'is-on')}>
       {nodes.map((node, index) => (
         <MegaRow
           key={`${node.label}-${index}`}

@@ -20,6 +20,15 @@ export const DEFAULT_PDP_HERO = {
   ],
   quickSpecsPerRow: 'auto' as const,
   selectorLabel: 'SELECT MODEL',
+  configSpecsLabel: 'CONFIGURATION',
+  configSpecs: [
+    { label: 'Type', value: 'Centrifugal — Standard' },
+    { label: 'Pump Flow Rate', value: '1,200 LPH' },
+    { label: 'Holding Capacity', value: '2 kg' },
+    { label: 'Moisture Holding', value: '—' },
+    { label: 'Electrical Motor', value: '0.75 kW / 1 HP, 415V, 3 Phase' },
+    { label: 'Dimensions', value: '35 × 34 × 47 in' },
+  ],
   ctas: [
     { label: 'Contact to buy', href: '/contact', appearance: 'primary' as const },
     { label: 'Download specs', href: '/resources', appearance: 'secondary' as const },

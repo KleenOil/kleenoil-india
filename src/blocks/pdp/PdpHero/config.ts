@@ -19,6 +19,33 @@ const quickSpecFields: Field[] = [
   },
 ];
 
+const configSpecFields: Field[] = [
+  {
+    name: 'label',
+    type: 'text',
+    required: true,
+    admin: { description: 'e.g. Type or Pump Flow Rate' },
+  },
+  {
+    name: 'value',
+    type: 'text',
+    required: true,
+    admin: { description: 'e.g. Centrifugal — Standard' },
+  },
+];
+
+const configSpecsField = (description: string): Field => ({
+  name: 'configSpecs',
+  type: 'array',
+  label: 'Configuration specs',
+  labels: { singular: 'Row', plural: 'Rows' },
+  admin: {
+    description,
+    initCollapsed: true,
+  },
+  fields: configSpecFields,
+});
+
 const galleryField: Field = {
   name: 'gallery',
   type: 'upload',
@@ -81,6 +108,7 @@ const heroContentFields: Field[] = [
     maxRows: 8,
     fields: quickSpecFields,
   },
+  configSpecsField('Label/value rows under the model picker. Variants can override these.'),
   linkArrayField({ name: 'ctas', label: 'CTAs', maxRows: 2 }),
 ];
 
@@ -103,11 +131,11 @@ const variantFields: Field[] = [
       defaultValue: 'chips',
       options: [
         { label: 'Chips', value: 'chips' },
+        { label: 'List', value: 'list' },
         { label: 'Dropdown', value: 'dropdown' },
       ],
       admin: {
-        description:
-          'Chips match the PDP design. Dropdown is a compact select for longer model lists.',
+        description: 'Chips = 2-column grid. List = full-width rows. Dropdown = compact select.',
       },
     },
     { sibling: 'enableVariants', truthy: true },
@@ -118,7 +146,18 @@ const variantFields: Field[] = [
       type: 'text',
       label: 'Selector label',
       admin: {
-        description: 'Defaults to SELECT MODEL.',
+        description: 'Defaults to SELECT MODEL for chips, SELECT CONFIGURATION for list.',
+      },
+    },
+    { sibling: 'enableVariants', truthy: true },
+  ),
+  withClientCondition(
+    {
+      name: 'configSpecsLabel',
+      type: 'text',
+      label: 'Configuration table label',
+      admin: {
+        description: 'Defaults to CONFIGURATION.',
       },
     },
     { sibling: 'enableVariants', truthy: true },
@@ -203,6 +242,7 @@ const variantFields: Field[] = [
           },
           fields: quickSpecFields,
         },
+        configSpecsField('Leave empty to keep the Hero tab configuration rows.'),
       ],
     },
     { sibling: 'enableVariants', truthy: true },
