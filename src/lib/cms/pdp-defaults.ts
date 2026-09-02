@@ -20,6 +20,7 @@ export const DEFAULT_PDP_HERO = {
   ],
   quickSpecsPerRow: 'auto' as const,
   selectorLabel: 'SELECT MODEL',
+  variantsPerRow: 'two' as const,
   configSpecsLabel: 'CONFIGURATION',
   configSpecs: [
     { label: 'Type', value: 'Centrifugal — Standard' },

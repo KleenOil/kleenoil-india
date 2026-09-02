@@ -1389,9 +1389,13 @@ export interface Product {
              */
             enableVariants?: boolean | null;
             /**
-             * Chips = 2-column grid. List = full-width rows. Dropdown = compact select.
+             * Chips = grid. List = full-width rows. Dropdown = compact select.
              */
             selectorStyle?: ('chips' | 'list' | 'dropdown') | null;
+            /**
+             * How many model options sit in each row. Used for chips and list. Defaults to 2.
+             */
+            variantsPerRow?: ('one' | 'two' | 'three' | 'four') | null;
             /**
              * Defaults to SELECT MODEL for chips, SELECT CONFIGURATION for list.
              */
@@ -1747,9 +1751,13 @@ export interface ProductTemplate {
              */
             enableVariants?: boolean | null;
             /**
-             * Chips = 2-column grid. List = full-width rows. Dropdown = compact select.
+             * Chips = grid. List = full-width rows. Dropdown = compact select.
              */
             selectorStyle?: ('chips' | 'list' | 'dropdown') | null;
+            /**
+             * How many model options sit in each row. Used for chips and list. Defaults to 2.
+             */
+            variantsPerRow?: ('one' | 'two' | 'three' | 'four') | null;
             /**
              * Defaults to SELECT MODEL for chips, SELECT CONFIGURATION for list.
              */
@@ -3045,6 +3053,7 @@ export interface ProductTemplatesSelect<T extends boolean = true> {
                   };
               enableVariants?: T;
               selectorStyle?: T;
+              variantsPerRow?: T;
               selectorLabel?: T;
               configSpecsLabel?: T;
               variants?:
@@ -3294,6 +3303,7 @@ export interface ProductsSelect<T extends boolean = true> {
                   };
               enableVariants?: T;
               selectorStyle?: T;
+              variantsPerRow?: T;
               selectorLabel?: T;
               configSpecsLabel?: T;
               variants?:

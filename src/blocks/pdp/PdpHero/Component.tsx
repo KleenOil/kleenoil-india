@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 import { VariantSelector, type HeroVariantOption } from './VariantSelector';
 
 type QuickSpecsPerRow = 'auto' | 'one' | 'two' | 'three' | 'four';
+type VariantsPerRow = 'one' | 'two' | 'three' | 'four';
 
 type SpecItem = {
   value?: string | null;
@@ -52,6 +53,7 @@ export type PdpHeroBlockData = {
   ctas?: CtaItem[] | null;
   enableVariants?: boolean | null;
   selectorStyle?: 'chips' | 'list' | 'dropdown' | null;
+  variantsPerRow?: VariantsPerRow | null;
   selectorLabel?: string | null;
   configSpecsLabel?: string | null;
   variants?: PdpHeroVariant[] | null;
@@ -79,6 +81,19 @@ function selectorStyle(style: PdpHeroBlockData['selectorStyle']): 'chips' | 'lis
   }
 
   return 'chips';
+}
+
+function variantsPerRowCount(value?: VariantsPerRow | null): 1 | 2 | 3 | 4 {
+  if (value === 'one') {
+    return 1;
+  }
+  if (value === 'three') {
+    return 3;
+  }
+  if (value === 'four') {
+    return 4;
+  }
+  return 2;
 }
 
 function selectorLabel(style: 'chips' | 'list' | 'dropdown', label?: string | null): string {
@@ -233,6 +248,7 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
             <VariantSelector
               label={selectorLabel(style, block?.selectorLabel)}
               style={style}
+              perRow={variantsPerRowCount(block?.variantsPerRow)}
               variants={variants}
               selectedIndex={Math.min(variantIndex, variants.length - 1)}
               onSelect={selectVariant}

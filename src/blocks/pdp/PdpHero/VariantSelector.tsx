@@ -12,6 +12,7 @@ export type HeroVariantOption = {
 type VariantSelectorProps = {
   label: string;
   style: 'chips' | 'list' | 'dropdown';
+  perRow?: 1 | 2 | 3 | 4;
   variants: HeroVariantOption[];
   selectedIndex: number;
   onSelect: (index: number) => void;
@@ -20,6 +21,7 @@ type VariantSelectorProps = {
 export function VariantSelector({
   label,
   style,
+  perRow = 2,
   variants,
   selectedIndex,
   onSelect,
@@ -38,27 +40,18 @@ export function VariantSelector({
 
       {style === 'dropdown' ? (
         <DropdownList variants={variants} selectedIndex={selectedIndex} onSelect={onSelect} />
-      ) : style === 'list' ? (
-        <div className="flex flex-col gap-2">
-          {variants.map((variant, index) => (
-            <VariantRow
-              key={`${variant.name}-${index}`}
-              variant={variant}
-              active={index === selectedIndex}
-              onSelect={() => onSelect(index)}
-              layout="list"
-            />
-          ))}
-        </div>
       ) : (
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <div
+          className="grid gap-2"
+          style={{ gridTemplateColumns: `repeat(${perRow}, minmax(0, 1fr))` }}
+        >
           {variants.map((variant, index) => (
             <VariantRow
               key={`${variant.name}-${index}`}
               variant={variant}
               active={index === selectedIndex}
               onSelect={() => onSelect(index)}
-              layout="chip"
+              layout={style === 'list' ? 'list' : 'chip'}
             />
           ))}
         </div>

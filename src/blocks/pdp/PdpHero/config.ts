@@ -135,7 +135,26 @@ const variantFields: Field[] = [
         { label: 'Dropdown', value: 'dropdown' },
       ],
       admin: {
-        description: 'Chips = 2-column grid. List = full-width rows. Dropdown = compact select.',
+        description: 'Chips = grid. List = full-width rows. Dropdown = compact select.',
+      },
+    },
+    { sibling: 'enableVariants', truthy: true },
+  ),
+  withClientCondition(
+    {
+      name: 'variantsPerRow',
+      type: 'select',
+      label: 'Options per row',
+      defaultValue: 'two',
+      options: [
+        { label: '1', value: 'one' },
+        { label: '2', value: 'two' },
+        { label: '3', value: 'three' },
+        { label: '4', value: 'four' },
+      ],
+      admin: {
+        description:
+          'How many model options sit in each row. Used for chips and list. Defaults to 2.',
       },
     },
     { sibling: 'enableVariants', truthy: true },
