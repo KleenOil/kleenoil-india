@@ -1,6 +1,6 @@
-import { ArrowUpRight } from 'lucide-react';
+import Image from 'next/image';
 
-import { MaybeLink, hasHref } from '@/components/ui/maybe-link';
+import { MaybeLink } from '@/components/ui/maybe-link';
 import { cn } from '@/lib/utils';
 
 export type ServiceCardData = {
@@ -8,6 +8,8 @@ export type ServiceCardData = {
   title: string;
   description: string;
   href?: string | null;
+  imageUrl?: string | null;
+  imageAlt?: string;
 };
 
 type ServiceCardProps = {
@@ -16,33 +18,49 @@ type ServiceCardProps = {
 };
 
 export function ServiceCard({ service, className }: ServiceCardProps) {
-  const linked = hasHref(service.href);
-
   return (
     <MaybeLink
       href={service.href}
       data-reveal-item
       className={cn(
-        'group surface-card flex flex-col gap-5 rounded-2xl border-2 border-border-subtle bg-surface-elevated/70',
+        'group surface-card relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded-2xl border-2 border-border-subtle bg-surface-elevated/40 p-8 sm:min-h-[520px] sm:p-9',
         className,
       )}
     >
-      <p className="font-mono text-[11px] font-medium tracking-[1.4px] text-brand-primary uppercase">
-        {service.tag}
-      </p>
-      <h3 className="font-heading text-2xl font-bold leading-tight tracking-tight text-text-primary">
-        {service.title}
-      </h3>
-      <p className="flex-1 text-sm leading-relaxed text-text-secondary">{service.description}</p>
-      {linked ? (
-        <div className="flex items-center justify-between border-t border-border-subtle pt-5">
-          <span className="font-heading text-sm font-bold text-brand-primary">Learn more</span>
-          <ArrowUpRight
-            className="size-4 text-brand-primary transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:-translate-y-1"
-            aria-hidden
+      {service.imageUrl ? (
+        <div className="absolute inset-0">
+          <Image
+            src={service.imageUrl}
+            alt={service.imageAlt || service.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 33vw"
           />
         </div>
-      ) : null}
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-soft via-surface to-brand-dim" />
+      )}
+
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent transition-opacity duration-500 ease-out group-hover:opacity-0"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-deep/70 via-brand-deep/20 to-transparent opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+      />
+
+      <div className="relative flex flex-col gap-2.5">
+        <p className="font-mono text-[11px] font-medium tracking-[1.4px] text-brand-primary uppercase transition-colors duration-500 ease-out group-hover:text-white">
+          {service.tag}
+        </p>
+        <h3 className="font-heading text-3xl font-bold leading-tight tracking-tight text-text-primary transition-colors duration-500 ease-out group-hover:text-white">
+          {service.title}
+        </h3>
+        <p className="max-w-md text-sm leading-relaxed text-text-secondary transition-colors duration-500 ease-out group-hover:text-white/85">
+          {service.description}
+        </p>
+      </div>
     </MaybeLink>
   );
 }

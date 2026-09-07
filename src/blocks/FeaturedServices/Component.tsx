@@ -1,12 +1,14 @@
 import { ServiceCard, type ServiceCardData } from '@/components/cards/ServiceCard';
 import { SectionHeader } from '@/components/sections/SectionHeader';
 import { DEFAULT_FEATURED_SERVICES } from '@/lib/cms/defaults';
-import { resolveLink } from '@/lib/cms/links';
+import { getMediaAlt, getMediaUrl, resolveLink } from '@/lib/cms/links';
+import type { Media } from '@/payload-types';
 
 type ServiceCmsCard = {
   tag?: string | null;
   title?: string | null;
   description?: string | null;
+  image?: number | Media | null;
   href?: string | null;
   id?: string | null;
 };
@@ -43,6 +45,8 @@ function mapCard(card: ServiceCmsCard, index: number): ServiceCardData | null {
     title: card.title.trim(),
     description: card.description?.trim() || fallback?.description || '',
     href: card.href?.trim() || '',
+    imageUrl: getMediaUrl(card.image) || fallback?.imageUrl || null,
+    imageAlt: getMediaAlt(card.image, card.title),
   };
 }
 

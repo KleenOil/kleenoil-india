@@ -18,7 +18,7 @@ export const FeaturedServices: Block = {
       maxRows: 6,
       admin: {
         initCollapsed: true,
-        description: 'Tag, title, description, and link for each card.',
+        description: 'Tag, title, description, image, and link for each card.',
       },
       fields: [
         {
@@ -35,6 +35,11 @@ export const FeaturedServices: Block = {
         {
           name: 'description',
           type: 'textarea',
+        },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
         },
         {
           name: 'href',

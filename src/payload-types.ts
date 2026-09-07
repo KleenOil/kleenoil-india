@@ -846,7 +846,7 @@ export interface Page {
               appearance?: ('primary' | 'secondary' | 'ghost') | null;
             };
             /**
-             * Tag, title, description, and link for each card.
+             * Tag, title, description, image, and link for each card.
              */
             cards?:
               | {
@@ -856,6 +856,7 @@ export interface Page {
                   tag?: string | null;
                   title: string;
                   description?: string | null;
+                  image?: (number | null) | Media;
                   /**
                    * Optional. Leave empty to keep the card as text only (not clickable).
                    */
@@ -2716,6 +2717,7 @@ export interface PagesSelect<T extends boolean = true> {
                     tag?: T;
                     title?: T;
                     description?: T;
+                    image?: T;
                     href?: T;
                     id?: T;
                   };

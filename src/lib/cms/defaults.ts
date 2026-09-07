@@ -1015,6 +1015,8 @@ export const DEFAULT_FEATURED_SERVICES = {
       description:
         'On-site assessment of oil condition, contamination sources, and filtration architecture across critical assets.',
       href: '/services',
+      imageUrl:
+        'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1080&q=80',
     },
     {
       tag: '02 / DESIGN',
@@ -1022,6 +1024,8 @@ export const DEFAULT_FEATURED_SERVICES = {
       description:
         'Custom bypass, vacuum, and coalescing configurations engineered for your fluid chemistry and duty cycle.',
       href: '/services',
+      imageUrl:
+        'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1080&q=80',
     },
     {
       tag: '03 / DEPLOY',
@@ -1029,6 +1033,8 @@ export const DEFAULT_FEATURED_SERVICES = {
       description:
         'Factory-trained teams deploy, commission, and validate filtration systems with ISO cleanliness targets.',
       href: '/services',
+      imageUrl:
+        'https://images.unsplash.com/photo-1531708366981-aa022a4e34ef?auto=format&fit=crop&w=1080&q=80',
     },
     {
       tag: '04 / SUPPORT',
@@ -1036,6 +1042,8 @@ export const DEFAULT_FEATURED_SERVICES = {
       description:
         'Filter change programmes, oil analysis reviews, and remote condition monitoring to sustain equipment life.',
       href: '/services',
+      imageUrl:
+        'https://images.unsplash.com/photo-1569371030340-816be1bc1be9?auto=format&fit=crop&w=1080&q=80',
     },
     {
       tag: '05 / TRAIN',
@@ -1043,6 +1051,8 @@ export const DEFAULT_FEATURED_SERVICES = {
       description:
         'Hands-on programmes for maintenance teams on contamination control, sampling, and filtration best practices.',
       href: '/services',
+      imageUrl:
+        'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1080&q=80',
     },
     {
       tag: '06 / MONITOR',
@@ -1050,6 +1060,8 @@ export const DEFAULT_FEATURED_SERVICES = {
       description:
         'IoT-enabled dashboards for real-time fluid health, filter life tracking, and predictive maintenance alerts.',
       href: '/services',
+      imageUrl:
+        'https://images.unsplash.com/photo-1738162837389-3b02d6dd507b?auto=format&fit=crop&w=1080&q=80',
     },
   ],
 };
