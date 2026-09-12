@@ -1,7 +1,6 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { INDIA_MAP_PATH } from '@/components/maps/indiaMapPath';
 
 export type MapPinKind = 'hq' | 'hub' | 'partner';
 
@@ -20,28 +19,33 @@ type IndiaNetworkMapProps = {
   className?: string;
 };
 
-/** Pin positions in viewBox 0 0 1000 1000 (SimpleMaps-style India outline). */
+/** Wikipedia India-map-en.svg canvas. */
+export const INDIA_MAP_VIEWBOX = { width: 1519, height: 1773 } as const;
+
+const MAP_SRC = '/maps/india-states.svg';
+
+/** Pin positions in the 1519×1773 India-map-en.svg viewBox. */
 export const CITY_MAP_COORDS: Record<string, { x: number; y: number }> = {
-  gurgaon: { x: 334, y: 273 },
-  delhi: { x: 339, y: 268 },
-  'new delhi': { x: 339, y: 268 },
-  ncr: { x: 334, y: 273 },
-  mumbai: { x: 213, y: 569 },
-  pune: { x: 241, y: 586 },
-  bangalore: { x: 350, y: 761 },
-  bengaluru: { x: 350, y: 761 },
-  chennai: { x: 428, y: 758 },
-  kolkata: { x: 663, y: 459 },
-  hyderabad: { x: 376, y: 622 },
-  ahmedabad: { x: 204, y: 445 },
-  jaipur: { x: 298, y: 322 },
-  chandigarh: { x: 326, y: 201 },
-  lucknow: { x: 448, y: 324 },
-  indore: { x: 300, y: 454 },
-  coimbatore: { x: 332, y: 823 },
-  kochi: { x: 312, y: 857 },
-  vizag: { x: 514, y: 613 },
-  visakhapatnam: { x: 514, y: 613 },
+  gurgaon: { x: 490, y: 560 },
+  delhi: { x: 508, y: 548 },
+  'new delhi': { x: 508, y: 548 },
+  ncr: { x: 490, y: 560 },
+  mumbai: { x: 272, y: 1118 },
+  pune: { x: 345, y: 1158 },
+  bangalore: { x: 422, y: 1408 },
+  bengaluru: { x: 422, y: 1408 },
+  chennai: { x: 578, y: 1488 },
+  kolkata: { x: 1042, y: 898 },
+  hyderabad: { x: 558, y: 1168 },
+  ahmedabad: { x: 278, y: 868 },
+  jaipur: { x: 378, y: 598 },
+  chandigarh: { x: 493, y: 431 },
+  lucknow: { x: 678, y: 678 },
+  indore: { x: 398, y: 898 },
+  coimbatore: { x: 398, y: 1528 },
+  kochi: { x: 328, y: 1612 },
+  vizag: { x: 748, y: 1188 },
+  visakhapatnam: { x: 748, y: 1188 },
 };
 
 export function resolveCityCoords(
@@ -50,14 +54,13 @@ export function resolveCityCoords(
   mapY?: number | null,
 ): { x: number; y: number } {
   if (typeof mapX === 'number' && typeof mapY === 'number') {
-    // CMS 0–100 values → 1000×1000 viewBox; absolute values pass through
-    const scaledX = mapX <= 100 ? (mapX / 100) * 1000 : mapX;
-    const scaledY = mapY <= 100 ? (mapY / 100) * 1000 : mapY;
+    const scaledX = mapX <= 100 ? (mapX / 100) * INDIA_MAP_VIEWBOX.width : mapX;
+    const scaledY = mapY <= 100 ? (mapY / 100) * INDIA_MAP_VIEWBOX.height : mapY;
     return { x: scaledX, y: scaledY };
   }
 
   const key = city.trim().toLowerCase();
-  return CITY_MAP_COORDS[key] ?? { x: 401, y: 473 };
+  return CITY_MAP_COORDS[key] ?? { x: 560, y: 920 };
 }
 
 export function IndiaNetworkMap({ pins, activeCity, onSelect, className }: IndiaNetworkMapProps) {
@@ -71,25 +74,27 @@ export function IndiaNetworkMap({ pins, activeCity, onSelect, className }: India
       )}
     >
       <svg
-        viewBox="0 0 1000 1000"
+        viewBox={`0 0 ${INDIA_MAP_VIEWBOX.width} ${INDIA_MAP_VIEWBOX.height}`}
+        preserveAspectRatio="xMidYMid meet"
         className="h-full w-full flex-1 select-none"
         role="img"
         aria-label="Kleenoil distribution network across India"
         onClick={(event) => {
-          // Clicks on empty map / land do nothing — only pins select.
           event.preventDefault();
         }}
         style={{ touchAction: 'none' }}
       >
-        <rect width="1000" height="1000" fill="#D8E8DE" pointerEvents="none" />
+        <rect
+          width={INDIA_MAP_VIEWBOX.width}
+          height={INDIA_MAP_VIEWBOX.height}
+          fill="#D8E8DE"
+          pointerEvents="none"
+        />
 
-        <path
-          d={INDIA_MAP_PATH}
-          fill="#6f9c76"
-          stroke="#ffffff"
-          strokeWidth="0.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+        <image
+          href={MAP_SRC}
+          width={INDIA_MAP_VIEWBOX.width}
+          height={INDIA_MAP_VIEWBOX.height}
           pointerEvents="none"
         />
 
@@ -104,9 +109,9 @@ export function IndiaNetworkMap({ pins, activeCity, onSelect, className }: India
                   x2={pin.x}
                   y2={pin.y}
                   stroke="#006633"
-                  strokeOpacity="0.2"
-                  strokeWidth="2.5"
-                  strokeDasharray="8 6"
+                  strokeOpacity="0.22"
+                  strokeWidth="3.5"
+                  strokeDasharray="12 9"
                   pointerEvents="none"
                 />
               ))
@@ -115,7 +120,7 @@ export function IndiaNetworkMap({ pins, activeCity, onSelect, className }: India
         {pins.map((pin) => {
           const isActive = activeCity?.toLowerCase() === pin.city.toLowerCase();
           const isHq = pin.kind === 'hq';
-          const baseRadius = isHq ? 14 : pin.kind === 'partner' ? 10 : 12;
+          const baseRadius = isHq ? 22 : pin.kind === 'partner' ? 16 : 19;
 
           return (
             <g
@@ -137,15 +142,14 @@ export function IndiaNetworkMap({ pins, activeCity, onSelect, className }: India
               aria-label={`Select ${pin.city}`}
               aria-pressed={isActive}
             >
-              {/* Larger invisible hit target — no other map chrome is clickable */}
-              <circle cx={pin.x} cy={pin.y} r="36" fill="transparent" />
+              <circle cx={pin.x} cy={pin.y} r="52" fill="transparent" />
 
               {isActive ? (
                 <>
-                  <circle cx={pin.x} cy={pin.y} r="40" fill="none" stroke="#006633" strokeWidth="3">
+                  <circle cx={pin.x} cy={pin.y} r="62" fill="none" stroke="#006633" strokeWidth="4">
                     <animate
                       attributeName="r"
-                      values="18;48;18"
+                      values="28;72;28"
                       dur="2.2s"
                       repeatCount="indefinite"
                     />
@@ -156,10 +160,10 @@ export function IndiaNetworkMap({ pins, activeCity, onSelect, className }: India
                       repeatCount="indefinite"
                     />
                   </circle>
-                  <circle cx={pin.x} cy={pin.y} r="28" fill="none" stroke="#006633" strokeWidth="3">
+                  <circle cx={pin.x} cy={pin.y} r="44" fill="none" stroke="#006633" strokeWidth="4">
                     <animate
                       attributeName="r"
-                      values="14;36;14"
+                      values="22;56;22"
                       dur="2.2s"
                       begin="0.35s"
                       repeatCount="indefinite"
@@ -175,11 +179,11 @@ export function IndiaNetworkMap({ pins, activeCity, onSelect, className }: India
                   <circle
                     cx={pin.x}
                     cy={pin.y}
-                    r="20"
+                    r="32"
                     fill="none"
                     stroke="#006633"
                     strokeOpacity="0.35"
-                    strokeWidth="2.5"
+                    strokeWidth="3.5"
                   />
                 </>
               ) : null}
@@ -187,19 +191,19 @@ export function IndiaNetworkMap({ pins, activeCity, onSelect, className }: India
               <circle
                 cx={pin.x}
                 cy={pin.y}
-                r={isActive ? baseRadius + 2 : baseRadius}
+                r={isActive ? baseRadius + 3 : baseRadius}
                 fill={pin.kind === 'partner' ? '#80B690' : '#006633'}
                 stroke="#EBF2EE"
-                strokeWidth="3.5"
+                strokeWidth="5"
               />
 
               {isActive ? (
                 <text
                   x={pin.x}
-                  y={pin.y - 42}
+                  y={pin.y - 64}
                   textAnchor="middle"
                   fill="#003319"
-                  fontSize="32"
+                  fontSize="48"
                   fontWeight="700"
                   fontFamily="var(--font-family-heading), sans-serif"
                   pointerEvents="none"
