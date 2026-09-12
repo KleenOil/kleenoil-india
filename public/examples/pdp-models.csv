@@ -1,0 +1,4 @@
+MODEL,FLOW,RESERVOIR,POWER
+KO-BFS 30,30 L/min,"up to 2,000 L",1.5 kW
+KO-BFS 60,60 L/min,"up to 5,000 L",2.2 kW
+KO-BFS 100,100 L/min,"up to 10,000 L",3.7 kW

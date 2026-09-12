@@ -25,7 +25,7 @@ export function withDataSource(fields: Field[]): Field[] {
   return [
     dataSourceField,
     ...fields.map((field) => {
-      if (!('name' in field) || field.name === 'dataSource') {
+      if (!('name' in field) || field.name === 'dataSource' || field.type === 'ui') {
         return field;
       }
 

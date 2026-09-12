@@ -47,7 +47,12 @@ export function PdpModelsBlock({ block }: { block?: PdpModelsBlockData | null })
         </div>
 
         <div className="surface-card overflow-hidden rounded-2xl border border-border-subtle bg-surface-elevated/70">
-          <div className="hidden grid-cols-4 gap-4 bg-brand-dim px-7 py-4 md:grid">
+          <div
+            className="hidden gap-4 bg-brand-dim px-7 py-4 md:grid"
+            style={{
+              gridTemplateColumns: `repeat(${Math.max(columns.length, 1)}, minmax(0, 1fr))`,
+            }}
+          >
             {columns.map((column) => (
               <p
                 key={column.label}
@@ -61,7 +66,10 @@ export function PdpModelsBlock({ block }: { block?: PdpModelsBlockData | null })
             {models.map((model) => (
               <div
                 key={model.name}
-                className="grid gap-2 px-5 py-5 md:grid-cols-4 md:gap-4 md:px-7"
+                className="grid gap-2 px-5 py-5 md:gap-4 md:px-7"
+                style={{
+                  gridTemplateColumns: `repeat(${Math.max(columns.length, 1)}, minmax(0, 1fr))`,
+                }}
               >
                 <p className="font-heading text-base font-bold text-text-primary">{model.name}</p>
                 {(model.values ?? []).map((cell, index) => (

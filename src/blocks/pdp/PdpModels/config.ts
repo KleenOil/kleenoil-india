@@ -3,7 +3,18 @@ import type { Block, Field } from 'payload';
 import { eyebrowField, headingField, descriptionField } from '../../shared';
 import { withDataSource } from '../shared';
 
+const csvImportField: Field = {
+  name: 'csvImport',
+  type: 'ui',
+  admin: {
+    components: {
+      Field: '/components/admin/PdpModelsCsvImport#PdpModelsCsvImport',
+    },
+  },
+};
+
 const fields: Field[] = [
+  csvImportField,
   eyebrowField,
   headingField,
   descriptionField,
@@ -11,14 +22,21 @@ const fields: Field[] = [
     name: 'columns',
     type: 'array',
     label: 'Table Columns',
-    maxRows: 8,
+    maxRows: 12,
+    admin: {
+      description:
+        'First column is the model name (MODEL). Extra columns are FLOW, RESERVOIR, POWER, and so on.',
+    },
     fields: [{ name: 'label', type: 'text', required: true }],
   },
   {
     name: 'models',
     type: 'array',
     label: 'Models',
-    maxRows: 20,
+    maxRows: 80,
+    admin: {
+      description: 'Prefer Import models from CSV. Cell Values must match the columns after MODEL.',
+    },
     fields: [
       { name: 'name', type: 'text', required: true },
       {

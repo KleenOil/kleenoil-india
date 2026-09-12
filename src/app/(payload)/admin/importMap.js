@@ -1,6 +1,7 @@
 import { MediaAltField as MediaAltField_ade275382dc4fcc8151b9d64aa67b7ea } from '../../../components/admin/MediaAltField'
 import { SlugLiveLink as SlugLiveLink_307150586f6bfa87df0297c95fe8a6c2 } from '../../../components/admin/SlugLiveLink'
 import { ClientConditionField as ClientConditionField_caa2e71b1c3436c129898b025fe9ed90 } from '../../../components/admin/ClientConditionField'
+import { PdpModelsCsvImport as PdpModelsCsvImport_7b4e2c91a0d84f1ea6c2b9f0e1d3a8c4 } from '../../../components/admin/PdpModelsCsvImport'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { LexicalDiffComponent as LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -34,6 +35,7 @@ export const importMap = {
   "/components/admin/MediaAltField#MediaAltField": MediaAltField_ade275382dc4fcc8151b9d64aa67b7ea,
   "/components/admin/SlugLiveLink#SlugLiveLink": SlugLiveLink_307150586f6bfa87df0297c95fe8a6c2,
   "/components/admin/ClientConditionField#ClientConditionField": ClientConditionField_caa2e71b1c3436c129898b025fe9ed90,
+  "/components/admin/PdpModelsCsvImport#PdpModelsCsvImport": PdpModelsCsvImport_7b4e2c91a0d84f1ea6c2b9f0e1d3a8c4,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#LexicalDiffComponent": LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e,
