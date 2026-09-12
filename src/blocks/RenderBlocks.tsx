@@ -52,6 +52,34 @@ import { ManifestoBlock, type ManifestoBlockData } from '@/blocks/Manifesto/Comp
 import { ProcessStoryBlock, type ProcessStoryBlockData } from '@/blocks/ProcessStory/Component';
 import { RichContentBlock, type RichContentBlockData } from '@/blocks/RichContent/Component';
 import { StatisticsBlock, type StatisticsBlockData } from '@/blocks/Statistics/Component';
+import {
+  SustainabilityApplicationsBlock,
+  type SustainabilityApplicationsBlockData,
+} from '@/blocks/SustainabilityApplications/Component';
+import {
+  SustainabilityCircularBlock,
+  type SustainabilityCircularBlockData,
+} from '@/blocks/SustainabilityCircular/Component';
+import {
+  SustainabilityCtaBlock,
+  type SustainabilityCtaBlockData,
+} from '@/blocks/SustainabilityCta/Component';
+import {
+  SustainabilityDropBlock,
+  type SustainabilityDropBlockData,
+} from '@/blocks/SustainabilityDrop/Component';
+import {
+  SustainabilityHeroBlock,
+  type SustainabilityHeroBlockData,
+} from '@/blocks/SustainabilityHero/Component';
+import {
+  SustainabilityImpactBlock,
+  type SustainabilityImpactBlockData,
+} from '@/blocks/SustainabilityImpact/Component';
+import {
+  SustainabilityNumbersBlock,
+  type SustainabilityNumbersBlockData,
+} from '@/blocks/SustainabilityNumbers/Component';
 import { TeamBlock, type TeamBlockData } from '@/blocks/Team/Component';
 import { TestimonialsBlock, type TestimonialsBlockData } from '@/blocks/Testimonials/Component';
 import {
@@ -324,6 +352,55 @@ export function RenderBlocks({
               key,
               <RichContentBlock block={block as RichContentBlockData} />,
               motion,
+            );
+          case 'sustainability-hero':
+            return wrapReveal(
+              key,
+              <SustainabilityHeroBlock block={block as SustainabilityHeroBlockData} />,
+              motion,
+              { variant: 'hero' },
+            );
+          case 'sustainability-impact':
+            return wrapReveal(
+              key,
+              <SustainabilityImpactBlock block={block as SustainabilityImpactBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'sustainability-circular':
+            return wrapReveal(
+              key,
+              <SustainabilityCircularBlock block={block as SustainabilityCircularBlockData} />,
+              motion,
+            );
+          case 'sustainability-drop':
+            return wrapReveal(
+              key,
+              <SustainabilityDropBlock block={block as SustainabilityDropBlockData} />,
+              motion,
+            );
+          case 'sustainability-numbers':
+            return wrapReveal(
+              key,
+              <SustainabilityNumbersBlock block={block as SustainabilityNumbersBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'sustainability-applications':
+            return wrapReveal(
+              key,
+              <SustainabilityApplicationsBlock
+                block={block as SustainabilityApplicationsBlockData}
+              />,
+              motion,
+              { stagger: true },
+            );
+          case 'sustainability-cta':
+            return wrapReveal(
+              key,
+              <SustainabilityCtaBlock block={block as SustainabilityCtaBlockData} />,
+              motion,
+              { variant: 'cta' },
             );
           default:
             return (

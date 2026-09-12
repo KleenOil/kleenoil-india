@@ -13,7 +13,7 @@ export function Eyebrow({ children, className }: EyebrowProps) {
         className,
       )}
     >
-      <span className="size-2 rounded-full bg-brand-primary" aria-hidden />
+      <span className="roi-svg-pulse size-2 rounded-full bg-brand-primary" aria-hidden />
       {children}
     </span>
   );

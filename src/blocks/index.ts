@@ -27,6 +27,13 @@ import { Manifesto } from './Manifesto/config';
 import { ProcessStory } from './ProcessStory/config';
 import { RichContent } from './RichContent/config';
 import { Statistics } from './Statistics/config';
+import { SustainabilityApplications } from './SustainabilityApplications/config';
+import { SustainabilityCircular } from './SustainabilityCircular/config';
+import { SustainabilityCta } from './SustainabilityCta/config';
+import { SustainabilityDrop } from './SustainabilityDrop/config';
+import { SustainabilityHero } from './SustainabilityHero/config';
+import { SustainabilityImpact } from './SustainabilityImpact/config';
+import { SustainabilityNumbers } from './SustainabilityNumbers/config';
 import { Team } from './Team/config';
 import { Testimonials } from './Testimonials/config';
 import { TrustIndicators } from './TrustIndicators/config';
@@ -65,6 +72,13 @@ export const pageBlocks: Block[] = [
   Testimonials,
   ContactPreview,
   RichContent,
+  SustainabilityHero,
+  SustainabilityImpact,
+  SustainabilityCircular,
+  SustainabilityDrop,
+  SustainabilityNumbers,
+  SustainabilityApplications,
+  SustainabilityCta,
 ];
 
 export type PageBlockSlug = (typeof pageBlocks)[number]['slug'];

@@ -1,37 +1,66 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { CtaButton } from '@/components/ui/cta-button';
-import { LEAD_INDUSTRIES, LEAD_TIMINGS, type LeadIndustry, type LeadTiming } from '@/lib/cms/leads';
+import {
+  contactOptionValue,
+  contactQuestionName,
+  isCoreContactField,
+  resolveContactFormQuestions,
+  type ContactFormQuestion,
+} from '@/lib/cms/contact-form';
 import { cn } from '@/lib/utils';
 
 const fieldClass =
-  'rounded-xl border border-border-subtle bg-background/80 px-4 py-3 text-sm text-text-primary outline-none ring-brand-primary/30 focus:ring-2';
+  'w-full rounded-xl border border-border-subtle bg-background/80 px-4 py-3 text-sm text-text-primary outline-none ring-brand-primary/30 focus:ring-2';
 
 const labelClass = 'font-mono text-[11px] font-bold tracking-[1.2px] text-text-tertiary uppercase';
+
+const AUTOCOMPLETE: Record<string, string> = {
+  name: 'name',
+  email: 'email',
+  company: 'organization',
+};
 
 type ConsultationFormProps = {
   title?: string;
   lead?: string;
   submitLabel?: string;
   finePrint?: string;
+  questions?: ContactFormQuestion[] | null;
   className?: string;
 };
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
+
+function uniqueQuestionNames(questions: ContactFormQuestion[]): string[] {
+  const used = new Set<string>(['website']);
+  return questions.map((question, index) => {
+    const base = contactQuestionName(question, index);
+    let name = base;
+    let suffix = 2;
+    while (used.has(name)) {
+      name = `${base}-${suffix}`;
+      suffix += 1;
+    }
+    used.add(name);
+    return name;
+  });
+}
 
 export function ConsultationForm({
   title = 'Request a 30-minute slot',
   lead = 'An engineer replies within one business day with a time that fits your shift.',
   submitLabel = 'Book this consultation',
   finePrint = 'No brochure deck. You get a written next step — even if Kleenoil is not the fit.',
+  questions,
   className,
 }: ConsultationFormProps) {
-  const [industry, setIndustry] = useState<LeadIndustry>('automotive');
-  const [timing, setTiming] = useState<LeadTiming>('this-week');
   const [status, setStatus] = useState<FormStatus>('idle');
   const [error, setError] = useState<string | null>(null);
+  const resolvedQuestions = useMemo(() => resolveContactFormQuestions(questions), [questions]);
+  const inputNames = useMemo(() => uniqueQuestionNames(resolvedQuestions), [resolvedQuestions]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -45,18 +74,36 @@ export function ConsultationForm({
     setStatus('submitting');
     setError(null);
 
+    const extras: string[] = [];
+    const payload: Record<string, string> = {};
+
+    resolvedQuestions.forEach((question, index) => {
+      const inputName = inputNames[index];
+      const value = String(data.get(inputName) ?? '').trim();
+      if (isCoreContactField(inputName)) {
+        payload[inputName] = value;
+        return;
+      }
+
+      if (value) {
+        extras.push(`${question.label}: ${value}`);
+      }
+    });
+
+    const message = [payload.message, extras.join('\n')].filter(Boolean).join('\n\n');
+
     try {
       const response = await fetch('/api/forms/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: data.get('name'),
-          email: data.get('email'),
-          company: data.get('company'),
-          plant: data.get('plant'),
-          industry,
-          timing,
-          message: data.get('message'),
+          name: payload.name,
+          email: payload.email,
+          company: payload.company,
+          plant: payload.plant,
+          industry: payload.industry,
+          timing: payload.timing,
+          message,
           website: data.get('website'),
         }),
       });
@@ -71,8 +118,6 @@ export function ConsultationForm({
 
       setStatus('success');
       form.reset();
-      setIndustry('automotive');
-      setTiming('this-week');
     } catch {
       setStatus('error');
       setError('Could not send your request. Please try again.');
@@ -112,81 +157,69 @@ export function ConsultationForm({
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <label className="flex flex-col gap-2">
-          <span className={labelClass}>Full name</span>
-          <input required name="name" type="text" autoComplete="name" className={fieldClass} />
-        </label>
-        <label className="flex flex-col gap-2">
-          <span className={labelClass}>Work email</span>
-          <input required name="email" type="email" autoComplete="email" className={fieldClass} />
-        </label>
-      </div>
+        {resolvedQuestions.map((question, index) => {
+          const inputName = inputNames[index];
+          const required = Boolean(question.required);
+          const widthClass = question.width === 'half' ? 'sm:col-span-1' : 'sm:col-span-2';
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <label className="flex flex-col gap-2">
-          <span className={labelClass}>Company</span>
-          <input name="company" type="text" autoComplete="organization" className={fieldClass} />
-        </label>
-        <label className="flex flex-col gap-2">
-          <span className={labelClass}>Plant / site</span>
-          <input name="plant" type="text" className={fieldClass} />
-        </label>
-      </div>
-
-      <fieldset className="flex flex-col gap-2">
-        <legend className={labelClass}>Industry</legend>
-        <div className="flex flex-wrap gap-2">
-          {LEAD_INDUSTRIES.map((item) => {
-            const selected = industry === item.value;
+          if (question.field === 'dropdown') {
             return (
-              <button
-                key={item.value}
-                type="button"
-                onClick={() => setIndustry(item.value)}
-                aria-pressed={selected}
-                className={cn(
-                  'rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors',
-                  selected
-                    ? 'border-brand-primary bg-brand-primary text-white'
-                    : 'border-border-subtle bg-background text-text-primary hover:border-brand-primary',
-                )}
+              <label
+                key={question.id || `${inputName}-${index}`}
+                className={cn('flex flex-col gap-2', widthClass)}
               >
-                {item.label}
-              </button>
+                <span className={labelClass}>{question.label}</span>
+                <select required={required} name={inputName} defaultValue="" className={fieldClass}>
+                  <option value="" disabled={required}>
+                    Select
+                  </option>
+                  {(question.options ?? []).map((option) => {
+                    const value = contactOptionValue(option);
+                    return (
+                      <option key={option.id || value} value={value}>
+                        {option.label}
+                      </option>
+                    );
+                  })}
+                </select>
+              </label>
             );
-          })}
-        </div>
-      </fieldset>
+          }
 
-      <fieldset className="flex flex-col gap-2">
-        <legend className={labelClass}>When can you talk</legend>
-        <div className="flex flex-wrap gap-2">
-          {LEAD_TIMINGS.map((item) => {
-            const selected = timing === item.value;
+          if (question.field === 'textarea') {
             return (
-              <button
-                key={item.value}
-                type="button"
-                onClick={() => setTiming(item.value)}
-                aria-pressed={selected}
-                className={cn(
-                  'rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors',
-                  selected
-                    ? 'border-brand-primary bg-brand-primary text-white'
-                    : 'border-border-subtle bg-background text-text-primary hover:border-brand-primary',
-                )}
+              <label
+                key={question.id || `${inputName}-${index}`}
+                className={cn('flex flex-col gap-2', widthClass)}
               >
-                {item.label}
-              </button>
+                <span className={labelClass}>{question.label}</span>
+                <textarea
+                  required={required}
+                  name={inputName}
+                  rows={4}
+                  className={cn(fieldClass, 'resize-y')}
+                />
+              </label>
             );
-          })}
-        </div>
-      </fieldset>
+          }
 
-      <label className="flex flex-col gap-2">
-        <span className={labelClass}>What should we look at</span>
-        <textarea required name="message" rows={4} className={cn(fieldClass, 'resize-y')} />
-      </label>
+          return (
+            <label
+              key={question.id || `${inputName}-${index}`}
+              className={cn('flex flex-col gap-2', widthClass)}
+            >
+              <span className={labelClass}>{question.label}</span>
+              <input
+                required={required}
+                name={inputName}
+                type={inputName === 'email' ? 'email' : 'text'}
+                autoComplete={AUTOCOMPLETE[inputName]}
+                className={fieldClass}
+              />
+            </label>
+          );
+        })}
+      </div>
 
       <input
         type="text"

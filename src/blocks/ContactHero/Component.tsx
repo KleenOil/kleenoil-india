@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import { ConsultationForm } from '@/components/forms/ConsultationForm';
+import { resolveContactFormQuestions, type ContactFormQuestion } from '@/lib/cms/contact-form';
 import { DEFAULT_CONTACT_HERO } from '@/lib/cms/defaults';
 import { getCmsContactDetails } from '@/lib/cms/contact';
 import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
@@ -21,6 +22,7 @@ export type ContactHeroBlockData = {
   benefits?: BenefitItem[] | null;
   formTitle?: string | null;
   formLead?: string | null;
+  questions?: ContactFormQuestion[] | null;
   submitLabel?: string | null;
   finePrint?: string | null;
 };
@@ -111,6 +113,7 @@ export async function ContactHeroBlock({ block }: ContactHeroBlockProps) {
             <ConsultationForm
               title={block?.formTitle || DEFAULT_CONTACT_HERO.formTitle}
               lead={block?.formLead || DEFAULT_CONTACT_HERO.formLead}
+              questions={resolveContactFormQuestions(block?.questions)}
               submitLabel={block?.submitLabel || DEFAULT_CONTACT_HERO.submitLabel}
               finePrint={block?.finePrint || DEFAULT_CONTACT_HERO.finePrint}
             />

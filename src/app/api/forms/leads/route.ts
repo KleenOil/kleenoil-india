@@ -23,11 +23,18 @@ const leadSchema = z.object({
   email: z.string().email('Enter a valid work email').max(160),
   company: z.string().trim().max(160).optional(),
   plant: z.string().trim().max(160).optional(),
-  industry: z.enum(industryValues),
-  timing: z.enum(timingValues),
-  message: z.string().trim().min(1, 'Tell us what to look at').max(4000),
+  industry: z.string().trim().max(160).optional(),
+  timing: z.string().trim().max(160).optional(),
+  message: z.string().trim().max(4000).optional(),
   website: z.string().optional(),
 });
+
+function asKnownValue<T extends string>(
+  value: string | undefined,
+  allowed: readonly T[],
+): T | undefined {
+  return allowed.includes(value as T) ? (value as T) : undefined;
+}
 
 function emptyToUndefined(value: unknown): string | undefined {
   if (typeof value !== 'string') {
@@ -63,6 +70,9 @@ export async function POST(request: Request) {
     ...(body && typeof body === 'object' ? body : {}),
     company: emptyToUndefined((body as { company?: unknown })?.company),
     plant: emptyToUndefined((body as { plant?: unknown })?.plant),
+    industry: emptyToUndefined((body as { industry?: unknown })?.industry),
+    timing: emptyToUndefined((body as { timing?: unknown })?.timing),
+    message: emptyToUndefined((body as { message?: unknown })?.message),
     website: emptyToUndefined((body as { website?: unknown })?.website),
   });
 
@@ -77,14 +87,22 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   }
 
+  const industry = asKnownValue(parsed.data.industry, industryValues);
+  const timing = asKnownValue(parsed.data.timing, timingValues);
+  const extraLines = [
+    parsed.data.industry && !industry ? `Industry: ${parsed.data.industry}` : null,
+    parsed.data.timing && !timing ? `Timing: ${parsed.data.timing}` : null,
+    parsed.data.message ?? null,
+  ].filter((line): line is string => Boolean(line));
+
   const lead: ConsultationLeadInput = {
     name: parsed.data.name,
     email: parsed.data.email,
     company: parsed.data.company,
     plant: parsed.data.plant,
-    industry: parsed.data.industry,
-    timing: parsed.data.timing,
-    message: parsed.data.message,
+    industry,
+    timing,
+    message: extraLines.join('\n\n'),
   };
 
   try {

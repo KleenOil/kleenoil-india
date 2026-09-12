@@ -23,8 +23,8 @@ export type ConsultationLeadInput = {
   email: string;
   company?: string;
   plant?: string;
-  industry: LeadIndustry;
-  timing: LeadTiming;
+  industry?: LeadIndustry;
+  timing?: LeadTiming;
   message: string;
   website?: string;
 };

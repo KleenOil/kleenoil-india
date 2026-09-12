@@ -30,6 +30,15 @@ import {
   DEFAULT_TRUST_INDICATORS,
   DEFAULT_WHATS_NEW,
 } from '@/lib/cms/defaults';
+import {
+  DEFAULT_SUSTAINABILITY_APPLICATIONS,
+  DEFAULT_SUSTAINABILITY_CIRCULAR,
+  DEFAULT_SUSTAINABILITY_CTA,
+  DEFAULT_SUSTAINABILITY_DROP,
+  DEFAULT_SUSTAINABILITY_HERO,
+  DEFAULT_SUSTAINABILITY_IMPACT,
+  DEFAULT_SUSTAINABILITY_NUMBERS,
+} from '@/lib/cms/sustainability';
 
 type Appearance = 'primary' | 'secondary' | 'ghost';
 
@@ -71,6 +80,13 @@ export const PAGE_BLOCK_OPTIONS = [
   { slug: 'testimonials', label: 'Testimonials' },
   { slug: 'contact-preview', label: 'Contact Preview' },
   { slug: 'rich-content', label: 'Rich Content' },
+  { slug: 'sustainability-hero', label: 'Sustainability Hero' },
+  { slug: 'sustainability-impact', label: 'Sustainability Impact' },
+  { slug: 'sustainability-circular', label: 'Sustainability Circular' },
+  { slug: 'sustainability-drop', label: 'Sustainability Drop' },
+  { slug: 'sustainability-numbers', label: 'Sustainability Numbers' },
+  { slug: 'sustainability-applications', label: 'Sustainability Applications' },
+  { slug: 'sustainability-cta', label: 'Sustainability CTA' },
 ] as const;
 
 export type PageBlockSlug = (typeof PAGE_BLOCK_OPTIONS)[number]['slug'];
@@ -176,6 +192,7 @@ const BLOCK_SEEDS: Record<string, () => LayoutBlock> = {
     benefits: DEFAULT_CONTACT_HERO.benefits.map((label) => ({ label })),
     formTitle: DEFAULT_CONTACT_HERO.formTitle,
     formLead: DEFAULT_CONTACT_HERO.formLead,
+    questions: DEFAULT_CONTACT_HERO.questions,
     submitLabel: DEFAULT_CONTACT_HERO.submitLabel,
     finePrint: DEFAULT_CONTACT_HERO.finePrint,
   }),
@@ -391,6 +408,57 @@ const BLOCK_SEEDS: Record<string, () => LayoutBlock> = {
         version: 1,
       },
     },
+  }),
+  'sustainability-hero': () => ({
+    blockType: 'sustainability-hero',
+    eyebrow: DEFAULT_SUSTAINABILITY_HERO.eyebrow,
+    heading: DEFAULT_SUSTAINABILITY_HERO.heading,
+    lead: DEFAULT_SUSTAINABILITY_HERO.lead,
+    body: DEFAULT_SUSTAINABILITY_HERO.body,
+    ctas: [customLink(DEFAULT_SUSTAINABILITY_HERO.cta.label, DEFAULT_SUSTAINABILITY_HERO.cta.href)],
+    pills: DEFAULT_SUSTAINABILITY_HERO.pills,
+  }),
+  'sustainability-impact': () => ({
+    blockType: 'sustainability-impact',
+    eyebrow: DEFAULT_SUSTAINABILITY_IMPACT.eyebrow,
+    heading: DEFAULT_SUSTAINABILITY_IMPACT.heading,
+    description: DEFAULT_SUSTAINABILITY_IMPACT.lead,
+    cards: DEFAULT_SUSTAINABILITY_IMPACT.cards.map(({ title, body }) => ({ title, body })),
+  }),
+  'sustainability-circular': () => ({
+    blockType: 'sustainability-circular',
+    eyebrow: DEFAULT_SUSTAINABILITY_CIRCULAR.eyebrow,
+    heading: DEFAULT_SUSTAINABILITY_CIRCULAR.heading,
+    description: DEFAULT_SUSTAINABILITY_CIRCULAR.lead,
+    steps: DEFAULT_SUSTAINABILITY_CIRCULAR.steps,
+  }),
+  'sustainability-drop': () => ({
+    blockType: 'sustainability-drop',
+    eyebrow: DEFAULT_SUSTAINABILITY_DROP.eyebrow,
+    heading: DEFAULT_SUSTAINABILITY_DROP.heading,
+    paragraphs: DEFAULT_SUSTAINABILITY_DROP.paragraphs.map((text) => ({ text })),
+  }),
+  'sustainability-numbers': () => ({
+    blockType: 'sustainability-numbers',
+    eyebrow: DEFAULT_SUSTAINABILITY_NUMBERS.eyebrow,
+    heading: DEFAULT_SUSTAINABILITY_NUMBERS.heading,
+    description: DEFAULT_SUSTAINABILITY_NUMBERS.lead,
+    stats: DEFAULT_SUSTAINABILITY_NUMBERS.stats,
+    disclaimer: DEFAULT_SUSTAINABILITY_NUMBERS.disclaimer,
+  }),
+  'sustainability-applications': () => ({
+    blockType: 'sustainability-applications',
+    eyebrow: DEFAULT_SUSTAINABILITY_APPLICATIONS.eyebrow,
+    heading: DEFAULT_SUSTAINABILITY_APPLICATIONS.heading,
+    description: DEFAULT_SUSTAINABILITY_APPLICATIONS.lead,
+    cards: DEFAULT_SUSTAINABILITY_APPLICATIONS.cards.map(({ title, body }) => ({ title, body })),
+  }),
+  'sustainability-cta': () => ({
+    blockType: 'sustainability-cta',
+    eyebrow: DEFAULT_SUSTAINABILITY_CTA.eyebrow,
+    heading: DEFAULT_SUSTAINABILITY_CTA.heading,
+    subtext: DEFAULT_SUSTAINABILITY_CTA.subtext,
+    ctas: [customLink(DEFAULT_SUSTAINABILITY_CTA.cta.label, DEFAULT_SUSTAINABILITY_CTA.cta.href)],
   }),
 };
 

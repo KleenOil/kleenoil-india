@@ -1,3 +1,5 @@
+import { DEFAULT_CONTACT_FORM_QUESTIONS } from '@/lib/cms/contact-form';
+
 /** Design-accurate fallbacks when CMS globals are empty (Kleenoil homepage design). */
 
 export type NavLink = {
@@ -23,7 +25,7 @@ export const DEFAULT_MAIN_NAV: NavLink[] = [
   { label: 'Products & Services', href: '/products' },
   { label: 'Solutions', href: '/industries' },
   { label: 'About Us', href: '/about' },
-  { label: 'Sustainability', href: '/about' },
+  { label: 'Sustainability', href: '/sustainability' },
   { label: 'Careers', href: '/careers' },
 ];
 
@@ -58,7 +60,7 @@ export const DEFAULT_FOOTER_COLUMNS: FooterColumn[] = [
       { label: 'Engineering Team', href: '/about' },
       { label: 'Press', href: '/about' },
       { label: 'Careers', href: '/about' },
-      { label: 'Sustainability', href: '/about' },
+      { label: 'Sustainability', href: '/sustainability' },
     ],
   },
   {
@@ -1220,6 +1222,7 @@ export const DEFAULT_CONTACT_HERO = {
   ],
   formTitle: 'Request a 30-minute slot',
   formLead: 'An engineer replies within one business day with a time that fits your shift.',
+  questions: DEFAULT_CONTACT_FORM_QUESTIONS,
   submitLabel: 'Book this consultation',
   finePrint: 'No brochure deck. You get a written next step — even if Kleenoil is not the fit.',
 };

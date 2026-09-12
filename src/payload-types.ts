@@ -465,6 +465,35 @@ export interface Page {
               | null;
             formTitle?: string | null;
             formLead?: string | null;
+            /**
+             * Leave empty to use the default form. Include questions named name and email so submissions reach the lead inbox. Other named fields: company, plant, industry, timing, message.
+             */
+            questions?:
+              | {
+                  label: string;
+                  /**
+                   * Optional. Use name, email, company, plant, industry, timing, or message to fill those lead columns. Leave empty to save the answer in the message.
+                   */
+                  name?: string | null;
+                  field: 'text' | 'dropdown' | 'textarea';
+                  width: 'half' | 'full';
+                  required?: boolean | null;
+                  /**
+                   * Shown when Field is Dropdown.
+                   */
+                  options?:
+                    | {
+                        label: string;
+                        /**
+                         * Optional. Stored with the lead. Leave empty to use the label.
+                         */
+                        value?: string | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
             submitLabel?: string | null;
             finePrint?: string | null;
             id?: string | null;
@@ -986,6 +1015,139 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'rich-content';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            lead?: string | null;
+            body?: string | null;
+            ctas?:
+              | {
+                  link: {
+                    type: 'page' | 'custom';
+                    label?: string | null;
+                    page?: (number | null) | Page;
+                    /**
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+                     */
+                    url?: string | null;
+                    openInNewTab?: boolean | null;
+                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            image?: (number | null) | Media;
+            pills?:
+              | {
+                  n: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'sustainability-hero';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            cards?:
+              | {
+                  title: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'sustainability-impact';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            steps?:
+              | {
+                  n: string;
+                  title: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'sustainability-circular';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            paragraphs?:
+              | {
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            image?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'sustainability-drop';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            stats?:
+              | {
+                  value: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            disclaimer?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'sustainability-numbers';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            cards?:
+              | {
+                  title: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'sustainability-applications';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            subtext?: string | null;
+            ctas?:
+              | {
+                  link: {
+                    type: 'page' | 'custom';
+                    label?: string | null;
+                    page?: (number | null) | Page;
+                    /**
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+                     */
+                    url?: string | null;
+                    openInNewTab?: boolean | null;
+                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'sustainability-cta';
           }
       )[]
     | null;
@@ -1534,12 +1696,18 @@ export interface Product {
             eyebrow?: string | null;
             heading?: string | null;
             description?: string | null;
+            /**
+             * First column is the model name (MODEL). Extra columns are FLOW, RESERVOIR, POWER, and so on.
+             */
             columns?:
               | {
                   label: string;
                   id?: string | null;
                 }[]
               | null;
+            /**
+             * Prefer Import models from CSV. Cell Values must match the columns after MODEL.
+             */
             models?:
               | {
                   name: string;
@@ -1880,12 +2048,18 @@ export interface ProductTemplate {
             eyebrow?: string | null;
             heading?: string | null;
             description?: string | null;
+            /**
+             * First column is the model name (MODEL). Extra columns are FLOW, RESERVOIR, POWER, and so on.
+             */
             columns?:
               | {
                   label: string;
                   id?: string | null;
                 }[]
               | null;
+            /**
+             * Prefer Import models from CSV. Cell Values must match the columns after MODEL.
+             */
             models?:
               | {
                   name: string;
@@ -2381,6 +2555,23 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               formTitle?: T;
               formLead?: T;
+              questions?:
+                | T
+                | {
+                    label?: T;
+                    name?: T;
+                    field?: T;
+                    width?: T;
+                    required?: T;
+                    options?:
+                      | T
+                      | {
+                          label?: T;
+                          value?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
               submitLabel?: T;
               finePrint?: T;
               id?: T;
@@ -2812,6 +3003,144 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'sustainability-hero'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              lead?: T;
+              body?: T;
+              ctas?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          label?: T;
+                          page?: T;
+                          url?: T;
+                          openInNewTab?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              image?: T;
+              pills?:
+                | T
+                | {
+                    n?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'sustainability-impact'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'sustainability-circular'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              steps?:
+                | T
+                | {
+                    n?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'sustainability-drop'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              paragraphs?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              image?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'sustainability-numbers'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              stats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              disclaimer?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'sustainability-applications'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'sustainability-cta'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subtext?: T;
+              ctas?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          label?: T;
+                          page?: T;
+                          url?: T;
+                          openInNewTab?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };

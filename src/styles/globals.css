@@ -723,6 +723,209 @@
   transition: none !important;
 }
 
+@keyframes roi-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(3px, -5px, 0);
+  }
+}
+
+@keyframes roi-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.07);
+    opacity: 0.88;
+  }
+}
+
+@keyframes roi-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes roi-dash {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+
+@keyframes roi-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0.55;
+  }
+}
+
+@keyframes roi-arrow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(3px, -2px, 0);
+  }
+}
+
+@keyframes roi-bar {
+  from {
+    transform: scaleX(0.35);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.roi-svg-float {
+  animation: roi-float 5.5s ease-in-out infinite;
+}
+
+.roi-svg-breathe {
+  animation: roi-breathe 7s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.roi-svg-spin {
+  animation: roi-spin 28s linear infinite;
+  transform-origin: center;
+}
+
+.roi-svg-dash {
+  animation: roi-dash 2.4s linear infinite;
+}
+
+.roi-svg-pulse {
+  animation: roi-pulse 2.2s ease-in-out infinite;
+}
+
+.roi-svg-arrow {
+  animation: roi-arrow 2.6s ease-in-out infinite;
+}
+
+.roi-bar-grow {
+  transform-origin: left center;
+  animation: roi-bar 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes sustain-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sustain-spin-rev {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes sustain-dash {
+  to {
+    stroke-dashoffset: -52;
+  }
+}
+
+@keyframes sustain-tick {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes sustain-core {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 0 0 rgba(124, 219, 166, 0.12);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.04);
+    box-shadow: 0 0 36px 8px rgba(124, 219, 166, 0.16);
+  }
+}
+
+@keyframes sustain-card-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -5px, 0);
+  }
+}
+
+@keyframes sustain-cta-blob {
+  0%,
+  100% {
+    transform: translateY(-50%) scale(1);
+    opacity: 0.72;
+  }
+  50% {
+    transform: translateY(-50%) scale(1.08);
+    opacity: 1;
+  }
+}
+
+.sustain-ring-spin,
+.sustain-ring-spin-slow,
+.sustain-ring-spin-rev,
+.sustain-ring-dash,
+.sustain-orbit {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.sustain-ring-spin {
+  animation: sustain-spin 22s linear infinite;
+}
+
+.sustain-ring-spin-slow {
+  animation: sustain-spin 36s linear infinite;
+}
+
+.sustain-ring-spin-rev {
+  animation: sustain-spin-rev 28s linear infinite;
+}
+
+.sustain-ring-dash {
+  animation: sustain-dash 3.2s linear infinite;
+}
+
+.sustain-orbit {
+  animation: sustain-spin 8s linear infinite;
+}
+
+.sustain-tick {
+  animation: sustain-tick 2.4s ease-in-out infinite;
+}
+
+.sustain-core-pulse {
+  animation: sustain-core 4.6s ease-in-out infinite;
+}
+
+.sustain-card-float {
+  animation: sustain-card-float 5.2s ease-in-out infinite;
+}
+
+.sustain-cta-blob {
+  animation: sustain-cta-blob 8s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
