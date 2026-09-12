@@ -28,34 +28,39 @@ export function SustainabilityDropBlock({ block }: { block?: SustainabilityDropB
   const imageAlt = getMediaAlt(block?.image, defaults.imageAlt);
 
   return (
-    <section className="bg-background">
-      <div className="mx-auto grid w-full max-w-[1440px] items-center gap-10 px-6 py-16 lg:grid-cols-2 lg:gap-16 lg:px-[100px] lg:py-[80px]">
-        <div
-          data-reveal-panel
-          className="relative min-h-[320px] overflow-hidden rounded-3xl bg-brand-deep lg:min-h-[420px]"
-        >
-          {imageUrl ? (
-            <Image src={imageUrl} alt={imageAlt} fill className="object-cover" sizes="50vw" />
-          ) : null}
-        </div>
+    <section className="grid overflow-hidden bg-background lg:grid-cols-2">
+      <div
+        data-reveal-panel
+        className="relative min-h-[320px] bg-brand-deep md:min-h-[420px] lg:min-h-[560px]"
+      >
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt={imageAlt}
+            fill
+            className="object-cover"
+            sizes="(min-width: 1024px) 50vw, 100vw"
+          />
+        ) : null}
+      </div>
 
-        <div className="flex max-w-[520px] flex-col gap-5">
-          <div data-reveal-part>
-            <Eyebrow>{eyebrow}</Eyebrow>
-          </div>
-          <h2 className="font-heading text-[1.75rem] font-bold leading-[1.05] tracking-[-0.04em] text-text-primary md:text-4xl lg:text-[44px]">
-            <HeadingLines text={heading} className="block" />
-          </h2>
-          {paragraphs.map((paragraph) => (
-            <p
-              key={paragraph.slice(0, 24)}
-              data-reveal-part
-              className="text-[15px] leading-relaxed text-text-secondary"
-            >
-              {paragraph}
-            </p>
-          ))}
+      <div className="flex flex-col justify-center gap-5 px-6 py-16 md:px-12 lg:px-[72px] lg:py-[88px]">
+        <div data-reveal-part>
+          <Eyebrow>{eyebrow}</Eyebrow>
         </div>
+        <h2 className="max-w-[568px] font-heading text-[1.75rem] font-bold leading-[1.05] tracking-[-0.04em] text-text-primary md:text-4xl lg:text-[44px]">
+          <HeadingLines text={heading} className="block" />
+        </h2>
+        <span aria-hidden className="motion-line-grow h-0.5 w-10 bg-brand-primary" />
+        {paragraphs.map((paragraph) => (
+          <p
+            key={paragraph.slice(0, 24)}
+            data-reveal-part
+            className="max-w-[568px] text-[15px] leading-relaxed text-text-secondary"
+          >
+            {paragraph}
+          </p>
+        ))}
       </div>
     </section>
   );
