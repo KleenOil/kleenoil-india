@@ -1,3 +1,4 @@
+import { CtaWanderBlob } from '@/components/sustainability/CtaWanderBlob';
 import { HeadingLines } from '@/components/sustainability/HeadingLines';
 import { CtaButton } from '@/components/ui/cta-button';
 import { Eyebrow } from '@/components/ui/eyebrow';
@@ -23,22 +24,7 @@ export function SustainabilityCtaBlock({ block }: { block?: SustainabilityCtaBlo
 
   return (
     <section className="relative overflow-hidden bg-background">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-1/4 w-px bg-border-subtle"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-1/2 w-px bg-border-subtle"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-3/4 w-px bg-border-subtle"
-      />
-      <div
-        aria-hidden
-        className="sustain-cta-blob pointer-events-none absolute -right-24 top-1/2 size-[420px] -translate-y-1/2 rounded-full bg-brand-soft lg:size-[520px]"
-      />
+      <CtaWanderBlob />
 
       <div className="relative mx-auto flex min-h-[360px] w-full max-w-[1440px] flex-col justify-center px-6 py-16 lg:min-h-[440px] lg:px-[100px] lg:py-20">
         <div data-reveal-panel className="flex max-w-[720px] flex-col items-start gap-6">

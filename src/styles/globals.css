@@ -869,18 +869,6 @@
   }
 }
 
-@keyframes sustain-cta-blob {
-  0%,
-  100% {
-    transform: translateY(-50%) scale(1);
-    opacity: 0.72;
-  }
-  50% {
-    transform: translateY(-50%) scale(1.08);
-    opacity: 1;
-  }
-}
-
 .sustain-ring-spin,
 .sustain-ring-spin-slow,
 .sustain-ring-spin-rev,
@@ -920,10 +908,6 @@
 
 .sustain-card-float {
   animation: sustain-card-float 5.2s ease-in-out infinite;
-}
-
-.sustain-cta-blob {
-  animation: sustain-cta-blob 8s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
