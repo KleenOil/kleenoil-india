@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { Circle } from 'lucide-react';
 
 import { Eyebrow } from '@/components/ui/eyebrow';
+import { blockHasCmsData, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_PDP_CONTAMINATION } from '@/lib/cms/pdp-defaults';
 import { getMediaUrl } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
@@ -30,7 +31,10 @@ type ListItem = {
   iconUrl: string | null;
 };
 
-function mapItems(items: Item[] | null | undefined): { left: ListItem[]; right: ListItem[] } {
+function mapItems(
+  items: Item[] | null | undefined,
+  hasCms: boolean,
+): { left: ListItem[]; right: ListItem[] } {
   const cmsItems =
     items
       ?.filter((item): item is Item & { text: string } => Boolean(item.text?.trim()))
@@ -45,6 +49,10 @@ function mapItems(items: Item[] | null | undefined): { left: ListItem[]; right: 
       left: cmsItems.filter((item) => !item.onRight),
       right: cmsItems.filter((item) => item.onRight),
     };
+  }
+
+  if (hasCms) {
+    return { left: [], right: [] };
   }
 
   return {
@@ -106,16 +114,16 @@ function ContaminationColumn({
 }
 
 export function PdpContaminationBlock({ block }: { block?: PdpContaminationBlockData | null }) {
-  const eyebrow = block?.eyebrow || DEFAULT_PDP_CONTAMINATION.eyebrow;
-  const heading = block?.heading || DEFAULT_PDP_CONTAMINATION.heading;
-  const description = block?.description || DEFAULT_PDP_CONTAMINATION.description;
-  const leftHeading = block?.leftHeading?.trim() || DEFAULT_PDP_CONTAMINATION.leftHeading;
-  const leftDescription =
-    block?.leftDescription?.trim() || DEFAULT_PDP_CONTAMINATION.leftDescription;
-  const rightHeading = block?.rightHeading?.trim() || DEFAULT_PDP_CONTAMINATION.rightHeading;
-  const rightDescription =
-    block?.rightDescription?.trim() || DEFAULT_PDP_CONTAMINATION.rightDescription;
-  const { left, right } = mapItems(block?.items);
+  const hasCms = blockHasCmsData(block);
+  const defaults = DEFAULT_PDP_CONTAMINATION;
+  const eyebrow = cmsText(block?.eyebrow, defaults.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, defaults.heading, hasCms);
+  const description = cmsText(block?.description, defaults.description, hasCms);
+  const leftHeading = cmsText(block?.leftHeading, defaults.leftHeading, hasCms);
+  const leftDescription = cmsText(block?.leftDescription, defaults.leftDescription, hasCms);
+  const rightHeading = cmsText(block?.rightHeading, defaults.rightHeading, hasCms);
+  const rightDescription = cmsText(block?.rightDescription, defaults.rightDescription, hasCms);
+  const { left, right } = mapItems(block?.items, hasCms);
 
   return (
     <section className="border-y border-border-subtle bg-surface">

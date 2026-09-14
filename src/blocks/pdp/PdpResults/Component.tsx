@@ -1,4 +1,5 @@
 import { Eyebrow } from '@/components/ui/eyebrow';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_PDP_RESULTS } from '@/lib/cms/pdp-defaults';
 
 type Metric = { value?: string | null; label?: string | null };
@@ -18,12 +19,13 @@ export type PdpResultsBlockData = {
 };
 
 export function PdpResultsBlock({ block }: { block?: PdpResultsBlockData | null }) {
-  const eyebrow = block?.eyebrow || DEFAULT_PDP_RESULTS.eyebrow;
-  const heading = block?.heading || DEFAULT_PDP_RESULTS.heading;
-  const description = block?.description || DEFAULT_PDP_RESULTS.description;
-  const results = block?.results?.filter((item) => item.title)?.length
-    ? block.results.filter((item) => item.title)
-    : DEFAULT_PDP_RESULTS.results;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_PDP_RESULTS.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_PDP_RESULTS.heading, hasCms);
+  const description = cmsText(block?.description, DEFAULT_PDP_RESULTS.description, hasCms);
+  const results = cmsList(block?.results, DEFAULT_PDP_RESULTS.results, hasCms, (item) =>
+    Boolean(item.title),
+  );
 
   return (
     <section className="border-y border-border-subtle bg-surface">

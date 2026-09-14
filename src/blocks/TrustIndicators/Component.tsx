@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { blockHasCmsData, cmsList, cmsText, cmsValue } from '@/lib/cms/block-content';
 import { DEFAULT_TRUST_INDICATORS } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
 import { cn } from '@/lib/utils';
@@ -27,12 +28,15 @@ type TrustIndicatorsBlockProps = {
   block?: TrustIndicatorsBlockData | null;
 };
 
-function resolveHeadingAlign(value: TrustHeadingAlign | null | undefined): TrustHeadingAlign {
+function resolveHeadingAlign(
+  value: TrustHeadingAlign | null | undefined,
+  hasCms: boolean,
+): TrustHeadingAlign {
   if (value === 'center' || value === 'right' || value === 'left') {
     return value;
   }
 
-  return DEFAULT_TRUST_INDICATORS.headingAlign;
+  return cmsValue(value, DEFAULT_TRUST_INDICATORS.headingAlign, hasCms) ?? 'left';
 }
 
 function HeadingRule({ fromEnd }: { fromEnd?: boolean }) {
@@ -48,16 +52,23 @@ function HeadingRule({ fromEnd }: { fromEnd?: boolean }) {
 }
 
 export function TrustIndicatorsBlock({ block }: TrustIndicatorsBlockProps) {
-  const heading = block?.heading || DEFAULT_TRUST_INDICATORS.heading;
-  const headingAlign = resolveHeadingAlign(block?.headingAlign);
+  const hasCms = blockHasCmsData(block);
+  const heading = cmsText(block?.heading, DEFAULT_TRUST_INDICATORS.heading, hasCms);
+  const headingAlign = resolveHeadingAlign(block?.headingAlign, hasCms);
 
-  const cmsLogos =
+  const defaultLogos = DEFAULT_TRUST_INDICATORS.logos.map((logo) => ({
+    name: logo.name,
+    imageUrl: null as string | null,
+    href: undefined as string | undefined,
+  }));
+
+  const logos = cmsList(
     block?.logos
       ?.map((item) => {
         const imageUrl = getMediaUrl(item.logo);
-        const alt = item.alt || getMediaAlt(item.logo, 'Client logo');
+        const alt = item.alt?.trim() || getMediaAlt(item.logo, '');
 
-        if (!imageUrl && !alt) {
+        if (!imageUrl && !item.alt?.trim()) {
           return null;
         }
 
@@ -67,16 +78,11 @@ export function TrustIndicatorsBlock({ block }: TrustIndicatorsBlockProps) {
           href: item.url?.trim() || undefined,
         };
       })
-      .filter((item): item is NonNullable<typeof item> => Boolean(item)) ?? [];
-
-  const logos =
-    cmsLogos.length > 0
-      ? cmsLogos
-      : DEFAULT_TRUST_INDICATORS.logos.map((logo) => ({
-          name: logo.name,
-          imageUrl: null as string | null,
-          href: undefined as string | undefined,
-        }));
+      .filter((item): item is NonNullable<typeof item> => Boolean(item)),
+    defaultLogos,
+    hasCms,
+    (item) => Boolean(item.imageUrl || item.name),
+  );
 
   return (
     <section className="border-b border-border-subtle bg-surface">
@@ -84,14 +90,16 @@ export function TrustIndicatorsBlock({ block }: TrustIndicatorsBlockProps) {
         <div className="flex flex-col gap-7 border-t border-border-subtle pt-6">
           <div data-reveal-part className="flex items-center gap-5">
             {headingAlign !== 'left' ? <HeadingRule fromEnd /> : null}
-            <p
-              className={cn(
-                'shrink-0 font-mono text-[11px] font-bold tracking-[2px] text-text-tertiary uppercase',
-                headingAlign === 'center' && 'text-center',
-              )}
-            >
-              {heading}
-            </p>
+            {heading ? (
+              <p
+                className={cn(
+                  'shrink-0 font-mono text-[11px] font-bold tracking-[2px] text-text-tertiary uppercase',
+                  headingAlign === 'center' && 'text-center',
+                )}
+              >
+                {heading}
+              </p>
+            ) : null}
             {headingAlign !== 'right' ? <HeadingRule /> : null}
           </div>
 

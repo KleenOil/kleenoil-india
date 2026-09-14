@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import { Eyebrow } from '@/components/ui/eyebrow';
+import { blockHasCmsData, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_CAREERS_HERO, DEFAULT_JOBS } from '@/lib/cms/defaults';
 import { getPublishedJobs } from '@/lib/cms/jobs';
 import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
@@ -21,11 +22,12 @@ type CareersHeroBlockProps = {
 };
 
 export async function CareersHeroBlock({ block, openRoles }: CareersHeroBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_CAREERS_HERO.eyebrow;
-  const heading = block?.heading || DEFAULT_CAREERS_HERO.heading;
-  const subheadline = block?.subheadline || DEFAULT_CAREERS_HERO.subheadline;
-  const cities = block?.cities || DEFAULT_CAREERS_HERO.cities;
-  const imageUrl = getMediaUrl(block?.image) || DEFAULT_CAREERS_HERO.imageUrl;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_CAREERS_HERO.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_CAREERS_HERO.heading, hasCms);
+  const subheadline = cmsText(block?.subheadline, DEFAULT_CAREERS_HERO.subheadline, hasCms);
+  const cities = cmsText(block?.cities, DEFAULT_CAREERS_HERO.cities, hasCms);
+  const imageUrl = cmsText(getMediaUrl(block?.image) ?? '', DEFAULT_CAREERS_HERO.imageUrl, hasCms);
   const imageAlt = getMediaAlt(block?.image, 'Kleenoil workshop floor');
   const published = await getPublishedJobs();
   const visible = published.filter((job) => job.showOnCareers !== false);
@@ -34,7 +36,7 @@ export async function CareersHeroBlock({ block, openRoles }: CareersHeroBlockPro
       ? openRoles
       : visible.length > 0
         ? visible.length
-        : published.length > 0
+        : published.length > 0 || hasCms
           ? 0
           : DEFAULT_JOBS.length;
   const displayCount = String(Math.max(count, 0)).padStart(2, '0');
@@ -58,25 +60,31 @@ export async function CareersHeroBlock({ block, openRoles }: CareersHeroBlockPro
 
       <div className="relative mx-auto flex h-full w-full max-w-[1440px] items-center justify-between gap-10 px-6 py-16 lg:px-[100px]">
         <div data-reveal-panel className="max-w-[720px]">
-          <div data-reveal-target>
-            <Eyebrow>{eyebrow}</Eyebrow>
-          </div>
-          <h1
-            data-reveal-target
-            className="mt-6 font-heading text-4xl font-bold leading-[0.98] tracking-[-0.04em] text-white md:text-5xl lg:text-[56px] lg:tracking-[-0.045em]"
-          >
-            {heading.split('\n').map((line, index) => (
-              <span key={`${line}-${index}`} className="block">
-                {line}
-              </span>
-            ))}
-          </h1>
-          <p
-            data-reveal-target
-            className="mt-5 max-w-[640px] text-base font-semibold leading-relaxed text-brand-soft md:text-lg"
-          >
-            {subheadline}
-          </p>
+          {eyebrow ? (
+            <div data-reveal-target>
+              <Eyebrow>{eyebrow}</Eyebrow>
+            </div>
+          ) : null}
+          {heading ? (
+            <h1
+              data-reveal-target
+              className="mt-6 font-heading text-4xl font-bold leading-[0.98] tracking-[-0.04em] text-white md:text-5xl lg:text-[56px] lg:tracking-[-0.045em]"
+            >
+              {heading.split('\n').map((line, index) => (
+                <span key={`${line}-${index}`} className="block">
+                  {line}
+                </span>
+              ))}
+            </h1>
+          ) : null}
+          {subheadline ? (
+            <p
+              data-reveal-target
+              className="mt-5 max-w-[640px] text-base font-semibold leading-relaxed text-brand-soft md:text-lg"
+            >
+              {subheadline}
+            </p>
+          ) : null}
         </div>
 
         <div
@@ -89,7 +97,9 @@ export async function CareersHeroBlock({ block, openRoles }: CareersHeroBlockPro
           <p className="mt-2 font-mono text-[12px] font-bold tracking-[2px] text-brand-soft uppercase">
             Open roles
           </p>
-          <p className="mt-4 text-[13px] leading-relaxed text-brand-soft">{cities}</p>
+          {cities ? (
+            <p className="mt-4 text-[13px] leading-relaxed text-brand-soft">{cities}</p>
+          ) : null}
         </div>
       </div>
     </section>

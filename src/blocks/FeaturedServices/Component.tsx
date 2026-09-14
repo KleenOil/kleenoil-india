@@ -1,5 +1,6 @@
 import { ServiceCard, type ServiceCardData } from '@/components/cards/ServiceCard';
 import { SectionHeader } from '@/components/sections/SectionHeader';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_FEATURED_SERVICES } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl, resolveLink } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
@@ -33,15 +34,18 @@ type FeaturedServicesBlockProps = {
   block?: FeaturedServicesBlockData | null;
 };
 
-function mapCard(card: ServiceCmsCard, index: number): ServiceCardData | null {
+function mapCard(card: ServiceCmsCard, index: number, hasCms: boolean): ServiceCardData | null {
   if (!card.title?.trim()) {
     return null;
   }
 
-  const fallback = DEFAULT_FEATURED_SERVICES.services[index];
+  const fallback = hasCms ? undefined : DEFAULT_FEATURED_SERVICES.services[index];
 
   return {
-    tag: card.tag?.trim() || fallback?.tag || `${String(index + 1).padStart(2, '0')} / SERVICE`,
+    tag:
+      card.tag?.trim() ||
+      fallback?.tag ||
+      (hasCms ? '' : `${String(index + 1).padStart(2, '0')} / SERVICE`),
     title: card.title.trim(),
     description: card.description?.trim() || fallback?.description || '',
     href: card.href?.trim() || '',
@@ -51,9 +55,10 @@ function mapCard(card: ServiceCmsCard, index: number): ServiceCardData | null {
 }
 
 export function FeaturedServicesBlock({ block }: FeaturedServicesBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_FEATURED_SERVICES.eyebrow;
-  const heading = block?.heading || DEFAULT_FEATURED_SERVICES.heading;
-  const description = block?.description || DEFAULT_FEATURED_SERVICES.description;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_FEATURED_SERVICES.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_FEATURED_SERVICES.heading, hasCms);
+  const description = cmsText(block?.description, DEFAULT_FEATURED_SERVICES.description, hasCms);
 
   const resolvedCta = resolveLink(block?.cta);
   const sectionCta = resolvedCta
@@ -63,14 +68,17 @@ export function FeaturedServicesBlock({ block }: FeaturedServicesBlockProps) {
         appearance: resolvedCta.appearance,
         openInNewTab: resolvedCta.openInNewTab,
       }
-    : DEFAULT_FEATURED_SERVICES.cta;
+    : hasCms
+      ? undefined
+      : DEFAULT_FEATURED_SERVICES.cta;
 
-  const cmsCards =
-    block?.cards
-      ?.map((card, index) => mapCard(card, index))
-      .filter((card): card is ServiceCardData => Boolean(card)) ?? [];
-
-  const services = cmsCards.length > 0 ? cmsCards : DEFAULT_FEATURED_SERVICES.services;
+  const services = cmsList(
+    block?.cards?.map((card, index) => mapCard(card, index, hasCms)).filter(Boolean) as
+      ServiceCardData[] | undefined,
+    DEFAULT_FEATURED_SERVICES.services,
+    hasCms,
+    (): boolean => true,
+  );
 
   return (
     <section className="border-y border-border-subtle bg-surface">

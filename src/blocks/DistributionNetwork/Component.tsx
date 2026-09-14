@@ -5,6 +5,7 @@ import {
   type DistributionOffice,
 } from '@/blocks/DistributionNetwork/Interactive';
 import { SectionHeader } from '@/components/sections/SectionHeader';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_DISTRIBUTION_NETWORK } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
@@ -50,7 +51,10 @@ type DistributionNetworkBlockProps = {
   block?: DistributionNetworkBlockData | null;
 };
 
-function resolveOffices(items: OfficeItem[] | null | undefined): DistributionOffice[] {
+function resolveOffices(
+  items: OfficeItem[] | null | undefined,
+  hasCms: boolean,
+): DistributionOffice[] {
   const cmsOffices =
     items
       ?.filter((office) => office.city && office.region)
@@ -73,6 +77,10 @@ function resolveOffices(items: OfficeItem[] | null | undefined): DistributionOff
     return cmsOffices;
   }
 
+  if (hasCms) {
+    return [];
+  }
+
   return DEFAULT_DISTRIBUTION_NETWORK.regionalOffices.map((office) => ({
     city: office.city,
     region: office.region,
@@ -82,30 +90,30 @@ function resolveOffices(items: OfficeItem[] | null | undefined): DistributionOff
 }
 
 export function DistributionNetworkBlock({ block }: DistributionNetworkBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_DISTRIBUTION_NETWORK.eyebrow;
-  const heading = block?.heading || DEFAULT_DISTRIBUTION_NETWORK.heading;
-  const description = block?.description || DEFAULT_DISTRIBUTION_NETWORK.description;
+  const hasCms = blockHasCmsData(block);
+  const defaults = DEFAULT_DISTRIBUTION_NETWORK;
+  const eyebrow = cmsText(block?.eyebrow, defaults.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, defaults.heading, hasCms);
+  const description = cmsText(block?.description, defaults.description, hasCms);
 
-  const stats = block?.stats?.filter((stat) => stat.value && stat.label)?.length
-    ? block.stats
-        .filter((stat) => stat.value && stat.label)
-        .map((stat) => ({ value: stat.value!, label: stat.label! }))
-    : DEFAULT_DISTRIBUTION_NETWORK.stats;
+  const stats = cmsList(block?.stats, defaults.stats, hasCms, (stat) =>
+    Boolean(stat.value && stat.label),
+  ).map((stat) => ({ value: stat.value!, label: stat.label! }));
 
-  const offices = resolveOffices(block?.regionalOffices);
+  const offices = resolveOffices(block?.regionalOffices, hasCms);
 
   const hq = {
-    label: block?.hq?.label || DEFAULT_DISTRIBUTION_NETWORK.hq.label,
-    title: block?.hq?.title || DEFAULT_DISTRIBUTION_NETWORK.hq.title,
-    address: block?.hq?.address || DEFAULT_DISTRIBUTION_NETWORK.hq.address,
-    phone: block?.hq?.phone || DEFAULT_DISTRIBUTION_NETWORK.hq.phone,
-    mobile: block?.hq?.mobile || DEFAULT_DISTRIBUTION_NETWORK.hq.mobile,
-    email: block?.hq?.email || DEFAULT_DISTRIBUTION_NETWORK.hq.email,
+    label: cmsText(block?.hq?.label, defaults.hq.label, hasCms),
+    title: cmsText(block?.hq?.title, defaults.hq.title, hasCms),
+    address: cmsText(block?.hq?.address, defaults.hq.address, hasCms),
+    phone: cmsText(block?.hq?.phone, defaults.hq.phone, hasCms),
+    mobile: cmsText(block?.hq?.mobile, defaults.hq.mobile, hasCms),
+    email: cmsText(block?.hq?.email, defaults.hq.email, hasCms),
   };
 
   const mapImageUrl = getMediaUrl(block?.mapImage);
   const mapImageAlt = getMediaAlt(block?.mapImage, 'Kleenoil distribution network map');
-  const hqImageUrl = getMediaUrl(block?.hqImage) || DEFAULT_DISTRIBUTION_NETWORK.hqImageUrl;
+  const hqImageUrl = cmsText(getMediaUrl(block?.hqImage) ?? '', defaults.hqImageUrl, hasCms);
   const hqImageAlt = getMediaAlt(block?.hqImage, 'Kleenoil headquarters');
 
   const contacts = [
@@ -128,15 +136,17 @@ export function DistributionNetworkBlock({ block }: DistributionNetworkBlockProp
         />
 
         <div className="grid gap-8 overflow-hidden rounded-2xl border border-border-subtle bg-background lg:grid-cols-2">
-          <div data-reveal-part className="relative min-h-[280px] lg:min-h-full">
-            <Image
-              src={hqImageUrl}
-              alt={hqImageAlt}
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-          </div>
+          {hqImageUrl ? (
+            <div data-reveal-part className="relative min-h-[280px] lg:min-h-full">
+              <Image
+                src={hqImageUrl}
+                alt={hqImageAlt}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
+          ) : null}
 
           <div className="flex flex-col gap-6 p-8 lg:p-12">
             <div className="flex flex-col gap-3">

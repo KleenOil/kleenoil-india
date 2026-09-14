@@ -6,6 +6,14 @@ type EyebrowProps = {
 };
 
 export function Eyebrow({ children, className }: EyebrowProps) {
+  if (children == null || children === false) {
+    return null;
+  }
+
+  if (typeof children === 'string' && !children.trim()) {
+    return null;
+  }
+
   return (
     <span
       className={cn(

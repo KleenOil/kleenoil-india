@@ -2,6 +2,7 @@ import { Car, Cog, Factory, Gauge, Truck, Zap } from 'lucide-react';
 
 import { HeadingLines } from '@/components/sustainability/HeadingLines';
 import { Eyebrow } from '@/components/ui/eyebrow';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_SUSTAINABILITY_APPLICATIONS } from '@/lib/cms/sustainability';
 
 const ICONS = [Factory, Zap, Gauge, Truck, Cog, Car];
@@ -22,26 +23,33 @@ export function SustainabilityApplicationsBlock({
   block?: SustainabilityApplicationsBlockData | null;
 }) {
   const defaults = DEFAULT_SUSTAINABILITY_APPLICATIONS;
-  const eyebrow = block?.eyebrow || defaults.eyebrow;
-  const heading = block?.heading || defaults.heading;
-  const lead = block?.description || defaults.lead;
-  const cards = block?.cards?.filter((card) => card.title && card.body)?.length
-    ? block.cards.filter((card) => card.title && card.body)
-    : defaults.cards;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, defaults.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, defaults.heading, hasCms);
+  const lead = cmsText(block?.description, defaults.lead, hasCms);
+  const cards = cmsList(block?.cards, defaults.cards, hasCms, (card) =>
+    Boolean(card.title && card.body),
+  );
 
   return (
     <section className="bg-background">
       <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-12 px-6 py-16 lg:px-[100px] lg:py-[100px]">
         <div className="max-w-[720px] space-y-5">
-          <div data-reveal-part>
-            <Eyebrow>{eyebrow}</Eyebrow>
-          </div>
-          <h2 className="font-heading text-[1.75rem] font-bold leading-[1.05] tracking-[-0.04em] text-text-primary md:text-4xl lg:text-[44px]">
-            <HeadingLines text={heading} className="block" />
-          </h2>
-          <p data-reveal-part className="text-[15px] leading-relaxed text-text-secondary">
-            {lead}
-          </p>
+          {eyebrow ? (
+            <div data-reveal-part>
+              <Eyebrow>{eyebrow}</Eyebrow>
+            </div>
+          ) : null}
+          {heading ? (
+            <h2 className="font-heading text-[1.75rem] font-bold leading-[1.05] tracking-[-0.04em] text-text-primary md:text-4xl lg:text-[44px]">
+              <HeadingLines text={heading} className="block" />
+            </h2>
+          ) : null}
+          {lead ? (
+            <p data-reveal-part className="text-[15px] leading-relaxed text-text-secondary">
+              {lead}
+            </p>
+          ) : null}
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -49,7 +57,7 @@ export function SustainabilityApplicationsBlock({
             const Icon = ICONS[index] ?? Cog;
             return (
               <article
-                key={card.title}
+                key={`${index}-${card.title}`}
                 data-reveal-item
                 className="flex flex-col gap-4 rounded-2xl border border-border-subtle bg-surface-elevated/80 p-6"
               >

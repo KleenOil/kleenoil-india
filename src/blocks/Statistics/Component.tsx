@@ -1,5 +1,6 @@
 import { StatCard } from '@/components/cards/StatCard';
 import { SectionHeader } from '@/components/sections/SectionHeader';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_STATISTICS } from '@/lib/cms/defaults';
 
 type StatItem = {
@@ -20,13 +21,14 @@ type StatisticsBlockProps = {
 };
 
 export function StatisticsBlock({ block }: StatisticsBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_STATISTICS.eyebrow;
-  const heading = block?.heading || DEFAULT_STATISTICS.heading;
-  const description = block?.description || DEFAULT_STATISTICS.description;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_STATISTICS.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_STATISTICS.heading, hasCms);
+  const description = cmsText(block?.description, DEFAULT_STATISTICS.description, hasCms);
 
-  const stats = block?.stats?.filter((stat) => stat.value && stat.label)?.length
-    ? block.stats.filter((stat) => stat.value && stat.label)
-    : DEFAULT_STATISTICS.stats;
+  const stats = cmsList(block?.stats, DEFAULT_STATISTICS.stats, hasCms, (stat) =>
+    Boolean(stat.value && stat.label),
+  );
 
   return (
     <section className="border-t border-border-subtle bg-surface">

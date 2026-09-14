@@ -1,5 +1,6 @@
 import { TestimonialCard } from '@/components/cards/TestimonialCard';
 import { SectionHeader } from '@/components/sections/SectionHeader';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_TESTIMONIALS } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
@@ -25,9 +26,10 @@ type TestimonialsBlockProps = {
 };
 
 export function TestimonialsBlock({ block }: TestimonialsBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_TESTIMONIALS.eyebrow;
-  const heading = block?.heading || DEFAULT_TESTIMONIALS.heading;
-  const description = block?.description || DEFAULT_TESTIMONIALS.description;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_TESTIMONIALS.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_TESTIMONIALS.heading, hasCms);
+  const description = cmsText(block?.description, DEFAULT_TESTIMONIALS.description, hasCms);
 
   const cmsItems =
     block?.items
@@ -41,7 +43,16 @@ export function TestimonialsBlock({ block }: TestimonialsBlockProps) {
         imageAlt: getMediaAlt(item.photo, item.clientName || 'Client'),
       })) ?? [];
 
-  const items = cmsItems.length > 0 ? cmsItems : DEFAULT_TESTIMONIALS.items;
+  const items = cmsList(
+    cmsItems,
+    DEFAULT_TESTIMONIALS.items.map((item) => ({
+      ...item,
+      imageUrl: null as string | null,
+      imageAlt: item.clientName,
+    })),
+    hasCms,
+    (item) => Boolean(item.quote && item.clientName),
+  );
 
   return (
     <section className="bg-background">

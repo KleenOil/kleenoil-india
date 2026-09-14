@@ -159,7 +159,7 @@ export function RenderBlocks({
   return (
     <>
       {blocks.map((block, index) => {
-        const key = block.id ?? `${block.blockType}-${index}`;
+        const key = `${block.blockType}-${index}-${block.id ?? 'block'}`;
 
         switch (block.blockType) {
           case 'hero':

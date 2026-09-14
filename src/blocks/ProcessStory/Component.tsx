@@ -1,6 +1,7 @@
 import { ProcessStageCard } from '@/components/cards/ProcessStageCard';
 import type { ProcessStageData } from '@/components/cards/ProcessStageCard';
 import { SectionHeader } from '@/components/sections/SectionHeader';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_PROCESS_STORY } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
@@ -25,15 +26,16 @@ type ProcessStoryBlockProps = {
   block?: ProcessStoryBlockData | null;
 };
 
-function mapCmsStep(step: ProcessStep, index: number): ProcessStageData | null {
+function mapCmsStep(step: ProcessStep, index: number, hasCms: boolean): ProcessStageData | null {
   if (!step.title) {
     return null;
   }
 
-  const fallback = DEFAULT_PROCESS_STORY.steps[index];
+  const fallback = hasCms ? undefined : DEFAULT_PROCESS_STORY.steps[index];
 
   return {
-    stage: step.year || fallback?.stage || `STAGE ${String(index + 1).padStart(2, '0')}`,
+    stage:
+      step.year || fallback?.stage || (hasCms ? '' : `STAGE ${String(index + 1).padStart(2, '0')}`),
     title: step.title,
     description: step.description || fallback?.description || '',
     spec: step.spec || fallback?.spec || '',
@@ -44,12 +46,18 @@ function mapCmsStep(step: ProcessStep, index: number): ProcessStageData | null {
 }
 
 export function ProcessStoryBlock({ block }: ProcessStoryBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_PROCESS_STORY.eyebrow;
-  const heading = block?.heading || DEFAULT_PROCESS_STORY.heading;
-  const description = block?.description || DEFAULT_PROCESS_STORY.description;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_PROCESS_STORY.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_PROCESS_STORY.heading, hasCms);
+  const description = cmsText(block?.description, DEFAULT_PROCESS_STORY.description, hasCms);
 
-  const cmsSteps = block?.steps?.map(mapCmsStep).filter((s): s is ProcessStageData => Boolean(s));
-  const steps = cmsSteps?.length ? cmsSteps : DEFAULT_PROCESS_STORY.steps;
+  const steps = cmsList(
+    block?.steps?.map((step, index) => mapCmsStep(step, index, hasCms)).filter(Boolean) as
+      ProcessStageData[] | undefined,
+    DEFAULT_PROCESS_STORY.steps,
+    hasCms,
+    (): boolean => true,
+  );
 
   return (
     <section className="relative overflow-hidden bg-background">

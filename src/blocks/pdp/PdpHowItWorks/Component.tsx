@@ -1,4 +1,5 @@
 import { Eyebrow } from '@/components/ui/eyebrow';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_PDP_HOW_IT_WORKS } from '@/lib/cms/pdp-defaults';
 
 type StepItem = {
@@ -16,12 +17,13 @@ export type PdpHowItWorksBlockData = {
 };
 
 export function PdpHowItWorksBlock({ block }: { block?: PdpHowItWorksBlockData | null }) {
-  const eyebrow = block?.eyebrow || DEFAULT_PDP_HOW_IT_WORKS.eyebrow;
-  const heading = block?.heading || DEFAULT_PDP_HOW_IT_WORKS.heading;
-  const description = block?.description || DEFAULT_PDP_HOW_IT_WORKS.description;
-  const steps = block?.steps?.filter((step) => step.title)?.length
-    ? block.steps.filter((step) => step.title)
-    : DEFAULT_PDP_HOW_IT_WORKS.steps;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_PDP_HOW_IT_WORKS.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_PDP_HOW_IT_WORKS.heading, hasCms);
+  const description = cmsText(block?.description, DEFAULT_PDP_HOW_IT_WORKS.description, hasCms);
+  const steps = cmsList(block?.steps, DEFAULT_PDP_HOW_IT_WORKS.steps, hasCms, (step) =>
+    Boolean(step.title),
+  );
 
   return (
     <section className="bg-background">

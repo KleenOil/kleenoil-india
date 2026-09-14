@@ -25,10 +25,14 @@ const DEFAULTS = {
 };
 
 export function CustomEngineeringCard({ card, className }: CustomEngineeringCardProps) {
-  const tag = card?.tag?.trim() || DEFAULTS.tag;
-  const title = card?.title?.trim() || DEFAULTS.title;
-  const description = card?.description?.trim() || DEFAULTS.description;
-  const ctaLabel = card?.ctaLabel?.trim() || DEFAULTS.ctaLabel;
+  const hasContent = Boolean(
+    card?.tag?.trim() || card?.title?.trim() || card?.description?.trim() || card?.ctaLabel?.trim(),
+  );
+  const useFallback = !hasContent;
+  const tag = card?.tag?.trim() || (useFallback ? DEFAULTS.tag : '');
+  const title = card?.title?.trim() || (useFallback ? DEFAULTS.title : '');
+  const description = card?.description?.trim() || (useFallback ? DEFAULTS.description : '');
+  const ctaLabel = card?.ctaLabel?.trim() || (useFallback ? DEFAULTS.ctaLabel : '');
   const href = card?.href?.trim() || '';
   const linked = hasHref(href);
 

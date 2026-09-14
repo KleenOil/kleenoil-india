@@ -1,5 +1,6 @@
 import { CaseStudyCard, type CaseStudyCardData } from '@/components/cards/CaseStudyCard';
 import { SectionHeader } from '@/components/sections/SectionHeader';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_FEATURED_CASE_STUDIES } from '@/lib/cms/defaults';
 import { resolveLink } from '@/lib/cms/links';
 
@@ -38,12 +39,12 @@ type FeaturedCaseStudiesBlockProps = {
   block?: FeaturedCaseStudiesBlockData | null;
 };
 
-function mapCard(card: CaseStudyCmsCard, index: number): CaseStudyCardData | null {
+function mapCard(card: CaseStudyCmsCard, index: number, hasCms: boolean): CaseStudyCardData | null {
   if (!card.title?.trim()) {
     return null;
   }
 
-  const fallback = DEFAULT_FEATURED_CASE_STUDIES.caseStudies[index];
+  const fallback = hasCms ? undefined : DEFAULT_FEATURED_CASE_STUDIES.caseStudies[index];
   const cmsMetrics =
     card.metrics
       ?.filter((metric): metric is { value: string; label: string } =>
@@ -55,7 +56,7 @@ function mapCard(card: CaseStudyCmsCard, index: number): CaseStudyCardData | nul
       })) ?? [];
 
   return {
-    tag: card.tag?.trim() || fallback?.tag || 'CASE STUDY',
+    tag: card.tag?.trim() || fallback?.tag || (hasCms ? '' : 'CASE STUDY'),
     title: card.title.trim(),
     description: card.description?.trim() || fallback?.description || '',
     href: card.href?.trim() || '',
@@ -64,9 +65,14 @@ function mapCard(card: CaseStudyCmsCard, index: number): CaseStudyCardData | nul
 }
 
 export function FeaturedCaseStudiesBlock({ block }: FeaturedCaseStudiesBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_FEATURED_CASE_STUDIES.eyebrow;
-  const heading = block?.heading || DEFAULT_FEATURED_CASE_STUDIES.heading;
-  const description = block?.description || DEFAULT_FEATURED_CASE_STUDIES.description;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_FEATURED_CASE_STUDIES.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_FEATURED_CASE_STUDIES.heading, hasCms);
+  const description = cmsText(
+    block?.description,
+    DEFAULT_FEATURED_CASE_STUDIES.description,
+    hasCms,
+  );
 
   const resolvedCta = resolveLink(block?.cta);
   const sectionCta = resolvedCta
@@ -76,14 +82,17 @@ export function FeaturedCaseStudiesBlock({ block }: FeaturedCaseStudiesBlockProp
         appearance: resolvedCta.appearance,
         openInNewTab: resolvedCta.openInNewTab,
       }
-    : DEFAULT_FEATURED_CASE_STUDIES.cta;
+    : hasCms
+      ? undefined
+      : DEFAULT_FEATURED_CASE_STUDIES.cta;
 
-  const cmsCards =
-    block?.cards
-      ?.map((card, index) => mapCard(card, index))
-      .filter((card): card is CaseStudyCardData => Boolean(card)) ?? [];
-
-  const caseStudies = cmsCards.length > 0 ? cmsCards : DEFAULT_FEATURED_CASE_STUDIES.caseStudies;
+  const caseStudies = cmsList(
+    block?.cards?.map((card, index) => mapCard(card, index, hasCms)).filter(Boolean) as
+      CaseStudyCardData[] | undefined,
+    DEFAULT_FEATURED_CASE_STUDIES.caseStudies,
+    hasCms,
+    (): boolean => true,
+  );
   const firstRow = caseStudies.slice(0, 2);
   const secondRow = caseStudies.slice(2, 4);
 

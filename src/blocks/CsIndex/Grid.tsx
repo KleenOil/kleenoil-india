@@ -86,9 +86,7 @@ export function CsIndexGrid({ studies }: CsIndexGridProps) {
           <p className="font-heading text-xl font-bold text-text-primary">
             No results in this sector
           </p>
-          <p className="mt-2 text-text-secondary">
-            Publish a case study in the CMS, or choose another sector.
-          </p>
+          <p className="mt-2 text-text-secondary">Try another sector, or check back later.</p>
         </div>
       )}
 

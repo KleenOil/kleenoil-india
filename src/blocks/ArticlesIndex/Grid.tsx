@@ -74,9 +74,7 @@ export function ArticlesIndexGrid({ articles }: ArticlesIndexGridProps) {
           <p className="font-heading text-xl font-bold text-text-primary">
             No articles in this grid
           </p>
-          <p className="mt-2 text-text-secondary">
-            Publish an article in the CMS, or remove it from the hidden list on this block.
-          </p>
+          <p className="mt-2 text-text-secondary">Try another filter, or check back later.</p>
         </div>
       )}
     </div>

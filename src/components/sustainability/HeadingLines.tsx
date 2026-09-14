@@ -4,6 +4,10 @@ type HeadingLinesProps = {
 };
 
 export function HeadingLines({ text, className }: HeadingLinesProps) {
+  if (!text?.trim()) {
+    return null;
+  }
+
   return (
     <>
       {text.split('\n').map((line, index) => (

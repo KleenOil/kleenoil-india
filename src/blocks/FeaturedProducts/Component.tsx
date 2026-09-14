@@ -1,6 +1,7 @@
 import { CustomEngineeringCard } from '@/components/cards/CustomEngineeringCard';
 import { ProductCard, type ProductCardData } from '@/components/cards/ProductCard';
 import { SectionHeader } from '@/components/sections/SectionHeader';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_FEATURED_PRODUCTS } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl, resolveLink } from '@/lib/cms/links';
 import type { Media, Product } from '@/payload-types';
@@ -56,13 +57,17 @@ function resolveCardHref(card: FeaturedProductCard): string {
   return '';
 }
 
-function mapCard(card: FeaturedProductCard, index: number): ProductCardData | null {
+function mapCard(
+  card: FeaturedProductCard,
+  index: number,
+  hasCms: boolean,
+): ProductCardData | null {
   if (!card.title?.trim()) {
     return null;
   }
 
   return {
-    tag: card.tag?.trim() || `0${(index % 9) + 1} / SYSTEM`,
+    tag: card.tag?.trim() || (hasCms ? '' : `0${(index % 9) + 1} / SYSTEM`),
     title: card.title.trim(),
     description: card.description?.trim() || '',
     href: resolveCardHref(card),
@@ -72,9 +77,11 @@ function mapCard(card: FeaturedProductCard, index: number): ProductCardData | nu
 }
 
 export function FeaturedProductsBlock({ block }: FeaturedProductsBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_FEATURED_PRODUCTS.eyebrow;
-  const heading = block?.heading || DEFAULT_FEATURED_PRODUCTS.heading;
-  const description = block?.description || DEFAULT_FEATURED_PRODUCTS.description;
+  const hasCms = blockHasCmsData(block);
+  const defaults = DEFAULT_FEATURED_PRODUCTS;
+  const eyebrow = cmsText(block?.eyebrow, defaults.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, defaults.heading, hasCms);
+  const description = cmsText(block?.description, defaults.description, hasCms);
 
   const resolvedCta = resolveLink(block?.cta);
   const sectionCta = resolvedCta
@@ -84,24 +91,41 @@ export function FeaturedProductsBlock({ block }: FeaturedProductsBlockProps) {
         appearance: resolvedCta.appearance,
         openInNewTab: resolvedCta.openInNewTab,
       }
-    : DEFAULT_FEATURED_PRODUCTS.cta;
+    : hasCms
+      ? undefined
+      : defaults.cta;
 
-  const cmsCards =
-    block?.cards
-      ?.map((card, index) => mapCard(card, index))
-      .filter((card): card is ProductCardData => Boolean(card)) ?? [];
-
-  const products = cmsCards.length > 0 ? cmsCards : DEFAULT_FEATURED_PRODUCTS.products;
+  const products = cmsList(
+    block?.cards?.map((card, index) => mapCard(card, index, hasCms)).filter(Boolean) as
+      ProductCardData[] | undefined,
+    defaults.products,
+    hasCms,
+    (): boolean => true,
+  );
   const primaryRow = products.slice(0, 3);
   const secondaryRow = products.slice(3, 5);
 
-  const customEngineering = {
-    ...DEFAULT_FEATURED_PRODUCTS.customEngineering,
-    ...(block?.customEngineering ?? {}),
-    href: block?.customEngineering
-      ? block.customEngineering.href?.trim() || ''
-      : DEFAULT_FEATURED_PRODUCTS.customEngineering.href,
-  };
+  const customEngineering = hasCms
+    ? {
+        tag: block?.customEngineering?.tag?.trim() || '',
+        title: block?.customEngineering?.title?.trim() || '',
+        description: block?.customEngineering?.description?.trim() || '',
+        ctaLabel: block?.customEngineering?.ctaLabel?.trim() || '',
+        href: block?.customEngineering?.href?.trim() || '',
+      }
+    : {
+        ...defaults.customEngineering,
+        ...(block?.customEngineering ?? {}),
+        href: block?.customEngineering
+          ? block.customEngineering.href?.trim() || ''
+          : defaults.customEngineering.href,
+      };
+  const showCustomEngineering = Boolean(
+    customEngineering.tag ||
+    customEngineering.title ||
+    customEngineering.description ||
+    customEngineering.ctaLabel,
+  );
 
   return (
     <section className="bg-background">
@@ -124,7 +148,7 @@ export function FeaturedProductsBlock({ block }: FeaturedProductsBlockProps) {
             {secondaryRow.map((product) => (
               <ProductCard key={product.title} product={product} />
             ))}
-            <CustomEngineeringCard card={customEngineering} />
+            {showCustomEngineering ? <CustomEngineeringCard card={customEngineering} /> : null}
           </div>
         </div>
       </div>

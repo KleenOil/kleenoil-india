@@ -2,6 +2,7 @@ import { Eyebrow } from '@/components/ui/eyebrow';
 import { CtaButton } from '@/components/ui/cta-button';
 import { TrustBadgeRow } from '@/components/sections/TrustBadgeRow';
 import { DEFAULT_CTA } from '@/lib/cms/defaults';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { resolveCtaList } from '@/lib/cms/links';
 
 type CtaLinkItem = {
@@ -34,22 +35,27 @@ type CtaBlockProps = {
 };
 
 export function CtaBlock({ block }: CtaBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_CTA.eyebrow;
-  const heading = block?.heading || DEFAULT_CTA.heading;
-  // Prefer subtext; fall back to section description if subtext was left empty.
-  const subtext =
-    (typeof block?.subtext === 'string' && block.subtext.trim()) ||
-    (typeof block?.description === 'string' && block.description.trim()) ||
-    DEFAULT_CTA.subtext;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_CTA.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_CTA.heading, hasCms);
+  const subtext = cmsText(
+    block?.subtext?.trim() || block?.description?.trim() || '',
+    DEFAULT_CTA.subtext,
+    hasCms,
+  );
 
-  const ctas = resolveCtaList(block?.ctas, DEFAULT_CTA.ctas);
+  const ctas = resolveCtaList(block?.ctas, hasCms ? [] : DEFAULT_CTA.ctas);
 
-  const badges =
+  const badges = cmsList(
     block?.trustBadges
       ?.filter((badge) => badge.label)
       ?.map((badge) => ({
-        label: badge.label!,
-      })) ?? DEFAULT_CTA.trustBadges;
+        label: badge.label as string,
+      })),
+    DEFAULT_CTA.trustBadges,
+    hasCms,
+    (badge) => Boolean(badge.label),
+  );
 
   return (
     <section className="relative overflow-hidden bg-brand-soft">
@@ -66,48 +72,58 @@ export function CtaBlock({ block }: CtaBlockProps) {
           data-reveal-panel
           className="surface-panel mx-auto flex max-w-[1100px] flex-col items-center gap-10 rounded-3xl p-10 text-center lg:gap-12 lg:p-20"
         >
-          <div data-reveal-part>
-            <Eyebrow>{eyebrow}</Eyebrow>
-          </div>
+          {eyebrow ? (
+            <div data-reveal-part>
+              <Eyebrow>{eyebrow}</Eyebrow>
+            </div>
+          ) : null}
 
-          <h2 className="font-heading text-3xl font-bold leading-[0.98] tracking-[-0.06em] text-text-primary md:text-4xl lg:text-[80px]">
-            {heading.split('\n').map((line, index) => (
-              <span key={`${line}-${index}`} data-reveal-part className="block">
-                {line}
-              </span>
-            ))}
-          </h2>
+          {heading ? (
+            <h2 className="font-heading text-3xl font-bold leading-[0.98] tracking-[-0.06em] text-text-primary md:text-4xl lg:text-[80px]">
+              {heading.split('\n').map((line, index) => (
+                <span key={`${line}-${index}`} data-reveal-part className="block">
+                  {line}
+                </span>
+              ))}
+            </h2>
+          ) : null}
 
-          <p
-            data-reveal-part
-            className="max-w-[640px] text-base font-semibold leading-relaxed text-text-secondary md:text-lg"
-          >
-            {subtext}
-          </p>
+          {subtext ? (
+            <p
+              data-reveal-part
+              className="max-w-[640px] text-base font-semibold leading-relaxed text-text-secondary md:text-lg"
+            >
+              {subtext}
+            </p>
+          ) : null}
 
-          <div
-            data-reveal-part
-            className="flex w-full max-w-md flex-col gap-3.5 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center"
-          >
-            {ctas.map((cta, index) => (
-              <CtaButton
-                key={`${cta.label}-${index}`}
-                href={cta.href}
-                appearance={cta.appearance}
-                openInNewTab={cta.openInNewTab}
-                className="w-full sm:w-auto"
-              >
-                {cta.label}
-              </CtaButton>
-            ))}
-          </div>
+          {ctas.length ? (
+            <div
+              data-reveal-part
+              className="flex w-full max-w-md flex-col gap-3.5 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center"
+            >
+              {ctas.map((cta, index) => (
+                <CtaButton
+                  key={`${cta.label}-${index}`}
+                  href={cta.href}
+                  appearance={cta.appearance}
+                  openInNewTab={cta.openInNewTab}
+                  className="w-full sm:w-auto"
+                >
+                  {cta.label}
+                </CtaButton>
+              ))}
+            </div>
+          ) : null}
 
-          <TrustBadgeRow
-            badges={badges}
-            className="justify-center pt-4"
-            stacked
-            data-reveal-badges
-          />
+          {badges.length ? (
+            <TrustBadgeRow
+              badges={badges}
+              className="justify-center pt-4"
+              stacked
+              data-reveal-badges
+            />
+          ) : null}
         </div>
       </div>
     </section>

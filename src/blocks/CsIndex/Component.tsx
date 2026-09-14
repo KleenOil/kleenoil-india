@@ -1,6 +1,7 @@
 import { SectionHeader } from '@/components/sections/SectionHeader';
 import { caseStudyId, getPublishedCaseStudies, toCaseStudyCard } from '@/lib/cms/case-studies';
 import type { CaseStudyListingCard } from '@/lib/cms/cs-listing';
+import { blockHasCmsData, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_CS_INDEX } from '@/lib/cms/defaults';
 import type { CaseStudy } from '@/payload-types';
 
@@ -19,9 +20,10 @@ type CsIndexBlockProps = {
 };
 
 export async function CsIndexBlock({ block }: CsIndexBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_CS_INDEX.eyebrow;
-  const heading = block?.heading || DEFAULT_CS_INDEX.heading;
-  const description = block?.description?.trim() || null;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_CS_INDEX.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_CS_INDEX.heading, hasCms);
+  const description = cmsText(block?.description?.trim() || '', '', hasCms) || null;
 
   const hiddenIds = new Set(
     (block?.hiddenStudies ?? [])
@@ -38,7 +40,7 @@ export async function CsIndexBlock({ block }: CsIndexBlockProps) {
   const studies: CaseStudyListingCard[] =
     visible.length > 0
       ? visible.map((study) => toCaseStudyCard(study))
-      : published.length > 0
+      : published.length > 0 || hasCms
         ? []
         : DEFAULT_CS_INDEX.caseStudies;
 

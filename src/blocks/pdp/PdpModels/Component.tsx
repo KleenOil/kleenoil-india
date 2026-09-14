@@ -1,4 +1,5 @@
 import { Eyebrow } from '@/components/ui/eyebrow';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_PDP_MODELS } from '@/lib/cms/pdp-defaults';
 
 type ColumnItem = { label?: string | null };
@@ -17,15 +18,16 @@ export type PdpModelsBlockData = {
 };
 
 export function PdpModelsBlock({ block }: { block?: PdpModelsBlockData | null }) {
-  const eyebrow = block?.eyebrow || DEFAULT_PDP_MODELS.eyebrow;
-  const heading = block?.heading || DEFAULT_PDP_MODELS.heading;
-  const description = block?.description || DEFAULT_PDP_MODELS.description;
-  const columns = block?.columns?.filter((col) => col.label)?.length
-    ? block.columns.filter((col) => col.label)
-    : DEFAULT_PDP_MODELS.columns;
-  const models = block?.models?.filter((model) => model.name)?.length
-    ? block.models.filter((model) => model.name)
-    : DEFAULT_PDP_MODELS.models;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_PDP_MODELS.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_PDP_MODELS.heading, hasCms);
+  const description = cmsText(block?.description, DEFAULT_PDP_MODELS.description, hasCms);
+  const columns = cmsList(block?.columns, DEFAULT_PDP_MODELS.columns, hasCms, (col) =>
+    Boolean(col.label),
+  );
+  const models = cmsList(block?.models, DEFAULT_PDP_MODELS.models, hasCms, (model) =>
+    Boolean(model.name),
+  );
 
   return (
     <section className="bg-background">

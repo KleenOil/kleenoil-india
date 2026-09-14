@@ -59,7 +59,10 @@ export function ConsultationForm({
 }: ConsultationFormProps) {
   const [status, setStatus] = useState<FormStatus>('idle');
   const [error, setError] = useState<string | null>(null);
-  const resolvedQuestions = useMemo(() => resolveContactFormQuestions(questions), [questions]);
+  const resolvedQuestions = useMemo(
+    () => resolveContactFormQuestions(questions, { allowEmpty: questions != null }),
+    [questions],
+  );
   const inputNames = useMemo(() => uniqueQuestionNames(resolvedQuestions), [resolvedQuestions]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -149,12 +152,18 @@ export function ConsultationForm({
         className,
       )}
     >
-      <div>
-        <h2 className="font-heading text-[22px] font-bold tracking-tight text-text-primary">
-          {title}
-        </h2>
-        <p className="mt-2 text-[13px] leading-relaxed text-text-secondary">{lead}</p>
-      </div>
+      {title || lead ? (
+        <div>
+          {title ? (
+            <h2 className="font-heading text-[22px] font-bold tracking-tight text-text-primary">
+              {title}
+            </h2>
+          ) : null}
+          {lead ? (
+            <p className="mt-2 text-[13px] leading-relaxed text-text-secondary">{lead}</p>
+          ) : null}
+        </div>
+      ) : null}
 
       <div className="grid gap-4 sm:grid-cols-2">
         {resolvedQuestions.map((question, index) => {
@@ -232,11 +241,13 @@ export function ConsultationForm({
 
       {error ? <p className="text-sm text-red-700">{error}</p> : null}
 
-      <CtaButton type="submit" disabled={status === 'submitting'} className="w-full">
-        {status === 'submitting' ? 'Sending…' : submitLabel}
-      </CtaButton>
+      {submitLabel ? (
+        <CtaButton type="submit" disabled={status === 'submitting'} className="w-full">
+          {status === 'submitting' ? 'Sending…' : submitLabel}
+        </CtaButton>
+      ) : null}
 
-      <p className="text-xs leading-relaxed text-text-tertiary">{finePrint}</p>
+      {finePrint ? <p className="text-xs leading-relaxed text-text-tertiary">{finePrint}</p> : null}
     </form>
   );
 }

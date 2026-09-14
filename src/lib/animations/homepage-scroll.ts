@@ -29,6 +29,14 @@ function deferUntilIdle(): Promise<void> {
   });
 }
 
+function hasAnimatedReveal(block: HTMLElement) {
+  return Boolean(
+    block.querySelector(
+      '[data-reveal-target], [data-reveal-part], [data-reveal-item], [data-reveal-column], [data-reveal-panel], [data-reveal-logos] > *, [data-reveal-badges] > *, [data-hero-glow], .motion-line-grow',
+    ) || block.querySelector('[data-reveal-stagger] .grid:not([data-reveal-ignore]) > *'),
+  );
+}
+
 function toArray(nodes: NodeListOf<HTMLElement> | HTMLElement[]) {
   return [...new Set([...nodes])];
 }
@@ -83,16 +91,37 @@ export async function initHomepageMotion(root: HTMLElement): Promise<MotionHandl
   };
 
   const ctx = gsap.context(() => {
-    playHero(gsap, root, config);
+    root.querySelectorAll<HTMLElement>('[data-reveal="hero"]').forEach((hero, index) => {
+      if (index === 0) {
+        playHero(gsap, hero, config);
+        return;
+      }
+
+      if (!hasAnimatedReveal(hero)) {
+        hero.classList.add('motion-revealed');
+        return;
+      }
+
+      watch(hero, () => playHero(gsap, hero, config));
+    });
 
     root.querySelectorAll<HTMLElement>('[data-reveal="section"]').forEach((section) => {
+      if (!hasAnimatedReveal(section)) {
+        section.classList.add('motion-revealed');
+        return;
+      }
+
       watch(section, () => playSection(gsap, section, config));
     });
 
-    const cta = root.querySelector<HTMLElement>('[data-reveal="cta"]');
-    if (cta) {
+    root.querySelectorAll<HTMLElement>('[data-reveal="cta"]').forEach((cta) => {
+      if (!hasAnimatedReveal(cta)) {
+        cta.classList.add('motion-revealed');
+        return;
+      }
+
       watch(cta, () => playCta(gsap, cta, config));
-    }
+    });
   }, root);
 
   return {
@@ -107,17 +136,17 @@ export async function initHomepageMotion(root: HTMLElement): Promise<MotionHandl
 
 function playHero(
   gsap: GsapInstance,
-  root: HTMLElement,
+  hero: HTMLElement,
   config: ReturnType<typeof getMotionConfig>,
 ) {
-  const hero = root.querySelector<HTMLElement>('[data-reveal="hero"]');
-  if (!hero) {
-    return;
-  }
-
   const targets = hero.querySelectorAll<HTMLElement>('[data-reveal-target]');
   const glow = hero.querySelector<HTMLElement>('[data-hero-glow]');
   const animated = [...targets, ...(glow ? [glow] : [])];
+
+  if (!animated.length) {
+    hero.classList.add('motion-revealed');
+    return;
+  }
 
   const tl = gsap.timeline({
     defaults: { ease: REVEAL_EASE },
@@ -225,6 +254,11 @@ function playCta(gsap: GsapInstance, cta: HTMLElement, config: ReturnType<typeof
   const parts = cta.querySelectorAll<HTMLElement>('[data-reveal-part]');
   const badges = cta.querySelectorAll<HTMLElement>('[data-reveal-badges] > *');
   const animated = [...(panel ? [panel] : []), ...parts, ...badges];
+
+  if (!animated.length) {
+    cta.classList.add('motion-revealed');
+    return;
+  }
 
   const tl = gsap.timeline({
     defaults: { ease: REVEAL_EASE },

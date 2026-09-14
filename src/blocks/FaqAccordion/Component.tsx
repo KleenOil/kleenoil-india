@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Minus, Plus } from 'lucide-react';
 
 import { SectionHeader } from '@/components/sections/SectionHeader';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_FAQ_ACCORDION } from '@/lib/cms/defaults';
 import { cn } from '@/lib/utils';
 
@@ -26,13 +27,14 @@ type FaqAccordionBlockProps = {
 };
 
 export function FaqAccordionBlock({ block }: FaqAccordionBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_FAQ_ACCORDION.eyebrow;
-  const heading = block?.heading || DEFAULT_FAQ_ACCORDION.heading;
-  const description = block?.description || DEFAULT_FAQ_ACCORDION.description;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_FAQ_ACCORDION.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_FAQ_ACCORDION.heading, hasCms);
+  const description = cmsText(block?.description, DEFAULT_FAQ_ACCORDION.description, hasCms);
 
-  const items = block?.items?.filter((item) => item.question && item.answer)?.length
-    ? block.items.filter((item) => item.question && item.answer)
-    : DEFAULT_FAQ_ACCORDION.items;
+  const items = cmsList(block?.items, DEFAULT_FAQ_ACCORDION.items, hasCms, (item) =>
+    Boolean(item.question && item.answer),
+  );
 
   const initialOpen = new Set(
     items.map((item, index) => (item.defaultOpen ? index : -1)).filter((index) => index >= 0),

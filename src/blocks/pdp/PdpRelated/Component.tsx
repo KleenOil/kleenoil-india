@@ -1,5 +1,6 @@
 import { ProductCard } from '@/components/cards/ProductCard';
 import { Eyebrow } from '@/components/ui/eyebrow';
+import { blockHasCmsData, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_PDP_RELATED } from '@/lib/cms/pdp-defaults';
 import { getMediaUrl } from '@/lib/cms/links';
 import type { Media, Product } from '@/payload-types';
@@ -21,9 +22,10 @@ export type PdpRelatedBlockData = {
 };
 
 export function PdpRelatedBlock({ block }: { block?: PdpRelatedBlockData | null }) {
-  const eyebrow = block?.eyebrow || DEFAULT_PDP_RELATED.eyebrow;
-  const heading = block?.heading || DEFAULT_PDP_RELATED.heading;
-  const description = block?.description || DEFAULT_PDP_RELATED.description;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_PDP_RELATED.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_PDP_RELATED.heading, hasCms);
+  const description = cmsText(block?.description, DEFAULT_PDP_RELATED.description, hasCms);
 
   const relatedProducts =
     block?.products
@@ -31,7 +33,7 @@ export function PdpRelatedBlock({ block }: { block?: PdpRelatedBlockData | null 
         (item): item is Product => typeof item === 'object' && item !== null && 'slug' in item,
       )
       .map((product, index) => ({
-        tag: `0${index + 1} / SYSTEM`,
+        tag: hasCms ? '' : `0${index + 1} / SYSTEM`,
         title: product.name,
         description: product.shortDescription || '',
         href: `/products/${product.slug}`,
@@ -42,7 +44,7 @@ export function PdpRelatedBlock({ block }: { block?: PdpRelatedBlockData | null 
     block?.cards
       ?.filter((card) => card.title)
       .map((card, index) => ({
-        tag: `0${index + 1} / SYSTEM`,
+        tag: hasCms ? '' : `0${index + 1} / SYSTEM`,
         title: card.title!,
         description: card.description || '',
         href: card.href?.trim() || '',
@@ -54,27 +56,31 @@ export function PdpRelatedBlock({ block }: { block?: PdpRelatedBlockData | null 
       ? relatedProducts
       : manualCards.length > 0
         ? manualCards
-        : DEFAULT_PDP_RELATED.cards.map((card, index) => ({
-            tag: `0${index + 1} / SYSTEM`,
-            title: card.title,
-            description: card.description,
-            href: card.href,
-            imageUrl: null as string | null,
-          }));
+        : hasCms
+          ? []
+          : DEFAULT_PDP_RELATED.cards.map((card, index) => ({
+              tag: hasCms ? '' : `0${index + 1} / SYSTEM`,
+              title: card.title,
+              description: card.description,
+              href: card.href,
+              imageUrl: null as string | null,
+            }));
 
   return (
     <section className="bg-background">
       <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-12 px-6 py-16 lg:px-[100px] lg:py-[100px]">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-[640px] space-y-4">
-            <Eyebrow>{eyebrow}</Eyebrow>
-            <h2 className="font-heading text-[1.625rem] font-bold leading-[1.08] tracking-[-0.04em] text-text-primary md:text-3xl lg:text-[40px]">
-              {heading.split('\n').map((line, index) => (
-                <span key={`${line}-${index}`} className="block">
-                  {line}
-                </span>
-              ))}
-            </h2>
+            {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
+            {heading ? (
+              <h2 className="font-heading text-[1.625rem] font-bold leading-[1.08] tracking-[-0.04em] text-text-primary md:text-3xl lg:text-[40px]">
+                {heading.split('\n').map((line, index) => (
+                  <span key={`${line}-${index}`} className="block">
+                    {line}
+                  </span>
+                ))}
+              </h2>
+            ) : null}
           </div>
           <p className="max-w-[420px] text-[15px] leading-relaxed text-text-secondary">
             {description}

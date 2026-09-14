@@ -1,4 +1,5 @@
 import { SectionHeader } from '@/components/sections/SectionHeader';
+import { blockHasCmsData, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_ARTICLES_INDEX } from '@/lib/cms/defaults';
 import { getPublishedPosts, postId, toArticleCard } from '@/lib/cms/posts';
 import type { Post } from '@/payload-types';
@@ -18,9 +19,10 @@ type ArticlesIndexBlockProps = {
 };
 
 export async function ArticlesIndexBlock({ block }: ArticlesIndexBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_ARTICLES_INDEX.eyebrow;
-  const heading = block?.heading || DEFAULT_ARTICLES_INDEX.heading;
-  const description = block?.description || DEFAULT_ARTICLES_INDEX.description;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_ARTICLES_INDEX.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_ARTICLES_INDEX.heading, hasCms);
+  const description = cmsText(block?.description, DEFAULT_ARTICLES_INDEX.description, hasCms);
 
   const hiddenIds = new Set(
     (block?.hiddenPosts ?? [])
@@ -41,7 +43,7 @@ export async function ArticlesIndexBlock({ block }: ArticlesIndexBlockProps) {
   const articles =
     posts.length > 0
       ? posts.map((post) => toArticleCard(post))
-      : published.length > 0
+      : published.length > 0 || hasCms
         ? []
         : DEFAULT_ARTICLES_INDEX.articles;
 

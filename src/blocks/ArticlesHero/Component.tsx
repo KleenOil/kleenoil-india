@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import { CtaButton } from '@/components/ui/cta-button';
+import { blockHasCmsData, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_ARTICLES_HERO } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl, resolveLink, type CmsLink } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
@@ -19,11 +20,14 @@ type ArticlesHeroBlockProps = {
 };
 
 export function ArticlesHeroBlock({ block }: ArticlesHeroBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_ARTICLES_HERO.eyebrow;
-  const heading = block?.heading || DEFAULT_ARTICLES_HERO.heading;
-  const subheadline = block?.subheadline || DEFAULT_ARTICLES_HERO.subheadline;
-  const cta = resolveLink(block?.cta) ?? DEFAULT_ARTICLES_HERO.cta;
-  const imageUrl = getMediaUrl(block?.image) || DEFAULT_ARTICLES_HERO.imageUrl;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_ARTICLES_HERO.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_ARTICLES_HERO.heading, hasCms);
+  const subheadline = cmsText(block?.subheadline, DEFAULT_ARTICLES_HERO.subheadline, hasCms);
+  const cta = hasCms
+    ? resolveLink(block?.cta)
+    : (resolveLink(block?.cta) ?? DEFAULT_ARTICLES_HERO.cta);
+  const imageUrl = cmsText(getMediaUrl(block?.image) ?? '', DEFAULT_ARTICLES_HERO.imageUrl, hasCms);
   const imageAlt = getMediaAlt(block?.image, 'Kleenoil plant floor');
 
   return (
@@ -47,28 +51,34 @@ export function ArticlesHeroBlock({ block }: ArticlesHeroBlockProps) {
           data-reveal-panel
           className="w-full max-w-[560px] rounded-2xl border border-white/20 bg-white/10 p-8 backdrop-blur-md lg:p-10"
         >
-          <p
-            data-reveal-target
-            className="font-mono text-[12px] font-bold tracking-[2px] text-brand-soft uppercase"
-          >
-            {eyebrow}
-          </p>
-          <h1
-            data-reveal-target
-            className="mt-4 font-heading text-3xl font-bold leading-[1.05] tracking-[-0.04em] text-white md:text-4xl lg:text-[44px]"
-          >
-            {heading.split('\n').map((line, index) => (
-              <span key={`${line}-${index}`} className="block">
-                {line}
-              </span>
-            ))}
-          </h1>
-          <p
-            data-reveal-target
-            className="mt-4 text-base font-medium leading-relaxed text-brand-soft"
-          >
-            {subheadline}
-          </p>
+          {eyebrow ? (
+            <p
+              data-reveal-target
+              className="font-mono text-[12px] font-bold tracking-[2px] text-brand-soft uppercase"
+            >
+              {eyebrow}
+            </p>
+          ) : null}
+          {heading ? (
+            <h1
+              data-reveal-target
+              className="mt-4 font-heading text-3xl font-bold leading-[1.05] tracking-[-0.04em] text-white md:text-4xl lg:text-[44px]"
+            >
+              {heading.split('\n').map((line, index) => (
+                <span key={`${line}-${index}`} className="block">
+                  {line}
+                </span>
+              ))}
+            </h1>
+          ) : null}
+          {subheadline ? (
+            <p
+              data-reveal-target
+              className="mt-4 text-base font-medium leading-relaxed text-brand-soft"
+            >
+              {subheadline}
+            </p>
+          ) : null}
           {cta ? (
             <div data-reveal-target className="mt-7">
               <CtaButton

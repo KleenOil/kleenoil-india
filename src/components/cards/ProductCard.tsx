@@ -47,9 +47,11 @@ export function ProductCard({ product, className }: ProductCardProps) {
       </div>
 
       <div className="flex flex-1 flex-col gap-3.5 p-7">
-        <p className="font-mono text-xs font-bold tracking-[1.4px] text-brand-primary uppercase">
-          {product.tag}
-        </p>
+        {product.tag ? (
+          <p className="font-mono text-xs font-bold tracking-[1.4px] text-brand-primary uppercase">
+            {product.tag}
+          </p>
+        ) : null}
         <h3 className="font-heading text-xl font-bold leading-tight tracking-tight text-text-primary md:text-[28px]">
           {product.title}
         </h3>

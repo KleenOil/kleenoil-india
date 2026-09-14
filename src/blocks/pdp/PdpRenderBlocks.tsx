@@ -24,13 +24,21 @@ type PdpRenderBlocksProps = {
   motion?: boolean;
 };
 
-function wrap(key: string, node: ReactNode, motion: boolean, stagger = true) {
+type RevealVariant = 'hero' | 'section' | 'cta';
+
+function wrap(
+  key: string,
+  node: ReactNode,
+  motion: boolean,
+  stagger = true,
+  variant: RevealVariant = 'section',
+) {
   if (!motion) {
     return <div key={key}>{node}</div>;
   }
 
   return (
-    <RevealSection key={key} stagger={stagger}>
+    <RevealSection key={key} variant={variant} stagger={stagger}>
       {node}
     </RevealSection>
   );
@@ -56,7 +64,7 @@ export function PdpRenderBlocks({
         {wrap('pdp-models', <PdpModelsBlock />, motion, false)}
         {wrap('pdp-results', <PdpResultsBlock />, motion)}
         {wrap('pdp-related', <PdpRelatedBlock />, motion)}
-        {wrap('pdp-cta', <PdpCtaBlock />, motion)}
+        {wrap('pdp-cta', <PdpCtaBlock />, motion, false, 'cta')}
       </>
     );
   }
@@ -64,7 +72,7 @@ export function PdpRenderBlocks({
   return (
     <>
       {blocks.map((block, index) => {
-        const key = block.id ?? `${block.blockType}-${index}`;
+        const key = `${block.blockType}-${index}-${block.id ?? 'block'}`;
 
         switch (block.blockType) {
           case 'pdp-hero':
@@ -98,7 +106,13 @@ export function PdpRenderBlocks({
           case 'pdp-related':
             return wrap(key, <PdpRelatedBlock block={block as PdpRelatedBlockData} />, motion);
           case 'pdp-cta':
-            return wrap(key, <PdpCtaBlock block={block as PdpCtaBlockData} />, motion);
+            return wrap(
+              key,
+              <PdpCtaBlock block={block as PdpCtaBlockData} />,
+              motion,
+              false,
+              'cta',
+            );
           default:
             return null;
         }

@@ -11,6 +11,7 @@ describe('resolveContactFormQuestions', () => {
   it('falls back to the default consultation questions when none are saved', () => {
     expect(resolveContactFormQuestions(null)).toEqual(DEFAULT_CONTACT_FORM_QUESTIONS);
     expect(resolveContactFormQuestions([])).toEqual(DEFAULT_CONTACT_FORM_QUESTIONS);
+    expect(resolveContactFormQuestions([], { allowEmpty: true })).toEqual([]);
   });
 
   it('keeps CMS questions with width, field type, and dropdown options', () => {

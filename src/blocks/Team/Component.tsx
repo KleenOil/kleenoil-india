@@ -1,5 +1,6 @@
 import { TeamCard } from '@/components/cards/TeamCard';
 import { SectionHeader } from '@/components/sections/SectionHeader';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_TEAM } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
@@ -31,10 +32,11 @@ type TeamBlockProps = {
 };
 
 export function TeamBlock({ block }: TeamBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_TEAM.eyebrow;
-  const heading = block?.heading || DEFAULT_TEAM.heading;
-  const description = block?.description || DEFAULT_TEAM.description;
-  const extraHeading = block?.extraHeading || DEFAULT_TEAM.extraHeading;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_TEAM.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_TEAM.heading, hasCms);
+  const description = cmsText(block?.description, DEFAULT_TEAM.description, hasCms);
+  const extraHeading = cmsText(block?.extraHeading, DEFAULT_TEAM.extraHeading, hasCms);
   const showExtraMembers = block?.showExtraMembers ?? !block;
 
   const cmsMembers =
@@ -47,17 +49,27 @@ export function TeamBlock({ block }: TeamBlockProps) {
         imageAlt: getMediaAlt(member.photo, member.name || 'Team member'),
       })) ?? [];
 
-  const members = cmsMembers.length > 0 ? cmsMembers : DEFAULT_TEAM.members;
+  const members = cmsList(
+    cmsMembers,
+    DEFAULT_TEAM.members.map((member) => ({
+      ...member,
+      imageAlt: member.name,
+    })),
+    hasCms,
+    (member) => Boolean(member.name && member.role),
+  );
 
-  const cmsExtraMembers =
+  const extraMembers = cmsList(
     block?.extraMembers
       ?.filter((member) => member.name && member.role)
       .map((member) => ({
         name: member.name!,
         role: member.role!,
-      })) ?? [];
-
-  const extraMembers = cmsExtraMembers.length > 0 ? cmsExtraMembers : DEFAULT_TEAM.extraMembers;
+      })),
+    DEFAULT_TEAM.extraMembers,
+    hasCms,
+    (member) => Boolean(member.name && member.role),
+  );
 
   return (
     <section className="border-y border-border-subtle bg-surface">

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
 import { CtaButton } from '@/components/ui/cta-button';
 import { Eyebrow } from '@/components/ui/eyebrow';
+import { blockHasCmsData, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_PDP_HERO } from '@/lib/cms/pdp-defaults';
 import { getMediaAlt, getMediaUrl, resolveCtaList, type CmsLink } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
@@ -96,9 +97,17 @@ function variantsPerRowCount(value?: VariantsPerRow | null): 1 | 2 | 3 | 4 {
   return 2;
 }
 
-function selectorLabel(style: 'chips' | 'list' | 'dropdown', label?: string | null): string {
+function selectorLabel(
+  style: 'chips' | 'list' | 'dropdown',
+  label: string | null | undefined,
+  hasCms: boolean,
+): string {
   if (label) {
     return label;
+  }
+
+  if (hasCms) {
+    return '';
   }
 
   return style === 'list' ? 'SELECT CONFIGURATION' : DEFAULT_PDP_HERO.selectorLabel;
@@ -124,6 +133,8 @@ function defaultVariantIndex(variants: PdpHeroVariant[]): number {
 }
 
 export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroProps) {
+  const hasCms = blockHasCmsData(block);
+  const defaults = DEFAULT_PDP_HERO;
   const variants = block?.enableVariants
     ? (block.variants?.filter((variant) => variant.name) ?? [])
     : [];
@@ -132,10 +143,15 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
 
   const selected = variants[variantIndex] ?? variants[0] ?? null;
 
-  const eyebrow = block?.eyebrow || DEFAULT_PDP_HERO.eyebrow;
-  const title = selected?.title || block?.title || productName || DEFAULT_PDP_HERO.title;
-  const summary = selected?.summary || block?.summary || DEFAULT_PDP_HERO.summary;
-  const badge = selected?.badge || block?.badge || DEFAULT_PDP_HERO.badge;
+  const eyebrow = cmsText(block?.eyebrow, defaults.eyebrow, hasCms);
+  const title =
+    selected?.title?.trim() ||
+    cmsText(block?.title, defaults.title, hasCms) ||
+    productName?.trim() ||
+    '';
+  const summary =
+    selected?.summary?.trim() || cmsText(block?.summary, defaults.summary, hasCms) || '';
+  const badge = selected?.badge?.trim() || cmsText(block?.badge, defaults.badge, hasCms) || '';
 
   const variantGallery = galleryFromMedia(selected?.gallery, title);
   const heroGallery = galleryFromMedia(block?.gallery, title);
@@ -144,13 +160,16 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
   const gallery =
     cmsGallery.length > 0
       ? cmsGallery
-      : [
-          ...(featuredImageUrl ? [{ url: featuredImageUrl, alt: title }] : []),
-          ...DEFAULT_PDP_HERO.galleryUrls.map((url, index) => ({
-            url,
-            alt: `${title} ${index + 1}`,
-          })),
-        ].slice(0, 4);
+      : featuredImageUrl
+        ? [{ url: featuredImageUrl, alt: title }]
+        : hasCms
+          ? []
+          : defaults.galleryUrls
+              .map((url, index) => ({
+                url,
+                alt: `${title || defaults.title} ${index + 1}`,
+              }))
+              .slice(0, 4);
 
   const activeImage = gallery[Math.min(active, gallery.length - 1)] ?? gallery[0];
 
@@ -158,7 +177,9 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
   const specs: SpecItem[] =
     heroSpecs.length > 0
       ? heroSpecs
-      : DEFAULT_PDP_HERO.quickSpecs.map((spec) => ({ ...spec, animateCounter: false }));
+      : hasCms
+        ? []
+        : defaults.quickSpecs.map((spec) => ({ ...spec, animateCounter: false }));
 
   const variantConfig = usableConfigSpecs(selected?.configSpecs);
   const heroConfig = usableConfigSpecs(block?.configSpecs);
@@ -167,11 +188,13 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
       ? variantConfig
       : heroConfig.length > 0
         ? heroConfig
-        : variants.length > 0
-          ? DEFAULT_PDP_HERO.configSpecs
-          : [];
+        : hasCms
+          ? []
+          : variants.length > 0
+            ? defaults.configSpecs
+            : [];
 
-  const perRow = block?.quickSpecsPerRow || DEFAULT_PDP_HERO.quickSpecsPerRow;
+  const perRow = block?.quickSpecsPerRow || (hasCms ? 'auto' : defaults.quickSpecsPerRow);
   const lockedColumns: Record<string, number> = {
     one: 1,
     two: 2,
@@ -180,7 +203,7 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
   };
   const specColumns = lockedColumns[perRow] ?? Math.min(Math.max(specs.length, 1), 4);
 
-  const ctas = resolveCtaList(block?.ctas, DEFAULT_PDP_HERO.ctas);
+  const ctas = resolveCtaList(block?.ctas, hasCms ? [] : defaults.ctas);
   const style = selectorStyle(block?.selectorStyle);
 
   const selectVariant = (index: number) => {
@@ -204,12 +227,14 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
               />
             ) : null}
             <div className="absolute inset-0 bg-brand-primary/10" aria-hidden />
-            <div className="absolute left-6 top-6 inline-flex items-center gap-2 rounded-full bg-surface-elevated/80 px-3.5 py-2.5">
-              <span className="size-1.5 rounded-full bg-brand-primary" aria-hidden />
-              <span className="font-mono text-[11px] font-bold tracking-[1.2px] text-brand-primary uppercase">
-                {badge}
-              </span>
-            </div>
+            {badge ? (
+              <div className="absolute left-6 top-6 inline-flex items-center gap-2 rounded-full bg-surface-elevated/80 px-3.5 py-2.5">
+                <span className="size-1.5 rounded-full bg-brand-primary" aria-hidden />
+                <span className="font-mono text-[11px] font-bold tracking-[1.2px] text-brand-primary uppercase">
+                  {badge}
+                </span>
+              </div>
+            ) : null}
           </div>
 
           {gallery.length > 1 ? (
@@ -232,21 +257,25 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col gap-7 pt-2">
-          <Eyebrow>{eyebrow}</Eyebrow>
-          <h1 className="font-heading text-3xl font-bold leading-[1.05] tracking-[-0.04em] text-text-primary md:text-4xl lg:text-[48px]">
-            {title.split('\n').map((line, index) => (
-              <span key={`${line}-${index}`} className="block">
-                {line}
-              </span>
-            ))}
-          </h1>
-          <p className="max-w-xl text-base leading-relaxed text-text-secondary md:text-[17px]">
-            {summary}
-          </p>
+          {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
+          {title ? (
+            <h1 className="font-heading text-3xl font-bold leading-[1.05] tracking-[-0.04em] text-text-primary md:text-4xl lg:text-[48px]">
+              {title.split('\n').map((line, index) => (
+                <span key={`${line}-${index}`} className="block">
+                  {line}
+                </span>
+              ))}
+            </h1>
+          ) : null}
+          {summary ? (
+            <p className="max-w-xl text-base leading-relaxed text-text-secondary md:text-[17px]">
+              {summary}
+            </p>
+          ) : null}
 
           {variants.length > 0 ? (
             <VariantSelector
-              label={selectorLabel(style, block?.selectorLabel)}
+              label={selectorLabel(style, block?.selectorLabel, hasCms)}
               style={style}
               perRow={variantsPerRowCount(block?.variantsPerRow)}
               variants={variants}
@@ -258,7 +287,7 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
           {configSpecs.length > 0 ? (
             <div className="flex flex-col">
               <p className="font-mono text-[11px] font-bold tracking-[1.4px] text-text-tertiary uppercase">
-                {block?.configSpecsLabel || DEFAULT_PDP_HERO.configSpecsLabel}
+                {cmsText(block?.configSpecsLabel, defaults.configSpecsLabel, hasCms)}
               </p>
               {configSpecs.map((spec, index) => (
                 <div key={`${spec.label}-${spec.value}-${index}`}>
@@ -309,18 +338,20 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
             ))}
           </div>
 
-          <div className="flex flex-wrap gap-3.5 pt-2">
-            {ctas.map((cta, index) => (
-              <CtaButton
-                key={`${cta.label}-${index}`}
-                href={cta.href}
-                appearance={cta.appearance}
-                openInNewTab={cta.openInNewTab}
-              >
-                {cta.label}
-              </CtaButton>
-            ))}
-          </div>
+          {ctas.length ? (
+            <div className="flex flex-wrap gap-3.5 pt-2">
+              {ctas.map((cta, index) => (
+                <CtaButton
+                  key={`${cta.label}-${index}`}
+                  href={cta.href}
+                  appearance={cta.appearance}
+                  openInNewTab={cta.openInNewTab}
+                >
+                  {cta.label}
+                </CtaButton>
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

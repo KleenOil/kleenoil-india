@@ -1,5 +1,6 @@
 import { IndustryCard, type IndustryCardData } from '@/components/cards/IndustryCard';
 import { SectionHeader } from '@/components/sections/SectionHeader';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_FEATURED_INDUSTRIES } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
@@ -25,15 +26,18 @@ type FeaturedIndustriesBlockProps = {
   block?: FeaturedIndustriesBlockData | null;
 };
 
-function mapCard(card: IndustryCmsCard, index: number): IndustryCardData | null {
+function mapCard(card: IndustryCmsCard, index: number, hasCms: boolean): IndustryCardData | null {
   if (!card.title?.trim()) {
     return null;
   }
 
-  const fallback = DEFAULT_FEATURED_INDUSTRIES.industries[index];
+  const fallback = hasCms ? undefined : DEFAULT_FEATURED_INDUSTRIES.industries[index];
 
   return {
-    tag: card.tag?.trim() || fallback?.tag || `${String(index + 1).padStart(2, '0')} / INDUSTRY`,
+    tag:
+      card.tag?.trim() ||
+      fallback?.tag ||
+      (hasCms ? '' : `${String(index + 1).padStart(2, '0')} / INDUSTRY`),
     title: card.title.trim(),
     description: card.description?.trim() || fallback?.description || '',
     href: card.href?.trim() || '',
@@ -43,16 +47,18 @@ function mapCard(card: IndustryCmsCard, index: number): IndustryCardData | null 
 }
 
 export function FeaturedIndustriesBlock({ block }: FeaturedIndustriesBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_FEATURED_INDUSTRIES.eyebrow;
-  const heading = block?.heading || DEFAULT_FEATURED_INDUSTRIES.heading;
-  const description = block?.description || DEFAULT_FEATURED_INDUSTRIES.description;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_FEATURED_INDUSTRIES.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_FEATURED_INDUSTRIES.heading, hasCms);
+  const description = cmsText(block?.description, DEFAULT_FEATURED_INDUSTRIES.description, hasCms);
 
-  const cmsCards =
-    block?.cards
-      ?.map((card, index) => mapCard(card, index))
-      .filter((card): card is IndustryCardData => Boolean(card)) ?? [];
-
-  const industries = cmsCards.length > 0 ? cmsCards : DEFAULT_FEATURED_INDUSTRIES.industries;
+  const industries = cmsList(
+    block?.cards?.map((card, index) => mapCard(card, index, hasCms)).filter(Boolean) as
+      IndustryCardData[] | undefined,
+    DEFAULT_FEATURED_INDUSTRIES.industries,
+    hasCms,
+    (): boolean => true,
+  );
   const firstRow = industries.slice(0, 3);
   const secondRow = industries.slice(3, 6);
 

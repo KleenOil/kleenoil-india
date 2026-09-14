@@ -2,6 +2,7 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 
 import { ContactForm } from '@/components/forms/ContactForm';
 import { SectionHeader } from '@/components/sections/SectionHeader';
+import { blockHasCmsData, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_CONTACT_PREVIEW } from '@/lib/cms/defaults';
 import { getContactDetails } from '@/lib/cms/contact';
 
@@ -19,9 +20,10 @@ type ContactPreviewBlockProps = {
 };
 
 export async function ContactPreviewBlock({ block }: ContactPreviewBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_CONTACT_PREVIEW.eyebrow;
-  const heading = block?.heading || DEFAULT_CONTACT_PREVIEW.heading;
-  const description = block?.description || DEFAULT_CONTACT_PREVIEW.description;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_CONTACT_PREVIEW.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_CONTACT_PREVIEW.heading, hasCms);
+  const description = cmsText(block?.description, DEFAULT_CONTACT_PREVIEW.description, hasCms);
   const showContactInfo = block?.showContactInfo ?? true;
   const showForm = block?.showForm ?? true;
 
@@ -101,22 +103,13 @@ export async function ContactPreviewBlock({ block }: ContactPreviewBlockProps) {
                 ))}
               </div>
             </div>
-          ) : (
-            <div className="rounded-2xl border border-dashed border-border-subtle bg-background/50 p-8 text-sm text-text-secondary">
-              Contact details are hidden for this block. Enable &ldquo;Show Contact
-              Information&rdquo; in the CMS to display office, phone, and email details.
-            </div>
-          )}
+          ) : null}
 
           {showForm ? (
             <div data-reveal-column>
               <ContactForm />
             </div>
-          ) : (
-            <div className="flex items-center justify-center rounded-2xl border border-dashed border-border-subtle bg-background/50 p-8 text-sm text-text-secondary">
-              Contact form hidden for this block.
-            </div>
-          )}
+          ) : null}
         </div>
       </div>
     </section>

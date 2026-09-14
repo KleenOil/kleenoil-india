@@ -4,6 +4,7 @@ import { ParallaxMedia } from '@/components/motion/ParallaxMedia';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
 import { Eyebrow } from '@/components/ui/eyebrow';
 import { CtaButton } from '@/components/ui/cta-button';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_HERO, DEFAULT_HERO_SLIDER, DEFAULT_IMMERSIVE_HERO } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl, resolveCtaList } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
@@ -52,6 +53,8 @@ type HeroProps = {
 };
 
 export function HeroBlock({ block }: HeroProps) {
+  const hasCms = blockHasCmsData(block);
+
   if (block?.variant === 'slider') {
     const mapped = (block.slides ?? [])
       .map((slide): HeroSlideView | null => {
@@ -67,18 +70,20 @@ export function HeroBlock({ block }: HeroProps) {
           subheadline: slide.subheadline?.trim() || '',
           imageUrl: getMediaUrl(slide.image),
           imageAlt: getMediaAlt(slide.image, slide.headline),
-          ctas: resolveCtaList(slide.ctas, DEFAULT_HERO_SLIDER[0]?.ctas ?? []),
+          ctas: resolveCtaList(slide.ctas, hasCms ? [] : (DEFAULT_HERO_SLIDER[0]?.ctas ?? [])),
         };
       })
       .filter((slide): slide is HeroSlideView => Boolean(slide));
 
     const slides =
       mapped.length > 0
-        ? mapped.map((slide, index) => ({
+        ? mapped.map((slide) => ({
             ...slide,
-            imageUrl: slide.imageUrl || DEFAULT_HERO_SLIDER[index]?.imageUrl || null,
+            imageUrl: slide.imageUrl || null,
           }))
-        : DEFAULT_HERO_SLIDER;
+        : hasCms
+          ? []
+          : DEFAULT_HERO_SLIDER;
 
     return <HeroSlider slides={slides} intervalSeconds={Number(block.slideInterval ?? 6)} />;
   }
@@ -86,18 +91,22 @@ export function HeroBlock({ block }: HeroProps) {
   const isImmersive = block?.variant === 'immersive';
   const defaults = isImmersive ? DEFAULT_IMMERSIVE_HERO : DEFAULT_HERO;
 
-  const eyebrow = block?.eyebrow || defaults.eyebrow;
-  const headline = block?.headline || defaults.headline;
-  const subheadline = block?.subheadline || defaults.subheadline;
+  const eyebrow = cmsText(block?.eyebrow, defaults.eyebrow, hasCms);
+  const headline = cmsText(block?.headline, defaults.headline, hasCms);
+  const subheadline = cmsText(block?.subheadline, defaults.subheadline, hasCms);
 
-  const ctas = resolveCtaList(block?.ctas, defaults.ctas);
+  const ctas = resolveCtaList(block?.ctas, hasCms ? [] : defaults.ctas);
 
-  const metaStats = block?.metaStats?.filter((stat) => stat.value && stat.label)?.length
-    ? block.metaStats.filter((stat) => stat.value && stat.label)
-    : defaults.metaStats;
+  const metaStats = cmsList(block?.metaStats, defaults.metaStats, hasCms, (stat) =>
+    Boolean(stat.value && stat.label),
+  );
 
   const imageUrl =
-    getMediaUrl(block?.image) || (isImmersive ? DEFAULT_IMMERSIVE_HERO.imageUrl : null);
+    cmsText(
+      getMediaUrl(block?.image) ?? '',
+      isImmersive ? DEFAULT_IMMERSIVE_HERO.imageUrl : '',
+      hasCms,
+    ) || null;
   const imageAlt = getMediaAlt(
     block?.image,
     isImmersive ? 'Kleenoil industrial filtration facility' : 'Industrial filtration equipment',
@@ -129,30 +138,36 @@ export function HeroBlock({ block }: HeroProps) {
 
         <div className="relative mx-auto flex min-h-[640px] w-full max-w-[1440px] flex-col justify-center px-6 py-20 lg:min-h-[720px] lg:px-[100px] lg:py-[160px]">
           <div className="flex max-w-[900px] flex-col gap-7">
-            <p
-              data-reveal-target
-              className="font-mono text-[13px] font-bold tracking-[2.4px] text-brand-soft uppercase"
-            >
-              {eyebrow}
-            </p>
+            {eyebrow ? (
+              <p
+                data-reveal-target
+                className="font-mono text-[13px] font-bold tracking-[2.4px] text-brand-soft uppercase"
+              >
+                {eyebrow}
+              </p>
+            ) : null}
 
-            <h1
-              data-reveal-target
-              className="font-heading text-4xl font-bold leading-[0.98] tracking-[-0.04em] text-white md:text-5xl lg:text-[72px] lg:tracking-[-0.045em]"
-            >
-              {headline.split('\n').map((line, index) => (
-                <span key={`${line}-${index}`} className="block">
-                  {line}
-                </span>
-              ))}
-            </h1>
+            {headline ? (
+              <h1
+                data-reveal-target
+                className="font-heading text-4xl font-bold leading-[0.98] tracking-[-0.04em] text-white md:text-5xl lg:text-[72px] lg:tracking-[-0.045em]"
+              >
+                {headline.split('\n').map((line, index) => (
+                  <span key={`${line}-${index}`} className="block">
+                    {line}
+                  </span>
+                ))}
+              </h1>
+            ) : null}
 
-            <p
-              data-reveal-target
-              className="max-w-[640px] text-base font-semibold leading-relaxed text-brand-soft md:text-lg"
-            >
-              {subheadline}
-            </p>
+            {subheadline ? (
+              <p
+                data-reveal-target
+                className="max-w-[640px] text-base font-semibold leading-relaxed text-brand-soft md:text-lg"
+              >
+                {subheadline}
+              </p>
+            ) : null}
 
             {ctas.length > 0 ? (
               <div data-reveal-target className="flex flex-wrap gap-3.5 pt-1">
@@ -174,21 +189,23 @@ export function HeroBlock({ block }: HeroProps) {
               </div>
             ) : null}
 
-            <div
-              data-reveal-target
-              className="mt-2 flex flex-wrap items-start gap-10 border-t border-white/15 pt-6 sm:gap-12"
-            >
-              {metaStats.map((stat) => (
-                <div key={`${stat.value}-${stat.label}`} className="flex flex-col gap-1">
-                  <p className="font-heading text-[28px] font-bold tracking-[-0.03em] text-white">
-                    <AnimatedCounter value={stat.value!} />
-                  </p>
-                  <p className="font-mono text-[11px] font-bold tracking-[1.4px] text-border-strong uppercase">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
-            </div>
+            {metaStats.length ? (
+              <div
+                data-reveal-target
+                className="mt-2 flex flex-wrap items-start gap-10 border-t border-white/15 pt-6 sm:gap-12"
+              >
+                {metaStats.map((stat) => (
+                  <div key={`${stat.value}-${stat.label}`} className="flex flex-col gap-1">
+                    <p className="font-heading text-[28px] font-bold tracking-[-0.03em] text-white">
+                      <AnimatedCounter value={stat.value!} />
+                    </p>
+                    <p className="font-mono text-[11px] font-bold tracking-[1.4px] text-border-strong uppercase">
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </div>
         </div>
       </section>
@@ -209,56 +226,66 @@ export function HeroBlock({ block }: HeroProps) {
       <div className="relative mx-auto flex w-full max-w-[1440px] flex-col gap-10 px-6 py-16 lg:flex-row lg:items-stretch lg:gap-[60px] lg:px-[100px] lg:py-[100px]">
         <div className="surface-panel w-full rounded-[20px] p-6 lg:max-w-[640px] lg:p-10">
           <div className="flex flex-col gap-8">
-            <div data-reveal-target>
-              <Eyebrow>{eyebrow}</Eyebrow>
-            </div>
+            {eyebrow ? (
+              <div data-reveal-target>
+                <Eyebrow>{eyebrow}</Eyebrow>
+              </div>
+            ) : null}
 
-            <h1
-              data-reveal-target
-              className="font-heading text-3xl font-bold leading-[0.98] tracking-[-0.04em] text-text-primary md:text-4xl lg:text-[58px]"
-            >
-              {headline.split('\n').map((line, index) => (
-                <span key={`${line}-${index}`} className="block">
-                  {line}
-                </span>
-              ))}
-            </h1>
+            {headline ? (
+              <h1
+                data-reveal-target
+                className="font-heading text-3xl font-bold leading-[0.98] tracking-[-0.04em] text-text-primary md:text-4xl lg:text-[58px]"
+              >
+                {headline.split('\n').map((line, index) => (
+                  <span key={`${line}-${index}`} className="block">
+                    {line}
+                  </span>
+                ))}
+              </h1>
+            ) : null}
 
-            <p
-              data-reveal-target
-              className="max-w-[520px] text-base font-semibold leading-relaxed text-text-secondary md:text-lg"
-            >
-              {subheadline}
-            </p>
+            {subheadline ? (
+              <p
+                data-reveal-target
+                className="max-w-[520px] text-base font-semibold leading-relaxed text-text-secondary md:text-lg"
+              >
+                {subheadline}
+              </p>
+            ) : null}
 
-            <div data-reveal-target className="flex flex-wrap gap-3.5 pt-2">
-              {ctas.map((cta, index) => (
-                <CtaButton
-                  key={`${cta.label}-${index}`}
-                  href={cta.href}
-                  appearance={cta.appearance}
-                  openInNewTab={cta.openInNewTab}
-                >
-                  {cta.label}
-                </CtaButton>
-              ))}
-            </div>
+            {ctas.length ? (
+              <div data-reveal-target className="flex flex-wrap gap-3.5 pt-2">
+                {ctas.map((cta, index) => (
+                  <CtaButton
+                    key={`${cta.label}-${index}`}
+                    href={cta.href}
+                    appearance={cta.appearance}
+                    openInNewTab={cta.openInNewTab}
+                  >
+                    {cta.label}
+                  </CtaButton>
+                ))}
+              </div>
+            ) : null}
 
-            <div
-              data-reveal-target
-              className="surface-panel mt-2 flex flex-col gap-8 rounded-2xl p-5 sm:flex-row sm:flex-wrap sm:items-start sm:gap-10 sm:p-7"
-            >
-              {metaStats.map((stat) => (
-                <div key={`${stat.value}-${stat.label}`} className="flex flex-col gap-1.5">
-                  <p className="font-heading text-2xl font-bold tracking-tight text-brand-primary md:text-[28px]">
-                    <AnimatedCounter value={stat.value!} />
-                  </p>
-                  <p className="text-[11px] font-bold tracking-[1.2px] text-text-tertiary uppercase">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
-            </div>
+            {metaStats.length ? (
+              <div
+                data-reveal-target
+                className="surface-panel mt-2 flex flex-col gap-8 rounded-2xl p-5 sm:flex-row sm:flex-wrap sm:items-start sm:gap-10 sm:p-7"
+              >
+                {metaStats.map((stat) => (
+                  <div key={`${stat.value}-${stat.label}`} className="flex flex-col gap-1.5">
+                    <p className="font-heading text-2xl font-bold tracking-tight text-brand-primary md:text-[28px]">
+                      <AnimatedCounter value={stat.value!} />
+                    </p>
+                    <p className="text-[11px] font-bold tracking-[1.2px] text-text-tertiary uppercase">
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </div>
         </div>
 
@@ -277,7 +304,7 @@ export function HeroBlock({ block }: HeroProps) {
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 priority
               />
-            ) : (
+            ) : hasCms ? null : (
               <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand-soft via-surface to-brand-dim p-10 text-center">
                 <div>
                   <p className="font-heading text-2xl font-bold text-brand-deep">Product Visual</p>

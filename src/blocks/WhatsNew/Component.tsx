@@ -2,6 +2,7 @@ import { ArrowRight } from 'lucide-react';
 
 import { SectionHeader } from '@/components/sections/SectionHeader';
 import { MaybeLink, hasHref } from '@/components/ui/maybe-link';
+import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_WHATS_NEW } from '@/lib/cms/defaults';
 import { resolveLink, type CmsLink } from '@/lib/cms/links';
 
@@ -25,36 +26,38 @@ type WhatsNewBlockProps = {
 };
 
 export function WhatsNewBlock({ block }: WhatsNewBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_WHATS_NEW.eyebrow;
-  const heading = block?.heading || DEFAULT_WHATS_NEW.heading;
-  const description = block?.description || DEFAULT_WHATS_NEW.description;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_WHATS_NEW.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_WHATS_NEW.heading, hasCms);
+  const description = cmsText(block?.description, DEFAULT_WHATS_NEW.description, hasCms);
 
-  const cmsCards =
+  const defaultCards = DEFAULT_WHATS_NEW.cards.map((card) => ({
+    badge: card.badge,
+    title: card.title,
+    description: card.description,
+    href: card.href,
+    linkLabel: card.linkLabel,
+  }));
+
+  const cards = cmsList(
     block?.cards
       ?.filter((card) => card.title)
       .map((card, index) => {
-        const fallback = DEFAULT_WHATS_NEW.cards[index] ?? DEFAULT_WHATS_NEW.cards[0];
+        const fallback = hasCms ? undefined : DEFAULT_WHATS_NEW.cards[index];
         const link = resolveLink(card.link);
 
         return {
-          badge: card.badge || fallback?.badge || 'Update',
+          badge: card.badge || fallback?.badge || (hasCms ? '' : 'Update'),
           title: card.title!,
           description: card.description || fallback?.description || '',
           href: link?.href ?? '',
-          linkLabel: link?.label || fallback?.linkLabel || 'Explore',
+          linkLabel: link?.label || fallback?.linkLabel || (hasCms ? '' : 'Explore'),
         };
-      }) ?? [];
-
-  const cards =
-    cmsCards.length > 0
-      ? cmsCards
-      : DEFAULT_WHATS_NEW.cards.map((card) => ({
-          badge: card.badge,
-          title: card.title,
-          description: card.description,
-          href: card.href,
-          linkLabel: card.linkLabel,
-        }));
+      }),
+    defaultCards,
+    hasCms,
+    (card) => Boolean(card.title),
+  );
 
   return (
     <section className="border-b border-border-subtle bg-background">

@@ -103,6 +103,7 @@ type CmsContactFormQuestion = {
 
 export function resolveContactFormQuestions(
   questions?: CmsContactFormQuestion[] | null,
+  options?: { allowEmpty?: boolean },
 ): ContactFormQuestion[] {
   const resolved = (questions ?? [])
     .map((question) => {
@@ -144,5 +145,9 @@ export function resolveContactFormQuestions(
     })
     .filter((question): question is ContactFormQuestion => question !== null);
 
-  return resolved.length ? resolved : DEFAULT_CONTACT_FORM_QUESTIONS;
+  if (resolved.length) {
+    return resolved;
+  }
+
+  return options?.allowEmpty ? [] : DEFAULT_CONTACT_FORM_QUESTIONS;
 }

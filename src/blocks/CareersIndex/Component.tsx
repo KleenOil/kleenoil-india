@@ -1,4 +1,5 @@
 import { Eyebrow } from '@/components/ui/eyebrow';
+import { blockHasCmsData, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_CAREERS_INDEX, DEFAULT_JOB_APPLY, DEFAULT_JOBS } from '@/lib/cms/defaults';
 import {
   detailsFromSections,
@@ -44,8 +45,9 @@ function toFallbackJobs(): JobPosting[] {
 }
 
 export async function CareersIndexBlock({ block }: CareersIndexBlockProps) {
-  const eyebrow = block?.eyebrow || DEFAULT_CAREERS_INDEX.eyebrow;
-  const heading = block?.heading || DEFAULT_CAREERS_INDEX.heading;
+  const hasCms = blockHasCmsData(block);
+  const eyebrow = cmsText(block?.eyebrow, DEFAULT_CAREERS_INDEX.eyebrow, hasCms);
+  const heading = cmsText(block?.heading, DEFAULT_CAREERS_INDEX.heading, hasCms);
 
   const hiddenIds = new Set(
     (block?.hiddenJobs ?? [])
@@ -66,7 +68,7 @@ export async function CareersIndexBlock({ block }: CareersIndexBlockProps) {
   const jobs =
     visible.length > 0
       ? visible.map((job) => toJobPosting(job))
-      : published.length > 0
+      : published.length > 0 || hasCms
         ? []
         : toFallbackJobs();
 
@@ -77,10 +79,12 @@ export async function CareersIndexBlock({ block }: CareersIndexBlockProps) {
       <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-10 px-6 py-16 lg:gap-12 lg:px-[100px] lg:py-[100px]">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-[720px] space-y-4">
-            <Eyebrow>{eyebrow}</Eyebrow>
-            <h2 className="font-heading text-[1.625rem] font-bold leading-[1.05] tracking-[-0.04em] text-text-primary md:text-3xl lg:text-[40px]">
-              {heading}
-            </h2>
+            {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
+            {heading ? (
+              <h2 className="font-heading text-[1.625rem] font-bold leading-[1.05] tracking-[-0.04em] text-text-primary md:text-3xl lg:text-[40px]">
+                {heading}
+              </h2>
+            ) : null}
           </div>
           <p className="font-mono text-[12px] font-bold tracking-[1.4px] text-text-tertiary uppercase">
             {countLabel}
@@ -96,9 +100,7 @@ export async function CareersIndexBlock({ block }: CareersIndexBlockProps) {
             <p className="font-heading text-xl font-bold text-text-primary">
               No open roles right now
             </p>
-            <p className="mt-2 text-text-secondary">
-              Publish a job posting in the CMS, or remove it from the hidden list on this block.
-            </p>
+            <p className="mt-2 text-text-secondary">Check back soon for new openings.</p>
           </div>
         )}
       </div>
