@@ -24,13 +24,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN" suppressHydrationWarning>
+    <html lang="en-IN" suppressHydrationWarning className={poppins.variable}>
       <body
         suppressHydrationWarning
-        className={cn(
-          'min-h-screen bg-background font-body text-text-primary antialiased',
-          poppins.variable,
-        )}
+        className={cn('min-h-screen bg-background font-body text-text-primary antialiased')}
       >
         <SiteShell>{children}</SiteShell>
       </body>

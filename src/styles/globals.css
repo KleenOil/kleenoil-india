@@ -47,7 +47,9 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
+}
 
+@theme inline {
   --font-heading: var(--font-family-heading), 'Poppins', Arial, Helvetica, sans-serif;
   --font-body: Arial, Helvetica, sans-serif;
   --font-mono: Arial, Helvetica, sans-serif;
@@ -80,13 +82,13 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-heading);
+    font-family: var(--font-family-heading), 'Poppins', Arial, Helvetica, sans-serif;
   }
 }
 
 @layer utilities {
   .font-heading {
-    font-family: var(--font-heading);
+    font-family: var(--font-family-heading), 'Poppins', Arial, Helvetica, sans-serif;
   }
 
   .font-body {
@@ -95,6 +97,12 @@
 
   .font-mono {
     font-family: var(--font-mono);
+  }
+
+  :is(h1, h2, h3, h4, h5, h6),
+  :is(h1, h2, h3, h4, h5, h6).font-body,
+  :is(h1, h2, h3, h4, h5, h6).font-mono {
+    font-family: var(--font-family-heading), 'Poppins', Arial, Helvetica, sans-serif;
   }
 
   /* Solid translucent surfaces — no backdrop-blur (expensive while scrolling) */
@@ -153,7 +161,7 @@
 }
 
 .rich-content :is(h1, h2, h3, h4, h5, h6) {
-  font-family: var(--font-heading);
+  font-family: var(--font-family-heading), 'Poppins', Arial, Helvetica, sans-serif;
   font-weight: 700;
   color: var(--color-text-primary);
   letter-spacing: -0.03em;

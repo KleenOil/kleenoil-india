@@ -63,7 +63,7 @@ export function SustainabilityCircularBlock({
                   {step.n}
                 </span>
                 <div className="space-y-2">
-                  <h3 className="font-mono text-[12px] font-bold tracking-[1.4px] text-white uppercase">
+                  <h3 className="font-heading text-[12px] font-bold tracking-[1.4px] text-white uppercase">
                     {step.title}
                   </h3>
                   <p className="max-w-[360px] text-sm leading-relaxed text-brand-soft/70">
