@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Arimo, Poppins } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 
 import { SiteShell } from '@/components/layout/SiteShell';
 import { cn } from '@/lib/utils';
@@ -10,13 +10,6 @@ const poppins = Poppins({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800'],
   variable: '--font-family-heading',
-  display: 'swap',
-});
-
-const arimo = Arimo({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-family-body',
   display: 'swap',
 });
 
@@ -37,7 +30,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         className={cn(
           'min-h-screen bg-background font-body text-text-primary antialiased',
           poppins.variable,
-          arimo.variable,
         )}
       >
         <SiteShell>{children}</SiteShell>

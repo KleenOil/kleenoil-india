@@ -71,7 +71,7 @@ export const SiteSettings: GlobalConfig = {
                 {
                   name: 'bodyFont',
                   type: 'text',
-                  defaultValue: 'Arimo',
+                  defaultValue: 'Arial',
                 },
               ],
             },

@@ -48,9 +48,9 @@
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
 
-  --font-heading: var(--font-family-heading), 'Poppins', ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-family-body), 'Arimo', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-family-body), 'Arimo', ui-monospace, monospace;
+  --font-heading: var(--font-family-heading), 'Poppins', Arial, Helvetica, sans-serif;
+  --font-body: Arial, Helvetica, sans-serif;
+  --font-mono: Arial, Helvetica, sans-serif;
 }
 
 @layer base {
