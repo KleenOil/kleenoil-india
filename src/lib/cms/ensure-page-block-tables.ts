@@ -104,7 +104,7 @@ async function applyMissingPageBlockTables(payload: Payload, signature: string):
 
   for (const migration of toRun) {
     payload.logger.info(`[cms] Applying ${migration.name}`);
-    await (migration.up as MigrationUp)({
+    await (migration.up as unknown as MigrationUp)({
       db: db.drizzle,
       payload,
       req: undefined as never,

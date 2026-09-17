@@ -62,10 +62,13 @@ describe('cmsText', () => {
 
 describe('cmsList', () => {
   it('keeps CMS rows and skips placeholders when the block is in use', () => {
-    expect(
-      cmsList([{ title: 'A' }], [{ title: 'Fallback' }], true, (item) => Boolean(item.title)),
-    ).toEqual([{ title: 'A' }]);
-    expect(cmsList([], [{ title: 'Fallback' }], true, (item) => Boolean(item.title))).toEqual([]);
+    const fallback = [{ title: 'Fallback' }];
+    expect(cmsList([{ title: 'A' }], fallback, true, (item) => Boolean(item.title))).toEqual([
+      { title: 'A' },
+    ]);
+    expect(cmsList([] as typeof fallback, fallback, true, (item) => Boolean(item.title))).toEqual(
+      [],
+    );
   });
 });
 

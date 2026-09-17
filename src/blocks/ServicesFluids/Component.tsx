@@ -68,7 +68,11 @@ export function ServicesFluidsBlock({ block }: { block?: ServicesFluidsBlockData
         ) : null}
 
         <div className="text-brand-soft">
-          <FluidsFlowSvg items={items} activeIndex={active} onActiveChange={setActive} />
+          <FluidsFlowSvg
+            items={items.map((item) => ({ label: item.label ?? '' }))}
+            activeIndex={active}
+            onActiveChange={setActive}
+          />
         </div>
 
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6">

@@ -86,12 +86,12 @@ export function cmsText(
 }
 
 export function cmsList<T>(
-  value: T[] | null | undefined,
-  fallback: T[],
+  value: Array<T | null | undefined> | null | undefined,
+  fallback: Array<NonNullable<T>>,
   hasCms: boolean,
-  keep: (item: T) => boolean,
-): T[] {
-  const items = (value ?? []).filter(keep);
+  keep: (item: NonNullable<T>) => boolean,
+): Array<NonNullable<T>> {
+  const items = (value ?? []).filter((item): item is NonNullable<T> => item != null).filter(keep);
   if (items.length) {
     return items;
   }

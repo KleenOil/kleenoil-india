@@ -167,21 +167,25 @@ export const DEFAULT_AMC_INDUSTRIES = {
       label: 'Automotive',
       imageUrl:
         'https://images.unsplash.com/photo-1531708366981-aa022a4e34ef?auto=format&fit=crop&w=1080&q=80',
+      imageAlt: 'Automotive',
     },
     {
       label: 'Steel',
       imageUrl:
         'https://images.unsplash.com/photo-1569371030340-816be1bc1be9?auto=format&fit=crop&w=1080&q=80',
+      imageAlt: 'Steel',
     },
     {
       label: 'Cement',
       imageUrl:
         'https://images.unsplash.com/photo-1600683550547-2c38a96fb400?auto=format&fit=crop&w=1080&q=80',
+      imageAlt: 'Cement',
     },
     {
       label: 'Power',
       imageUrl:
         'https://images.unsplash.com/photo-1738162837389-3b02d6dd507b?auto=format&fit=crop&w=1080&q=80',
+      imageAlt: 'Power',
     },
   ],
   chips: ['Automotive', 'Steel', 'Cement', 'Mining', 'Power', 'Sugar', 'Defence', 'Die-casting'],

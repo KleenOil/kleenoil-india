@@ -140,7 +140,14 @@ export function AmcHeroBlock({ block }: { block?: AmcHeroBlockData | null }) {
           ) : null}
         </div>
 
-        <AmcHeroVisual imageUrl={imageUrl} imageAlt={imageAlt} quarters={quarters} />
+        <AmcHeroVisual
+          imageUrl={imageUrl}
+          imageAlt={imageAlt}
+          quarters={quarters.map((quarter) => ({
+            code: quarter.code ?? '',
+            label: quarter.label ?? '',
+          }))}
+        />
       </div>
     </section>
   );
