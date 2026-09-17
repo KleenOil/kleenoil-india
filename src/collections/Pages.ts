@@ -10,7 +10,6 @@ const RESERVED_SLUGS = new Set([
   'admin',
   'api',
   'products',
-  'services',
   'industries',
   'case-studies',
   'blog',
@@ -64,6 +63,9 @@ export const Pages: CollectionConfig = {
       blocks: pageBlocks,
       admin: {
         initCollapsed: true,
+        components: {
+          afterInput: ['/components/admin/BlocksDrawerMultiSelect#BlocksDrawerMultiSelect'],
+        },
       },
     },
     seoField,

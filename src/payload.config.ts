@@ -19,8 +19,9 @@ import { Footer } from './globals/Footer';
 import { Navigation } from './globals/Navigation';
 import { SeoDefaults } from './globals/SeoDefaults';
 import { SiteSettings } from './globals/SiteSettings';
-import { getServerEnv } from './lib/env';
+import { ensurePageBlockTables } from './lib/cms/ensure-page-block-tables';
 import { ensureDefaultProductTemplate } from './lib/cms/seed-product-template';
+import { getServerEnv } from './lib/env';
 import { getStoragePlugins } from './lib/storage/plugins';
 
 const filename = fileURLToPath(import.meta.url);
@@ -52,11 +53,20 @@ export default buildConfig({
     },
     // Schema changes ship as migrations (Vercel never pushes). Local push is opt-in
     // because it prompts to drop leftover draft columns and hangs the dev server.
+    // Missing page-block tables are created in onInit via ensurePageBlockTables.
     push: process.env.PAYLOAD_DB_PUSH === 'true',
   }),
   sharp,
   plugins: [...getStoragePlugins(env)],
   onInit: async (payload) => {
+    try {
+      await ensurePageBlockTables(payload);
+    } catch (error) {
+      payload.logger.error(
+        `Could not create missing page block tables: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+
     // Fire-and-forget: never let seeding block or crash Payload initialization
     // (which would take the admin panel down with it on Vercel).
     void ensureDefaultProductTemplate(payload).catch((error) => {

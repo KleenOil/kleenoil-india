@@ -1,6 +1,13 @@
 import type { Block } from 'payload';
 
 import { AboutOrigin } from './AboutOrigin/config';
+import { AmcCoverage } from './AmcCoverage/config';
+import { AmcCta } from './AmcCta/config';
+import { AmcHero } from './AmcHero/config';
+import { AmcIndustries } from './AmcIndustries/config';
+import { AmcProof } from './AmcProof/config';
+import { AmcVisit } from './AmcVisit/config';
+import { AmcWhy } from './AmcWhy/config';
 import { AboutStory } from './AboutStory/config';
 import { ArticlesFeatured } from './ArticlesFeatured/config';
 import { ArticlesHero } from './ArticlesHero/config';
@@ -29,6 +36,13 @@ import { RichContent } from './RichContent/config';
 import { Statistics } from './Statistics/config';
 import { SustainabilityApplications } from './SustainabilityApplications/config';
 import { SustainabilityCircular } from './SustainabilityCircular/config';
+import { ServicesCta } from './ServicesCta/config';
+import { ServicesFluids } from './ServicesFluids/config';
+import { ServicesHero } from './ServicesHero/config';
+import { ServicesIndustries } from './ServicesIndustries/config';
+import { ServicesOfferings } from './ServicesOfferings/config';
+import { ServicesProgram } from './ServicesProgram/config';
+import { ServicesVisit } from './ServicesVisit/config';
 import { SustainabilityCta } from './SustainabilityCta/config';
 import { SustainabilityDrop } from './SustainabilityDrop/config';
 import { SustainabilityHero } from './SustainabilityHero/config';
@@ -39,7 +53,9 @@ import { Testimonials } from './Testimonials/config';
 import { TrustIndicators } from './TrustIndicators/config';
 import { WhatsNew } from './WhatsNew/config';
 
-/** Payload block configs registered on the Pages collection. */
+/** Payload block configs registered on the Pages collection.
+ *  New entries need an idempotent `*_page_blocks` migration so local admin
+ *  does not go blank (see ensurePageBlockTables). */
 export const pageBlocks: Block[] = [
   Hero,
   ArticlesHero,
@@ -79,6 +95,20 @@ export const pageBlocks: Block[] = [
   SustainabilityNumbers,
   SustainabilityApplications,
   SustainabilityCta,
+  ServicesHero,
+  ServicesOfferings,
+  ServicesFluids,
+  ServicesProgram,
+  ServicesVisit,
+  ServicesIndustries,
+  ServicesCta,
+  AmcHero,
+  AmcWhy,
+  AmcCoverage,
+  AmcVisit,
+  AmcIndustries,
+  AmcProof,
+  AmcCta,
 ];
 
 export type PageBlockSlug = (typeof pageBlocks)[number]['slug'];

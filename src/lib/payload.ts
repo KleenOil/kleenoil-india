@@ -1,6 +1,11 @@
 import config from '@payload-config';
 import { getPayload, type Payload } from 'payload';
 
+import {
+  ensurePageBlockTables,
+  pageBlockSchemaSignature,
+} from '@/lib/cms/ensure-page-block-tables';
+
 // Reuse the Payload client across requests on the same serverless instance and
 // across Next.js dev HMR reloads. Without a global cache, each request would
 // re-init Postgres + admin config, blowing up cold-start latency on Vercel.
@@ -13,11 +18,11 @@ type GlobalWithPayload = typeof globalThis & {
 };
 
 function configSignature(): string {
-  return (
+  const collections =
     (config as { collections?: Array<{ slug: string }> }).collections
       ?.map((collection) => collection.slug)
-      .join(',') ?? ''
-  );
+      .join(',') ?? '';
+  return `${collections}|${pageBlockSchemaSignature()}`;
 }
 
 const globalCache: GlobalWithPayload = globalThis as GlobalWithPayload;
@@ -33,7 +38,8 @@ export async function getPayloadClient(): Promise<Payload> {
   }
   if (!cache.promise) {
     cache.promise = getPayload({ config })
-      .then((client) => {
+      .then(async (client) => {
+        await ensurePageBlockTables(client);
         cache.client = client;
         return client;
       })

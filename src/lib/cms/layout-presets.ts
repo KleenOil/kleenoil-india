@@ -39,6 +39,24 @@ import {
   DEFAULT_SUSTAINABILITY_IMPACT,
   DEFAULT_SUSTAINABILITY_NUMBERS,
 } from '@/lib/cms/sustainability';
+import {
+  DEFAULT_SERVICES_CTA,
+  DEFAULT_SERVICES_FLUIDS,
+  DEFAULT_SERVICES_HERO,
+  DEFAULT_SERVICES_INDUSTRIES,
+  DEFAULT_SERVICES_OFFERINGS,
+  DEFAULT_SERVICES_PROGRAM,
+  DEFAULT_SERVICES_VISIT,
+} from '@/lib/cms/services';
+import {
+  DEFAULT_AMC_COVERAGE,
+  DEFAULT_AMC_CTA,
+  DEFAULT_AMC_HERO,
+  DEFAULT_AMC_INDUSTRIES,
+  DEFAULT_AMC_PROOF,
+  DEFAULT_AMC_VISIT,
+  DEFAULT_AMC_WHY,
+} from '@/lib/cms/amc';
 
 type Appearance = 'primary' | 'secondary' | 'ghost';
 
@@ -47,49 +65,7 @@ export type LayoutBlock = {
   [key: string]: unknown;
 };
 
-/** Labels shown in the CMS multi-add picker (About-first order, then other homepage blocks). */
-export const PAGE_BLOCK_OPTIONS = [
-  { slug: 'hero', label: 'Hero' },
-  { slug: 'articles-hero', label: 'Articles Hero' },
-  { slug: 'articles-featured', label: 'Articles Featured' },
-  { slug: 'articles-index', label: 'Articles Index' },
-  { slug: 'careers-hero', label: 'Careers Hero' },
-  { slug: 'careers-index', label: 'Careers Index' },
-  { slug: 'cs-hero', label: 'CS Banner' },
-  { slug: 'cs-featured', label: 'CS Featured' },
-  { slug: 'cs-index', label: 'CS Index' },
-  { slug: 'cs-cta', label: 'CS CTA' },
-  { slug: 'contact-hero', label: 'Contact Hero' },
-  { slug: 'contact-process', label: 'Contact Process' },
-  { slug: 'contact-channels', label: 'Contact Channels' },
-  { slug: 'manifesto', label: 'Manifesto' },
-  { slug: 'about-origin', label: 'About Origin' },
-  { slug: 'about-story', label: 'About Story' },
-  { slug: 'trust-indicators', label: 'Trust Indicators' },
-  { slug: 'team', label: 'Team' },
-  { slug: 'whats-new', label: 'Whats New' },
-  { slug: 'distribution-network', label: 'Distribution Network' },
-  { slug: 'faq-accordion', label: 'FAQ Accordion' },
-  { slug: 'cta', label: 'CTA' },
-  { slug: 'statistics', label: 'Statistics' },
-  { slug: 'featured-products', label: 'Featured Products' },
-  { slug: 'featured-industries', label: 'Featured Industries' },
-  { slug: 'featured-services', label: 'Featured Services' },
-  { slug: 'process-story', label: 'Process Story' },
-  { slug: 'featured-case-studies', label: 'Featured Case Studies' },
-  { slug: 'testimonials', label: 'Testimonials' },
-  { slug: 'contact-preview', label: 'Contact Preview' },
-  { slug: 'rich-content', label: 'Rich Content' },
-  { slug: 'sustainability-hero', label: 'Sustainability Hero' },
-  { slug: 'sustainability-impact', label: 'Sustainability Impact' },
-  { slug: 'sustainability-circular', label: 'Sustainability Circular' },
-  { slug: 'sustainability-drop', label: 'Sustainability Drop' },
-  { slug: 'sustainability-numbers', label: 'Sustainability Numbers' },
-  { slug: 'sustainability-applications', label: 'Sustainability Applications' },
-  { slug: 'sustainability-cta', label: 'Sustainability CTA' },
-] as const;
-
-export type PageBlockSlug = (typeof PAGE_BLOCK_OPTIONS)[number]['slug'];
+export { PAGE_BLOCK_OPTIONS, type PageBlockSlug } from '@/lib/cms/page-block-options';
 
 function customLink(label: string, url: string, appearance?: Appearance) {
   return {
@@ -459,6 +435,138 @@ const BLOCK_SEEDS: Record<string, () => LayoutBlock> = {
     heading: DEFAULT_SUSTAINABILITY_CTA.heading,
     subtext: DEFAULT_SUSTAINABILITY_CTA.subtext,
     ctas: [customLink(DEFAULT_SUSTAINABILITY_CTA.cta.label, DEFAULT_SUSTAINABILITY_CTA.cta.href)],
+  }),
+  'services-hero': () => ({
+    blockType: 'services-hero',
+    eyebrow: DEFAULT_SERVICES_HERO.eyebrow,
+    heading: DEFAULT_SERVICES_HERO.heading,
+    lead: DEFAULT_SERVICES_HERO.lead,
+    note: DEFAULT_SERVICES_HERO.note,
+    ctas: [customLink(DEFAULT_SERVICES_HERO.cta.label, DEFAULT_SERVICES_HERO.cta.href)],
+    cards: DEFAULT_SERVICES_HERO.cards,
+  }),
+  'services-offerings': () => ({
+    blockType: 'services-offerings',
+    eyebrow: DEFAULT_SERVICES_OFFERINGS.eyebrow,
+    heading: DEFAULT_SERVICES_OFFERINGS.heading,
+    cards: DEFAULT_SERVICES_OFFERINGS.cards.map(({ n, title, body, href, linkLabel }) => ({
+      n,
+      title,
+      body,
+      href,
+      linkLabel,
+    })),
+  }),
+  'services-fluids': () => ({
+    blockType: 'services-fluids',
+    kicker: DEFAULT_SERVICES_FLUIDS.kicker,
+    note: DEFAULT_SERVICES_FLUIDS.note,
+    items: DEFAULT_SERVICES_FLUIDS.items,
+  }),
+  'services-program': () => ({
+    blockType: 'services-program',
+    eyebrow: DEFAULT_SERVICES_PROGRAM.eyebrow,
+    heading: DEFAULT_SERVICES_PROGRAM.heading,
+    description: DEFAULT_SERVICES_PROGRAM.lead,
+    questions: DEFAULT_SERVICES_PROGRAM.questions.map(({ n, icon, title, body }) => ({
+      n,
+      icon,
+      title,
+      body,
+    })),
+    focusKicker: DEFAULT_SERVICES_PROGRAM.focusKicker,
+    focusHeading: DEFAULT_SERVICES_PROGRAM.focusHeading,
+    focusBody: DEFAULT_SERVICES_PROGRAM.focusBody,
+    commitments: DEFAULT_SERVICES_PROGRAM.commitments,
+  }),
+  'services-visit': () => ({
+    blockType: 'services-visit',
+    eyebrow: DEFAULT_SERVICES_VISIT.eyebrow,
+    heading: DEFAULT_SERVICES_VISIT.heading,
+    steps: DEFAULT_SERVICES_VISIT.steps.map(({ n, icon, title, body }) => ({
+      n,
+      icon,
+      title,
+      body,
+    })),
+  }),
+  'services-industries': () => ({
+    blockType: 'services-industries',
+    kicker: DEFAULT_SERVICES_INDUSTRIES.kicker,
+    heading: DEFAULT_SERVICES_INDUSTRIES.heading,
+    photos: DEFAULT_SERVICES_INDUSTRIES.photos.map(({ label }) => ({ label })),
+    chips: DEFAULT_SERVICES_INDUSTRIES.chips.map((label) => ({ label })),
+  }),
+  'services-cta': () => ({
+    blockType: 'services-cta',
+    eyebrow: DEFAULT_SERVICES_CTA.eyebrow,
+    heading: DEFAULT_SERVICES_CTA.heading,
+    subtext: DEFAULT_SERVICES_CTA.subtext,
+    ctas: DEFAULT_SERVICES_CTA.ctas.map((cta) => customLink(cta.label, cta.href, cta.appearance)),
+  }),
+  'amc-hero': () => ({
+    blockType: 'amc-hero',
+    eyebrow: DEFAULT_AMC_HERO.eyebrow,
+    heading: DEFAULT_AMC_HERO.heading,
+    lead: DEFAULT_AMC_HERO.lead,
+    note: DEFAULT_AMC_HERO.note,
+    ctas: [
+      customLink(
+        DEFAULT_AMC_HERO.cta.label,
+        DEFAULT_AMC_HERO.cta.href,
+        DEFAULT_AMC_HERO.cta.appearance,
+      ),
+    ],
+    points: DEFAULT_AMC_HERO.points,
+    stats: DEFAULT_AMC_HERO.stats,
+    quarters: DEFAULT_AMC_HERO.quarters,
+  }),
+  'amc-why': () => ({
+    blockType: 'amc-why',
+    kicker: DEFAULT_AMC_WHY.kicker,
+    heading: DEFAULT_AMC_WHY.heading,
+    lead: DEFAULT_AMC_WHY.lead,
+    items: DEFAULT_AMC_WHY.items.map(({ n, icon, title, body }) => ({ n, icon, title, body })),
+  }),
+  'amc-coverage': () => ({
+    blockType: 'amc-coverage',
+    eyebrow: DEFAULT_AMC_COVERAGE.eyebrow,
+    heading: DEFAULT_AMC_COVERAGE.heading,
+    lead: DEFAULT_AMC_COVERAGE.lead,
+    cards: DEFAULT_AMC_COVERAGE.cards.map(({ icon, title, body }) => ({ icon, title, body })),
+  }),
+  'amc-visit': () => ({
+    blockType: 'amc-visit',
+    eyebrow: DEFAULT_AMC_VISIT.eyebrow,
+    heading: DEFAULT_AMC_VISIT.heading,
+    steps: DEFAULT_AMC_VISIT.steps.map(({ n, icon, title, body }) => ({ n, icon, title, body })),
+  }),
+  'amc-industries': () => ({
+    blockType: 'amc-industries',
+    kicker: DEFAULT_AMC_INDUSTRIES.kicker,
+    heading: DEFAULT_AMC_INDUSTRIES.heading,
+    photos: DEFAULT_AMC_INDUSTRIES.photos.map(({ label }) => ({ label })),
+    chips: DEFAULT_AMC_INDUSTRIES.chips.map((label) => ({ label })),
+  }),
+  'amc-proof': () => ({
+    blockType: 'amc-proof',
+    eyebrow: DEFAULT_AMC_PROOF.eyebrow,
+    heading: DEFAULT_AMC_PROOF.heading,
+    lead: DEFAULT_AMC_PROOF.lead,
+    ctas: [
+      customLink(
+        DEFAULT_AMC_PROOF.cta.label,
+        DEFAULT_AMC_PROOF.cta.href,
+        DEFAULT_AMC_PROOF.cta.appearance,
+      ),
+    ],
+  }),
+  'amc-cta': () => ({
+    blockType: 'amc-cta',
+    eyebrow: DEFAULT_AMC_CTA.eyebrow,
+    heading: DEFAULT_AMC_CTA.heading,
+    subtext: DEFAULT_AMC_CTA.subtext,
+    ctas: DEFAULT_AMC_CTA.ctas.map((cta) => customLink(cta.label, cta.href, cta.appearance)),
   }),
 };
 

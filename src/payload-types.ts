@@ -1149,6 +1149,333 @@ export interface Page {
             blockName?: string | null;
             blockType: 'sustainability-cta';
           }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            lead?: string | null;
+            note?: string | null;
+            ctas?:
+              | {
+                  link: {
+                    type: 'page' | 'custom';
+                    label?: string | null;
+                    page?: (number | null) | Page;
+                    /**
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+                     */
+                    url?: string | null;
+                    openInNewTab?: boolean | null;
+                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            image?: (number | null) | Media;
+            cards?:
+              | {
+                  n: string;
+                  kicker?: string | null;
+                  title: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'services-hero';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            cards?:
+              | {
+                  n: string;
+                  title: string;
+                  body: string;
+                  linkLabel?: string | null;
+                  href?: string | null;
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'services-offerings';
+          }
+        | {
+            kicker?: string | null;
+            note?: string | null;
+            image?: (number | null) | Media;
+            items?:
+              | {
+                  icon?: string | null;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'services-fluids';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            processImage?: (number | null) | Media;
+            questions?:
+              | {
+                  n: string;
+                  icon?: string | null;
+                  title: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            focusKicker?: string | null;
+            focusHeading?: string | null;
+            focusBody?: string | null;
+            focusImage?: (number | null) | Media;
+            commitments?:
+              | {
+                  n: string;
+                  title: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'services-program';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            steps?:
+              | {
+                  n: string;
+                  icon?: string | null;
+                  title: string;
+                  body: string;
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'services-visit';
+          }
+        | {
+            kicker?: string | null;
+            heading?: string | null;
+            photos?:
+              | {
+                  label: string;
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            chips?:
+              | {
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'services-industries';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            subtext?: string | null;
+            ctas?:
+              | {
+                  link: {
+                    type: 'page' | 'custom';
+                    label?: string | null;
+                    page?: (number | null) | Page;
+                    /**
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+                     */
+                    url?: string | null;
+                    openInNewTab?: boolean | null;
+                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'services-cta';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            lead?: string | null;
+            note?: string | null;
+            ctas?:
+              | {
+                  link: {
+                    type: 'page' | 'custom';
+                    label?: string | null;
+                    page?: (number | null) | Page;
+                    /**
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+                     */
+                    url?: string | null;
+                    openInNewTab?: boolean | null;
+                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            image?: (number | null) | Media;
+            points?:
+              | {
+                  n: string;
+                  title: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            stats?:
+              | {
+                  value: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            quarters?:
+              | {
+                  code: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'amc-hero';
+          }
+        | {
+            kicker?: string | null;
+            heading?: string | null;
+            lead?: string | null;
+            image?: (number | null) | Media;
+            items?:
+              | {
+                  n: string;
+                  icon?: string | null;
+                  title: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'amc-why';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            lead?: string | null;
+            cards?:
+              | {
+                  icon?: string | null;
+                  title: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'amc-coverage';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            steps?:
+              | {
+                  n: string;
+                  icon?: string | null;
+                  title: string;
+                  body: string;
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'amc-visit';
+          }
+        | {
+            kicker?: string | null;
+            heading?: string | null;
+            photos?:
+              | {
+                  label: string;
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            chips?:
+              | {
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'amc-industries';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            lead?: string | null;
+            ctas?:
+              | {
+                  link: {
+                    type: 'page' | 'custom';
+                    label?: string | null;
+                    page?: (number | null) | Page;
+                    /**
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+                     */
+                    url?: string | null;
+                    openInNewTab?: boolean | null;
+                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            image?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'amc-proof';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            subtext?: string | null;
+            ctas?:
+              | {
+                  link: {
+                    type: 'page' | 'custom';
+                    label?: string | null;
+                    page?: (number | null) | Page;
+                    /**
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+                     */
+                    url?: string | null;
+                    openInNewTab?: boolean | null;
+                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'amc-cta';
+          }
       )[]
     | null;
   /**
@@ -3121,6 +3448,342 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         'sustainability-cta'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subtext?: T;
+              ctas?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          label?: T;
+                          page?: T;
+                          url?: T;
+                          openInNewTab?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'services-hero'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              lead?: T;
+              note?: T;
+              ctas?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          label?: T;
+                          page?: T;
+                          url?: T;
+                          openInNewTab?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              image?: T;
+              cards?:
+                | T
+                | {
+                    n?: T;
+                    kicker?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'services-offerings'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              cards?:
+                | T
+                | {
+                    n?: T;
+                    title?: T;
+                    body?: T;
+                    linkLabel?: T;
+                    href?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'services-fluids'?:
+          | T
+          | {
+              kicker?: T;
+              note?: T;
+              image?: T;
+              items?:
+                | T
+                | {
+                    icon?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'services-program'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              processImage?: T;
+              questions?:
+                | T
+                | {
+                    n?: T;
+                    icon?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              focusKicker?: T;
+              focusHeading?: T;
+              focusBody?: T;
+              focusImage?: T;
+              commitments?:
+                | T
+                | {
+                    n?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'services-visit'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              steps?:
+                | T
+                | {
+                    n?: T;
+                    icon?: T;
+                    title?: T;
+                    body?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'services-industries'?:
+          | T
+          | {
+              kicker?: T;
+              heading?: T;
+              photos?:
+                | T
+                | {
+                    label?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              chips?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'services-cta'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subtext?: T;
+              ctas?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          label?: T;
+                          page?: T;
+                          url?: T;
+                          openInNewTab?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'amc-hero'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              lead?: T;
+              note?: T;
+              ctas?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          label?: T;
+                          page?: T;
+                          url?: T;
+                          openInNewTab?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              image?: T;
+              points?:
+                | T
+                | {
+                    n?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              stats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              quarters?:
+                | T
+                | {
+                    code?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'amc-why'?:
+          | T
+          | {
+              kicker?: T;
+              heading?: T;
+              lead?: T;
+              image?: T;
+              items?:
+                | T
+                | {
+                    n?: T;
+                    icon?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'amc-coverage'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              lead?: T;
+              cards?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'amc-visit'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              steps?:
+                | T
+                | {
+                    n?: T;
+                    icon?: T;
+                    title?: T;
+                    body?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'amc-industries'?:
+          | T
+          | {
+              kicker?: T;
+              heading?: T;
+              photos?:
+                | T
+                | {
+                    label?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              chips?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'amc-proof'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              lead?: T;
+              ctas?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          label?: T;
+                          page?: T;
+                          url?: T;
+                          openInNewTab?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              image?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'amc-cta'?:
           | T
           | {
               eyebrow?: T;

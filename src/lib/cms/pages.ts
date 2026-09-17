@@ -6,7 +6,6 @@ export const RESERVED_PAGE_SLUGS = new Set([
   'admin',
   'api',
   'products',
-  'services',
   'industries',
   'case-studies',
   'blog',

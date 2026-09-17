@@ -918,6 +918,60 @@
   animation: sustain-card-float 5.2s ease-in-out infinite;
 }
 
+@keyframes services-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes services-dash {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
+
+@keyframes services-core {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+}
+
+.services-ring-spin {
+  transform-origin: 110px 110px;
+  animation: services-spin 18s linear infinite;
+}
+
+.services-oil-dash {
+  animation: services-dash 2.8s linear infinite;
+}
+
+.services-core-pulse {
+  transform-origin: 110px 110px;
+  animation: services-core 3.2s ease-in-out infinite;
+}
+
+.amc-ring-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: services-spin 18s linear infinite;
+}
+
+.amc-oil-dash {
+  animation: services-dash 2.8s linear infinite;
+}
+
+.amc-core-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: services-core 3.2s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

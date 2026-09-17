@@ -1,4 +1,11 @@
 import { AboutOriginBlock, type AboutOriginBlockData } from '@/blocks/AboutOrigin/Component';
+import { AmcCoverageBlock, type AmcCoverageBlockData } from '@/blocks/AmcCoverage/Component';
+import { AmcCtaBlock, type AmcCtaBlockData } from '@/blocks/AmcCta/Component';
+import { AmcHeroBlock, type AmcHeroBlockData } from '@/blocks/AmcHero/Component';
+import { AmcIndustriesBlock, type AmcIndustriesBlockData } from '@/blocks/AmcIndustries/Component';
+import { AmcProofBlock, type AmcProofBlockData } from '@/blocks/AmcProof/Component';
+import { AmcVisitBlock, type AmcVisitBlockData } from '@/blocks/AmcVisit/Component';
+import { AmcWhyBlock, type AmcWhyBlockData } from '@/blocks/AmcWhy/Component';
 import { AboutStoryBlock, type AboutStoryBlockData } from '@/blocks/AboutStory/Component';
 import {
   ArticlesFeaturedBlock,
@@ -80,6 +87,25 @@ import {
   SustainabilityNumbersBlock,
   type SustainabilityNumbersBlockData,
 } from '@/blocks/SustainabilityNumbers/Component';
+import { ServicesCtaBlock, type ServicesCtaBlockData } from '@/blocks/ServicesCta/Component';
+import {
+  ServicesFluidsBlock,
+  type ServicesFluidsBlockData,
+} from '@/blocks/ServicesFluids/Component';
+import { ServicesHeroBlock, type ServicesHeroBlockData } from '@/blocks/ServicesHero/Component';
+import {
+  ServicesIndustriesBlock,
+  type ServicesIndustriesBlockData,
+} from '@/blocks/ServicesIndustries/Component';
+import {
+  ServicesOfferingsBlock,
+  type ServicesOfferingsBlockData,
+} from '@/blocks/ServicesOfferings/Component';
+import {
+  ServicesProgramBlock,
+  type ServicesProgramBlockData,
+} from '@/blocks/ServicesProgram/Component';
+import { ServicesVisitBlock, type ServicesVisitBlockData } from '@/blocks/ServicesVisit/Component';
 import { TeamBlock, type TeamBlockData } from '@/blocks/Team/Component';
 import { TestimonialsBlock, type TestimonialsBlockData } from '@/blocks/Testimonials/Component';
 import {
@@ -402,6 +428,84 @@ export function RenderBlocks({
               motion,
               { variant: 'cta' },
             );
+          case 'services-hero':
+            return wrapReveal(
+              key,
+              <ServicesHeroBlock block={block as ServicesHeroBlockData} />,
+              motion,
+              { variant: 'hero' },
+            );
+          case 'services-offerings':
+            return wrapReveal(
+              key,
+              <ServicesOfferingsBlock block={block as ServicesOfferingsBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'services-fluids':
+            return wrapReveal(
+              key,
+              <ServicesFluidsBlock block={block as ServicesFluidsBlockData} />,
+              motion,
+            );
+          case 'services-program':
+            return wrapReveal(
+              key,
+              <ServicesProgramBlock block={block as ServicesProgramBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'services-visit':
+            return wrapReveal(
+              key,
+              <ServicesVisitBlock block={block as ServicesVisitBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'services-industries':
+            return wrapReveal(
+              key,
+              <ServicesIndustriesBlock block={block as ServicesIndustriesBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'services-cta':
+            return wrapReveal(
+              key,
+              <ServicesCtaBlock block={block as ServicesCtaBlockData} />,
+              motion,
+              { variant: 'cta' },
+            );
+          case 'amc-hero':
+            return wrapReveal(key, <AmcHeroBlock block={block as AmcHeroBlockData} />, motion);
+          case 'amc-why':
+            return wrapReveal(key, <AmcWhyBlock block={block as AmcWhyBlockData} />, motion, {
+              stagger: true,
+            });
+          case 'amc-coverage':
+            return wrapReveal(
+              key,
+              <AmcCoverageBlock block={block as AmcCoverageBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'amc-visit':
+            return wrapReveal(key, <AmcVisitBlock block={block as AmcVisitBlockData} />, motion, {
+              stagger: true,
+            });
+          case 'amc-industries':
+            return wrapReveal(
+              key,
+              <AmcIndustriesBlock block={block as AmcIndustriesBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'amc-proof':
+            return wrapReveal(key, <AmcProofBlock block={block as AmcProofBlockData} />, motion);
+          case 'amc-cta':
+            return wrapReveal(key, <AmcCtaBlock block={block as AmcCtaBlockData} />, motion, {
+              variant: 'cta',
+            });
           default:
             return (
               <section

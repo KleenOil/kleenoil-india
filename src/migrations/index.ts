@@ -37,6 +37,8 @@ import * as migration_20260903_021000_pdp_hero_variants_per_row from './20260903
 import * as migration_20260908_120000_featured_services_card_image from './20260908_120000_featured_services_card_image';
 import * as migration_20260908_130000_contact_hero_questions from './20260908_130000_contact_hero_questions';
 import * as migration_20260912_180000_sustainability_page_blocks from './20260912_180000_sustainability_page_blocks';
+import * as migration_20260918_030000_services_page_blocks from './20260918_030000_services_page_blocks';
+import * as migration_20260918_040000_amc_page_blocks from './20260918_040000_amc_page_blocks';
 
 export const migrations = [
   {
@@ -233,5 +235,15 @@ export const migrations = [
     up: migration_20260912_180000_sustainability_page_blocks.up,
     down: migration_20260912_180000_sustainability_page_blocks.down,
     name: '20260912_180000_sustainability_page_blocks',
+  },
+  {
+    up: migration_20260918_030000_services_page_blocks.up,
+    down: migration_20260918_030000_services_page_blocks.down,
+    name: '20260918_030000_services_page_blocks',
+  },
+  {
+    up: migration_20260918_040000_amc_page_blocks.up,
+    down: migration_20260918_040000_amc_page_blocks.down,
+    name: '20260918_040000_amc_page_blocks',
   },
 ];

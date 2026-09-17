@@ -55,7 +55,7 @@ export function TestimonialsBlock({ block }: TestimonialsBlockProps) {
   );
 
   return (
-    <section className="bg-background">
+    <section id="testimonials" className="bg-background">
       <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-12 px-6 py-16 lg:gap-20 lg:px-[100px] lg:py-[140px]">
         <SectionHeader eyebrow={eyebrow} heading={heading} description={description} />
 

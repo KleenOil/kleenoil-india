@@ -1,33 +1,107 @@
 'use client';
 
 import { Button, useField, useForm, useModal } from '@payloadcms/ui';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { PAGE_BLOCK_OPTIONS } from '@/lib/cms/layout-presets';
+import { PAGE_BLOCK_OPTIONS } from '@/lib/cms/page-block-options';
 
-const LABEL_TO_SLUG = new Map(
-  PAGE_BLOCK_OPTIONS.map((option) => [option.label.toLowerCase(), option.slug]),
-);
+type ClientBlock = {
+  slug?: string;
+  labels?: {
+    singular?: unknown;
+  };
+};
 
-function resolveSlugFromBlockCard(card: Element): string | null {
-  const label =
-    card.querySelector('.thumbnail-card__label')?.textContent?.trim().toLowerCase() ||
-    card.textContent?.trim().toLowerCase() ||
-    '';
+type BlocksDrawerMultiSelectProps = {
+  blocks?: Array<string | ClientBlock>;
+  field?: {
+    name?: string;
+    blocks?: Array<string | ClientBlock>;
+  };
+  path?: string;
+  schemaPath?: string;
+};
 
-  for (const [blockLabel, slug] of LABEL_TO_SLUG) {
-    if (label.includes(blockLabel)) {
-      return slug;
-    }
+function asLabel(value: unknown): string {
+  return typeof value === 'string' ? value.trim().toLowerCase() : '';
+}
+
+function normalizeBlocks(blocks: Array<string | ClientBlock> | undefined): ClientBlock[] {
+  if (!Array.isArray(blocks)) {
+    return [];
   }
 
-  return null;
+  return blocks.map((block) => {
+    if (typeof block === 'string') {
+      return { slug: block };
+    }
+    return {
+      slug: typeof block?.slug === 'string' ? block.slug : undefined,
+      labels: block?.labels,
+    };
+  });
+}
+
+function buildLabelToSlug(blocks: ClientBlock[]): Map<string, string> {
+  const map = new Map<string, string>();
+
+  for (const option of PAGE_BLOCK_OPTIONS) {
+    map.set(option.label.toLowerCase(), option.slug);
+    map.set(option.slug.replace(/-/g, ' '), option.slug);
+  }
+
+  for (const block of blocks) {
+    if (!block?.slug) {
+      continue;
+    }
+    const singular = asLabel(block.labels?.singular);
+    if (singular) {
+      map.set(singular, block.slug);
+    }
+    map.set(block.slug.replace(/-/g, ' '), block.slug);
+  }
+
+  return map;
+}
+
+function resolveSlugFromBlockCard(card: Element, labelToSlug: Map<string, string>): string | null {
+  const label =
+    card.querySelector('.thumbnail-card__label')?.textContent?.trim().toLowerCase() ||
+    card.querySelector('button')?.getAttribute('title')?.trim().toLowerCase() ||
+    '';
+
+  if (!label) {
+    return null;
+  }
+
+  return labelToSlug.get(label) ?? null;
 }
 
 function findOpenBlocksDrawer(): HTMLElement | null {
   const drawers = Array.from(document.querySelectorAll<HTMLElement>('.drawer'));
   return drawers.find((drawer) => drawer.querySelector('.blocks-drawer__blocks')) ?? null;
+}
+
+function getDrawerSlug(drawer: HTMLElement | null): string | null {
+  const closeId = drawer?.querySelector<HTMLElement>('[id^="close-drawer__"]')?.id ?? '';
+  return closeId.replace(/^close-drawer__/, '') || null;
+}
+
+function applySelectedStyles(selected: string[], labelToSlug: Map<string, string>) {
+  const drawer = findOpenBlocksDrawer();
+  if (!drawer) {
+    return;
+  }
+
+  drawer.querySelectorAll('.blocks-drawer__block').forEach((node) => {
+    const card = node as HTMLElement;
+    const slug = resolveSlugFromBlockCard(card, labelToSlug);
+    const isSelected = Boolean(slug && selected.includes(slug));
+    card.toggleAttribute('data-multi-selected', isSelected);
+    card.style.outline = isSelected ? '2px solid var(--theme-success-500, #3ac47d)' : '';
+    card.style.outlineOffset = isSelected ? '2px' : '';
+  });
 }
 
 function clearSelectedStyles() {
@@ -38,96 +112,32 @@ function clearSelectedStyles() {
   });
 }
 
-type DrawerChrome = {
-  headerHost: HTMLElement | null;
-  footerHost: HTMLElement | null;
-  activeDrawerSlug: string | null;
-  isOpen: boolean;
-};
-
-function readDrawerChrome(): DrawerChrome {
-  const drawer = findOpenBlocksDrawer();
-  if (!drawer) {
-    return {
-      headerHost: null,
-      footerHost: null,
-      activeDrawerSlug: null,
-      isOpen: false,
-    };
-  }
-
-  const header = drawer.querySelector<HTMLElement>('.drawer__header');
-  const content = drawer.querySelector<HTMLElement>('.drawer__content-children');
-  if (!header || !content) {
-    return {
-      headerHost: null,
-      footerHost: null,
-      activeDrawerSlug: null,
-      isOpen: true,
-    };
-  }
-
-  header.style.display = 'flex';
-  header.style.alignItems = 'center';
-  header.style.gap = '0.75rem';
-
-  let controls = header.querySelector<HTMLElement>('[data-multi-select-controls]');
-  if (!controls) {
-    controls = document.createElement('div');
-    controls.setAttribute('data-multi-select-controls', 'true');
-    controls.style.cssText = 'margin-left:auto;display:flex;align-items:center;flex-shrink:0;';
-    const closeBtn = header.querySelector('.drawer__header__close');
-    if (closeBtn) {
-      header.insertBefore(controls, closeBtn);
-    } else {
-      header.appendChild(controls);
-    }
-  }
-
-  let footer = content.querySelector<HTMLElement>('[data-multi-select-footer]');
-  if (!footer) {
-    footer = document.createElement('div');
-    footer.setAttribute('data-multi-select-footer', 'true');
-    footer.style.cssText = 'margin-top:1rem;padding-top:0.75rem;';
-    content.appendChild(footer);
-  }
-
-  const closeId = drawer.querySelector<HTMLElement>('[id^="close-drawer__"]')?.id ?? '';
-  const slug = closeId.replace(/^close-drawer__/, '') || null;
-
-  return {
-    headerHost: controls,
-    footerHost: footer,
-    activeDrawerSlug: slug,
-    isOpen: true,
-  };
-}
-
-type BlocksDrawerMultiSelectProps = {
-  path: string;
-  schemaPath: string;
-};
-
 /**
- * Enhances Payload's native "Add Layout" drawer with a top-right
- * "Select multiple" checkbox so editors can add several blocks at once.
+ * Adds multi-select to Payload's Add Layout drawer without replacing native
+ * one-click add. Uncheck "Select multiple" to use the original click-to-add.
  */
-export function BlocksDrawerMultiSelect({ path, schemaPath }: BlocksDrawerMultiSelectProps) {
+export function BlocksDrawerMultiSelect(props: BlocksDrawerMultiSelectProps) {
+  const path = props.path || props.field?.name || 'layout';
+  const schemaPath = props.schemaPath || path;
+  const blocks = useMemo(
+    () => normalizeBlocks(props.blocks ?? props.field?.blocks),
+    [props.blocks, props.field?.blocks],
+  );
+
   const { addFieldRow } = useForm();
-  const { closeModal, modalState } = useModal();
+  const { closeModal } = useModal();
   const { rows = [] } = useField({ path, hasRows: true });
 
-  const [multiSelect, setMultiSelect] = useState(false);
+  const [multiSelect, setMultiSelect] = useState(true);
   const [selected, setSelected] = useState<string[]>([]);
-  const [chrome, setChrome] = useState<DrawerChrome>({
-    headerHost: null,
-    footerHost: null,
-    activeDrawerSlug: null,
-    isOpen: false,
-  });
+  const [isOpen, setIsOpen] = useState(false);
+  const [drawerSlug, setDrawerSlug] = useState<string | null>(null);
 
-  const multiSelectRef = useRef(false);
+  const multiSelectRef = useRef(true);
   const selectedRef = useRef<string[]>([]);
+  const wasOpenRef = useRef(false);
+  const labelToSlug = useMemo(() => buildLabelToSlug(blocks), [blocks]);
+  const labelToSlugRef = useRef(labelToSlug);
 
   useEffect(() => {
     multiSelectRef.current = multiSelect;
@@ -137,6 +147,10 @@ export function BlocksDrawerMultiSelect({ path, schemaPath }: BlocksDrawerMultiS
     selectedRef.current = selected;
   }, [selected]);
 
+  useEffect(() => {
+    labelToSlugRef.current = labelToSlug;
+  }, [labelToSlug]);
+
   const resetSelection = useCallback(() => {
     setSelected([]);
     clearSelectedStyles();
@@ -145,34 +159,37 @@ export function BlocksDrawerMultiSelect({ path, schemaPath }: BlocksDrawerMultiS
   useEffect(() => {
     let frame = 0;
 
-    const applyChrome = () => {
+    const syncDrawerState = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        const next = readDrawerChrome();
-        setChrome((prev) => {
-          if (
-            prev.headerHost === next.headerHost &&
-            prev.footerHost === next.footerHost &&
-            prev.activeDrawerSlug === next.activeDrawerSlug &&
-            prev.isOpen === next.isOpen
-          ) {
-            return prev;
-          }
-          return next;
-        });
+        const drawer = findOpenBlocksDrawer();
+        const nextOpen = Boolean(drawer);
+        const nextSlug = getDrawerSlug(drawer);
 
-        if (!next.isOpen) {
-          setMultiSelect(false);
+        setIsOpen((prev) => (prev === nextOpen ? prev : nextOpen));
+        setDrawerSlug((prev) => (prev === nextSlug ? prev : nextSlug));
+
+        if (wasOpenRef.current && !nextOpen) {
+          setMultiSelect(true);
           setSelected([]);
           clearSelectedStyles();
+        }
+        wasOpenRef.current = nextOpen;
+
+        if (!nextOpen) {
+          return;
+        }
+
+        if (multiSelectRef.current) {
+          applySelectedStyles(selectedRef.current, labelToSlugRef.current);
         }
       });
     };
 
-    applyChrome();
+    syncDrawerState();
 
     const observer = new MutationObserver(() => {
-      applyChrome();
+      syncDrawerState();
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
@@ -181,7 +198,14 @@ export function BlocksDrawerMultiSelect({ path, schemaPath }: BlocksDrawerMultiS
       cancelAnimationFrame(frame);
       observer.disconnect();
     };
-  }, [modalState]);
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen || !multiSelect) {
+      return;
+    }
+    applySelectedStyles(selected, labelToSlug);
+  }, [isOpen, labelToSlug, multiSelect, selected]);
 
   useEffect(() => {
     const onClickCapture = (event: MouseEvent) => {
@@ -194,18 +218,20 @@ export function BlocksDrawerMultiSelect({ path, schemaPath }: BlocksDrawerMultiS
         return;
       }
 
+      const drawer = findOpenBlocksDrawer();
       const card = target.closest('.blocks-drawer__block');
-      if (!card || !findOpenBlocksDrawer()?.contains(card)) {
+      if (!drawer || !card || !drawer.contains(card)) {
+        return;
+      }
+
+      const slug = resolveSlugFromBlockCard(card, labelToSlugRef.current);
+      if (!slug) {
         return;
       }
 
       event.preventDefault();
       event.stopPropagation();
-
-      const slug = resolveSlugFromBlockCard(card);
-      if (!slug) {
-        return;
-      }
+      event.stopImmediatePropagation();
 
       const isSelected = selectedRef.current.includes(slug);
       const next = isSelected
@@ -213,16 +239,7 @@ export function BlocksDrawerMultiSelect({ path, schemaPath }: BlocksDrawerMultiS
         : [...selectedRef.current, slug];
 
       setSelected(next);
-
-      if (isSelected) {
-        card.removeAttribute('data-multi-selected');
-        (card as HTMLElement).style.outline = '';
-        (card as HTMLElement).style.outlineOffset = '';
-      } else {
-        card.setAttribute('data-multi-selected', 'true');
-        (card as HTMLElement).style.outline = '2px solid var(--theme-success-500, #3ac47d)';
-        (card as HTMLElement).style.outlineOffset = '2px';
-      }
+      applySelectedStyles(next, labelToSlugRef.current);
     };
 
     document.addEventListener('click', onClickCapture, true);
@@ -234,9 +251,8 @@ export function BlocksDrawerMultiSelect({ path, schemaPath }: BlocksDrawerMultiS
       return;
     }
 
-    const ordered = PAGE_BLOCK_OPTIONS.map((option) => option.slug).filter((slug) =>
-      selected.includes(slug),
-    );
+    const known = new Set(labelToSlug.values());
+    const ordered = selected.filter((slug) => known.has(slug));
 
     let rowIndex = rows.length;
     for (const blockType of ordered) {
@@ -249,16 +265,17 @@ export function BlocksDrawerMultiSelect({ path, schemaPath }: BlocksDrawerMultiS
       rowIndex += 1;
     }
 
-    if (chrome.activeDrawerSlug) {
-      closeModal(chrome.activeDrawerSlug);
+    if (drawerSlug) {
+      closeModal(drawerSlug);
     }
 
-    setMultiSelect(false);
+    setMultiSelect(true);
     resetSelection();
   }, [
     addFieldRow,
-    chrome.activeDrawerSlug,
     closeModal,
+    drawerSlug,
+    labelToSlug,
     path,
     resetSelection,
     rows.length,
@@ -266,55 +283,64 @@ export function BlocksDrawerMultiSelect({ path, schemaPath }: BlocksDrawerMultiS
     selected,
   ]);
 
-  return (
-    <>
-      {chrome.headerHost
-        ? createPortal(
-            <label
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                fontSize: '0.8125rem',
-                cursor: 'pointer',
-                userSelect: 'none',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              <input
-                type="checkbox"
-                checked={multiSelect}
-                onChange={(event) => {
-                  const enabled = event.target.checked;
-                  setMultiSelect(enabled);
-                  if (!enabled) {
-                    resetSelection();
-                  }
-                }}
-              />
-              Select multiple
-            </label>,
-            chrome.headerHost,
-          )
-        : null}
+  if (!isOpen) {
+    return null;
+  }
 
-      {chrome.footerHost && multiSelect
-        ? createPortal(
-            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-              <Button buttonStyle="primary" disabled={selected.length === 0} onClick={addSelected}>
-                Add selected ({selected.length})
-              </Button>
-              <Button
-                buttonStyle="secondary"
-                disabled={selected.length === 0}
-                onClick={resetSelection}
-              >
-                Clear
-              </Button>
-            </div>,
-            chrome.footerHost,
-          )
-        : null}
-    </>
+  return createPortal(
+    <div
+      style={{
+        position: 'fixed',
+        left: '50%',
+        bottom: '1.5rem',
+        transform: 'translateX(-50%)',
+        zIndex: 100000,
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.5rem',
+        flexWrap: 'wrap',
+        padding: '0.4rem 0.55rem',
+        borderRadius: '6px',
+        background: 'var(--theme-elevation-0, #fff)',
+        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
+        border: '1px solid var(--theme-elevation-150, #e0e0e0)',
+      }}
+    >
+      <label
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '0.4rem',
+          fontSize: '0.8125rem',
+          cursor: 'pointer',
+          userSelect: 'none',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        <input
+          type="checkbox"
+          checked={multiSelect}
+          onChange={(event) => {
+            const enabled = event.target.checked;
+            setMultiSelect(enabled);
+            if (!enabled) {
+              resetSelection();
+            }
+          }}
+        />
+        Select multiple
+      </label>
+      {multiSelect ? (
+        <>
+          <Button buttonStyle="primary" disabled={selected.length === 0} onClick={addSelected}>
+            Add selected ({selected.length})
+          </Button>
+          <Button buttonStyle="secondary" disabled={selected.length === 0} onClick={resetSelection}>
+            Clear
+          </Button>
+        </>
+      ) : null}
+    </div>,
+    document.body,
   );
 }
