@@ -1,5 +1,6 @@
 import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
 import { getPayloadClient } from '@/lib/payload';
+import { logCmsFailure } from '@/lib/cms/unavailable';
 import type { Post } from '@/payload-types';
 
 export type ArticleCardSource = {
@@ -73,7 +74,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
 
     return (result.docs[0] as Post | undefined) ?? null;
   } catch (error) {
-    console.error('[cms] getPostBySlug failed', error);
+    logCmsFailure('getPostBySlug', error);
     return null;
   }
 }
@@ -87,7 +88,7 @@ export async function getPostById(id: number | string): Promise<Post | null> {
       depth: 1,
     })) as Post;
   } catch (error) {
-    console.error('[cms] getPostById failed', error);
+    logCmsFailure('getPostById', error);
     return null;
   }
 }
@@ -104,7 +105,7 @@ export async function getPublishedPosts(limit = 48): Promise<Post[]> {
 
     return result.docs as Post[];
   } catch (error) {
-    console.error('[cms] getPublishedPosts failed', error);
+    logCmsFailure('getPublishedPosts', error);
     return [];
   }
 }
@@ -139,7 +140,7 @@ export async function getRelatedPosts(excludeId: number | string, limit = 3): Pr
 
     return result.docs as Post[];
   } catch (error) {
-    console.error('[cms] getRelatedPosts failed', error);
+    logCmsFailure('getRelatedPosts', error);
     return [];
   }
 }

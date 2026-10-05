@@ -1,5 +1,6 @@
 import { getPayloadClient } from '@/lib/payload';
 import { resolvePdpLayout, type PdpLayoutBlock } from '@/lib/cms/resolve-pdp-layout';
+import { logCmsFailure } from '@/lib/cms/unavailable';
 import type { Product, ProductTemplate } from '@/payload-types';
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
@@ -18,7 +19,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 
     return (result.docs[0] as Product | undefined) ?? null;
   } catch (error) {
-    console.error('[cms] getProductBySlug failed', error);
+    logCmsFailure('getProductBySlug', error);
     return null;
   }
 }
@@ -35,7 +36,7 @@ export async function getPublishedProducts(limit = 24): Promise<Product[]> {
 
     return result.docs as Product[];
   } catch (error) {
-    console.error('[cms] getPublishedProducts failed', error);
+    logCmsFailure('getPublishedProducts', error);
     return [];
   }
 }
@@ -56,7 +57,7 @@ export async function getResolvedPdpLayout(product: Product): Promise<PdpLayoutB
         depth: 3,
       })) as ProductTemplate;
     } catch (error) {
-      console.error('[cms] getResolvedPdpLayout: template lookup failed', error);
+      logCmsFailure('getResolvedPdpLayout: template lookup', error);
       template =
         typeof templateRef === 'object' && templateRef ? (templateRef as ProductTemplate) : null;
     }

@@ -17,6 +17,10 @@ export type PdpModelsBlockData = {
   models?: ModelItem[] | null;
 };
 
+function columnLabel(columns: ColumnItem[], valueIndex: number) {
+  return columns[valueIndex + 1]?.label?.trim() || `Col ${valueIndex + 1}`;
+}
+
 export function PdpModelsBlock({ block }: { block?: PdpModelsBlockData | null }) {
   const hasCms = blockHasCmsData(block);
   const eyebrow = cmsText(block?.eyebrow, DEFAULT_PDP_MODELS.eyebrow, hasCms);
@@ -28,6 +32,8 @@ export function PdpModelsBlock({ block }: { block?: PdpModelsBlockData | null })
   const models = cmsList(block?.models, DEFAULT_PDP_MODELS.models, hasCms, (model) =>
     Boolean(model.name),
   );
+  const columnCount = Math.max(columns.length, 1);
+  const tableMinWidth = `${Math.max(columnCount * 11, 42)}rem`;
 
   return (
     <section className="bg-background">
@@ -49,41 +55,70 @@ export function PdpModelsBlock({ block }: { block?: PdpModelsBlockData | null })
         </div>
 
         <div className="surface-card overflow-hidden rounded-2xl border border-border-subtle bg-surface-elevated/70">
-          <div
-            className="hidden gap-4 bg-brand-dim px-7 py-4 md:grid"
-            style={{
-              gridTemplateColumns: `repeat(${Math.max(columns.length, 1)}, minmax(0, 1fr))`,
-            }}
-          >
-            {columns.map((column) => (
-              <p
-                key={column.label}
-                className="font-mono text-[11px] font-bold tracking-[1.2px] text-brand-primary uppercase"
-              >
-                {column.label}
-              </p>
+          <div className="divide-y divide-border-subtle lg:hidden">
+            {models.map((model) => (
+              <article key={model.name} className="flex flex-col gap-4 px-5 py-5">
+                <p className="font-heading text-base font-bold text-text-primary">{model.name}</p>
+                <dl className="flex flex-col gap-3">
+                  {(model.values ?? []).map((cell, index) => (
+                    <div
+                      key={`${model.name}-${index}`}
+                      className="grid grid-cols-[minmax(5.5rem,32%)_minmax(0,1fr)] items-start gap-3"
+                    >
+                      <dt className="font-mono text-[10px] font-bold tracking-wider text-text-tertiary uppercase">
+                        {columnLabel(columns, index)}
+                      </dt>
+                      <dd className="min-w-0 text-sm leading-relaxed break-words text-text-secondary">
+                        {cell.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </article>
             ))}
           </div>
-          <div className="divide-y divide-border-subtle">
-            {models.map((model) => (
+
+          <div className="hidden overflow-x-auto lg:block">
+            <div style={{ minWidth: tableMinWidth }}>
               <div
-                key={model.name}
-                className="grid gap-2 px-5 py-5 md:gap-4 md:px-7"
+                className="grid gap-4 bg-brand-dim px-7 py-4"
                 style={{
-                  gridTemplateColumns: `repeat(${Math.max(columns.length, 1)}, minmax(0, 1fr))`,
+                  gridTemplateColumns: `repeat(${columnCount}, minmax(10rem, 1fr))`,
                 }}
               >
-                <p className="font-heading text-base font-bold text-text-primary">{model.name}</p>
-                {(model.values ?? []).map((cell, index) => (
-                  <p key={`${model.name}-${index}`} className="text-sm text-text-secondary">
-                    <span className="mr-2 font-mono text-[10px] font-bold tracking-wider text-text-tertiary uppercase md:hidden">
-                      {columns[index + 1]?.label || `Col ${index + 1}`}
-                    </span>
-                    {cell.value}
+                {columns.map((column) => (
+                  <p
+                    key={column.label}
+                    className="min-w-0 font-mono text-[11px] font-bold tracking-[1.2px] text-brand-primary uppercase"
+                  >
+                    {column.label}
                   </p>
                 ))}
               </div>
-            ))}
+              <div className="divide-y divide-border-subtle">
+                {models.map((model) => (
+                  <div
+                    key={model.name}
+                    className="grid items-start gap-4 px-7 py-5"
+                    style={{
+                      gridTemplateColumns: `repeat(${columnCount}, minmax(10rem, 1fr))`,
+                    }}
+                  >
+                    <p className="min-w-0 font-heading text-base font-bold break-words text-text-primary">
+                      {model.name}
+                    </p>
+                    {(model.values ?? []).map((cell, index) => (
+                      <p
+                        key={`${model.name}-${index}`}
+                        className="min-w-0 text-sm leading-relaxed break-words text-text-secondary"
+                      >
+                        {cell.value}
+                      </p>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

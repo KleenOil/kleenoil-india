@@ -10,6 +10,7 @@ import {
   type NavLink,
 } from '@/lib/cms/defaults';
 import { mapMainNavItems, mapNavLinks, type NavItem } from '@/lib/cms/nav';
+import { logCmsFailure } from '@/lib/cms/unavailable';
 import type { Footer, Media, Navigation, SiteSetting } from '@/payload-types';
 
 export type SiteLogoImage = {
@@ -110,7 +111,7 @@ export async function getSiteChrome(): Promise<SiteChrome> {
       enableSearch: settings?.features?.enableSearch ?? true,
     };
   } catch (error) {
-    console.error('[cms] getSiteChrome failed', error);
+    logCmsFailure('getSiteChrome', error);
     return {
       site: FALLBACK_SITE,
       mainNav: DEFAULT_MAIN_NAV,

@@ -1,4 +1,5 @@
 import { getPayloadClient } from '@/lib/payload';
+import { logCmsFailure } from '@/lib/cms/unavailable';
 import type { Page } from '@/payload-types';
 
 /** App routes that must not be claimed by CMS pages. */
@@ -38,7 +39,7 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
 
     return (result.docs[0] as Page | undefined) ?? null;
   } catch (error) {
-    console.error('[cms] getPageBySlug failed', error);
+    logCmsFailure('getPageBySlug', error);
     return null;
   }
 }
@@ -57,7 +58,7 @@ export async function getHomePage(): Promise<Page | null> {
 
     return (result.docs[0] as Page | undefined) ?? null;
   } catch (error) {
-    console.error('[cms] getHomePage failed', error);
+    logCmsFailure('getHomePage', error);
     return null;
   }
 }

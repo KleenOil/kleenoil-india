@@ -5,6 +5,7 @@ import {
 } from '@/lib/cms/cs-listing';
 import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
 import { getPayloadClient } from '@/lib/payload';
+import { logCmsFailure } from '@/lib/cms/unavailable';
 import type { CaseStudy } from '@/payload-types';
 
 export function caseStudyId(
@@ -65,7 +66,7 @@ export async function getPublishedCaseStudies(limit = 48): Promise<CaseStudy[]> 
 
     return (result.docs as CaseStudy[]).filter((study) => study.showOnListing !== false);
   } catch (error) {
-    console.error('[cms] getPublishedCaseStudies failed', error);
+    logCmsFailure('getPublishedCaseStudies', error);
     return [];
   }
 }
@@ -79,7 +80,7 @@ export async function getCaseStudyById(id: number | string): Promise<CaseStudy |
       depth: 1,
     })) as CaseStudy;
   } catch (error) {
-    console.error('[cms] getCaseStudyById failed', error);
+    logCmsFailure('getCaseStudyById', error);
     return null;
   }
 }

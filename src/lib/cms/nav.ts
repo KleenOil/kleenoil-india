@@ -9,6 +9,7 @@ import type {
 } from '@/lib/cms/nav-types';
 import { getPayloadClient } from '@/lib/payload';
 import { resolvePdpLayout, type PdpLayoutBlock } from '@/lib/cms/resolve-pdp-layout';
+import { logCmsFailure } from '@/lib/cms/unavailable';
 import type { Media, Navigation, Product, ProductTemplate } from '@/payload-types';
 
 export type { MegaProductCard, NavItem } from '@/lib/cms/nav-types';
@@ -382,7 +383,7 @@ async function loadMegaProductCards(items: CmsNavRow[]): Promise<Map<number, Meg
 
     return cards;
   } catch (error) {
-    console.error('[cms] loadMegaProductCards failed', error);
+    logCmsFailure('loadMegaProductCards', error);
     return new Map();
   }
 }

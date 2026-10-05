@@ -1,5 +1,6 @@
 import { resolveLink, type CmsLink, type ResolvedLink } from '@/lib/cms/links';
 import { getPayloadClient } from '@/lib/payload';
+import { logCmsFailure } from '@/lib/cms/unavailable';
 import type { Job } from '@/payload-types';
 
 export type JobDetails = NonNullable<Job['details']>;
@@ -131,7 +132,7 @@ export async function getPublishedJobs(limit = 48): Promise<Job[]> {
 
     return result.docs as Job[];
   } catch (error) {
-    console.error('[cms] getPublishedJobs failed', error);
+    logCmsFailure('getPublishedJobs', error);
     return [];
   }
 }
@@ -152,7 +153,7 @@ export async function getJobBySlug(slug: string): Promise<Job | null> {
 
     return (result.docs[0] as Job | undefined) ?? null;
   } catch (error) {
-    console.error('[cms] getJobBySlug failed', error);
+    logCmsFailure('getJobBySlug', error);
     return null;
   }
 }

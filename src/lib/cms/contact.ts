@@ -1,4 +1,5 @@
 import { getPayloadClient } from '@/lib/payload';
+import { logCmsFailure } from '@/lib/cms/unavailable';
 import type { ContactInfo } from '@/payload-types';
 
 export type ContactDetails = {
@@ -86,7 +87,7 @@ export async function getContactDetails(): Promise<ContactDetails> {
       emails: emails.length ? emails : DEFAULT_CONTACT.emails,
     };
   } catch (error) {
-    console.error('[cms] getContactDetails failed', error);
+    logCmsFailure('getContactDetails', error);
     return DEFAULT_CONTACT;
   }
 }
@@ -126,7 +127,7 @@ export async function getCmsContactDetails(): Promise<ContactDetails | null> {
 
     return { addresses, phones, emails };
   } catch (error) {
-    console.error('[cms] getCmsContactDetails failed', error);
+    logCmsFailure('getCmsContactDetails', error);
     return null;
   }
 }
