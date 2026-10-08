@@ -144,14 +144,29 @@ export function PdpContaminationBlock({ block }: { block?: PdpContaminationBlock
           </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
-          <ContaminationColumn heading={leftHeading} description={leftDescription} items={left} />
-          <ContaminationColumn
-            heading={rightHeading}
-            description={rightDescription}
-            items={right}
-          />
-        </div>
+        {left.length > 0 || right.length > 0 ? (
+          <div
+            className={cn(
+              'grid gap-6',
+              left.length > 0 && right.length > 0 ? 'lg:grid-cols-2' : 'lg:grid-cols-1',
+            )}
+          >
+            {left.length > 0 ? (
+              <ContaminationColumn
+                heading={leftHeading}
+                description={leftDescription}
+                items={left}
+              />
+            ) : null}
+            {right.length > 0 ? (
+              <ContaminationColumn
+                heading={rightHeading}
+                description={rightDescription}
+                items={right}
+              />
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </section>
   );
