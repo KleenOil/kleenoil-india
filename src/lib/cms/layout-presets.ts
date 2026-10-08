@@ -57,6 +57,12 @@ import {
   DEFAULT_AMC_VISIT,
   DEFAULT_AMC_WHY,
 } from '@/lib/cms/amc';
+import {
+  DEFAULT_FAQ_CTA,
+  DEFAULT_FAQ_TOPICS,
+  DEFAULT_RESOURCE_HERO,
+  DEFAULT_RESOURCE_PDFS,
+} from '@/lib/cms/library';
 
 type Appearance = 'primary' | 'secondary' | 'ghost';
 
@@ -567,6 +573,52 @@ const BLOCK_SEEDS: Record<string, () => LayoutBlock> = {
     heading: DEFAULT_AMC_CTA.heading,
     subtext: DEFAULT_AMC_CTA.subtext,
     ctas: DEFAULT_AMC_CTA.ctas.map((cta) => customLink(cta.label, cta.href, cta.appearance)),
+  }),
+  'resource-hero': () => ({
+    blockType: 'resource-hero',
+    variant: 'industries',
+    eyebrow: DEFAULT_RESOURCE_HERO.industries.eyebrow,
+    heading: DEFAULT_RESOURCE_HERO.industries.heading,
+    lead: DEFAULT_RESOURCE_HERO.industries.lead,
+    ctas: DEFAULT_RESOURCE_HERO.industries.cta
+      ? [
+          customLink(
+            DEFAULT_RESOURCE_HERO.industries.cta.label,
+            DEFAULT_RESOURCE_HERO.industries.cta.href,
+            DEFAULT_RESOURCE_HERO.industries.cta.appearance,
+          ),
+        ]
+      : [],
+    stats: DEFAULT_RESOURCE_HERO.industries.stats,
+  }),
+  'resource-pdfs': () => ({
+    blockType: 'resource-pdfs',
+    variant: 'industries',
+    eyebrow: DEFAULT_RESOURCE_PDFS.industries.eyebrow,
+    heading: DEFAULT_RESOURCE_PDFS.industries.heading,
+    description: DEFAULT_RESOURCE_PDFS.industries.description,
+    cards: DEFAULT_RESOURCE_PDFS.industries.cards.map(({ title, meta, href }) => ({
+      title,
+      meta,
+      href,
+    })),
+  }),
+  'faq-topics': () => ({
+    blockType: 'faq-topics',
+    topics: DEFAULT_FAQ_TOPICS.topics.map((topic) => ({
+      label: topic.label,
+      items: topic.items.map(({ question, answer, defaultOpen }) => ({
+        question,
+        answer,
+        defaultOpen: Boolean(defaultOpen),
+      })),
+    })),
+  }),
+  'faq-cta': () => ({
+    blockType: 'faq-cta',
+    eyebrow: DEFAULT_FAQ_CTA.eyebrow,
+    heading: DEFAULT_FAQ_CTA.heading,
+    ctas: DEFAULT_FAQ_CTA.ctas.map((cta) => customLink(cta.label, cta.href, cta.appearance)),
   }),
 };
 

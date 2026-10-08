@@ -61,8 +61,8 @@ function MegaMenuPanelView({ open, intro, tree, labelledBy }: MegaMenuPanelProps
     >
       <div className="mega-menu-panel-clip">
         <div className="mega-menu-panel-body">
-          <div className="flex w-full items-stretch">
-            <aside className="mega-intro flex w-[32%] shrink-0 flex-col gap-5 px-8 py-9 lg:px-16">
+          <div className="mega-menu-panel-inner">
+            <aside className="mega-intro flex w-[32%] shrink-0 flex-col gap-5 px-8 py-9 lg:px-16 min-h-0">
               {intro?.heading ? (
                 <h2 className="font-heading text-[2rem] leading-tight font-semibold text-text-primary">
                   {intro.heading}
@@ -90,7 +90,7 @@ function MegaMenuPanelView({ open, intro, tree, labelledBy }: MegaMenuPanelProps
               ) : null}
             </aside>
 
-            <div className="mega-levels grid min-w-0 flex-1 grid-cols-3">
+            <div className="mega-levels grid min-h-0 min-w-0 flex-1 grid-cols-3">
               <MegaLevel nodes={level1} activeIndex={activeL1} onHover={hoverLevel1} />
               <MegaLevel
                 key={`l2-${activeL1}`}

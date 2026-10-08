@@ -29,7 +29,11 @@ import { FeaturedCaseStudies } from './FeaturedCaseStudies/config';
 import { FeaturedIndustries } from './FeaturedIndustries/config';
 import { FeaturedProducts } from './FeaturedProducts/config';
 import { FeaturedServices } from './FeaturedServices/config';
+import { FaqCta } from './FaqCta/config';
+import { FaqTopics } from './FaqTopics/config';
 import { Hero } from './Hero/config';
+import { ResourceHero } from './ResourceHero/config';
+import { ResourcePdfs } from './ResourcePdfs/config';
 import { Manifesto } from './Manifesto/config';
 import { ProcessStory } from './ProcessStory/config';
 import { RichContent } from './RichContent/config';
@@ -109,6 +113,10 @@ export const pageBlocks: Block[] = [
   AmcIndustries,
   AmcProof,
   AmcCta,
+  ResourceHero,
+  ResourcePdfs,
+  FaqTopics,
+  FaqCta,
 ];
 
 export type PageBlockSlug = (typeof pageBlocks)[number]['slug'];

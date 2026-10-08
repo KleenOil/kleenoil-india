@@ -33,6 +33,10 @@ import {
   type ContactProcessBlockData,
 } from '@/blocks/ContactProcess/Component';
 import { CtaBlock, type CtaBlockData } from '@/blocks/CTA/Component';
+import { FaqCtaBlock, type FaqCtaBlockData } from '@/blocks/FaqCta/Component';
+import { FaqTopicsBlock, type FaqTopicsBlockData } from '@/blocks/FaqTopics/Component';
+import { ResourceHeroBlock, type ResourceHeroBlockData } from '@/blocks/ResourceHero/Component';
+import { ResourcePdfsBlock, type ResourcePdfsBlockData } from '@/blocks/ResourcePdfs/Component';
 import {
   DistributionNetworkBlock,
   type DistributionNetworkBlockData,
@@ -504,6 +508,26 @@ export function RenderBlocks({
             return wrapReveal(key, <AmcProofBlock block={block as AmcProofBlockData} />, motion);
           case 'amc-cta':
             return wrapReveal(key, <AmcCtaBlock block={block as AmcCtaBlockData} />, motion, {
+              variant: 'cta',
+            });
+          case 'resource-hero':
+            return wrapReveal(
+              key,
+              <ResourceHeroBlock block={block as ResourceHeroBlockData} />,
+              motion,
+              { variant: 'hero' },
+            );
+          case 'resource-pdfs':
+            return wrapReveal(
+              key,
+              <ResourcePdfsBlock block={block as ResourcePdfsBlockData} />,
+              motion,
+              { stagger: true },
+            );
+          case 'faq-topics':
+            return wrapReveal(key, <FaqTopicsBlock block={block as FaqTopicsBlockData} />, motion);
+          case 'faq-cta':
+            return wrapReveal(key, <FaqCtaBlock block={block as FaqCtaBlockData} />, motion, {
               variant: 'cta',
             });
           default:

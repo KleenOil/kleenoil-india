@@ -69,7 +69,7 @@ export const DEFAULT_FOOTER_COLUMNS: FooterColumn[] = [
       { label: 'Case Studies', href: '/case-studies' },
       { label: 'Technical Library', href: '/resources/downloads' },
       { label: 'Brochures', href: '/resources/brochures' },
-      { label: 'FAQ', href: '/resources/faqs' },
+      { label: 'FAQ', href: '/faq' },
       { label: 'Contact', href: '/contact' },
     ],
   },

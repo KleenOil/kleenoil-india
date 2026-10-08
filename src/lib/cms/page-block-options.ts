@@ -52,6 +52,10 @@ export const PAGE_BLOCK_OPTIONS = [
   { slug: 'amc-industries', label: 'AMC Industries' },
   { slug: 'amc-proof', label: 'AMC Proof' },
   { slug: 'amc-cta', label: 'AMC CTA' },
+  { slug: 'resource-hero', label: 'Resource Hero' },
+  { slug: 'resource-pdfs', label: 'Resource PDFs' },
+  { slug: 'faq-topics', label: 'FAQ Topics' },
+  { slug: 'faq-cta', label: 'FAQ CTA' },
 ] as const;
 
 export type PageBlockSlug = (typeof PAGE_BLOCK_OPTIONS)[number]['slug'];

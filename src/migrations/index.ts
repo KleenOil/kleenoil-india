@@ -39,6 +39,8 @@ import * as migration_20260908_130000_contact_hero_questions from './20260908_13
 import * as migration_20260912_180000_sustainability_page_blocks from './20260912_180000_sustainability_page_blocks';
 import * as migration_20260918_030000_services_page_blocks from './20260918_030000_services_page_blocks';
 import * as migration_20260918_040000_amc_page_blocks from './20260918_040000_amc_page_blocks';
+import * as migration_20261008_110000_resource_page_blocks from './20261008_110000_resource_page_blocks';
+import * as migration_20261008_111000_faq_page_blocks from './20261008_111000_faq_page_blocks';
 
 export const migrations = [
   {
@@ -245,5 +247,15 @@ export const migrations = [
     up: migration_20260918_040000_amc_page_blocks.up,
     down: migration_20260918_040000_amc_page_blocks.down,
     name: '20260918_040000_amc_page_blocks',
+  },
+  {
+    up: migration_20261008_110000_resource_page_blocks.up,
+    down: migration_20261008_110000_resource_page_blocks.down,
+    name: '20261008_110000_resource_page_blocks',
+  },
+  {
+    up: migration_20261008_111000_faq_page_blocks.up,
+    down: migration_20261008_111000_faq_page_blocks.down,
+    name: '20261008_111000_faq_page_blocks',
   },
 ];

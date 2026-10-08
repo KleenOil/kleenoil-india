@@ -1476,6 +1476,110 @@ export interface Page {
             blockName?: string | null;
             blockType: 'amc-cta';
           }
+        | {
+            /**
+             * Industries, Applications, Types of Oil, Testimonials, or FAQ.
+             */
+            variant?: ('industries' | 'applications' | 'fluids' | 'testimonials' | 'faq') | null;
+            eyebrow?: string | null;
+            heading?: string | null;
+            lead?: string | null;
+            ctas?:
+              | {
+                  link: {
+                    type: 'page' | 'custom';
+                    label?: string | null;
+                    page?: (number | null) | Page;
+                    /**
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+                     */
+                    url?: string | null;
+                    openInNewTab?: boolean | null;
+                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            image?: (number | null) | Media;
+            quote?: string | null;
+            attribution?: string | null;
+            stats?:
+              | {
+                  n: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            previews?:
+              | {
+                  title: string;
+                  kicker?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'resource-hero';
+          }
+        | {
+            variant?: ('industries' | 'applications' | 'fluids' | 'testimonials') | null;
+            eyebrow?: string | null;
+            heading?: string | null;
+            description?: string | null;
+            cards?:
+              | {
+                  title: string;
+                  meta?: string | null;
+                  href?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'resource-pdfs';
+          }
+        | {
+            topics?:
+              | {
+                  label: string;
+                  items?:
+                    | {
+                        question: string;
+                        answer: string;
+                        defaultOpen?: boolean | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq-topics';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            ctas?:
+              | {
+                  link: {
+                    type: 'page' | 'custom';
+                    label?: string | null;
+                    page?: (number | null) | Page;
+                    /**
+                     * Optional. Absolute URL or site path (e.g. /products). Leave empty to keep this as text only.
+                     */
+                    url?: string | null;
+                    openInNewTab?: boolean | null;
+                    appearance?: ('primary' | 'secondary' | 'ghost') | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq-cta';
+          }
       )[]
     | null;
   /**
@@ -3789,6 +3893,109 @@ export interface PagesSelect<T extends boolean = true> {
               eyebrow?: T;
               heading?: T;
               subtext?: T;
+              ctas?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          label?: T;
+                          page?: T;
+                          url?: T;
+                          openInNewTab?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'resource-hero'?:
+          | T
+          | {
+              variant?: T;
+              eyebrow?: T;
+              heading?: T;
+              lead?: T;
+              ctas?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          label?: T;
+                          page?: T;
+                          url?: T;
+                          openInNewTab?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              image?: T;
+              quote?: T;
+              attribution?: T;
+              stats?:
+                | T
+                | {
+                    n?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              previews?:
+                | T
+                | {
+                    title?: T;
+                    kicker?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'resource-pdfs'?:
+          | T
+          | {
+              variant?: T;
+              eyebrow?: T;
+              heading?: T;
+              description?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    meta?: T;
+                    href?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'faq-topics'?:
+          | T
+          | {
+              topics?:
+                | T
+                | {
+                    label?: T;
+                    items?:
+                      | T
+                      | {
+                          question?: T;
+                          answer?: T;
+                          defaultOpen?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'faq-cta'?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
               ctas?:
                 | T
                 | {
