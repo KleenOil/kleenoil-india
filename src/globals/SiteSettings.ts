@@ -161,6 +161,107 @@ export const SiteSettings: GlobalConfig = {
           ],
         },
         {
+          label: 'Loader',
+          fields: [
+            {
+              name: 'loader',
+              type: 'group',
+              label: 'Page loader',
+              admin: {
+                description:
+                  'Full-screen overlay shown when moving between pages. Desktop and mobile layouts follow the Kleenoil loading screens.',
+              },
+              fields: [
+                {
+                  name: 'enabled',
+                  type: 'checkbox',
+                  defaultValue: true,
+                  admin: { description: 'Show the branded loader on in-site page changes.' },
+                },
+                {
+                  name: 'showOnFirstLoad',
+                  type: 'checkbox',
+                  label: 'Show on first page load',
+                  defaultValue: false,
+                  admin: {
+                    description:
+                      'Also play the loader when someone first lands on the site. Off = navigation only.',
+                  },
+                },
+                {
+                  name: 'brandName',
+                  type: 'text',
+                  label: 'Wordmark',
+                  defaultValue: 'KLEENOIL',
+                  admin: {
+                    description: 'Large name next to the letter mark. Defaults to KLEENOIL.',
+                  },
+                },
+                {
+                  name: 'statusText',
+                  type: 'text',
+                  label: 'Status line',
+                  defaultValue: 'WARMING UP THE SYSTEM',
+                },
+                {
+                  name: 'systemCode',
+                  type: 'text',
+                  label: 'Top-left code (desktop)',
+                  defaultValue: 'SYS. 01  //  INITIALIZING',
+                },
+                {
+                  name: 'systemCodeMobile',
+                  type: 'text',
+                  label: 'Top-left code (mobile)',
+                  defaultValue: 'SYS. 01  //  INIT',
+                },
+                {
+                  name: 'versionLabel',
+                  type: 'text',
+                  label: 'Version',
+                  defaultValue: 'v2026.10',
+                },
+                {
+                  name: 'cornerBrand',
+                  type: 'text',
+                  label: 'Bottom-right mark (desktop)',
+                  defaultValue: 'KLEENOIL INDIA  —  EST. 1988',
+                },
+                {
+                  name: 'cornerBrandMobile',
+                  type: 'text',
+                  label: 'Bottom-right mark (mobile)',
+                  defaultValue: 'KLEENOIL  —  1988',
+                },
+                {
+                  name: 'tagline',
+                  type: 'text',
+                  label: 'Logo tagline (desktop)',
+                  defaultValue: 'INDIA  —  BYPASS FILTRATION SINCE 1988',
+                },
+                {
+                  name: 'taglineMobile',
+                  type: 'text',
+                  label: 'Logo tagline (mobile)',
+                  defaultValue: 'INDIA  —  BYPASS FILTRATION',
+                },
+                {
+                  name: 'minDurationMs',
+                  type: 'number',
+                  label: 'Fade duration (ms)',
+                  defaultValue: 700,
+                  min: 400,
+                  max: 2000,
+                  admin: {
+                    description:
+                      'How long the fade in and fade out take. The overlay itself stays until the next page has loaded.',
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
           label: 'Features',
           fields: [
             {

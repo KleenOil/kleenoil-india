@@ -8,7 +8,12 @@ type PostgresDb = {
     execute: (query: unknown) => Promise<unknown>;
   };
   pool?: {
-    query: (query: string, params?: unknown[]) => Promise<{ rows: Array<{ tablename?: unknown }> }>;
+    query: (
+      query: string,
+      params?: unknown[],
+    ) => Promise<{
+      rows: Array<{ tablename?: unknown; table_name?: unknown; column_name?: unknown }>;
+    }>;
   };
 };
 
@@ -21,9 +26,36 @@ type MigrationUp = (args: {
 let inFlight: Promise<void> | null = null;
 let completedSignature: string | null = null;
 
+/** Idempotent ALTER migrations for new columns on existing page-block tables.
+ *  Local DBs used drizzle push, so `payload migrate` cannot apply these. */
+const COLUMN_PATCHES: Array<{ name: string; table: string; column: string }> = [
+  {
+    name: '20261020_020000_featured_industries_pdf_and_view_all',
+    table: 'pages_blocks_featured_industries_cards',
+    column: 'pdf_id',
+  },
+  {
+    name: '20261020_020000_featured_industries_pdf_and_view_all',
+    table: 'pages_blocks_featured_industries',
+    column: 'view_all_tag',
+  },
+  {
+    name: '20261020_030000_site_settings_loader',
+    table: 'site_settings',
+    column: 'loader_enabled',
+  },
+  {
+    name: '20261020_030000_site_settings_loader',
+    table: 'site_settings',
+    column: 'loader_brand_name',
+  },
+];
+
 /** Slug list used to bust the Payload client cache when page blocks change. */
 export function pageBlockSchemaSignature(): string {
-  return pageBlocks.map((block) => block.slug).join(',');
+  const blocks = pageBlocks.map((block) => block.slug).join(',');
+  const columns = COLUMN_PATCHES.map((patch) => `${patch.table}.${patch.column}`).join(',');
+  return `${blocks}|${columns}`;
 }
 
 export function pageBlockTableNames(slug: string): string[] {
@@ -54,7 +86,7 @@ export async function ensurePageBlockTables(payload: Payload): Promise<void> {
   }
 
   if (!inFlight) {
-    inFlight = applyMissingPageBlockTables(payload, signature).finally(() => {
+    inFlight = applyMissingPageBlockTables(payload).finally(() => {
       inFlight = null;
     });
   }
@@ -63,7 +95,7 @@ export async function ensurePageBlockTables(payload: Payload): Promise<void> {
   completedSignature = signature;
 }
 
-async function applyMissingPageBlockTables(payload: Payload, signature: string): Promise<void> {
+async function applyMissingPageBlockTables(payload: Payload): Promise<void> {
   const db = payload.db as PostgresDb;
   if (typeof db.pool?.query !== 'function' || typeof db.drizzle?.execute !== 'function') {
     return;
@@ -84,9 +116,8 @@ async function applyMissingPageBlockTables(payload: Payload, signature: string):
   const missing = required.filter((table) => !existing.has(table));
 
   if (!missing.length) {
-    payload.logger.info(
-      `[cms] Page block tables are in sync (${signature.split(',').length} sections)`,
-    );
+    payload.logger.info(`[cms] Page block tables are in sync (${pageBlocks.length} sections)`);
+    await applyMissingPageBlockColumns(payload, db);
     return;
   }
 
@@ -125,6 +156,73 @@ async function applyMissingPageBlockTables(payload: Payload, signature: string):
   if (stillMissing.length) {
     throw new Error(
       `[cms] Page block tables still missing after migrate: ${stillMissing.join(', ')}`,
+    );
+  }
+
+  await applyMissingPageBlockColumns(payload, db);
+}
+
+async function pageBlockColumnExists(
+  db: PostgresDb,
+  table: string,
+  column: string,
+): Promise<boolean> {
+  const result = await db.pool!.query(
+    `SELECT 1
+     FROM information_schema.columns
+     WHERE table_schema = 'public'
+       AND table_name = $1
+       AND column_name = $2`,
+    [table, column],
+  );
+  return result.rows.length > 0;
+}
+
+async function applyMissingPageBlockColumns(payload: Payload, db: PostgresDb): Promise<void> {
+  if (typeof db.pool?.query !== 'function' || typeof db.drizzle?.execute !== 'function') {
+    return;
+  }
+
+  const needed = COLUMN_PATCHES.filter((patch) =>
+    migrations.some((migration) => migration.name === patch.name),
+  );
+  if (!needed.length) {
+    return;
+  }
+
+  const toRunNames: string[] = [];
+  for (const patch of needed) {
+    const missingColumn = !(await pageBlockColumnExists(db, patch.table, patch.column));
+    if (missingColumn && !toRunNames.includes(patch.name)) {
+      toRunNames.push(patch.name);
+    }
+  }
+
+  if (!toRunNames.length) {
+    return;
+  }
+
+  const toRun = migrations.filter((migration) => toRunNames.includes(migration.name));
+  payload.logger.info(`[cms] Applying page-block column patches: ${toRunNames.join(', ')}`);
+
+  for (const migration of toRun) {
+    payload.logger.info(`[cms] Applying ${migration.name}`);
+    await (migration.up as unknown as MigrationUp)({
+      db: db.drizzle,
+      payload,
+      req: undefined as never,
+    });
+  }
+
+  const stillMissing: string[] = [];
+  for (const patch of needed.filter((item) => toRunNames.includes(item.name))) {
+    if (!(await pageBlockColumnExists(db, patch.table, patch.column))) {
+      stillMissing.push(`${patch.table}.${patch.column}`);
+    }
+  }
+  if (stillMissing.length) {
+    throw new Error(
+      `[cms] Page-block columns still missing after migrate: ${stillMissing.join(', ')}`,
     );
   }
 }

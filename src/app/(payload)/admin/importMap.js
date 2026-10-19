@@ -25,10 +25,10 @@ import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997e
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BlocksDrawerMultiSelect as BlocksDrawerMultiSelect_05d9fb17bd9c5f35228e3c9477cb5f03 } from '../../../components/admin/BlocksDrawerMultiSelect'
+import { ClearStaleNotFound as ClearStaleNotFound_0155db8d59b38abe17cf40ba8ebec63e } from '../../../components/admin/ClearStaleNotFound'
 import { LeadStatusCell as LeadStatusCell_08ae8d8e212959ebcb7d4736dfe68ee0 } from '../../../components/admin/LeadStatusCell'
 import { LeadStatusTabs as LeadStatusTabs_b7fdbdcc235d91375ae35c55f3f938ec } from '../../../components/admin/LeadStatusTabs'
 import { PdpModelsCsvImport as PdpModelsCsvImport_7efa64de95690efee1a0d8a7f9395f56 } from '../../../components/admin/PdpModelsCsvImport'
-import { ClearStaleNotFound as ClearStaleNotFound_0155db8d59b38abe17cf40ba8ebec63e } from '../../../components/admin/ClearStaleNotFound'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -60,9 +60,9 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "/components/admin/BlocksDrawerMultiSelect#BlocksDrawerMultiSelect": BlocksDrawerMultiSelect_05d9fb17bd9c5f35228e3c9477cb5f03,
+  "/components/admin/ClearStaleNotFound#ClearStaleNotFound": ClearStaleNotFound_0155db8d59b38abe17cf40ba8ebec63e,
   "/components/admin/LeadStatusCell#LeadStatusCell": LeadStatusCell_08ae8d8e212959ebcb7d4736dfe68ee0,
   "/components/admin/LeadStatusTabs#LeadStatusTabs": LeadStatusTabs_b7fdbdcc235d91375ae35c55f3f938ec,
   "/components/admin/PdpModelsCsvImport#PdpModelsCsvImport": PdpModelsCsvImport_7efa64de95690efee1a0d8a7f9395f56,
-  "/components/admin/ClearStaleNotFound#ClearStaleNotFound": ClearStaleNotFound_0155db8d59b38abe17cf40ba8ebec63e,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

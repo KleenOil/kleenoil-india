@@ -1,3 +1,4 @@
+import { FileText } from 'lucide-react';
 import Image from 'next/image';
 
 import { ParallaxMedia } from '@/components/motion/ParallaxMedia';
@@ -9,6 +10,8 @@ export type IndustryCardData = {
   title: string;
   description: string;
   href?: string | null;
+  openInNewTab?: boolean;
+  isPdf?: boolean;
   imageUrl?: string | null;
   imageAlt?: string;
 };
@@ -22,12 +25,19 @@ export function IndustryCard({ industry, className }: IndustryCardProps) {
   return (
     <MaybeLink
       href={industry.href}
+      openInNewTab={industry.openInNewTab}
       data-reveal-item
       className={cn(
         'group surface-card relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded-2xl border-2 border-border-subtle bg-surface-elevated/40 p-8 sm:min-h-[520px] sm:p-9',
         className,
       )}
     >
+      {industry.isPdf ? (
+        <span className="absolute top-6 right-6 z-10 inline-flex items-center gap-1.5 rounded-md bg-white/90 px-2 py-1 font-heading text-[10px] font-bold tracking-[1.2px] text-brand-primary uppercase">
+          <FileText className="size-3" aria-hidden />
+          PDF
+        </span>
+      ) : null}
       {industry.imageUrl ? (
         <ParallaxMedia enabled strength={0.18} className="absolute inset-0">
           <Image

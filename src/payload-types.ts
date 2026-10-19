@@ -837,7 +837,7 @@ export interface Page {
             heading?: string | null;
             description?: string | null;
             /**
-             * Shown in two rows of three. Tag, title, description, image, and link.
+             * Up to five industry cards. The sixth slot is the View all card below. Each card can use a PDF, a link, or both (PDF wins when both are set).
              */
             cards?:
               | {
@@ -849,12 +849,35 @@ export interface Page {
                   description?: string | null;
                   image?: (number | null) | Media;
                   /**
-                   * Optional. Leave empty to keep the card as text only (not clickable).
+                   * Optional page or URL. Used when no PDF is uploaded. Leave both empty to keep the card as text only.
                    */
                   href?: string | null;
+                  /**
+                   * Optional. If set, the card opens this PDF in a new tab instead of the Link field.
+                   */
+                  pdf?: (number | null) | Media;
                   id?: string | null;
                 }[]
               | null;
+            /**
+             * The sixth card — a distinct redirect to the full industries page.
+             */
+            viewAll?: {
+              /**
+               * e.g. 06 / LIBRARY
+               */
+              tag?: string | null;
+              title?: string | null;
+              description?: string | null;
+              /**
+               * e.g. View all industries
+               */
+              ctaLabel?: string | null;
+              /**
+               * Optional. Leave empty to keep the card not clickable.
+               */
+              href?: string | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'featured-industries';
@@ -1500,7 +1523,13 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
+            /**
+             * Full-bleed photo on Applications and Testimonials. Testimonials uses it behind the quote and PDF cards.
+             */
             image?: (number | null) | Media;
+            /**
+             * Featured quote on the Testimonials banner, under the headline.
+             */
             quote?: string | null;
             attribution?: string | null;
             stats?:
@@ -1510,6 +1539,9 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
+            /**
+             * Up to three PDF cards that float over the Testimonials banner photo on desktop.
+             */
             previews?:
               | {
                   title: string;
@@ -3312,7 +3344,17 @@ export interface PagesSelect<T extends boolean = true> {
                     description?: T;
                     image?: T;
                     href?: T;
+                    pdf?: T;
                     id?: T;
+                  };
+              viewAll?:
+                | T
+                | {
+                    tag?: T;
+                    title?: T;
+                    description?: T;
+                    ctaLabel?: T;
+                    href?: T;
                   };
               id?: T;
               blockName?: T;
@@ -4809,6 +4851,35 @@ export interface SiteSetting {
    * Inbox that receives consultation form submissions. Comma-separate for more than one. Falls back to EMAIL_TO_SALES in the environment if empty.
    */
   leadNotificationEmail?: string | null;
+  /**
+   * Full-screen overlay shown when moving between pages. Desktop and mobile layouts follow the Kleenoil loading screens.
+   */
+  loader?: {
+    /**
+     * Show the branded loader on in-site page changes.
+     */
+    enabled?: boolean | null;
+    /**
+     * Also play the loader when someone first lands on the site. Off = navigation only.
+     */
+    showOnFirstLoad?: boolean | null;
+    /**
+     * Large name next to the letter mark. Defaults to KLEENOIL.
+     */
+    brandName?: string | null;
+    statusText?: string | null;
+    systemCode?: string | null;
+    systemCodeMobile?: string | null;
+    versionLabel?: string | null;
+    cornerBrand?: string | null;
+    cornerBrandMobile?: string | null;
+    tagline?: string | null;
+    taglineMobile?: string | null;
+    /**
+     * How long the fade in and fade out take. The overlay itself stays until the next page has loaded.
+     */
+    minDurationMs?: number | null;
+  };
   features?: {
     enableSearch?: boolean | null;
     enableBlog?: boolean | null;
@@ -5200,6 +5271,22 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         id?: T;
       };
   leadNotificationEmail?: T;
+  loader?:
+    | T
+    | {
+        enabled?: T;
+        showOnFirstLoad?: T;
+        brandName?: T;
+        statusText?: T;
+        systemCode?: T;
+        systemCodeMobile?: T;
+        versionLabel?: T;
+        cornerBrand?: T;
+        cornerBrandMobile?: T;
+        tagline?: T;
+        taglineMobile?: T;
+        minDurationMs?: T;
+      };
   features?:
     | T
     | {

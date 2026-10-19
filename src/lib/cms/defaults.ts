@@ -21,6 +21,21 @@ export const DEFAULT_SITE = {
   copyright: '© {{year}} KLEENOIL INDIA PVT. LTD. — BANGALORE, INDIA',
 };
 
+export const DEFAULT_PAGE_LOADER = {
+  enabled: true,
+  showOnFirstLoad: false,
+  brandName: 'KLEENOIL',
+  statusText: 'WARMING UP THE SYSTEM',
+  systemCode: 'SYS. 01  //  INITIALIZING',
+  systemCodeMobile: 'SYS. 01  //  INIT',
+  versionLabel: 'v2026.10',
+  cornerBrand: 'KLEENOIL INDIA  —  EST. 1988',
+  cornerBrandMobile: 'KLEENOIL  —  1988',
+  tagline: 'INDIA  —  BYPASS FILTRATION SINCE 1988',
+  taglineMobile: 'INDIA  —  BYPASS FILTRATION',
+  minDurationMs: 700,
+};
+
 export const DEFAULT_MAIN_NAV: NavLink[] = [
   { label: 'Products & Services', href: '/products' },
   { label: 'Solutions', href: '/industries' },
@@ -319,16 +334,15 @@ export const DEFAULT_FEATURED_INDUSTRIES = {
       imageUrl:
         'https://images.unsplash.com/photo-1767795197649-8bb9dc3c3011?auto=format&fit=crop&w=1080&q=80',
     },
-    {
-      tag: '06 / INDUSTRY',
-      title: 'CNC Manufacturing',
-      description:
-        'Coolant management and hydraulic filtration for high-precision machining operations.',
-      href: '/industries',
-      imageUrl:
-        'https://images.unsplash.com/photo-1738162837335-3745e5d16c09?auto=format&fit=crop&w=1080&q=80',
-    },
   ],
+  viewAll: {
+    tag: '06 / LIBRARY',
+    title: 'View all industries',
+    description:
+      'Industry notes for every plant we walk into — contamination patterns, typical fluids, and the filtration setup that holds.',
+    ctaLabel: 'Browse industry notes',
+    href: '/industries',
+  },
 };
 
 export const DEFAULT_PROCESS_STORY = {

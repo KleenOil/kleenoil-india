@@ -67,6 +67,19 @@
     overflow-x: clip;
   }
 
+  html.page-loader-active {
+    overflow: hidden;
+  }
+
+  .page-loader[data-state='active'] {
+    pointer-events: auto;
+  }
+
+  .page-loader,
+  .page-loader * {
+    transition: none;
+  }
+
   body {
     @apply bg-background text-foreground;
     /* Static gradients — no fixed attachment (major scroll jank on Windows) */

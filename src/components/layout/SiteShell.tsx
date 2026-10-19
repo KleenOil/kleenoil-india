@@ -1,5 +1,6 @@
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
+import { PageLoader } from '@/components/loader/PageLoader';
 import { getSiteChrome } from '@/lib/cms/site';
 
 export async function SiteShell({ children }: { children: React.ReactNode }) {
@@ -22,6 +23,7 @@ export async function SiteShell({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       <Footer site={chrome.site} columns={chrome.footerColumns} legalLinks={chrome.legalLinks} />
+      {chrome.loader.enabled ? <PageLoader loader={chrome.loader} /> : null}
     </>
   );
 }

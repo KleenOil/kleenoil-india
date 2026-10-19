@@ -311,6 +311,7 @@ const BLOCK_SEEDS: Record<string, () => LayoutBlock> = {
       description: industry.description,
       href: industry.href,
     })),
+    viewAll: { ...DEFAULT_FEATURED_INDUSTRIES.viewAll },
   }),
   'featured-services': () => ({
     blockType: 'featured-services',

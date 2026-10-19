@@ -31,6 +31,9 @@ export const Pages: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
     group: 'Content',
+    components: {
+      beforeListTable: ['/components/admin/ClearStaleNotFound#ClearStaleNotFound'],
+    },
   },
   // Keep version history, but do not require a separate Publish click.
   // Drafts left Pages looking "blank" / disappearing on Vercel after save.

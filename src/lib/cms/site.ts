@@ -4,6 +4,7 @@ import {
   DEFAULT_FOOTER_COLUMNS,
   DEFAULT_LEGAL_LINKS,
   DEFAULT_MAIN_NAV,
+  DEFAULT_PAGE_LOADER,
   DEFAULT_SITE,
   DEFAULT_UTILITY_NAV,
   type FooterColumn,
@@ -21,6 +22,21 @@ export type SiteLogoImage = {
   mimeType?: string | null;
 };
 
+export type SiteLoader = {
+  enabled: boolean;
+  showOnFirstLoad: boolean;
+  brandName: string;
+  statusText: string;
+  systemCode: string;
+  systemCodeMobile: string;
+  versionLabel: string;
+  cornerBrand: string;
+  cornerBrandMobile: string;
+  tagline: string;
+  taglineMobile: string;
+  minDurationMs: number;
+};
+
 export type SiteChrome = {
   site: {
     companyName: string;
@@ -30,6 +46,7 @@ export type SiteChrome = {
     logo: SiteLogoImage | null;
     logoMark: SiteLogoImage | null;
   };
+  loader: SiteLoader;
   mainNav: NavItem[];
   mobileNav: NavItem[];
   utilityNav: NavLink[];
@@ -62,6 +79,37 @@ const FALLBACK_SITE: SiteChrome['site'] = {
   logoMark: null,
 };
 
+function textOrDefault(value: string | null | undefined, fallback: string): string {
+  const trimmed = typeof value === 'string' ? value.trim() : '';
+  return trimmed || fallback;
+}
+
+function mapLoader(settings: SiteSetting | null): SiteLoader {
+  const loader = settings?.loader;
+  const duration = Number(loader?.minDurationMs);
+  const hasDuration = loader?.minDurationMs != null && Number.isFinite(duration) && duration > 0;
+
+  return {
+    enabled: loader?.enabled !== false,
+    showOnFirstLoad: Boolean(loader?.showOnFirstLoad),
+    brandName: textOrDefault(loader?.brandName, DEFAULT_PAGE_LOADER.brandName),
+    statusText: textOrDefault(loader?.statusText, DEFAULT_PAGE_LOADER.statusText),
+    systemCode: textOrDefault(loader?.systemCode, DEFAULT_PAGE_LOADER.systemCode),
+    systemCodeMobile: textOrDefault(loader?.systemCodeMobile, DEFAULT_PAGE_LOADER.systemCodeMobile),
+    versionLabel: textOrDefault(loader?.versionLabel, DEFAULT_PAGE_LOADER.versionLabel),
+    cornerBrand: textOrDefault(loader?.cornerBrand, DEFAULT_PAGE_LOADER.cornerBrand),
+    cornerBrandMobile: textOrDefault(
+      loader?.cornerBrandMobile,
+      DEFAULT_PAGE_LOADER.cornerBrandMobile,
+    ),
+    tagline: textOrDefault(loader?.tagline, DEFAULT_PAGE_LOADER.tagline),
+    taglineMobile: textOrDefault(loader?.taglineMobile, DEFAULT_PAGE_LOADER.taglineMobile),
+    minDurationMs: hasDuration
+      ? Math.min(2000, Math.max(400, duration))
+      : DEFAULT_PAGE_LOADER.minDurationMs,
+  };
+}
+
 export async function getSiteChrome(): Promise<SiteChrome> {
   try {
     const payload = await getPayloadClient();
@@ -89,16 +137,18 @@ export async function getSiteChrome(): Promise<SiteChrome> {
         .filter((column) => column.links.length > 0) ?? [];
 
     const legalLinks = mapNavLinks(footerData?.bottomBar?.legalLinks);
+    const companyName = settings?.companyName || DEFAULT_SITE.companyName;
 
     return {
       site: {
-        companyName: settings?.companyName || DEFAULT_SITE.companyName,
+        companyName,
         companyTagline: settings?.companyTagline || DEFAULT_SITE.companyTagline,
         footerTagline: DEFAULT_SITE.footerTagline,
         copyright: footerData?.bottomBar?.copyrightText || DEFAULT_SITE.copyright,
-        logo: toSiteLogo(settings?.logo, settings?.companyName || DEFAULT_SITE.companyName),
-        logoMark: toSiteLogo(settings?.logoMark, settings?.companyName || DEFAULT_SITE.companyName),
+        logo: toSiteLogo(settings?.logo, companyName),
+        logoMark: toSiteLogo(settings?.logoMark, companyName),
       },
+      loader: mapLoader(settings),
       mainNav: mainNav.length ? mainNav : DEFAULT_MAIN_NAV,
       mobileNav: mobileOverride.length
         ? mobileOverride
@@ -114,6 +164,7 @@ export async function getSiteChrome(): Promise<SiteChrome> {
     logCmsFailure('getSiteChrome', error);
     return {
       site: FALLBACK_SITE,
+      loader: mapLoader(null),
       mainNav: DEFAULT_MAIN_NAV,
       mobileNav: DEFAULT_MAIN_NAV,
       utilityNav: DEFAULT_UTILITY_NAV,

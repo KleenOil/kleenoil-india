@@ -1,4 +1,5 @@
 import { IndustryCard, type IndustryCardData } from '@/components/cards/IndustryCard';
+import { IndustryViewAllCard } from '@/components/cards/IndustryViewAllCard';
 import { SectionHeader } from '@/components/sections/SectionHeader';
 import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_FEATURED_INDUSTRIES } from '@/lib/cms/defaults';
@@ -11,7 +12,16 @@ type IndustryCmsCard = {
   description?: string | null;
   image?: number | Media | null;
   href?: string | null;
+  pdf?: number | Media | null;
   id?: string | null;
+};
+
+type ViewAllFields = {
+  tag?: string | null;
+  title?: string | null;
+  description?: string | null;
+  ctaLabel?: string | null;
+  href?: string | null;
 };
 
 export type FeaturedIndustriesBlockData = {
@@ -20,11 +30,22 @@ export type FeaturedIndustriesBlockData = {
   heading?: string | null;
   description?: string | null;
   cards?: IndustryCmsCard[] | null;
+  viewAll?: ViewAllFields | null;
 };
 
 type FeaturedIndustriesBlockProps = {
   block?: FeaturedIndustriesBlockData | null;
 };
+
+function resolveCardHref(card: IndustryCmsCard): { href: string; isPdf: boolean } {
+  const pdfUrl = getMediaUrl(card.pdf);
+  if (pdfUrl) {
+    return { href: pdfUrl, isPdf: true };
+  }
+
+  const href = card.href?.trim() || '';
+  return { href, isPdf: /\.pdf($|\?)/i.test(href) };
+}
 
 function mapCard(card: IndustryCmsCard, index: number, hasCms: boolean): IndustryCardData | null {
   if (!card.title?.trim()) {
@@ -32,6 +53,8 @@ function mapCard(card: IndustryCmsCard, index: number, hasCms: boolean): Industr
   }
 
   const fallback = hasCms ? undefined : DEFAULT_FEATURED_INDUSTRIES.industries[index];
+  const resolved = resolveCardHref(card);
+  const href = resolved.href || fallback?.href || '';
 
   return {
     tag:
@@ -40,7 +63,9 @@ function mapCard(card: IndustryCmsCard, index: number, hasCms: boolean): Industr
       (hasCms ? '' : `${String(index + 1).padStart(2, '0')} / INDUSTRY`),
     title: card.title.trim(),
     description: card.description?.trim() || fallback?.description || '',
-    href: card.href?.trim() || '',
+    href,
+    openInNewTab: resolved.isPdf,
+    isPdf: resolved.isPdf,
     imageUrl: getMediaUrl(card.image) || fallback?.imageUrl || null,
     imageAlt: getMediaAlt(card.image, card.title),
   };
@@ -58,9 +83,21 @@ export function FeaturedIndustriesBlock({ block }: FeaturedIndustriesBlockProps)
     DEFAULT_FEATURED_INDUSTRIES.industries,
     hasCms,
     (): boolean => true,
-  );
+  ).slice(0, 5);
   const firstRow = industries.slice(0, 3);
-  const secondRow = industries.slice(3, 6);
+  const secondRow = industries.slice(3, 5);
+
+  const viewAllDefaults = DEFAULT_FEATURED_INDUSTRIES.viewAll;
+  const viewAll = {
+    tag: block?.viewAll?.tag?.trim() || (hasCms ? '' : viewAllDefaults.tag),
+    title: block?.viewAll?.title?.trim() || (hasCms ? '' : viewAllDefaults.title),
+    description: block?.viewAll?.description?.trim() || (hasCms ? '' : viewAllDefaults.description),
+    ctaLabel: block?.viewAll?.ctaLabel?.trim() || (hasCms ? '' : viewAllDefaults.ctaLabel),
+    href: block?.viewAll?.href?.trim() || (hasCms ? '' : viewAllDefaults.href),
+  };
+  const showViewAll = Boolean(
+    viewAll.tag || viewAll.title || viewAll.description || viewAll.ctaLabel,
+  );
 
   return (
     <section className="border-y border-border-subtle bg-surface">
@@ -73,11 +110,12 @@ export function FeaturedIndustriesBlock({ block }: FeaturedIndustriesBlockProps)
               <IndustryCard key={industry.title} industry={industry} />
             ))}
           </div>
-          {secondRow.length > 0 ? (
+          {secondRow.length > 0 || showViewAll ? (
             <div className="grid gap-6 lg:grid-cols-3">
               {secondRow.map((industry) => (
                 <IndustryCard key={industry.title} industry={industry} />
               ))}
+              {showViewAll ? <IndustryViewAllCard card={viewAll} /> : null}
             </div>
           ) : null}
         </div>

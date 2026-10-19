@@ -29,7 +29,7 @@ function configSignature(): string {
   return `${collections}|${pageBlockSchemaSignature()}`;
 }
 
-const PAYLOAD_CACHE_VERSION = 2;
+const PAYLOAD_CACHE_VERSION = 3;
 const globalCache: GlobalWithPayload = globalThis as GlobalWithPayload;
 const signature = configSignature();
 if (
@@ -57,8 +57,17 @@ function markUnavailable() {
   }
 }
 
+function hasPagesTable(client: Payload): boolean {
+  const tables = (client.db as { tables?: Record<string, { id?: unknown } | undefined> }).tables;
+  return Boolean(tables?.pages?.id);
+}
+
 export async function getPayloadClient(): Promise<Payload> {
   const cache = globalCache.__kleenoilPayload!;
+  if (cache.client && !hasPagesTable(cache.client)) {
+    cache.client = null;
+    cache.promise = null;
+  }
   if (cache.client) {
     return cache.client;
   }
@@ -76,6 +85,9 @@ export async function getPayloadClient(): Promise<Payload> {
     cache.promise = (async () => {
       try {
         const client = await getPayload({ config });
+        if (!hasPagesTable(client)) {
+          throw new Error('[cms] Payload adapter is not ready');
+        }
         await ensurePageBlockTables(client);
         cache.client = client;
         cache.warnedOffline = false;
