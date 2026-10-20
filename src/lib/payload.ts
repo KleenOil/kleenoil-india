@@ -29,7 +29,7 @@ function configSignature(): string {
   return `${collections}|${pageBlockSchemaSignature()}`;
 }
 
-const PAYLOAD_CACHE_VERSION = 3;
+const PAYLOAD_CACHE_VERSION = 4;
 const globalCache: GlobalWithPayload = globalThis as GlobalWithPayload;
 const signature = configSignature();
 if (

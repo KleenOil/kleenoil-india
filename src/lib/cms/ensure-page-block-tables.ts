@@ -27,16 +27,28 @@ let inFlight: Promise<void> | null = null;
 let completedSignature: string | null = null;
 
 /** Idempotent ALTER migrations for new columns on existing page-block tables.
- *  Local DBs used drizzle push, so `payload migrate` cannot apply these. */
+ *  Local DBs used drizzle push, so `payload migrate` cannot apply these.
+ *  Hyphenated `pages__blocks_*` names are included because drizzle-push DBs
+ *  keep the block slug as-is. Missing tables are skipped, not treated as errors. */
 const COLUMN_PATCHES: Array<{ name: string; table: string; column: string }> = [
   {
-    name: '20261020_020000_featured_industries_pdf_and_view_all',
+    name: '20261021_010000_featured_industries_cms_columns',
     table: 'pages_blocks_featured_industries_cards',
     column: 'pdf_id',
   },
   {
-    name: '20261020_020000_featured_industries_pdf_and_view_all',
+    name: '20261021_010000_featured_industries_cms_columns',
     table: 'pages_blocks_featured_industries',
+    column: 'view_all_tag',
+  },
+  {
+    name: '20261021_010000_featured_industries_cms_columns',
+    table: 'pages__blocks_featured-industries_cards',
+    column: 'pdf_id',
+  },
+  {
+    name: '20261021_010000_featured_industries_cms_columns',
+    table: 'pages__blocks_featured-industries',
     column: 'view_all_tag',
   },
   {
@@ -162,6 +174,17 @@ async function applyMissingPageBlockTables(payload: Payload): Promise<void> {
   await applyMissingPageBlockColumns(payload, db);
 }
 
+async function pageBlockTableExists(db: PostgresDb, table: string): Promise<boolean> {
+  const result = await db.pool!.query(
+    `SELECT 1
+     FROM information_schema.tables
+     WHERE table_schema = 'public'
+       AND table_name = $1`,
+    [table],
+  );
+  return result.rows.length > 0;
+}
+
 async function pageBlockColumnExists(
   db: PostgresDb,
   table: string,
@@ -191,7 +214,12 @@ async function applyMissingPageBlockColumns(payload: Payload, db: PostgresDb): P
   }
 
   const toRunNames: string[] = [];
+  const existingPatches: typeof needed = [];
   for (const patch of needed) {
+    if (!(await pageBlockTableExists(db, patch.table))) {
+      continue;
+    }
+    existingPatches.push(patch);
     const missingColumn = !(await pageBlockColumnExists(db, patch.table, patch.column));
     if (missingColumn && !toRunNames.includes(patch.name)) {
       toRunNames.push(patch.name);
@@ -215,7 +243,7 @@ async function applyMissingPageBlockColumns(payload: Payload, db: PostgresDb): P
   }
 
   const stillMissing: string[] = [];
-  for (const patch of needed.filter((item) => toRunNames.includes(item.name))) {
+  for (const patch of existingPatches.filter((item) => toRunNames.includes(item.name))) {
     if (!(await pageBlockColumnExists(db, patch.table, patch.column))) {
       stillMissing.push(`${patch.table}.${patch.column}`);
     }

@@ -43,6 +43,7 @@ import * as migration_20261008_110000_resource_page_blocks from './20261008_1100
 import * as migration_20261008_111000_faq_page_blocks from './20261008_111000_faq_page_blocks';
 import * as migration_20261020_020000_featured_industries_pdf_and_view_all from './20261020_020000_featured_industries_pdf_and_view_all';
 import * as migration_20261020_030000_site_settings_loader from './20261020_030000_site_settings_loader';
+import * as migration_20261021_010000_featured_industries_cms_columns from './20261021_010000_featured_industries_cms_columns';
 
 export const migrations = [
   {
@@ -269,5 +270,10 @@ export const migrations = [
     up: migration_20261020_030000_site_settings_loader.up,
     down: migration_20261020_030000_site_settings_loader.down,
     name: '20261020_030000_site_settings_loader',
+  },
+  {
+    up: migration_20261021_010000_featured_industries_cms_columns.up,
+    down: migration_20261021_010000_featured_industries_cms_columns.down,
+    name: '20261021_010000_featured_industries_cms_columns',
   },
 ];

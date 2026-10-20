@@ -89,15 +89,12 @@ export function FeaturedIndustriesBlock({ block }: FeaturedIndustriesBlockProps)
 
   const viewAllDefaults = DEFAULT_FEATURED_INDUSTRIES.viewAll;
   const viewAll = {
-    tag: block?.viewAll?.tag?.trim() || (hasCms ? '' : viewAllDefaults.tag),
-    title: block?.viewAll?.title?.trim() || (hasCms ? '' : viewAllDefaults.title),
-    description: block?.viewAll?.description?.trim() || (hasCms ? '' : viewAllDefaults.description),
-    ctaLabel: block?.viewAll?.ctaLabel?.trim() || (hasCms ? '' : viewAllDefaults.ctaLabel),
-    href: block?.viewAll?.href?.trim() || (hasCms ? '' : viewAllDefaults.href),
+    tag: block?.viewAll?.tag?.trim() || viewAllDefaults.tag,
+    title: block?.viewAll?.title?.trim() || viewAllDefaults.title,
+    description: block?.viewAll?.description?.trim() || viewAllDefaults.description,
+    ctaLabel: block?.viewAll?.ctaLabel?.trim() || viewAllDefaults.ctaLabel,
+    href: block?.viewAll?.href?.trim() || viewAllDefaults.href,
   };
-  const showViewAll = Boolean(
-    viewAll.tag || viewAll.title || viewAll.description || viewAll.ctaLabel,
-  );
 
   return (
     <section className="border-y border-border-subtle bg-surface">
@@ -110,14 +107,12 @@ export function FeaturedIndustriesBlock({ block }: FeaturedIndustriesBlockProps)
               <IndustryCard key={industry.title} industry={industry} />
             ))}
           </div>
-          {secondRow.length > 0 || showViewAll ? (
-            <div className="grid gap-6 lg:grid-cols-3">
-              {secondRow.map((industry) => (
-                <IndustryCard key={industry.title} industry={industry} />
-              ))}
-              {showViewAll ? <IndustryViewAllCard card={viewAll} /> : null}
-            </div>
-          ) : null}
+          <div className="grid gap-6 lg:grid-cols-3">
+            {secondRow.map((industry) => (
+              <IndustryCard key={industry.title} industry={industry} />
+            ))}
+            <IndustryViewAllCard card={viewAll} />
+          </div>
         </div>
       </div>
     </section>
