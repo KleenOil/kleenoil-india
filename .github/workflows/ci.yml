@@ -39,6 +39,9 @@ jobs:
           cache: npm
 
       - name: Install dependencies
+        env:
+          NODE_ENV: development
+          HUSKY: '0'
         run: npm ci
 
       - name: Format check
@@ -74,6 +77,9 @@ jobs:
           cache: npm
 
       - name: Install dependencies
+        env:
+          NODE_ENV: development
+          HUSKY: '0'
         run: npm ci
 
       - name: npm audit (high+)

@@ -323,12 +323,13 @@ const BLOCK_SEEDS: Record<string, () => LayoutBlock> = {
       DEFAULT_FEATURED_SERVICES.cta.href,
       DEFAULT_FEATURED_SERVICES.cta.appearance,
     ).link,
-    cards: DEFAULT_FEATURED_SERVICES.services.map((service) => ({
+    cards: DEFAULT_FEATURED_SERVICES.services.slice(0, 5).map((service) => ({
       tag: service.tag,
       title: service.title,
       description: service.description,
       href: service.href,
     })),
+    viewAll: { ...DEFAULT_FEATURED_INDUSTRIES.viewAll },
   }),
   'process-story': () => ({
     blockType: 'process-story',

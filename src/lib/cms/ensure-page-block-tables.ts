@@ -52,6 +52,26 @@ const COLUMN_PATCHES: Array<{ name: string; table: string; column: string }> = [
     column: 'view_all_tag',
   },
   {
+    name: '20261021_120000_featured_services_pdf_and_view_all',
+    table: 'pages_blocks_featured_services_cards',
+    column: 'pdf_id',
+  },
+  {
+    name: '20261021_120000_featured_services_pdf_and_view_all',
+    table: 'pages_blocks_featured_services',
+    column: 'view_all_tag',
+  },
+  {
+    name: '20261021_120000_featured_services_pdf_and_view_all',
+    table: 'pages__blocks_featured-services_cards',
+    column: 'pdf_id',
+  },
+  {
+    name: '20261021_120000_featured_services_pdf_and_view_all',
+    table: 'pages__blocks_featured-services',
+    column: 'view_all_tag',
+  },
+  {
     name: '20261020_030000_site_settings_loader',
     table: 'site_settings',
     column: 'loader_enabled',
@@ -89,6 +109,33 @@ const FEATURED_INDUSTRIES_ALTER_SQL = `
   ALTER TABLE IF EXISTS "_pages_v_blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_description" varchar;
   ALTER TABLE IF EXISTS "_pages_v_blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_cta_label" varchar;
   ALTER TABLE IF EXISTS "_pages_v_blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_href" varchar;
+`;
+
+const FEATURED_SERVICES_ALTER_SQL = `
+  ALTER TABLE IF EXISTS "pages_blocks_featured_services_cards" ADD COLUMN IF NOT EXISTS "pdf_id" integer;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured_services_cards" ADD COLUMN IF NOT EXISTS "pdf_id" integer;
+  ALTER TABLE IF EXISTS "pages__blocks_featured-services_cards" ADD COLUMN IF NOT EXISTS "pdf_id" integer;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured-services_cards" ADD COLUMN IF NOT EXISTS "pdf_id" integer;
+  ALTER TABLE IF EXISTS "pages_blocks_featured_services" ADD COLUMN IF NOT EXISTS "view_all_tag" varchar;
+  ALTER TABLE IF EXISTS "pages_blocks_featured_services" ADD COLUMN IF NOT EXISTS "view_all_title" varchar;
+  ALTER TABLE IF EXISTS "pages_blocks_featured_services" ADD COLUMN IF NOT EXISTS "view_all_description" varchar;
+  ALTER TABLE IF EXISTS "pages_blocks_featured_services" ADD COLUMN IF NOT EXISTS "view_all_cta_label" varchar;
+  ALTER TABLE IF EXISTS "pages_blocks_featured_services" ADD COLUMN IF NOT EXISTS "view_all_href" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured_services" ADD COLUMN IF NOT EXISTS "view_all_tag" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured_services" ADD COLUMN IF NOT EXISTS "view_all_title" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured_services" ADD COLUMN IF NOT EXISTS "view_all_description" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured_services" ADD COLUMN IF NOT EXISTS "view_all_cta_label" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured_services" ADD COLUMN IF NOT EXISTS "view_all_href" varchar;
+  ALTER TABLE IF EXISTS "pages__blocks_featured-services" ADD COLUMN IF NOT EXISTS "view_all_tag" varchar;
+  ALTER TABLE IF EXISTS "pages__blocks_featured-services" ADD COLUMN IF NOT EXISTS "view_all_title" varchar;
+  ALTER TABLE IF EXISTS "pages__blocks_featured-services" ADD COLUMN IF NOT EXISTS "view_all_description" varchar;
+  ALTER TABLE IF EXISTS "pages__blocks_featured-services" ADD COLUMN IF NOT EXISTS "view_all_cta_label" varchar;
+  ALTER TABLE IF EXISTS "pages__blocks_featured-services" ADD COLUMN IF NOT EXISTS "view_all_href" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured-services" ADD COLUMN IF NOT EXISTS "view_all_tag" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured-services" ADD COLUMN IF NOT EXISTS "view_all_title" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured-services" ADD COLUMN IF NOT EXISTS "view_all_description" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured-services" ADD COLUMN IF NOT EXISTS "view_all_cta_label" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured-services" ADD COLUMN IF NOT EXISTS "view_all_href" varchar;
 `;
 
 const LOADER_ALTER_SQL = `
@@ -262,8 +309,9 @@ async function applyMissingPageBlockColumns(payload: Payload, db: PostgresDb): P
     return;
   }
 
-  payload.logger.info('[cms] Applying Featured Industries / loader column patches');
+  payload.logger.info('[cms] Applying Featured Industries / Services / loader column patches');
   await db.pool.query(FEATURED_INDUSTRIES_ALTER_SQL);
+  await db.pool.query(FEATURED_SERVICES_ALTER_SQL);
   await db.pool.query(LOADER_ALTER_SQL);
 
   const stillMissing: string[] = [];

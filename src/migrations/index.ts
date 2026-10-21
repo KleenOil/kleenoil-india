@@ -44,6 +44,7 @@ import * as migration_20261008_111000_faq_page_blocks from './20261008_111000_fa
 import * as migration_20261020_020000_featured_industries_pdf_and_view_all from './20261020_020000_featured_industries_pdf_and_view_all';
 import * as migration_20261020_030000_site_settings_loader from './20261020_030000_site_settings_loader';
 import * as migration_20261021_010000_featured_industries_cms_columns from './20261021_010000_featured_industries_cms_columns';
+import * as migration_20261021_120000_featured_services_pdf_and_view_all from './20261021_120000_featured_services_pdf_and_view_all';
 
 export const migrations = [
   {
@@ -275,5 +276,10 @@ export const migrations = [
     up: migration_20261021_010000_featured_industries_cms_columns.up,
     down: migration_20261021_010000_featured_industries_cms_columns.down,
     name: '20261021_010000_featured_industries_cms_columns',
+  },
+  {
+    up: migration_20261021_120000_featured_services_pdf_and_view_all.up,
+    down: migration_20261021_120000_featured_services_pdf_and_view_all.down,
+    name: '20261021_120000_featured_services_pdf_and_view_all',
   },
 ];

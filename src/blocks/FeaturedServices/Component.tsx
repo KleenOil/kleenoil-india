@@ -1,7 +1,8 @@
-import { ServiceCard, type ServiceCardData } from '@/components/cards/ServiceCard';
+import { IndustryCard, type IndustryCardData } from '@/components/cards/IndustryCard';
+import { IndustryViewAllCard } from '@/components/cards/IndustryViewAllCard';
 import { SectionHeader } from '@/components/sections/SectionHeader';
 import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
-import { DEFAULT_FEATURED_SERVICES } from '@/lib/cms/defaults';
+import { DEFAULT_FEATURED_INDUSTRIES, DEFAULT_FEATURED_SERVICES } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl, resolveLink } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
 
@@ -11,7 +12,16 @@ type ServiceCmsCard = {
   description?: string | null;
   image?: number | Media | null;
   href?: string | null;
+  pdf?: number | Media | null;
   id?: string | null;
+};
+
+type ViewAllFields = {
+  tag?: string | null;
+  title?: string | null;
+  description?: string | null;
+  ctaLabel?: string | null;
+  href?: string | null;
 };
 
 export type FeaturedServicesBlockData = {
@@ -20,6 +30,7 @@ export type FeaturedServicesBlockData = {
   heading?: string | null;
   description?: string | null;
   cards?: ServiceCmsCard[] | null;
+  viewAll?: ViewAllFields | null;
   cta?: {
     type?: 'page' | 'custom' | null;
     label?: string | null;
@@ -34,12 +45,24 @@ type FeaturedServicesBlockProps = {
   block?: FeaturedServicesBlockData | null;
 };
 
-function mapCard(card: ServiceCmsCard, index: number, hasCms: boolean): ServiceCardData | null {
+function resolveCardHref(card: ServiceCmsCard): { href: string; isPdf: boolean } {
+  const pdfUrl = getMediaUrl(card.pdf);
+  if (pdfUrl) {
+    return { href: pdfUrl, isPdf: true };
+  }
+
+  const href = card.href?.trim() || '';
+  return { href, isPdf: /\.pdf($|\?)/i.test(href) };
+}
+
+function mapCard(card: ServiceCmsCard, index: number, hasCms: boolean): IndustryCardData | null {
   if (!card.title?.trim()) {
     return null;
   }
 
   const fallback = hasCms ? undefined : DEFAULT_FEATURED_SERVICES.services[index];
+  const resolved = resolveCardHref(card);
+  const href = resolved.href || fallback?.href || '';
 
   return {
     tag:
@@ -48,7 +71,9 @@ function mapCard(card: ServiceCmsCard, index: number, hasCms: boolean): ServiceC
       (hasCms ? '' : `${String(index + 1).padStart(2, '0')} / SERVICE`),
     title: card.title.trim(),
     description: card.description?.trim() || fallback?.description || '',
-    href: card.href?.trim() || '',
+    href,
+    openInNewTab: resolved.isPdf,
+    isPdf: resolved.isPdf,
     imageUrl: getMediaUrl(card.image) || fallback?.imageUrl || null,
     imageAlt: getMediaAlt(card.image, card.title),
   };
@@ -72,13 +97,30 @@ export function FeaturedServicesBlock({ block }: FeaturedServicesBlockProps) {
       ? undefined
       : DEFAULT_FEATURED_SERVICES.cta;
 
-  const services = cmsList(
+  const cards = cmsList(
     block?.cards?.map((card, index) => mapCard(card, index, hasCms)).filter(Boolean) as
-      ServiceCardData[] | undefined,
-    DEFAULT_FEATURED_SERVICES.services,
+      IndustryCardData[] | undefined,
+    DEFAULT_FEATURED_SERVICES.services.map((service) => ({
+      tag: service.tag,
+      title: service.title,
+      description: service.description,
+      href: service.href,
+      imageUrl: service.imageUrl,
+    })),
     hasCms,
     (): boolean => true,
-  );
+  ).slice(0, 5);
+  const firstRow = cards.slice(0, 3);
+  const secondRow = cards.slice(3, 5);
+
+  const viewAllDefaults = DEFAULT_FEATURED_INDUSTRIES.viewAll;
+  const viewAll = {
+    tag: block?.viewAll?.tag?.trim() || viewAllDefaults.tag,
+    title: block?.viewAll?.title?.trim() || viewAllDefaults.title,
+    description: block?.viewAll?.description?.trim() || viewAllDefaults.description,
+    ctaLabel: block?.viewAll?.ctaLabel?.trim() || viewAllDefaults.ctaLabel,
+    href: block?.viewAll?.href?.trim() || viewAllDefaults.href,
+  };
 
   return (
     <section className="border-y border-border-subtle bg-surface">
@@ -90,10 +132,18 @@ export function FeaturedServicesBlock({ block }: FeaturedServicesBlockProps) {
           cta={sectionCta}
         />
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {services.map((service) => (
-            <ServiceCard key={service.title} service={service} />
-          ))}
+        <div className="flex flex-col gap-6">
+          <div className="grid gap-6 lg:grid-cols-3">
+            {firstRow.map((card) => (
+              <IndustryCard key={card.title} industry={card} />
+            ))}
+          </div>
+          <div className="grid gap-6 lg:grid-cols-3">
+            {secondRow.map((card) => (
+              <IndustryCard key={card.title} industry={card} />
+            ))}
+            <IndustryViewAllCard card={viewAll} />
+          </div>
         </div>
       </div>
     </section>
