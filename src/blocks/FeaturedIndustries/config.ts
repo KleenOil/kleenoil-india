@@ -83,31 +83,24 @@ export const FeaturedIndustries: Block = {
           required: true,
         },
         {
-          type: 'row',
-          fields: [
-            {
-              name: 'href',
-              type: 'text',
-              label: 'Link',
-              admin: {
-                width: '50%',
-                description: 'Page path or URL. Used when no PDF is uploaded.',
-              },
-            },
-            {
-              name: 'pdf',
-              type: 'upload',
-              relationTo: 'media',
-              label: 'PDF file',
-              filterOptions: () => ({
-                mimeType: { equals: 'application/pdf' },
-              }),
-              admin: {
-                width: '50%',
-                description: 'Upload a PDF. If set, the card opens this file in a new tab.',
-              },
-            },
-          ],
+          name: 'pdf',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'PDF file',
+          filterOptions: {
+            mimeType: { contains: 'pdf' },
+          },
+          admin: {
+            description: 'Upload a PDF. If set, the card opens this file in a new tab.',
+          },
+        },
+        {
+          name: 'href',
+          type: 'text',
+          label: 'Link',
+          admin: {
+            description: 'Page path or URL. Used when no PDF is uploaded.',
+          },
         },
         {
           name: 'description',

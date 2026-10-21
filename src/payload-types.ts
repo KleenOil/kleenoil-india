@@ -837,30 +837,7 @@ export interface Page {
             heading?: string | null;
             description?: string | null;
             /**
-             * Up to five industry cards. The sixth slot is the View all card below. Each card can use a PDF, a link, or both (PDF wins when both are set).
-             */
-            cards?:
-              | {
-                  /**
-                   * e.g. 01 / INDUSTRY
-                   */
-                  tag?: string | null;
-                  title: string;
-                  description?: string | null;
-                  image?: (number | null) | Media;
-                  /**
-                   * Optional page or URL. Used when no PDF is uploaded. Leave both empty to keep the card as text only.
-                   */
-                  href?: string | null;
-                  /**
-                   * Optional. If set, the card opens this PDF in a new tab instead of the Link field.
-                   */
-                  pdf?: (number | null) | Media;
-                  id?: string | null;
-                }[]
-              | null;
-            /**
-             * The sixth card — a distinct redirect to the full industries page.
+             * Always the sixth card — a distinct redirect to the industries library. This is not one of the five industry cards below.
              */
             viewAll?: {
               /**
@@ -870,14 +847,37 @@ export interface Page {
               title?: string | null;
               description?: string | null;
               /**
-               * e.g. View all industries
+               * e.g. Browse industry notes
                */
               ctaLabel?: string | null;
               /**
-               * Optional. Leave empty to keep the card not clickable.
+               * Where the sixth card should go, e.g. /industries
                */
               href?: string | null;
             };
+            /**
+             * Up to five industry cards. Extra rows above five are ignored on the site — delete them. Each card can use a PDF, a link, or both (PDF wins when both are set).
+             */
+            cards?:
+              | {
+                  /**
+                   * e.g. 01 / INDUSTRY
+                   */
+                  tag?: string | null;
+                  title: string;
+                  /**
+                   * Upload a PDF. If set, the card opens this file in a new tab.
+                   */
+                  pdf?: (number | null) | Media;
+                  /**
+                   * Page path or URL. Used when no PDF is uploaded.
+                   */
+                  href?: string | null;
+                  description?: string | null;
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'featured-industries';
@@ -3336,17 +3336,6 @@ export interface PagesSelect<T extends boolean = true> {
               eyebrow?: T;
               heading?: T;
               description?: T;
-              cards?:
-                | T
-                | {
-                    tag?: T;
-                    title?: T;
-                    description?: T;
-                    image?: T;
-                    href?: T;
-                    pdf?: T;
-                    id?: T;
-                  };
               viewAll?:
                 | T
                 | {
@@ -3355,6 +3344,17 @@ export interface PagesSelect<T extends boolean = true> {
                     description?: T;
                     ctaLabel?: T;
                     href?: T;
+                  };
+              cards?:
+                | T
+                | {
+                    tag?: T;
+                    title?: T;
+                    pdf?: T;
+                    href?: T;
+                    description?: T;
+                    image?: T;
+                    id?: T;
                   };
               id?: T;
               blockName?: T;

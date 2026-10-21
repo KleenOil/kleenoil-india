@@ -63,6 +63,49 @@ const COLUMN_PATCHES: Array<{ name: string; table: string; column: string }> = [
   },
 ];
 
+/** Raw ALTERs so Vercel still gets PDF + View all columns when `payload migrate` aborts. */
+const FEATURED_INDUSTRIES_ALTER_SQL = `
+  ALTER TABLE IF EXISTS "pages_blocks_featured_industries_cards" ADD COLUMN IF NOT EXISTS "pdf_id" integer;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured_industries_cards" ADD COLUMN IF NOT EXISTS "pdf_id" integer;
+  ALTER TABLE IF EXISTS "pages__blocks_featured-industries_cards" ADD COLUMN IF NOT EXISTS "pdf_id" integer;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured-industries_cards" ADD COLUMN IF NOT EXISTS "pdf_id" integer;
+  ALTER TABLE IF EXISTS "pages_blocks_featured_industries" ADD COLUMN IF NOT EXISTS "view_all_tag" varchar;
+  ALTER TABLE IF EXISTS "pages_blocks_featured_industries" ADD COLUMN IF NOT EXISTS "view_all_title" varchar;
+  ALTER TABLE IF EXISTS "pages_blocks_featured_industries" ADD COLUMN IF NOT EXISTS "view_all_description" varchar;
+  ALTER TABLE IF EXISTS "pages_blocks_featured_industries" ADD COLUMN IF NOT EXISTS "view_all_cta_label" varchar;
+  ALTER TABLE IF EXISTS "pages_blocks_featured_industries" ADD COLUMN IF NOT EXISTS "view_all_href" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured_industries" ADD COLUMN IF NOT EXISTS "view_all_tag" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured_industries" ADD COLUMN IF NOT EXISTS "view_all_title" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured_industries" ADD COLUMN IF NOT EXISTS "view_all_description" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured_industries" ADD COLUMN IF NOT EXISTS "view_all_cta_label" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured_industries" ADD COLUMN IF NOT EXISTS "view_all_href" varchar;
+  ALTER TABLE IF EXISTS "pages__blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_tag" varchar;
+  ALTER TABLE IF EXISTS "pages__blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_title" varchar;
+  ALTER TABLE IF EXISTS "pages__blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_description" varchar;
+  ALTER TABLE IF EXISTS "pages__blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_cta_label" varchar;
+  ALTER TABLE IF EXISTS "pages__blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_href" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_tag" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_title" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_description" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_cta_label" varchar;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_href" varchar;
+`;
+
+const LOADER_ALTER_SQL = `
+  ALTER TABLE IF EXISTS "site_settings" ADD COLUMN IF NOT EXISTS "loader_enabled" boolean DEFAULT true;
+  ALTER TABLE IF EXISTS "site_settings" ADD COLUMN IF NOT EXISTS "loader_brand_name" varchar;
+  ALTER TABLE IF EXISTS "site_settings" ADD COLUMN IF NOT EXISTS "loader_show_on_first_load" boolean DEFAULT false;
+  ALTER TABLE IF EXISTS "site_settings" ADD COLUMN IF NOT EXISTS "loader_status_text" varchar;
+  ALTER TABLE IF EXISTS "site_settings" ADD COLUMN IF NOT EXISTS "loader_system_code" varchar;
+  ALTER TABLE IF EXISTS "site_settings" ADD COLUMN IF NOT EXISTS "loader_system_code_mobile" varchar;
+  ALTER TABLE IF EXISTS "site_settings" ADD COLUMN IF NOT EXISTS "loader_version_label" varchar;
+  ALTER TABLE IF EXISTS "site_settings" ADD COLUMN IF NOT EXISTS "loader_corner_brand" varchar;
+  ALTER TABLE IF EXISTS "site_settings" ADD COLUMN IF NOT EXISTS "loader_corner_brand_mobile" varchar;
+  ALTER TABLE IF EXISTS "site_settings" ADD COLUMN IF NOT EXISTS "loader_tagline" varchar;
+  ALTER TABLE IF EXISTS "site_settings" ADD COLUMN IF NOT EXISTS "loader_tagline_mobile" varchar;
+  ALTER TABLE IF EXISTS "site_settings" ADD COLUMN IF NOT EXISTS "loader_min_duration_ms" numeric;
+`;
+
 /** Slug list used to bust the Payload client cache when page blocks change. */
 export function pageBlockSchemaSignature(): string {
   const blocks = pageBlocks.map((block) => block.slug).join(',');
@@ -98,9 +141,15 @@ export async function ensurePageBlockTables(payload: Payload): Promise<void> {
   }
 
   if (!inFlight) {
-    inFlight = applyMissingPageBlockTables(payload).finally(() => {
-      inFlight = null;
-    });
+    inFlight = applyMissingPageBlockTables(payload)
+      .catch((error) => {
+        payload.logger.error(
+          `[cms] Could not sync page-block schema: ${error instanceof Error ? error.message : String(error)}`,
+        );
+      })
+      .finally(() => {
+        inFlight = null;
+      });
   }
 
   await inFlight;
@@ -109,7 +158,12 @@ export async function ensurePageBlockTables(payload: Payload): Promise<void> {
 
 async function applyMissingPageBlockTables(payload: Payload): Promise<void> {
   const db = payload.db as PostgresDb;
-  if (typeof db.pool?.query !== 'function' || typeof db.drizzle?.execute !== 'function') {
+  if (typeof db.pool?.query !== 'function') {
+    return;
+  }
+
+  if (typeof db.drizzle?.execute !== 'function') {
+    await applyMissingPageBlockColumns(payload, db);
     return;
   }
 
@@ -138,9 +192,11 @@ async function applyMissingPageBlockTables(payload: Payload): Promise<void> {
   );
 
   if (!toRun.length) {
-    throw new Error(
+    payload.logger.warn(
       `[cms] Missing page block tables with no matching *_page_blocks migration: ${missing.join(', ')}`,
     );
+    await applyMissingPageBlockColumns(payload, db);
+    return;
   }
 
   payload.logger.info(`[cms] Creating missing page block tables: ${missing.join(', ')}`);
@@ -166,7 +222,7 @@ async function applyMissingPageBlockTables(payload: Payload): Promise<void> {
   );
   const stillMissing = missing.filter((table) => !created.has(table));
   if (stillMissing.length) {
-    throw new Error(
+    payload.logger.warn(
       `[cms] Page block tables still missing after migrate: ${stillMissing.join(', ')}`,
     );
   }
@@ -202,55 +258,26 @@ async function pageBlockColumnExists(
 }
 
 async function applyMissingPageBlockColumns(payload: Payload, db: PostgresDb): Promise<void> {
-  if (typeof db.pool?.query !== 'function' || typeof db.drizzle?.execute !== 'function') {
+  if (typeof db.pool?.query !== 'function') {
     return;
   }
 
-  const needed = COLUMN_PATCHES.filter((patch) =>
-    migrations.some((migration) => migration.name === patch.name),
-  );
-  if (!needed.length) {
-    return;
-  }
+  payload.logger.info('[cms] Applying Featured Industries / loader column patches');
+  await db.pool.query(FEATURED_INDUSTRIES_ALTER_SQL);
+  await db.pool.query(LOADER_ALTER_SQL);
 
-  const toRunNames: string[] = [];
-  const existingPatches: typeof needed = [];
-  for (const patch of needed) {
+  const stillMissing: string[] = [];
+  for (const patch of COLUMN_PATCHES) {
     if (!(await pageBlockTableExists(db, patch.table))) {
       continue;
     }
-    existingPatches.push(patch);
-    const missingColumn = !(await pageBlockColumnExists(db, patch.table, patch.column));
-    if (missingColumn && !toRunNames.includes(patch.name)) {
-      toRunNames.push(patch.name);
-    }
-  }
-
-  if (!toRunNames.length) {
-    return;
-  }
-
-  const toRun = migrations.filter((migration) => toRunNames.includes(migration.name));
-  payload.logger.info(`[cms] Applying page-block column patches: ${toRunNames.join(', ')}`);
-
-  for (const migration of toRun) {
-    payload.logger.info(`[cms] Applying ${migration.name}`);
-    await (migration.up as unknown as MigrationUp)({
-      db: db.drizzle,
-      payload,
-      req: undefined as never,
-    });
-  }
-
-  const stillMissing: string[] = [];
-  for (const patch of existingPatches.filter((item) => toRunNames.includes(item.name))) {
     if (!(await pageBlockColumnExists(db, patch.table, patch.column))) {
       stillMissing.push(`${patch.table}.${patch.column}`);
     }
   }
   if (stillMissing.length) {
-    throw new Error(
-      `[cms] Page-block columns still missing after migrate: ${stillMissing.join(', ')}`,
+    payload.logger.warn(
+      `[cms] Page-block columns still missing after patch: ${stillMissing.join(', ')}`,
     );
   }
 }
