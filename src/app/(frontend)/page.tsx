@@ -4,7 +4,7 @@ import { RenderBlocks } from '@/blocks/RenderBlocks';
 import { HomepageMotion } from '@/components/motion/HomepageMotion';
 import { getHomePage } from '@/lib/cms/pages';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 120;
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getHomePage();

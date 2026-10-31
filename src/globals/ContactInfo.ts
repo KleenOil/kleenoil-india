@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload';
 
 import { editorsAndAdmins } from '@/access/roles';
+import { revalidateContactGlobal } from '@/hooks/revalidate';
 
 export const ContactInfo: GlobalConfig = {
   slug: 'contact-info',
@@ -53,6 +54,9 @@ export const ContactInfo: GlobalConfig = {
       },
     },
   ],
+  hooks: {
+    afterChange: [revalidateContactGlobal],
+  },
   admin: {
     group: 'Configuration',
   },

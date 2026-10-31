@@ -1,3 +1,4 @@
+import { cachedCmsQuery, CMS_CACHE_TAGS, dedupeCmsQuery } from '@/lib/cms/cache';
 import { resolveLink, type CmsLink, type ResolvedLink } from '@/lib/cms/links';
 import { getPayloadClient } from '@/lib/payload';
 import { logCmsFailure } from '@/lib/cms/unavailable';
@@ -120,40 +121,56 @@ export function toJobPosting(job: Job): JobPosting {
   };
 }
 
-export async function getPublishedJobs(limit = 48): Promise<Job[]> {
-  try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: 'jobs',
-      limit,
-      depth: 1,
-      sort: '-publishedAt',
-    });
+const fetchPublishedJobs = cachedCmsQuery(
+  ['cms', 'jobs', 'list'],
+  [CMS_CACHE_TAGS.jobs],
+  async (limit: number): Promise<Job[]> => {
+    try {
+      const payload = await getPayloadClient();
+      const result = await payload.find({
+        collection: 'jobs',
+        limit,
+        depth: 1,
+        sort: '-publishedAt',
+      });
 
-    return result.docs as Job[];
-  } catch (error) {
-    logCmsFailure('getPublishedJobs', error);
-    return [];
-  }
-}
+      return result.docs as Job[];
+    } catch (error) {
+      logCmsFailure('getPublishedJobs', error);
+      return [];
+    }
+  },
+);
 
-export async function getJobBySlug(slug: string): Promise<Job | null> {
+const fetchJobBySlug = cachedCmsQuery(
+  ['cms', 'job', 'by-slug'],
+  [CMS_CACHE_TAGS.jobs],
+  async (slug: string): Promise<Job | null> => {
+    try {
+      const payload = await getPayloadClient();
+      const result = await payload.find({
+        collection: 'jobs',
+        where: { slug: { equals: slug } },
+        limit: 1,
+        depth: 1,
+      });
+
+      return (result.docs[0] as Job | undefined) ?? null;
+    } catch (error) {
+      logCmsFailure('getJobBySlug', error);
+      return null;
+    }
+  },
+);
+
+export const getPublishedJobs = dedupeCmsQuery(async (limit: number = 48): Promise<Job[]> =>
+  fetchPublishedJobs(Number(limit) || 48),
+);
+
+export const getJobBySlug = dedupeCmsQuery(async (slug: string): Promise<Job | null> => {
   if (!slug) {
     return null;
   }
 
-  try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: 'jobs',
-      where: { slug: { equals: slug } },
-      limit: 1,
-      depth: 1,
-    });
-
-    return (result.docs[0] as Job | undefined) ?? null;
-  } catch (error) {
-    logCmsFailure('getJobBySlug', error);
-    return null;
-  }
-}
+  return fetchJobBySlug(slug);
+});

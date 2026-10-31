@@ -5,7 +5,7 @@ import { Eyebrow } from '@/components/ui/eyebrow';
 import { getMediaUrl } from '@/lib/cms/links';
 import { getPublishedProducts } from '@/lib/cms/products';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 120;
 
 export const metadata: Metadata = {
   title: 'Products',

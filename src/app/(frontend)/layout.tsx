@@ -8,7 +8,8 @@ import '@/styles/globals.css';
 
 const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  // Headings use semibold/bold/extrabold; body text stays system Arial.
+  weight: ['600', '700', '800'],
   variable: '--font-family-heading',
   display: 'swap',
 });

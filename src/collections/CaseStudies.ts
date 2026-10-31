@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload';
 import { anyone, editorsAndAdmins } from '@/access/roles';
 import { CASE_STUDY_SECTORS } from '@/lib/cms/cs-listing';
 import { slugField } from '@/fields/slug';
+import { revalidateCaseStudyAfterChange, revalidateCaseStudyAfterDelete } from '@/hooks/revalidate';
 
 export const CaseStudies: CollectionConfig = {
   slug: 'case-studies',
@@ -120,4 +121,8 @@ export const CaseStudies: CollectionConfig = {
       },
     },
   ],
+  hooks: {
+    afterChange: [revalidateCaseStudyAfterChange],
+    afterDelete: [revalidateCaseStudyAfterDelete],
+  },
 };

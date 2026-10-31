@@ -22,7 +22,7 @@ import {
   toArticleCard,
 } from '@/lib/cms/posts';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 120;
 
 type PageProps = {
   params: Promise<{ slug: string }>;

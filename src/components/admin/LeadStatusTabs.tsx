@@ -20,20 +20,19 @@ function statusFromWhere(where: Where | undefined): LeadStatus | null {
   return null;
 }
 
-async function countByStatus(status: LeadStatus): Promise<number> {
-  const params = new URLSearchParams({
-    limit: '1',
-    depth: '0',
-  });
-  params.set('where[status][equals]', status);
-  const response = await fetch(`/api/leads?${params.toString()}`, {
+async function fetchStatusCounts(): Promise<Record<LeadStatus, number>> {
+  const response = await fetch('/api/leads/status-counts', {
     credentials: 'include',
   });
   if (!response.ok) {
-    return 0;
+    return { new: 0, contacted: 0, closed: 0 };
   }
-  const json = (await response.json()) as { totalDocs?: number };
-  return json.totalDocs ?? 0;
+  const json = (await response.json()) as Partial<Record<LeadStatus, number>>;
+  return {
+    new: json.new ?? 0,
+    contacted: json.contacted ?? 0,
+    closed: json.closed ?? 0,
+  };
 }
 
 export function LeadStatusTabs() {
@@ -50,26 +49,21 @@ export function LeadStatusTabs() {
 
   const active = statusFromWhere(query.where) ?? 'new';
   const staleNotFound = searchParams.get('notFound');
+  const listTotalDocs = (query.data as { totalDocs?: number } | undefined)?.totalDocs;
 
   useEffect(() => {
     let cancelled = false;
 
-    void Promise.all(LEAD_STATUSES.map((item) => countByStatus(item.value))).then(
-      ([newCount, contactedCount, closedCount]) => {
-        if (!cancelled) {
-          setCounts({
-            new: newCount,
-            contacted: contactedCount,
-            closed: closedCount,
-          });
-        }
-      },
-    );
+    void fetchStatusCounts().then((next) => {
+      if (!cancelled) {
+        setCounts(next);
+      }
+    });
 
     return () => {
       cancelled = true;
     };
-  }, [mostRecentUpdate, (query.data as { totalDocs?: number } | undefined)?.totalDocs]);
+  }, [mostRecentUpdate, listTotalDocs]);
 
   useEffect(() => {
     if (staleNotFound) {

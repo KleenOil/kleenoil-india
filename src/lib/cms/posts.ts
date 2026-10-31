@@ -1,3 +1,4 @@
+import { cachedCmsQuery, CMS_CACHE_TAGS, dedupeCmsQuery } from '@/lib/cms/cache';
 import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
 import { getPayloadClient } from '@/lib/payload';
 import { logCmsFailure } from '@/lib/cms/unavailable';
@@ -58,57 +59,81 @@ export function toArticleCard(post: ArticleCardSource) {
   };
 }
 
-export async function getPostBySlug(slug: string): Promise<Post | null> {
+const fetchPostBySlug = cachedCmsQuery(
+  ['cms', 'post', 'by-slug'],
+  [CMS_CACHE_TAGS.posts],
+  async (slug: string): Promise<Post | null> => {
+    try {
+      const payload = await getPayloadClient();
+      const result = await payload.find({
+        collection: 'posts',
+        where: { slug: { equals: slug } },
+        limit: 1,
+        depth: 3,
+      });
+
+      return (result.docs[0] as Post | undefined) ?? null;
+    } catch (error) {
+      logCmsFailure('getPostBySlug', error);
+      return null;
+    }
+  },
+);
+
+const fetchPostById = cachedCmsQuery(
+  ['cms', 'post', 'by-id'],
+  [CMS_CACHE_TAGS.posts],
+  async (id: number | string): Promise<Post | null> => {
+    try {
+      const payload = await getPayloadClient();
+      return (await payload.findByID({
+        collection: 'posts',
+        id,
+        depth: 1,
+      })) as Post;
+    } catch (error) {
+      logCmsFailure('getPostById', error);
+      return null;
+    }
+  },
+);
+
+const fetchPublishedPosts = cachedCmsQuery(
+  ['cms', 'posts', 'list'],
+  [CMS_CACHE_TAGS.posts],
+  async (limit: number): Promise<Post[]> => {
+    try {
+      const payload = await getPayloadClient();
+      const result = await payload.find({
+        collection: 'posts',
+        limit,
+        depth: 1,
+        sort: '-publishedAt',
+      });
+
+      return result.docs as Post[];
+    } catch (error) {
+      logCmsFailure('getPublishedPosts', error);
+      return [];
+    }
+  },
+);
+
+export const getPostBySlug = dedupeCmsQuery(async (slug: string): Promise<Post | null> => {
   if (!slug) {
     return null;
   }
 
-  try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: 'posts',
-      where: { slug: { equals: slug } },
-      limit: 1,
-      depth: 3,
-    });
+  return fetchPostBySlug(slug);
+});
 
-    return (result.docs[0] as Post | undefined) ?? null;
-  } catch (error) {
-    logCmsFailure('getPostBySlug', error);
-    return null;
-  }
-}
+export const getPostById = dedupeCmsQuery(async (id: number | string): Promise<Post | null> =>
+  fetchPostById(id),
+);
 
-export async function getPostById(id: number | string): Promise<Post | null> {
-  try {
-    const payload = await getPayloadClient();
-    return (await payload.findByID({
-      collection: 'posts',
-      id,
-      depth: 1,
-    })) as Post;
-  } catch (error) {
-    logCmsFailure('getPostById', error);
-    return null;
-  }
-}
-
-export async function getPublishedPosts(limit = 48): Promise<Post[]> {
-  try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: 'posts',
-      limit,
-      depth: 1,
-      sort: '-publishedAt',
-    });
-
-    return result.docs as Post[];
-  } catch (error) {
-    logCmsFailure('getPublishedPosts', error);
-    return [];
-  }
-}
+export const getPublishedPosts = dedupeCmsQuery(async (limit: number = 48): Promise<Post[]> =>
+  fetchPublishedPosts(Number(limit) || 48),
+);
 
 function isPopulatedPost(value: unknown): value is Post {
   return Boolean(value && typeof value === 'object' && 'title' in value);
@@ -125,25 +150,34 @@ export function pickedRelatedPosts(post: Post): Post[] {
     .slice(0, 3);
 }
 
-export async function getRelatedPosts(excludeId: number | string, limit = 3): Promise<Post[]> {
-  try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: 'posts',
-      where: {
-        and: [{ id: { not_equals: excludeId } }, { showInJournal: { not_equals: false } }],
-      },
-      limit,
-      depth: 1,
-      sort: '-publishedAt',
-    });
+const fetchRelatedPosts = cachedCmsQuery(
+  ['cms', 'posts', 'related'],
+  [CMS_CACHE_TAGS.posts],
+  async (excludeId: number | string, limit: number): Promise<Post[]> => {
+    try {
+      const payload = await getPayloadClient();
+      const result = await payload.find({
+        collection: 'posts',
+        where: {
+          and: [{ id: { not_equals: excludeId } }, { showInJournal: { not_equals: false } }],
+        },
+        limit,
+        depth: 1,
+        sort: '-publishedAt',
+      });
 
-    return result.docs as Post[];
-  } catch (error) {
-    logCmsFailure('getRelatedPosts', error);
-    return [];
-  }
-}
+      return result.docs as Post[];
+    } catch (error) {
+      logCmsFailure('getRelatedPosts', error);
+      return [];
+    }
+  },
+);
+
+export const getRelatedPosts = dedupeCmsQuery(
+  async (excludeId: number | string, limit: number = 3): Promise<Post[]> =>
+    fetchRelatedPosts(excludeId, Number(limit) || 3),
+);
 
 /** Use CMS picks when present; otherwise the latest other journal articles. */
 export async function resolveRelatedPosts(post: Post, limit = 3): Promise<Post[]> {

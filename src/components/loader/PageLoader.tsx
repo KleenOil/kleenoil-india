@@ -73,8 +73,17 @@ function waitForPaint(): Promise<void> {
 }
 
 function waitForPageAssets(): Promise<void> {
+  // Prefer above-the-fold images so client navigations do not wait on distant media.
+  const viewportH = typeof window !== 'undefined' ? window.innerHeight : 900;
   const images = Array.from(document.querySelectorAll('main img')).filter(
-    (node): node is HTMLImageElement => node instanceof HTMLImageElement && !node.complete,
+    (node): node is HTMLImageElement => {
+      if (!(node instanceof HTMLImageElement) || node.complete) {
+        return false;
+      }
+
+      const rect = node.getBoundingClientRect();
+      return rect.top < viewportH * 1.25;
+    },
   );
 
   if (!images.length) {
@@ -90,7 +99,7 @@ function waitForPageAssets(): Promise<void> {
         resolve();
       }
     };
-    const timer = window.setTimeout(resolve, 8000);
+    const timer = window.setTimeout(resolve, 2500);
     images.forEach((image) => {
       image.addEventListener('load', finishWait, { once: true });
       image.addEventListener('error', finishWait, { once: true });
@@ -133,18 +142,23 @@ export function PageLoader({ loader }: PageLoaderProps) {
     inTimelineRef.current?.kill();
     outTimelineRef.current?.kill();
     const reduced = prefersReducedMotion();
-    const tl = playLoaderOut({ root, reduced, fadeMs: loader.minDurationMs });
-    outTimelineRef.current = tl;
-    tl.eventCallback('onComplete', () => {
-      phaseRef.current = 'idle';
-      pendingOutRef.current = false;
-      closingRef.current = false;
-      lockScroll(false);
-      if (rootRef.current) {
-        rootRef.current.setAttribute('aria-hidden', 'true');
-        rootRef.current.setAttribute('data-state', 'idle');
-        rootRef.current.setAttribute('aria-busy', 'false');
+    void playLoaderOut({ root, reduced, fadeMs: loader.minDurationMs }).then((tl) => {
+      if (phaseRef.current !== 'out') {
+        tl.kill();
+        return;
       }
+      outTimelineRef.current = tl;
+      tl.eventCallback('onComplete', () => {
+        phaseRef.current = 'idle';
+        pendingOutRef.current = false;
+        closingRef.current = false;
+        lockScroll(false);
+        if (rootRef.current) {
+          rootRef.current.setAttribute('aria-hidden', 'true');
+          rootRef.current.setAttribute('data-state', 'idle');
+          rootRef.current.setAttribute('aria-busy', 'false');
+        }
+      });
     });
   }, [loader.minDurationMs, lockScroll]);
 
@@ -166,16 +180,21 @@ export function PageLoader({ loader }: PageLoaderProps) {
     root.setAttribute('aria-busy', 'true');
 
     const reduced = prefersReducedMotion();
-    const tl = playLoaderIn({ root, reduced, fadeMs: loader.minDurationMs });
-    inTimelineRef.current = tl;
-    tl.eventCallback('onComplete', () => {
+    void playLoaderIn({ root, reduced, fadeMs: loader.minDurationMs }).then((tl) => {
       if (phaseRef.current !== 'in') {
+        tl.kill();
         return;
       }
-      phaseRef.current = 'hold';
-      if (pendingOutRef.current) {
-        finish();
-      }
+      inTimelineRef.current = tl;
+      tl.eventCallback('onComplete', () => {
+        if (phaseRef.current !== 'in') {
+          return;
+        }
+        phaseRef.current = 'hold';
+        if (pendingOutRef.current) {
+          finish();
+        }
+      });
     });
   }, [finish, loader.minDurationMs, lockScroll]);
 

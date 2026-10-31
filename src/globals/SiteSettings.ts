@@ -3,6 +3,7 @@ import type { GlobalConfig } from 'payload';
 import { superAdminOnly } from '@/access/roles';
 import { linkField } from '@/fields/link';
 import { withClientCondition } from '@/fields/withClientCondition';
+import { revalidateSiteChromeGlobal } from '@/hooks/revalidate';
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
@@ -278,6 +279,9 @@ export const SiteSettings: GlobalConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [revalidateSiteChromeGlobal],
+  },
   admin: {
     group: 'Configuration',
   },

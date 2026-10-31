@@ -1,15 +1,21 @@
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-import {
-  DistributionNetworkInteractive,
-  type DistributionOffice,
-} from '@/blocks/DistributionNetwork/Interactive';
+import type { DistributionOffice } from '@/blocks/DistributionNetwork/Interactive';
 import { SectionHeader } from '@/components/sections/SectionHeader';
 import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_DISTRIBUTION_NETWORK } from '@/lib/cms/defaults';
 import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
 import type { MapPinKind } from '@/components/maps/IndiaNetworkMap';
+
+const DistributionNetworkInteractive = dynamic(
+  () =>
+    import('@/blocks/DistributionNetwork/Interactive').then(
+      (mod) => mod.DistributionNetworkInteractive,
+    ),
+  { ssr: true },
+);
 
 type StatItem = {
   value?: string | null;

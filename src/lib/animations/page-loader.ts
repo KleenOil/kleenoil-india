@@ -1,12 +1,35 @@
-import gsap from 'gsap';
+type GsapInstance = typeof import('gsap').default;
 
-export type PageLoaderTimeline = ReturnType<typeof gsap.timeline>;
+export type PageLoaderTimeline = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  eventCallback: (...args: any[]) => unknown;
+  kill: () => void;
+  [key: string]: unknown;
+};
 
 type LoaderScope = {
   root: HTMLElement;
   reduced: boolean;
   fadeMs?: number;
 };
+
+let gsapModule: GsapInstance | null = null;
+let gsapPromise: Promise<GsapInstance> | null = null;
+
+async function loadGsap(): Promise<GsapInstance> {
+  if (gsapModule) {
+    return gsapModule;
+  }
+
+  if (!gsapPromise) {
+    gsapPromise = import('gsap').then((mod) => {
+      gsapModule = mod.default;
+      return gsapModule;
+    });
+  }
+
+  return gsapPromise;
+}
 
 function select(root: HTMLElement, name: string): HTMLElement | null {
   return root.querySelector(`[data-loader="${name}"]`);
@@ -25,11 +48,20 @@ function fadeSeconds(fadeMs: number | undefined, reduced: boolean) {
 }
 
 export function killLoaderTweens(root: HTMLElement) {
-  gsap.killTweensOf(root.querySelectorAll('[data-loader]'));
-  gsap.killTweensOf(root);
+  if (!gsapModule) {
+    return;
+  }
+
+  gsapModule.killTweensOf(root.querySelectorAll('[data-loader]'));
+  gsapModule.killTweensOf(root);
 }
 
-export function playLoaderIn({ root, reduced, fadeMs }: LoaderScope): PageLoaderTimeline {
+export async function playLoaderIn({
+  root,
+  reduced,
+  fadeMs,
+}: LoaderScope): Promise<PageLoaderTimeline> {
+  const gsap = await loadGsap();
   killLoaderTweens(root);
 
   const fill = select(root, 'fill');
@@ -79,10 +111,15 @@ export function playLoaderIn({ root, reduced, fadeMs }: LoaderScope): PageLoader
     });
   }, 0.05);
 
-  return tl;
+  return tl as unknown as PageLoaderTimeline;
 }
 
-export function playLoaderOut({ root, reduced, fadeMs }: LoaderScope): PageLoaderTimeline {
+export async function playLoaderOut({
+  root,
+  reduced,
+  fadeMs,
+}: LoaderScope): Promise<PageLoaderTimeline> {
+  const gsap = await loadGsap();
   const fill = select(root, 'fill');
   const dots = selectAll(root, 'dot');
   const pulse = select(root, 'pulse');
@@ -105,5 +142,5 @@ export function playLoaderOut({ root, reduced, fadeMs }: LoaderScope): PageLoade
   );
   tl.to(root, { autoAlpha: 0, pointerEvents: 'none', duration, ease: 'sine.inOut' }, 0.08);
 
-  return tl;
+  return tl as unknown as PageLoaderTimeline;
 }

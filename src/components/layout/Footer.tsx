@@ -1,3 +1,4 @@
+import { CookieSettingsButton } from '@/components/consent/CookieSettingsButton';
 import { Logo } from '@/components/branding/Logo';
 import { MaybeLink, hasHref } from '@/components/ui/maybe-link';
 import type { SiteChrome } from '@/lib/cms/site';
@@ -57,7 +58,7 @@ export function Footer({ site, columns, legalLinks }: FooterProps) {
         <div className="mt-20 border-t border-border-subtle pt-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-[11px] tracking-[1px] text-text-tertiary uppercase">{copyright}</p>
-            <ul className="flex flex-wrap gap-8">
+            <ul className="flex flex-wrap items-center gap-8">
               {legalLinks.map((link) => (
                 <li key={link.label}>
                   <MaybeLink
@@ -71,6 +72,9 @@ export function Footer({ site, columns, legalLinks }: FooterProps) {
                   </MaybeLink>
                 </li>
               ))}
+              <li>
+                <CookieSettingsButton />
+              </li>
             </ul>
           </div>
         </div>

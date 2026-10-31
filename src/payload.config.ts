@@ -50,6 +50,10 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: env.DATABASE_URL,
+      // Serverless-friendly: avoid connection storms on Vercel/Neon.
+      max: process.env.NODE_ENV === 'production' ? 3 : 10,
+      idleTimeoutMillis: 20_000,
+      connectionTimeoutMillis: 10_000,
     },
     // Schema changes ship as migrations (Vercel never pushes). Local push is opt-in
     // because it prompts to drop leftover draft columns and hangs the dev server.

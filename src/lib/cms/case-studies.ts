@@ -1,3 +1,4 @@
+import { cachedCmsQuery, CMS_CACHE_TAGS, dedupeCmsQuery } from '@/lib/cms/cache';
 import {
   CASE_STUDY_SECTORS,
   type CaseStudySector,
@@ -54,33 +55,50 @@ export function toCaseStudyCard(study: CaseStudy): CaseStudyListingCard {
   };
 }
 
-export async function getPublishedCaseStudies(limit = 48): Promise<CaseStudy[]> {
-  try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: 'case-studies',
-      limit,
-      depth: 1,
-      sort: '-publishedAt',
-    });
+const fetchPublishedCaseStudies = cachedCmsQuery(
+  ['cms', 'case-studies', 'list'],
+  [CMS_CACHE_TAGS.caseStudies],
+  async (limit: number): Promise<CaseStudy[]> => {
+    try {
+      const payload = await getPayloadClient();
+      const result = await payload.find({
+        collection: 'case-studies',
+        limit,
+        depth: 1,
+        sort: '-publishedAt',
+      });
 
-    return (result.docs as CaseStudy[]).filter((study) => study.showOnListing !== false);
-  } catch (error) {
-    logCmsFailure('getPublishedCaseStudies', error);
-    return [];
-  }
-}
+      return (result.docs as CaseStudy[]).filter((study) => study.showOnListing !== false);
+    } catch (error) {
+      logCmsFailure('getPublishedCaseStudies', error);
+      return [];
+    }
+  },
+);
 
-export async function getCaseStudyById(id: number | string): Promise<CaseStudy | null> {
-  try {
-    const payload = await getPayloadClient();
-    return (await payload.findByID({
-      collection: 'case-studies',
-      id,
-      depth: 1,
-    })) as CaseStudy;
-  } catch (error) {
-    logCmsFailure('getCaseStudyById', error);
-    return null;
-  }
-}
+const fetchCaseStudyById = cachedCmsQuery(
+  ['cms', 'case-study', 'by-id'],
+  [CMS_CACHE_TAGS.caseStudies],
+  async (id: number | string): Promise<CaseStudy | null> => {
+    try {
+      const payload = await getPayloadClient();
+      return (await payload.findByID({
+        collection: 'case-studies',
+        id,
+        depth: 1,
+      })) as CaseStudy;
+    } catch (error) {
+      logCmsFailure('getCaseStudyById', error);
+      return null;
+    }
+  },
+);
+
+export const getPublishedCaseStudies = dedupeCmsQuery(
+  async (limit: number = 48): Promise<CaseStudy[]> =>
+    fetchPublishedCaseStudies(Number(limit) || 48),
+);
+
+export const getCaseStudyById = dedupeCmsQuery(
+  async (id: number | string): Promise<CaseStudy | null> => fetchCaseStudyById(id),
+);

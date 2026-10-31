@@ -4,6 +4,7 @@ import { anyone, editorsAndAdmins } from '@/access/roles';
 import { seoField } from '@/fields/seo';
 import { slugField } from '@/fields/slug';
 import { linkArrayField, linkField } from '@/fields/link';
+import { revalidatePostAfterChange, revalidatePostAfterDelete } from '@/hooks/revalidate';
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -287,5 +288,7 @@ export const Posts: CollectionConfig = {
         return data;
       },
     ],
+    afterChange: [revalidatePostAfterChange],
+    afterDelete: [revalidatePostAfterDelete],
   },
 };

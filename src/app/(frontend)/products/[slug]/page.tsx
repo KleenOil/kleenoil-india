@@ -6,7 +6,7 @@ import { HomepageMotion } from '@/components/motion/HomepageMotion';
 import { getMediaUrl } from '@/lib/cms/links';
 import { getProductBySlug, getResolvedPdpLayout } from '@/lib/cms/products';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 120;
 
 type PageProps = {
   params: Promise<{ slug: string }>;

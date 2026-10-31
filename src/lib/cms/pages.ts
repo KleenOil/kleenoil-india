@@ -1,3 +1,4 @@
+import { cachedCmsQuery, CMS_CACHE_TAGS, dedupeCmsQuery } from '@/lib/cms/cache';
 import { getPayloadClient } from '@/lib/payload';
 import { logCmsFailure } from '@/lib/cms/unavailable';
 import type { Page } from '@/payload-types';
@@ -19,44 +20,58 @@ export const RESERVED_PAGE_SLUGS = new Set([
   'robots.txt',
 ]);
 
-export async function getPageBySlug(slug: string): Promise<Page | null> {
+const fetchPageBySlug = cachedCmsQuery(
+  ['cms', 'page', 'by-slug'],
+  [CMS_CACHE_TAGS.pages],
+  async (slug: string): Promise<Page | null> => {
+    try {
+      const payload = await getPayloadClient();
+      const result = await payload.find({
+        collection: 'pages',
+        where: {
+          slug: { equals: slug },
+        },
+        limit: 1,
+        depth: 2,
+      });
+
+      return (result.docs[0] as Page | undefined) ?? null;
+    } catch (error) {
+      logCmsFailure('getPageBySlug', error);
+      return null;
+    }
+  },
+);
+
+const fetchHomePage = cachedCmsQuery(
+  ['cms', 'page', 'home'],
+  [CMS_CACHE_TAGS.pages],
+  async (): Promise<Page | null> => {
+    try {
+      const payload = await getPayloadClient();
+      const result = await payload.find({
+        collection: 'pages',
+        where: {
+          slug: { equals: 'home' },
+        },
+        limit: 1,
+        depth: 2,
+      });
+
+      return (result.docs[0] as Page | undefined) ?? null;
+    } catch (error) {
+      logCmsFailure('getHomePage', error);
+      return null;
+    }
+  },
+);
+
+export const getPageBySlug = dedupeCmsQuery(async (slug: string): Promise<Page | null> => {
   if (!slug || RESERVED_PAGE_SLUGS.has(slug)) {
     return null;
   }
 
-  try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: 'pages',
-      where: {
-        slug: { equals: slug },
-      },
-      limit: 1,
-      depth: 2,
-    });
+  return fetchPageBySlug(slug);
+});
 
-    return (result.docs[0] as Page | undefined) ?? null;
-  } catch (error) {
-    logCmsFailure('getPageBySlug', error);
-    return null;
-  }
-}
-
-export async function getHomePage(): Promise<Page | null> {
-  try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: 'pages',
-      where: {
-        slug: { equals: 'home' },
-      },
-      limit: 1,
-      depth: 2,
-    });
-
-    return (result.docs[0] as Page | undefined) ?? null;
-  } catch (error) {
-    logCmsFailure('getHomePage', error);
-    return null;
-  }
-}
+export const getHomePage = dedupeCmsQuery(async (): Promise<Page | null> => fetchHomePage());

@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload';
 import { anyone, editorsAndAdmins } from '@/access/roles';
 import { linkField } from '@/fields/link';
 import { slugField } from '@/fields/slug';
+import { revalidateJobAfterChange, revalidateJobAfterDelete } from '@/hooks/revalidate';
 
 export const Jobs: CollectionConfig = {
   slug: 'jobs',
@@ -141,5 +142,7 @@ export const Jobs: CollectionConfig = {
         return data;
       },
     ],
+    afterChange: [revalidateJobAfterChange],
+    afterDelete: [revalidateJobAfterDelete],
   },
 };

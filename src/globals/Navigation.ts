@@ -2,6 +2,7 @@ import type { GlobalConfig } from 'payload';
 
 import { editorsAndAdmins } from '@/access/roles';
 import { navItemFields } from '@/fields/link';
+import { revalidateSiteChromeGlobal } from '@/hooks/revalidate';
 
 export const Navigation: GlobalConfig = {
   slug: 'navigation',
@@ -41,6 +42,9 @@ export const Navigation: GlobalConfig = {
       fields: navItemFields(),
     },
   ],
+  hooks: {
+    afterChange: [revalidateSiteChromeGlobal],
+  },
   admin: {
     group: 'Configuration',
   },

@@ -1,3 +1,4 @@
+import { cachedCmsQuery, CMS_CACHE_TAGS, dedupeCmsQuery } from '@/lib/cms/cache';
 import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
 import { getPayloadClient } from '@/lib/payload';
 import {
@@ -110,7 +111,7 @@ function mapLoader(settings: SiteSetting | null): SiteLoader {
   };
 }
 
-export async function getSiteChrome(): Promise<SiteChrome> {
+async function loadSiteChrome(): Promise<SiteChrome> {
   try {
     const payload = await getPayloadClient();
 
@@ -174,3 +175,11 @@ export async function getSiteChrome(): Promise<SiteChrome> {
     };
   }
 }
+
+const fetchSiteChrome = cachedCmsQuery(
+  ['cms', 'site-chrome'],
+  [CMS_CACHE_TAGS.siteChrome, CMS_CACHE_TAGS.globals],
+  loadSiteChrome,
+);
+
+export const getSiteChrome = dedupeCmsQuery(async (): Promise<SiteChrome> => fetchSiteChrome());

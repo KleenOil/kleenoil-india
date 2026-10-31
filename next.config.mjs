@@ -22,7 +22,11 @@ const nextConfig = {
       },
     ];
   },
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'radix-ui'],
+  },
   images: {
+    minimumCacheTTL: 60 * 60 * 24,
     localPatterns: [
       {
         pathname: '/api/media/file/**',

@@ -4,6 +4,7 @@ import { anyone, editorsAndAdmins } from '@/access/roles';
 import { pageBlocks } from '@/blocks';
 import { seoField } from '@/fields/seo';
 import { slugField } from '@/fields/slug';
+import { revalidatePageAfterChange, revalidatePageAfterDelete } from '@/hooks/revalidate';
 
 /** Route segments reserved by the App Router — cannot be used as CMS page slugs. */
 const RESERVED_SLUGS = new Set([
@@ -92,5 +93,7 @@ export const Pages: CollectionConfig = {
         return data;
       },
     ],
+    afterChange: [revalidatePageAfterChange],
+    afterDelete: [revalidatePageAfterDelete],
   },
 };

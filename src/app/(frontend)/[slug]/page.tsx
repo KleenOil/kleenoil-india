@@ -5,7 +5,7 @@ import { RenderBlocks } from '@/blocks/RenderBlocks';
 import { HomepageMotion } from '@/components/motion/HomepageMotion';
 import { getPageBySlug } from '@/lib/cms/pages';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 120;
 
 type PageProps = {
   params: Promise<{ slug: string }>;

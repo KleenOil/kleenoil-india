@@ -320,10 +320,11 @@ async function loadMegaProductCards(items: CmsNavRow[]): Promise<Map<number, Meg
 
   try {
     const payload = await getPayloadClient();
+    // Depth 1 is enough for featuredImage + template id; galleries come from a batched template load.
     const result = await payload.find({
       collection: 'products',
       where: { id: { in: ids } },
-      depth: 3,
+      depth: 1,
       limit: ids.length,
       pagination: false,
     });
@@ -340,25 +341,20 @@ async function loadMegaProductCards(items: CmsNavRow[]): Promise<Map<number, Meg
       ),
     ];
 
-    const templates = await Promise.all(
-      templateIds.map(async (id) => {
-        try {
-          return (await payload.findByID({
-            collection: 'product-templates',
-            id,
-            depth: 3,
-          })) as ProductTemplate;
-        } catch {
-          return null;
-        }
-      }),
-    );
+    const templatesById = new Map<number, ProductTemplate>();
+    if (templateIds.length) {
+      const templateResult = await payload.find({
+        collection: 'product-templates',
+        where: { id: { in: templateIds } },
+        depth: 2,
+        limit: templateIds.length,
+        pagination: false,
+      });
 
-    const templatesById = new Map(
-      templates
-        .filter((template): template is ProductTemplate => Boolean(template))
-        .map((template) => [template.id, template]),
-    );
+      for (const template of templateResult.docs as ProductTemplate[]) {
+        templatesById.set(template.id, template);
+      }
+    }
 
     const cards = new Map<number, MegaProductCard>();
 
@@ -368,7 +364,7 @@ async function loadMegaProductCards(items: CmsNavRow[]): Promise<Map<number, Meg
         typeof templateRef === 'object' && templateRef ? templateRef.id : templateRef;
       const layout = resolvePdpLayout(
         product,
-        typeof templateId === 'number' ? templatesById.get(templateId) : null,
+        typeof templateId === 'number' ? (templatesById.get(templateId) ?? null) : null,
       );
       const [imageUrl, hoverImageUrl] = firstTwoProductImages(product, layout);
 

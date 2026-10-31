@@ -1,45 +1,62 @@
+import { cachedCmsQuery, CMS_CACHE_TAGS, dedupeCmsQuery } from '@/lib/cms/cache';
 import { getPayloadClient } from '@/lib/payload';
 import { resolvePdpLayout, type PdpLayoutBlock } from '@/lib/cms/resolve-pdp-layout';
 import { logCmsFailure } from '@/lib/cms/unavailable';
 import type { Product, ProductTemplate } from '@/payload-types';
 
-export async function getProductBySlug(slug: string): Promise<Product | null> {
+const fetchProductBySlug = cachedCmsQuery(
+  ['cms', 'product', 'by-slug'],
+  [CMS_CACHE_TAGS.products],
+  async (slug: string): Promise<Product | null> => {
+    try {
+      const payload = await getPayloadClient();
+      const result = await payload.find({
+        collection: 'products',
+        where: { slug: { equals: slug } },
+        limit: 1,
+        depth: 3,
+      });
+
+      return (result.docs[0] as Product | undefined) ?? null;
+    } catch (error) {
+      logCmsFailure('getProductBySlug', error);
+      return null;
+    }
+  },
+);
+
+const fetchPublishedProducts = cachedCmsQuery(
+  ['cms', 'products', 'list'],
+  [CMS_CACHE_TAGS.products],
+  async (limit: number): Promise<Product[]> => {
+    try {
+      const payload = await getPayloadClient();
+      const result = await payload.find({
+        collection: 'products',
+        limit,
+        depth: 1,
+        sort: '-updatedAt',
+      });
+
+      return result.docs as Product[];
+    } catch (error) {
+      logCmsFailure('getPublishedProducts', error);
+      return [];
+    }
+  },
+);
+
+export const getProductBySlug = dedupeCmsQuery(async (slug: string): Promise<Product | null> => {
   if (!slug) {
     return null;
   }
 
-  try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: 'products',
-      where: { slug: { equals: slug } },
-      limit: 1,
-      depth: 3,
-    });
+  return fetchProductBySlug(slug);
+});
 
-    return (result.docs[0] as Product | undefined) ?? null;
-  } catch (error) {
-    logCmsFailure('getProductBySlug', error);
-    return null;
-  }
-}
-
-export async function getPublishedProducts(limit = 24): Promise<Product[]> {
-  try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: 'products',
-      limit,
-      depth: 1,
-      sort: '-updatedAt',
-    });
-
-    return result.docs as Product[];
-  } catch (error) {
-    logCmsFailure('getPublishedProducts', error);
-    return [];
-  }
-}
+export const getPublishedProducts = dedupeCmsQuery(async (limit: number = 24): Promise<Product[]> =>
+  fetchPublishedProducts(Number(limit) || 24),
+);
 
 export async function getResolvedPdpLayout(product: Product): Promise<PdpLayoutBlock[]> {
   let template: ProductTemplate | null = null;

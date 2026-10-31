@@ -4,6 +4,7 @@ import { anyone, editorsAndAdmins } from '@/access/roles';
 import { pdpBlocks } from '@/blocks/pdp';
 import { seoField } from '@/fields/seo';
 import { slugField } from '@/fields/slug';
+import { revalidateProductAfterChange, revalidateProductAfterDelete } from '@/hooks/revalidate';
 
 type LayoutBlock = {
   blockType?: string;
@@ -255,5 +256,7 @@ export const Products: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [prepareProductLayoutSave, syncLayoutFromTemplate],
+    afterChange: [revalidateProductAfterChange],
+    afterDelete: [revalidateProductAfterDelete],
   },
 };

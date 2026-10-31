@@ -204,6 +204,14 @@ export async function ensurePageBlockTables(payload: Payload): Promise<void> {
     return;
   }
 
+  // Production DBs that already run migrations can skip runtime CREATE/ALTER.
+  // Set SKIP_PAGE_BLOCK_ENSURE=1 on Vercel after migrate is the source of truth.
+  if (process.env.SKIP_PAGE_BLOCK_ENSURE === '1') {
+    payload.logger.info('[cms] Skipping page-block schema ensure (SKIP_PAGE_BLOCK_ENSURE=1)');
+    completedSignature = signature;
+    return;
+  }
+
   if (!inFlight) {
     inFlight = applyMissingPageBlockTables(payload)
       .catch((error) => {
@@ -333,6 +341,11 @@ async function applyMissingPageBlockColumns(payload: Payload, db: PostgresDb): P
   await db.pool.query(FEATURED_SERVICES_ALTER_SQL);
   await db.pool.query(RESOURCE_PDFS_ALTER_SQL);
   await db.pool.query(LOADER_ALTER_SQL);
+
+  // Skip per-column EXISTS probes in production — ADD COLUMN IF NOT EXISTS is enough.
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
 
   const stillMissing: string[] = [];
   for (const patch of COLUMN_PATCHES) {
