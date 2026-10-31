@@ -5,6 +5,16 @@ import {
   type ResourcePdfCard,
   type ResourcePdfsVariant,
 } from '@/lib/cms/library';
+import { resolvePdfHref } from '@/lib/cms/links';
+import type { Media } from '@/payload-types';
+
+type ResourcePdfCmsCard = {
+  title?: string | null;
+  meta?: string | null;
+  href?: string | null;
+  pdf?: number | Media | null;
+  id?: string | null;
+};
 
 export type ResourcePdfsBlockData = {
   blockType: 'resource-pdfs';
@@ -12,7 +22,7 @@ export type ResourcePdfsBlockData = {
   eyebrow?: string | null;
   heading?: string | null;
   description?: string | null;
-  cards?: Array<{ title?: string | null; meta?: string | null; href?: string | null }> | null;
+  cards?: ResourcePdfCmsCard[] | null;
 };
 
 function pdfsVariant(value: ResourcePdfsBlockData['variant']): ResourcePdfsVariant {
@@ -31,11 +41,18 @@ export function ResourcePdfsBlock({ block }: { block?: ResourcePdfsBlockData | n
   const description = cmsText(block?.description, defaults.description, hasCms);
   const cards: ResourcePdfCard[] = cmsList(block?.cards, defaults.cards, hasCms, (card) =>
     Boolean(card.title),
-  ).map((card) => ({
-    title: card.title as string,
-    meta: card.meta ?? '',
-    href: card.href ?? undefined,
-  }));
+  ).map((card) => {
+    const resolved = resolvePdfHref({
+      pdf: 'pdf' in card ? (card.pdf as number | Media | null | undefined) : null,
+      href: card.href,
+    });
+    return {
+      title: card.title as string,
+      meta: card.meta ?? '',
+      href: resolved.href || undefined,
+      openInNewTab: resolved.openInNewTab,
+    };
+  });
 
   return (
     <ResourcePdfs eyebrow={eyebrow} heading={heading} description={description} cards={cards} />

@@ -3,7 +3,7 @@ import {
   type CaseStudySector,
   type CaseStudyListingCard,
 } from '@/lib/cms/cs-listing';
-import { getMediaAlt, getMediaUrl } from '@/lib/cms/links';
+import { getMediaAlt, getMediaUrl, resolvePdfHref } from '@/lib/cms/links';
 import { getPayloadClient } from '@/lib/payload';
 import { logCmsFailure } from '@/lib/cms/unavailable';
 import type { CaseStudy } from '@/payload-types';
@@ -36,8 +36,8 @@ export function toCaseStudyCard(study: CaseStudy): CaseStudyListingCard {
         label: metric.label.trim(),
       })) ?? [];
 
-  const pdfUrl = getMediaUrl(study.pdf);
-  const href = pdfUrl || study.href?.trim() || '';
+  const resolved = resolvePdfHref({ pdf: study.pdf, href: study.href });
+  const href = resolved.href;
 
   return {
     id: study.id,
@@ -46,7 +46,7 @@ export function toCaseStudyCard(study: CaseStudy): CaseStudyListingCard {
     title: study.title,
     description: study.excerpt?.trim() || '',
     href,
-    openInNewTab: Boolean(pdfUrl) || /\.pdf($|\?)/i.test(href),
+    openInNewTab: resolved.openInNewTab,
     location: study.location?.trim() || '',
     imageUrl: getMediaUrl(study.featuredImage),
     imageAlt: getMediaAlt(study.featuredImage, study.title),

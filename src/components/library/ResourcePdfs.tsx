@@ -31,7 +31,13 @@ export function ResourcePdfs({ eyebrow, heading, description, cards }: ResourceP
         {cards.length ? (
           <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
             {cards.map((card) => (
-              <PdfCard key={card.title} title={card.title} meta={card.meta} href={card.href} />
+              <PdfCard
+                key={card.title}
+                title={card.title}
+                meta={card.meta}
+                href={card.href}
+                openInNewTab={card.openInNewTab ?? true}
+              />
             ))}
           </div>
         ) : null}

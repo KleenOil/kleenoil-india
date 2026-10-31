@@ -72,6 +72,16 @@ const COLUMN_PATCHES: Array<{ name: string; table: string; column: string }> = [
     column: 'view_all_tag',
   },
   {
+    name: '20261031_140000_resource_pdfs_upload',
+    table: 'pages_blocks_resource_pdfs_cards',
+    column: 'pdf_id',
+  },
+  {
+    name: '20261031_140000_resource_pdfs_upload',
+    table: 'pages__blocks_resource-pdfs_cards',
+    column: 'pdf_id',
+  },
+  {
     name: '20261020_030000_site_settings_loader',
     table: 'site_settings',
     column: 'loader_enabled',
@@ -109,6 +119,13 @@ const FEATURED_INDUSTRIES_ALTER_SQL = `
   ALTER TABLE IF EXISTS "_pages_v_blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_description" varchar;
   ALTER TABLE IF EXISTS "_pages_v_blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_cta_label" varchar;
   ALTER TABLE IF EXISTS "_pages_v_blocks_featured-industries" ADD COLUMN IF NOT EXISTS "view_all_href" varchar;
+`;
+
+const RESOURCE_PDFS_ALTER_SQL = `
+  ALTER TABLE IF EXISTS "pages_blocks_resource_pdfs_cards" ADD COLUMN IF NOT EXISTS "pdf_id" integer;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_resource_pdfs_cards" ADD COLUMN IF NOT EXISTS "pdf_id" integer;
+  ALTER TABLE IF EXISTS "pages__blocks_resource-pdfs_cards" ADD COLUMN IF NOT EXISTS "pdf_id" integer;
+  ALTER TABLE IF EXISTS "_pages_v_blocks_resource-pdfs_cards" ADD COLUMN IF NOT EXISTS "pdf_id" integer;
 `;
 
 const FEATURED_SERVICES_ALTER_SQL = `
@@ -309,9 +326,12 @@ async function applyMissingPageBlockColumns(payload: Payload, db: PostgresDb): P
     return;
   }
 
-  payload.logger.info('[cms] Applying Featured Industries / Services / loader column patches');
+  payload.logger.info(
+    '[cms] Applying Featured Industries / Services / Resource PDFs / loader column patches',
+  );
   await db.pool.query(FEATURED_INDUSTRIES_ALTER_SQL);
   await db.pool.query(FEATURED_SERVICES_ALTER_SQL);
+  await db.pool.query(RESOURCE_PDFS_ALTER_SQL);
   await db.pool.query(LOADER_ALTER_SQL);
 
   const stillMissing: string[] = [];

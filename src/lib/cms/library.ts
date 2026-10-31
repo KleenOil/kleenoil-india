@@ -3,7 +3,12 @@ export type ResourceHeroVariant = 'industries' | 'applications' | 'fluids' | 'te
 export type ResourcePdfsVariant = 'industries' | 'applications' | 'fluids' | 'testimonials';
 
 export type ResourceStat = { n: string; label: string };
-export type ResourcePdfCard = { title: string; meta: string; href?: string };
+export type ResourcePdfCard = {
+  title: string;
+  meta: string;
+  href?: string;
+  openInNewTab?: boolean;
+};
 export type ResourcePreview = { title: string; kicker: string };
 export type FaqTopic = {
   label: string;

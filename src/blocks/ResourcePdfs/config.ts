@@ -25,10 +25,34 @@ export const ResourcePdfs: Block = {
       name: 'cards',
       type: 'array',
       label: 'PDF cards',
+      admin: {
+        initCollapsed: true,
+        description:
+          'Upload a PDF for each card (preferred). A download URL is only used when no file is uploaded.',
+      },
       fields: [
         { name: 'title', type: 'text', required: true },
         { name: 'meta', type: 'text', label: 'Subtitle' },
-        { name: 'href', type: 'text', label: 'Download URL' },
+        {
+          name: 'pdf',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'PDF file',
+          filterOptions: {
+            mimeType: { contains: 'pdf' },
+          },
+          admin: {
+            description: 'Upload a PDF. Opens in a new browser tab when clicked.',
+          },
+        },
+        {
+          name: 'href',
+          type: 'text',
+          label: 'Link (optional)',
+          admin: {
+            description: 'Used only when no PDF is uploaded. Prefer uploading a PDF file above.',
+          },
+        },
       ],
     },
   ],

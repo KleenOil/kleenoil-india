@@ -143,6 +143,49 @@ export function getMediaUrl(media: number | Media | null | undefined): string | 
   return media.url ? toNextImageSrc(media.url) : null;
 }
 
+/**
+ * Prefer the app PDF proxy so browsers open uploads as `application/pdf`
+ * in a new tab (Cloudinary raw URLs often strip `.pdf` and force a bad download).
+ */
+export function getPdfViewUrl(media: number | Media | null | undefined): string | null {
+  if (!media) {
+    return null;
+  }
+
+  if (typeof media === 'number') {
+    return `/api/pdf/${media}`;
+  }
+
+  const mime = media.mimeType?.toLowerCase() ?? '';
+  const filename = media.filename?.toLowerCase() ?? '';
+  const looksLikePdf = mime.includes('pdf') || filename.endsWith('.pdf');
+  if (!looksLikePdf && !media.url) {
+    return null;
+  }
+
+  if (media.id != null) {
+    return `/api/pdf/${media.id}`;
+  }
+
+  return getMediaUrl(media);
+}
+
+/** Resolve an uploaded PDF (preferred) or a plain href that looks like a PDF. */
+export function resolvePdfHref(args: { pdf?: number | Media | null; href?: string | null }): {
+  href: string;
+  isPdf: boolean;
+  openInNewTab: boolean;
+} {
+  const pdfUrl = getPdfViewUrl(args.pdf);
+  if (pdfUrl) {
+    return { href: pdfUrl, isPdf: true, openInNewTab: true };
+  }
+
+  const href = args.href?.trim() || '';
+  const isPdf = /\.pdf($|\?)/i.test(href) || href.startsWith('/api/pdf/');
+  return { href, isPdf, openInNewTab: isPdf };
+}
+
 export function getMediaAlt(media: number | Media | null | undefined, fallback = ''): string {
   if (!media || typeof media === 'number') {
     return fallback;

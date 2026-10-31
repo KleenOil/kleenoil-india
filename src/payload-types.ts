@@ -898,21 +898,38 @@ export interface Page {
               appearance?: ('primary' | 'secondary' | 'ghost') | null;
             };
             /**
-             * Tag, title, description, image, and link for each card.
+             * Always the sixth card. Used on the homepage industry grid. This is not one of the five cards below.
+             */
+            viewAll?: {
+              /**
+               * e.g. 06 / LIBRARY
+               */
+              tag?: string | null;
+              title?: string | null;
+              description?: string | null;
+              ctaLabel?: string | null;
+              href?: string | null;
+            };
+            /**
+             * Up to five cards. Extra rows above five are ignored on the site — delete them. Each card can use a PDF, a link, or both (PDF wins when both are set).
              */
             cards?:
               | {
                   /**
-                   * e.g. 01 / CONSULT
+                   * e.g. 01 / INDUSTRY
                    */
                   tag?: string | null;
                   title: string;
-                  description?: string | null;
-                  image?: (number | null) | Media;
                   /**
-                   * Optional. Leave empty to keep the card as text only (not clickable).
+                   * Upload a PDF. If set, the card opens this file in a new tab.
+                   */
+                  pdf?: (number | null) | Media;
+                  /**
+                   * Page path or URL. Used when no PDF is uploaded.
                    */
                   href?: string | null;
+                  description?: string | null;
+                  image?: (number | null) | Media;
                   id?: string | null;
                 }[]
               | null;
@@ -1562,6 +1579,13 @@ export interface Page {
               | {
                   title: string;
                   meta?: string | null;
+                  /**
+                   * Upload a PDF. Opens in a new browser tab when clicked.
+                   */
+                  pdf?: (number | null) | Media;
+                  /**
+                   * Used only when no PDF is uploaded. Prefer uploading a PDF file above.
+                   */
                   href?: string | null;
                   id?: string | null;
                 }[]
@@ -3375,14 +3399,24 @@ export interface PagesSelect<T extends boolean = true> {
                     openInNewTab?: T;
                     appearance?: T;
                   };
-              cards?:
+              viewAll?:
                 | T
                 | {
                     tag?: T;
                     title?: T;
                     description?: T;
-                    image?: T;
+                    ctaLabel?: T;
                     href?: T;
+                  };
+              cards?:
+                | T
+                | {
+                    tag?: T;
+                    title?: T;
+                    pdf?: T;
+                    href?: T;
+                    description?: T;
+                    image?: T;
                     id?: T;
                   };
               id?: T;
@@ -4007,6 +4041,7 @@ export interface PagesSelect<T extends boolean = true> {
                 | {
                     title?: T;
                     meta?: T;
+                    pdf?: T;
                     href?: T;
                     id?: T;
                   };

@@ -8,8 +8,17 @@ type CloudinaryAdapterArgs = {
   folder?: string;
 };
 
-function publicIdFor(filename: string, folder: string, prefix?: string): string {
-  const baseName = filename.replace(/\.[^/.]+$/, '');
+/** Keep the extension for PDFs/raw so CDN URLs end in `.pdf` and browsers open them correctly. */
+function publicIdFor(
+  filename: string,
+  folder: string,
+  prefix?: string,
+  mimeType?: string | null,
+): string {
+  const keepExtension =
+    Boolean(mimeType && !mimeType.startsWith('image/') && !mimeType.startsWith('video/')) ||
+    /\.pdf$/i.test(filename);
+  const baseName = keepExtension ? filename : filename.replace(/\.[^/.]+$/, '');
   const segments = [folder, prefix, baseName].filter(Boolean);
   return segments.join('/');
 }
@@ -45,7 +54,7 @@ export function cloudinaryAdapter(args: CloudinaryAdapterArgs): Adapter {
     return {
       name: 'cloudinary',
       async handleUpload({ file }) {
-        const publicId = publicIdFor(file.filename, folder, prefix);
+        const publicId = publicIdFor(file.filename, folder, prefix, file.mimeType);
         const resourceType = guessResourceType(file.mimeType);
 
         await new Promise<void>((resolve, reject) => {
@@ -69,8 +78,8 @@ export function cloudinaryAdapter(args: CloudinaryAdapterArgs): Adapter {
         });
       },
       async handleDelete({ filename, doc }) {
-        const publicId = publicIdFor(filename, folder, doc.prefix || prefix);
         const mimeType = 'mimeType' in doc ? String(doc.mimeType ?? '') : '';
+        const publicId = publicIdFor(filename, folder, doc.prefix || prefix, mimeType);
         const resourceType = guessResourceType(mimeType);
 
         try {
@@ -83,8 +92,8 @@ export function cloudinaryAdapter(args: CloudinaryAdapterArgs): Adapter {
         }
       },
       generateURL({ filename, prefix: docPrefix, data }) {
-        const publicId = publicIdFor(filename, folder, docPrefix || prefix);
         const mimeType = data && typeof data === 'object' ? String(data.mimeType ?? '') : '';
+        const publicId = publicIdFor(filename, folder, docPrefix || prefix, mimeType);
         const resourceType = guessResourceType(mimeType);
 
         return cloudinary.url(publicId, {

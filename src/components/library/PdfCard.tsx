@@ -1,4 +1,4 @@
-import { Download, FileText } from 'lucide-react';
+import { ArrowUpRight, FileText } from 'lucide-react';
 
 import { MaybeLink, hasHref } from '@/components/ui/maybe-link';
 
@@ -6,14 +6,16 @@ type PdfCardProps = {
   title: string;
   meta: string;
   href?: string;
+  openInNewTab?: boolean;
 };
 
-export function PdfCard({ title, meta, href }: PdfCardProps) {
+export function PdfCard({ title, meta, href, openInNewTab = true }: PdfCardProps) {
   const linked = hasHref(href);
 
   return (
     <MaybeLink
       href={href}
+      openInNewTab={linked ? openInNewTab : false}
       className="flex flex-col gap-3.5 rounded-2xl border border-[#B7D4C6] bg-[#E8F3ED] p-[22px] shadow-[0_8px_20px_#00331912] transition-transform duration-300 hover:-translate-y-0.5"
     >
       <div className="flex items-center justify-between">
@@ -27,8 +29,8 @@ export function PdfCard({ title, meta, href }: PdfCardProps) {
       <p className="font-heading text-base font-bold leading-snug text-text-primary">{title}</p>
       <p className="text-[13px] text-text-secondary">{meta}</p>
       <span className="mt-auto inline-flex items-center gap-1.5 font-heading text-xs font-semibold text-brand-primary">
-        Download
-        <Download className="size-3.5" aria-hidden />
+        {linked ? 'Open PDF' : 'Coming soon'}
+        <ArrowUpRight className="size-3.5" aria-hidden />
         <span className="sr-only">{linked ? title : `${title} (coming soon)`}</span>
       </span>
     </MaybeLink>

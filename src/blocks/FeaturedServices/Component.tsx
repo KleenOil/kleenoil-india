@@ -3,7 +3,7 @@ import { IndustryViewAllCard } from '@/components/cards/IndustryViewAllCard';
 import { SectionHeader } from '@/components/sections/SectionHeader';
 import { blockHasCmsData, cmsList, cmsText } from '@/lib/cms/block-content';
 import { DEFAULT_FEATURED_INDUSTRIES, DEFAULT_FEATURED_SERVICES } from '@/lib/cms/defaults';
-import { getMediaAlt, getMediaUrl, resolveLink } from '@/lib/cms/links';
+import { getMediaAlt, getMediaUrl, resolveLink, resolvePdfHref } from '@/lib/cms/links';
 import type { Media } from '@/payload-types';
 
 type ServiceCmsCard = {
@@ -45,23 +45,13 @@ type FeaturedServicesBlockProps = {
   block?: FeaturedServicesBlockData | null;
 };
 
-function resolveCardHref(card: ServiceCmsCard): { href: string; isPdf: boolean } {
-  const pdfUrl = getMediaUrl(card.pdf);
-  if (pdfUrl) {
-    return { href: pdfUrl, isPdf: true };
-  }
-
-  const href = card.href?.trim() || '';
-  return { href, isPdf: /\.pdf($|\?)/i.test(href) };
-}
-
 function mapCard(card: ServiceCmsCard, index: number, hasCms: boolean): IndustryCardData | null {
   if (!card.title?.trim()) {
     return null;
   }
 
   const fallback = hasCms ? undefined : DEFAULT_FEATURED_SERVICES.services[index];
-  const resolved = resolveCardHref(card);
+  const resolved = resolvePdfHref({ pdf: card.pdf, href: card.href });
   const href = resolved.href || fallback?.href || '';
 
   return {
@@ -72,7 +62,7 @@ function mapCard(card: ServiceCmsCard, index: number, hasCms: boolean): Industry
     title: card.title.trim(),
     description: card.description?.trim() || fallback?.description || '',
     href,
-    openInNewTab: resolved.isPdf,
+    openInNewTab: resolved.openInNewTab || Boolean(href && resolved.isPdf),
     isPdf: resolved.isPdf,
     imageUrl: getMediaUrl(card.image) || fallback?.imageUrl || null,
     imageAlt: getMediaAlt(card.image, card.title),
