@@ -9,12 +9,29 @@ type CloudinaryAdapterArgs = {
 };
 
 /**
+ * Cloudinary rejects or mangles public ids with `&`, spaces, and most punctuation
+ * (e.g. "Pulp & Paper.pdf"). Keep a stable, URL-safe segment.
+ */
+function sanitizePublicIdSegment(name: string): string {
+  const cleaned = name
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/&/g, 'and')
+    .replace(/[^a-zA-Z0-9._-]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^[-.]+|[-.]+$/g, '');
+
+  return cleaned || 'file';
+}
+
+/**
  * Cloudinary raw public IDs are stored without the file extension
  * (matches earlier uploads). Delivery Content-Type is fixed by `/api/pdf/[id]`.
  */
 function publicIdFor(filename: string, folder: string, prefix?: string): string {
-  const baseName = filename.replace(/\.[^/.]+$/, '');
-  const segments = [folder, prefix, baseName].filter(Boolean);
+  const baseName = sanitizePublicIdSegment(filename.replace(/\.[^/.]+$/, ''));
+  const safePrefix = prefix ? sanitizePublicIdSegment(prefix.replace(/\/+/g, '-')) : '';
+  const segments = [folder, safePrefix, baseName].filter(Boolean);
   return segments.join('/');
 }
 
@@ -50,7 +67,11 @@ export function cloudinaryAdapter(args: CloudinaryAdapterArgs): Adapter {
       name: 'cloudinary',
       async handleUpload({ file }) {
         const publicId = publicIdFor(file.filename, folder, prefix);
-        const resourceType = guessResourceType(file.mimeType);
+        // Treat anything that looks like a PDF as raw — some clients send a non-pdf mime.
+        const looksLikePdf =
+          file.mimeType?.toLowerCase().includes('pdf') ||
+          file.filename.toLowerCase().endsWith('.pdf');
+        const resourceType = looksLikePdf ? 'raw' : guessResourceType(file.mimeType);
 
         await new Promise<void>((resolve, reject) => {
           const stream = cloudinary.uploader.upload_stream(
@@ -59,10 +80,19 @@ export function cloudinaryAdapter(args: CloudinaryAdapterArgs): Adapter {
               resource_type: resourceType,
               overwrite: true,
               invalidate: true,
+              // Avoid Cloudinary treating the raw name as a path expression.
+              use_filename: false,
+              unique_filename: false,
             },
             (error) => {
               if (error) {
-                reject(error);
+                reject(
+                  new Error(
+                    `Cloudinary upload failed for "${file.filename}" → ${publicId}: ${
+                      error.message || String(error)
+                    }`,
+                  ),
+                );
                 return;
               }
               resolve();

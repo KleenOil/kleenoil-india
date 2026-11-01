@@ -123,7 +123,12 @@ export const Media: CollectionConfig = {
       'image/svg+xml',
       'video/mp4',
       'video/webm',
+      // Browsers / OS sometimes label PDFs with these aliases.
       'application/pdf',
+      'application/x-pdf',
+      'application/acrobat',
+      'applications/vnd.pdf',
+      'text/pdf',
       'model/gltf-binary',
     ],
   },

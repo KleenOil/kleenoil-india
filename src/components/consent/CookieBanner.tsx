@@ -98,12 +98,12 @@ export function CookieBanner({ className }: CookieBannerProps) {
           )}
         </div>
 
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div className="flex w-full flex-nowrap items-stretch gap-2 sm:w-auto sm:items-center sm:gap-3">
           <CtaButton
             type="button"
             appearance="secondary"
             onClick={() => save(false)}
-            className="w-full sm:w-auto"
+            className="min-w-0 flex-1 whitespace-nowrap px-3 py-3 text-[13px] sm:flex-none sm:px-6 sm:py-4 sm:text-sm lg:px-8 lg:py-[18px] lg:text-base"
           >
             Necessary only
           </CtaButton>
@@ -111,7 +111,7 @@ export function CookieBanner({ className }: CookieBannerProps) {
             type="button"
             appearance="primary"
             onClick={() => save(true)}
-            className="w-full sm:w-auto"
+            className="min-w-0 flex-1 whitespace-nowrap px-3 py-3 text-[13px] sm:flex-none sm:px-6 sm:py-4 sm:text-sm lg:px-8 lg:py-[18px] lg:text-base"
           >
             Accept analytics
           </CtaButton>
