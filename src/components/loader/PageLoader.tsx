@@ -21,10 +21,82 @@ type PageLoaderProps = {
 
 const SAFETY_MAX_MS = 4500;
 const ASSET_WAIT_MS = 1800;
+const CONTENT_SWAP_MS = 3200;
 const MIN_VISIBLE_MS = 320;
 
 function isModifiedClick(event: MouseEvent) {
   return event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0;
+}
+
+/** Fingerprint of visible page content under <main> (URL excluded — it updates before the DOM). */
+function getMainSignature(): string {
+  const main = document.querySelector('main');
+  if (!main) {
+    return '';
+  }
+
+  const contentRoots = Array.from(main.children).filter((el) => el.id !== 'header-scroll-sentinel');
+  const root = contentRoots[0];
+  const heading = main.querySelector('h1');
+
+  return [
+    contentRoots.length,
+    root?.tagName ?? '',
+    root?.getAttribute('class')?.slice(0, 64) ?? '',
+    heading?.textContent?.trim().slice(0, 100) ?? '',
+    String(main.scrollHeight),
+    root?.textContent?.trim().slice(0, 140) ?? '',
+  ].join('\u00a7');
+}
+
+function waitForMainContentSwap(previous: string, timeoutMs: number): Promise<boolean> {
+  if (!previous || getMainSignature() !== previous) {
+    return Promise.resolve(true);
+  }
+
+  return new Promise((resolve) => {
+    const main = document.querySelector('main');
+    let settled = false;
+
+    const finish = (changed: boolean) => {
+      if (settled) {
+        return;
+      }
+      settled = true;
+      observer?.disconnect();
+      window.clearInterval(poll);
+      window.clearTimeout(timer);
+      resolve(changed);
+    };
+
+    const check = () => {
+      if (getMainSignature() !== previous) {
+        finish(true);
+      }
+    };
+
+    const observer =
+      main != null
+        ? new MutationObserver(() => {
+            check();
+          })
+        : null;
+
+    observer?.observe(main as Node, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+
+    const poll = window.setInterval(check, 32);
+    const timer = window.setTimeout(() => finish(getMainSignature() !== previous), timeoutMs);
+    check();
+  });
+}
+
+/** Two paint cycles so the new route is composited under the still-opaque loader. */
+function waitForCommittedPaint(): Promise<void> {
+  return waitForPaint().then(() => waitForPaint());
 }
 
 function shouldHandleAnchor(anchor: HTMLAnchorElement): boolean {
@@ -126,10 +198,16 @@ function waitForAboveFoldImages(timeoutMs: number): Promise<void> {
   });
 }
 
-async function waitForPageReady(onProgress: (value: number) => void): Promise<void> {
-  onProgress(0.35);
-  await waitForPaint();
-  onProgress(0.55);
+async function waitForPageReady(
+  fromSignature: string,
+  onProgress: (value: number) => void,
+): Promise<void> {
+  onProgress(0.28);
+  // Hold until the previous page DOM is gone — pathname alone updates too early.
+  await waitForMainContentSwap(fromSignature, CONTENT_SWAP_MS);
+  onProgress(0.5);
+  await waitForCommittedPaint();
+  onProgress(0.62);
 
   const fontsReady =
     'fonts' in document
@@ -143,8 +221,9 @@ async function waitForPageReady(onProgress: (value: number) => void): Promise<vo
     }),
   ]);
 
-  onProgress(0.92);
-  await waitForPaint();
+  onProgress(0.9);
+  // Final paints: new page must be on screen before we start fading the overlay.
+  await waitForCommittedPaint();
   onProgress(1);
 }
 
@@ -164,6 +243,7 @@ export function PageLoader({ loader }: PageLoaderProps) {
   const outTimelineRef = useRef<PageLoaderTimeline | null>(null);
   const startRef = useRef<() => void>(() => undefined);
   const finishRef = useRef<() => void>(() => undefined);
+  const fromSignatureRef = useRef('');
 
   useEffect(() => {
     minDurationMsRef.current = loader.minDurationMs;
@@ -293,6 +373,8 @@ export function PageLoader({ loader }: PageLoaderProps) {
       }
 
       if (phaseRef.current === 'in' || phaseRef.current === 'hold') {
+        // Chained navigation: re-baseline against whatever is currently under the overlay.
+        fromSignatureRef.current = getMainSignature();
         pendingOutRef.current = false;
         armSafety();
         return;
@@ -311,6 +393,7 @@ export function PageLoader({ loader }: PageLoaderProps) {
       closingRef.current = false;
       pendingOutRef.current = false;
       phaseRef.current = 'in';
+      fromSignatureRef.current = getMainSignature();
       startedAtRef.current = performance.now();
       lockScroll(true);
       root.setAttribute('aria-hidden', 'false');
@@ -438,11 +521,12 @@ export function PageLoader({ loader }: PageLoaderProps) {
 
     const token = navTokenRef.current;
     const committedPath = pathname;
+    const fromSignature = fromSignatureRef.current;
     let cancelled = false;
 
     void (async () => {
       try {
-        await waitForPageReady((value) => {
+        await waitForPageReady(fromSignature, (value) => {
           if (cancelled || token !== navTokenRef.current || !rootRef.current) {
             return;
           }
@@ -452,6 +536,16 @@ export function PageLoader({ loader }: PageLoaderProps) {
         });
       } catch {
         // Readiness probing must never trap the overlay.
+      }
+
+      if (cancelled || token !== navTokenRef.current) {
+        return;
+      }
+
+      // One last check: never reveal while the departure page is still mounted.
+      if (fromSignature && getMainSignature() === fromSignature) {
+        await waitForMainContentSwap(fromSignature, 800);
+        await waitForCommittedPaint();
       }
 
       if (cancelled || token !== navTokenRef.current) {
