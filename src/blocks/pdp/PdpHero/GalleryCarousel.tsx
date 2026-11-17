@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -19,49 +19,19 @@ type GalleryCarouselProps = {
 };
 
 export function GalleryCarousel({ items, active, onChange, badge }: GalleryCarouselProps) {
-  const mainRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
-  const syncingRef = useRef(false);
+  const touchStartX = useRef<number | null>(null);
   const count = items.length;
   const safeActive = count > 0 ? Math.min(Math.max(active, 0), count - 1) : 0;
 
-  const scrollMainTo = useCallback((index: number, behavior: ScrollBehavior = 'smooth') => {
-    const scroller = mainRef.current;
-    if (!scroller) {
+  const goTo = (index: number) => {
+    if (count <= 1) {
       return;
     }
-    const width = scroller.clientWidth;
-    if (width <= 0) {
-      return;
-    }
-    syncingRef.current = true;
-    scroller.scrollTo({ left: width * index, behavior });
-    window.setTimeout(
-      () => {
-        syncingRef.current = false;
-      },
-      behavior === 'smooth' ? 420 : 0,
-    );
-  }, []);
+    onChange(((index % count) + count) % count);
+  };
 
-  const goTo = useCallback(
-    (index: number) => {
-      if (count <= 1) {
-        return;
-      }
-      const next = ((index % count) + count) % count;
-      onChange(next);
-      scrollMainTo(next);
-    },
-    [count, onChange, scrollMainTo],
-  );
-
-  // Keep main track aligned when active changes from thumbs / variant reset.
-  useEffect(() => {
-    scrollMainTo(safeActive, 'auto');
-  }, [safeActive, scrollMainTo, count]);
-
-  // Keep the active thumb visible in the strip.
+  // Keep the active thumb in view.
   useEffect(() => {
     const strip = thumbRef.current;
     if (!strip || count <= 1) {
@@ -71,30 +41,6 @@ export function GalleryCarousel({ items, active, onChange, badge }: GalleryCarou
     thumb?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
   }, [safeActive, count]);
 
-  useEffect(() => {
-    const scroller = mainRef.current;
-    if (!scroller || count <= 1) {
-      return;
-    }
-
-    const onScroll = () => {
-      if (syncingRef.current) {
-        return;
-      }
-      const width = scroller.clientWidth;
-      if (width <= 0) {
-        return;
-      }
-      const index = Math.round(scroller.scrollLeft / width);
-      if (index !== safeActive && index >= 0 && index < count) {
-        onChange(index);
-      }
-    };
-
-    scroller.addEventListener('scroll', onScroll, { passive: true });
-    return () => scroller.removeEventListener('scroll', onScroll);
-  }, [count, onChange, safeActive]);
-
   if (count === 0) {
     return (
       <div className="surface-card relative aspect-[680/520] overflow-hidden rounded-[20px] border-2 border-border-subtle bg-brand-soft" />
@@ -103,17 +49,34 @@ export function GalleryCarousel({ items, active, onChange, badge }: GalleryCarou
 
   return (
     <div className="flex w-full flex-col gap-3">
-      <div className="surface-card relative aspect-[680/520] overflow-hidden rounded-[20px] border-2 border-border-subtle bg-brand-soft">
+      <div
+        className="surface-card relative aspect-[680/520] overflow-hidden rounded-[20px] border-2 border-border-subtle bg-brand-soft"
+        onTouchStart={(event) => {
+          touchStartX.current = event.changedTouches[0]?.clientX ?? null;
+        }}
+        onTouchEnd={(event) => {
+          const startX = touchStartX.current;
+          touchStartX.current = null;
+          if (startX == null || count <= 1) {
+            return;
+          }
+          const delta = (event.changedTouches[0]?.clientX ?? startX) - startX;
+          if (Math.abs(delta) < 40) {
+            return;
+          }
+          goTo(delta < 0 ? safeActive + 1 : safeActive - 1);
+        }}
+      >
         <div
-          ref={mainRef}
-          className="flex h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex h-full w-full transition-transform duration-300 ease-out"
+          style={{ transform: `translate3d(-${safeActive * 100}%, 0, 0)` }}
           aria-roledescription="carousel"
           aria-label="Product images"
         >
           {items.map((item, index) => (
             <div
               key={`${item.url}-${index}`}
-              className="relative h-full w-full shrink-0 snap-center"
+              className="relative h-full w-full min-w-full shrink-0 grow-0 basis-full"
               aria-hidden={index !== safeActive}
             >
               <Image
@@ -168,7 +131,7 @@ export function GalleryCarousel({ items, active, onChange, badge }: GalleryCarou
         <div
           ref={thumbRef}
           data-reveal-ignore
-          className="flex snap-x snap-mandatory gap-2 overflow-x-auto scroll-smooth pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex gap-2 overflow-x-auto scroll-smooth pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           aria-label="Image thumbnails"
         >
           {items.map((item, index) => (
@@ -180,7 +143,7 @@ export function GalleryCarousel({ items, active, onChange, badge }: GalleryCarou
               aria-label={`Show image ${index + 1}`}
               aria-current={index === safeActive ? 'true' : undefined}
               className={cn(
-                'relative h-14 w-[4.5rem] shrink-0 snap-start overflow-hidden rounded-lg border-2 md:h-16 md:w-[5.25rem]',
+                'relative h-14 w-[4.5rem] shrink-0 overflow-hidden rounded-lg border-2 md:h-16 md:w-[5.25rem]',
                 index === safeActive ? 'border-brand-primary' : 'border-border-subtle',
               )}
             >
