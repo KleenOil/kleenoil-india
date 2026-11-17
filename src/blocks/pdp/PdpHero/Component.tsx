@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
 
 import { AnimatedCounter } from '@/components/ui/animated-counter';
@@ -12,6 +11,7 @@ import { getMediaAlt, getMediaUrl, resolveCtaList, type CmsLink } from '@/lib/cm
 import type { Media } from '@/payload-types';
 import { cn } from '@/lib/utils';
 
+import { GalleryCarousel } from './GalleryCarousel';
 import { VariantSelector, type HeroVariantOption } from './VariantSelector';
 
 type QuickSpecsPerRow = 'auto' | 'one' | 'two' | 'three' | 'four';
@@ -171,8 +171,6 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
               }))
               .slice(0, 4);
 
-  const activeImage = gallery[Math.min(active, gallery.length - 1)] ?? gallery[0];
-
   const heroSpecs = usableSpecs(block?.quickSpecs);
   const specs: SpecItem[] =
     heroSpecs.length > 0
@@ -214,46 +212,13 @@ export function PdpHeroBlock({ block, productName, featuredImageUrl }: PdpHeroPr
   return (
     <section className="bg-background">
       <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-10 px-6 py-16 lg:flex-row lg:gap-16 lg:px-[100px] lg:py-20">
-        <div className="flex w-full flex-col gap-4 lg:max-w-[680px]">
-          <div className="surface-card relative aspect-[680/520] overflow-hidden rounded-[20px] border-2 border-border-subtle bg-brand-soft">
-            {activeImage ? (
-              <Image
-                src={activeImage.url}
-                alt={activeImage.alt}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 680px"
-                priority
-              />
-            ) : null}
-            <div className="absolute inset-0 bg-brand-primary/10" aria-hidden />
-            {badge ? (
-              <div className="absolute left-6 top-6 inline-flex items-center gap-2 rounded-full bg-surface-elevated/80 px-3.5 py-2.5">
-                <span className="size-1.5 rounded-full bg-brand-primary" aria-hidden />
-                <span className="font-mono text-[11px] font-bold tracking-[1.2px] text-brand-primary uppercase">
-                  {badge}
-                </span>
-              </div>
-            ) : null}
-          </div>
-
-          {gallery.length > 1 ? (
-            <div data-reveal-ignore className="grid grid-cols-4 gap-3">
-              {gallery.map((item, index) => (
-                <button
-                  key={`${item.url}-${index}`}
-                  type="button"
-                  onClick={() => setActive(index)}
-                  className={cn(
-                    'relative aspect-[4/3] overflow-hidden rounded-xl border-2',
-                    index === active ? 'border-brand-primary' : 'border-border-subtle',
-                  )}
-                >
-                  <Image src={item.url} alt="" fill className="object-cover" sizes="160px" />
-                </button>
-              ))}
-            </div>
-          ) : null}
+        <div className="flex w-full flex-col lg:max-w-[680px]">
+          <GalleryCarousel
+            items={gallery}
+            active={active}
+            onChange={setActive}
+            badge={badge || undefined}
+          />
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col gap-7 pt-2">
