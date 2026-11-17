@@ -1,21 +1,27 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import {
+  hardHideLoader,
   killLoaderTweens,
   playLoaderIn,
   playLoaderOut,
+  preloadPageLoaderGsap,
+  setLoaderProgress,
   type PageLoaderTimeline,
 } from '@/lib/animations/page-loader';
 import { prefersReducedMotion } from '@/lib/animations/prefers-reduced-motion';
 import type { SiteLoader } from '@/lib/cms/site';
-import { cn } from '@/lib/utils';
 
 type PageLoaderProps = {
   loader: SiteLoader;
 };
+
+const SAFETY_MAX_MS = 4500;
+const ASSET_WAIT_MS = 1800;
+const MIN_VISIBLE_MS = 320;
 
 function isModifiedClick(event: MouseEvent) {
   return event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0;
@@ -72,9 +78,8 @@ function waitForPaint(): Promise<void> {
   });
 }
 
-function waitForPageAssets(): Promise<void> {
-  // Prefer above-the-fold images so client navigations do not wait on distant media.
-  const viewportH = typeof window !== 'undefined' ? window.innerHeight : 900;
+function waitForAboveFoldImages(timeoutMs: number): Promise<void> {
+  const viewportH = window.innerHeight || 900;
   const images = Array.from(document.querySelectorAll('main img')).filter(
     (node): node is HTMLImageElement => {
       if (!(node instanceof HTMLImageElement) || node.complete) {
@@ -82,7 +87,10 @@ function waitForPageAssets(): Promise<void> {
       }
 
       const rect = node.getBoundingClientRect();
-      return rect.top < viewportH * 1.25;
+      if (rect.height === 0 && rect.width === 0) {
+        return false;
+      }
+      return rect.top < viewportH * 1.15;
     },
   );
 
@@ -92,19 +100,52 @@ function waitForPageAssets(): Promise<void> {
 
   return new Promise((resolve) => {
     let remaining = images.length;
-    const finishWait = () => {
+    let settled = false;
+    const done = () => {
+      if (settled) {
+        return;
+      }
+      settled = true;
+      window.clearTimeout(timer);
+      resolve();
+    };
+    const onOne = () => {
       remaining -= 1;
       if (remaining <= 0) {
-        window.clearTimeout(timer);
-        resolve();
+        done();
       }
     };
-    const timer = window.setTimeout(resolve, 2500);
+    const timer = window.setTimeout(done, timeoutMs);
     images.forEach((image) => {
-      image.addEventListener('load', finishWait, { once: true });
-      image.addEventListener('error', finishWait, { once: true });
+      image.addEventListener('load', onOne, { once: true });
+      image.addEventListener('error', onOne, { once: true });
+      if (image.complete) {
+        onOne();
+      }
     });
   });
+}
+
+async function waitForPageReady(onProgress: (value: number) => void): Promise<void> {
+  onProgress(0.35);
+  await waitForPaint();
+  onProgress(0.55);
+
+  const fontsReady =
+    'fonts' in document
+      ? document.fonts.ready.then(() => undefined).catch(() => undefined)
+      : Promise.resolve();
+
+  await Promise.race([
+    Promise.all([waitForAboveFoldImages(ASSET_WAIT_MS), fontsReady]),
+    new Promise<void>((resolve) => {
+      window.setTimeout(resolve, ASSET_WAIT_MS);
+    }),
+  ]);
+
+  onProgress(0.92);
+  await waitForPaint();
+  onProgress(1);
 }
 
 export function PageLoader({ loader }: PageLoaderProps) {
@@ -114,114 +155,210 @@ export function PageLoader({ loader }: PageLoaderProps) {
   const phaseRef = useRef<'idle' | 'in' | 'hold' | 'out'>('idle');
   const pendingOutRef = useRef(false);
   const closingRef = useRef(false);
+  const startedAtRef = useRef(0);
+  const navTokenRef = useRef(0);
+  const safetyTimerRef = useRef<number | null>(null);
+  const hardSafetyTimerRef = useRef<number | null>(null);
+  const minDurationMsRef = useRef(loader.minDurationMs);
   const inTimelineRef = useRef<PageLoaderTimeline | null>(null);
   const outTimelineRef = useRef<PageLoaderTimeline | null>(null);
-
-  const lockScroll = useCallback((locked: boolean) => {
-    document.documentElement.classList.toggle('page-loader-active', locked);
-  }, []);
-
-  const finish = useCallback(() => {
-    const root = rootRef.current;
-    if (!root || phaseRef.current === 'out' || phaseRef.current === 'idle' || closingRef.current) {
-      return;
-    }
-
-    if (phaseRef.current === 'in') {
-      pendingOutRef.current = true;
-      return;
-    }
-
-    if (phaseRef.current !== 'hold') {
-      return;
-    }
-
-    closingRef.current = true;
-    phaseRef.current = 'out';
-    pendingOutRef.current = false;
-    inTimelineRef.current?.kill();
-    outTimelineRef.current?.kill();
-    const reduced = prefersReducedMotion();
-    void playLoaderOut({ root, reduced, fadeMs: loader.minDurationMs }).then((tl) => {
-      if (phaseRef.current !== 'out') {
-        tl.kill();
-        return;
-      }
-      outTimelineRef.current = tl;
-      tl.eventCallback('onComplete', () => {
-        phaseRef.current = 'idle';
-        pendingOutRef.current = false;
-        closingRef.current = false;
-        lockScroll(false);
-        if (rootRef.current) {
-          rootRef.current.setAttribute('aria-hidden', 'true');
-          rootRef.current.setAttribute('data-state', 'idle');
-          rootRef.current.setAttribute('aria-busy', 'false');
-        }
-      });
-    });
-  }, [loader.minDurationMs, lockScroll]);
-
-  const start = useCallback(() => {
-    const root = rootRef.current;
-    if (!root || phaseRef.current === 'in' || phaseRef.current === 'hold') {
-      return;
-    }
-
-    outTimelineRef.current?.kill();
-    inTimelineRef.current?.kill();
-    killLoaderTweens(root);
-    closingRef.current = false;
-    phaseRef.current = 'in';
-    pendingOutRef.current = false;
-    lockScroll(true);
-    root.setAttribute('aria-hidden', 'false');
-    root.setAttribute('data-state', 'active');
-    root.setAttribute('aria-busy', 'true');
-
-    const reduced = prefersReducedMotion();
-    void playLoaderIn({ root, reduced, fadeMs: loader.minDurationMs }).then((tl) => {
-      if (phaseRef.current !== 'in') {
-        tl.kill();
-        return;
-      }
-      inTimelineRef.current = tl;
-      tl.eventCallback('onComplete', () => {
-        if (phaseRef.current !== 'in') {
-          return;
-        }
-        phaseRef.current = 'hold';
-        if (pendingOutRef.current) {
-          finish();
-        }
-      });
-    });
-  }, [finish, loader.minDurationMs, lockScroll]);
+  const startRef = useRef<() => void>(() => undefined);
+  const finishRef = useRef<() => void>(() => undefined);
 
   useEffect(() => {
-    if (pathname === routeRef.current) {
-      return;
-    }
+    minDurationMsRef.current = loader.minDurationMs;
+  }, [loader.minDurationMs]);
 
-    routeRef.current = pathname;
-    let cancelled = false;
-    void (async () => {
-      await waitForPaint();
-      await waitForPageAssets();
-      if (!cancelled) {
-        finish();
-      }
-    })();
+  useEffect(() => {
+    preloadPageLoaderGsap();
+  }, []);
 
-    return () => {
-      cancelled = true;
-    };
-  }, [finish, pathname]);
-
+  // Stable controller — never torn down on pathname changes.
   useEffect(() => {
     if (!loader.enabled) {
       return;
     }
+
+    const lockScroll = (locked: boolean) => {
+      document.documentElement.classList.toggle('page-loader-active', locked);
+    };
+
+    const clearSafety = () => {
+      if (safetyTimerRef.current !== null) {
+        window.clearTimeout(safetyTimerRef.current);
+        safetyTimerRef.current = null;
+      }
+      if (hardSafetyTimerRef.current !== null) {
+        window.clearTimeout(hardSafetyTimerRef.current);
+        hardSafetyTimerRef.current = null;
+      }
+    };
+
+    const resetIdle = () => {
+      clearSafety();
+      phaseRef.current = 'idle';
+      pendingOutRef.current = false;
+      closingRef.current = false;
+      lockScroll(false);
+      const root = rootRef.current;
+      if (root) {
+        hardHideLoader(root);
+      }
+    };
+
+    const finish = () => {
+      const root = rootRef.current;
+      if (
+        !root ||
+        phaseRef.current === 'out' ||
+        phaseRef.current === 'idle' ||
+        closingRef.current
+      ) {
+        return;
+      }
+
+      if (phaseRef.current === 'in') {
+        pendingOutRef.current = true;
+        return;
+      }
+
+      if (phaseRef.current !== 'hold') {
+        return;
+      }
+
+      const elapsed = performance.now() - startedAtRef.current;
+      const waitMore = Math.max(0, MIN_VISIBLE_MS - elapsed);
+      if (waitMore > 0) {
+        window.setTimeout(() => {
+          if (phaseRef.current === 'hold' && !closingRef.current) {
+            finish();
+          }
+        }, waitMore);
+        return;
+      }
+
+      closingRef.current = true;
+      phaseRef.current = 'out';
+      pendingOutRef.current = false;
+      inTimelineRef.current?.kill();
+      outTimelineRef.current?.kill();
+      setLoaderProgress({ root, progress: 1 });
+
+      const reduced = prefersReducedMotion();
+      const token = navTokenRef.current;
+
+      void playLoaderOut({ root, reduced, fadeMs: minDurationMsRef.current })
+        .then((tl) => {
+          if (phaseRef.current !== 'out' || token !== navTokenRef.current) {
+            tl.kill();
+            return;
+          }
+          outTimelineRef.current = tl;
+          tl.eventCallback('onComplete', () => {
+            if (token !== navTokenRef.current) {
+              return;
+            }
+            resetIdle();
+          });
+        })
+        .catch(() => {
+          resetIdle();
+        });
+    };
+
+    const armSafety = () => {
+      clearSafety();
+      safetyTimerRef.current = window.setTimeout(() => {
+        if (phaseRef.current === 'idle') {
+          return;
+        }
+        pendingOutRef.current = true;
+        if (phaseRef.current === 'in') {
+          phaseRef.current = 'hold';
+        }
+        finish();
+      }, SAFETY_MAX_MS);
+
+      hardSafetyTimerRef.current = window.setTimeout(() => {
+        if (phaseRef.current !== 'idle') {
+          resetIdle();
+        }
+      }, SAFETY_MAX_MS + 1500);
+    };
+
+    const start = () => {
+      const root = rootRef.current;
+      if (!root) {
+        return;
+      }
+
+      if (phaseRef.current === 'in' || phaseRef.current === 'hold') {
+        pendingOutRef.current = false;
+        armSafety();
+        return;
+      }
+
+      if (phaseRef.current === 'out') {
+        outTimelineRef.current?.kill();
+        closingRef.current = false;
+      }
+
+      navTokenRef.current += 1;
+      const token = navTokenRef.current;
+      outTimelineRef.current?.kill();
+      inTimelineRef.current?.kill();
+      killLoaderTweens(root);
+      closingRef.current = false;
+      pendingOutRef.current = false;
+      phaseRef.current = 'in';
+      startedAtRef.current = performance.now();
+      lockScroll(true);
+      root.setAttribute('aria-hidden', 'false');
+      root.setAttribute('data-state', 'active');
+      root.setAttribute('aria-busy', 'true');
+      armSafety();
+
+      const reduced = prefersReducedMotion();
+      void playLoaderIn({ root, reduced, fadeMs: minDurationMsRef.current })
+        .then((tl) => {
+          if (token !== navTokenRef.current || phaseRef.current !== 'in') {
+            tl.kill();
+            return;
+          }
+          inTimelineRef.current = tl;
+          setLoaderProgress({ root, progress: 0.2 });
+
+          const enterHold = () => {
+            if (token !== navTokenRef.current || phaseRef.current !== 'in') {
+              return;
+            }
+            phaseRef.current = 'hold';
+            setLoaderProgress({ root, progress: 0.45 });
+            if (pendingOutRef.current) {
+              finish();
+            }
+          };
+
+          if (typeof tl.progress === 'function' && tl.progress() >= 1) {
+            enterHold();
+            return;
+          }
+
+          tl.eventCallback('onComplete', enterHold);
+        })
+        .catch(() => {
+          if (token !== navTokenRef.current) {
+            return;
+          }
+          phaseRef.current = 'hold';
+          if (pendingOutRef.current) {
+            finish();
+          }
+        });
+    };
+
+    startRef.current = start;
+    finishRef.current = finish;
 
     const onClick = (event: MouseEvent) => {
       if (isModifiedClick(event) || event.defaultPrevented) {
@@ -263,18 +400,73 @@ export function PageLoader({ loader }: PageLoaderProps) {
       }
     }
 
+    const root = rootRef.current;
+
     return () => {
+      clearSafety();
       window.removeEventListener('load', releaseFirstLoad);
       document.removeEventListener('click', onClick, true);
       window.removeEventListener('popstate', onPopState);
       inTimelineRef.current?.kill();
       outTimelineRef.current?.kill();
-      if (rootRef.current) {
-        killLoaderTweens(rootRef.current);
+      if (root) {
+        killLoaderTweens(root);
       }
       lockScroll(false);
+      phaseRef.current = 'idle';
+      pendingOutRef.current = false;
+      closingRef.current = false;
     };
-  }, [finish, loader.enabled, loader.showOnFirstLoad, lockScroll, start]);
+  }, [loader.enabled, loader.showOnFirstLoad]);
+
+  // Dismiss only when the committed route changes after a started transition.
+  // Intentionally delay updating routeRef until dismiss is scheduled so React
+  // Strict Mode / effect re-runs cannot skip the finish path.
+  useEffect(() => {
+    if (!loader.enabled) {
+      return;
+    }
+
+    if (pathname === routeRef.current) {
+      return;
+    }
+
+    if (phaseRef.current === 'idle') {
+      routeRef.current = pathname;
+      return;
+    }
+
+    const token = navTokenRef.current;
+    const committedPath = pathname;
+    let cancelled = false;
+
+    void (async () => {
+      try {
+        await waitForPageReady((value) => {
+          if (cancelled || token !== navTokenRef.current || !rootRef.current) {
+            return;
+          }
+          if (phaseRef.current === 'in' || phaseRef.current === 'hold') {
+            setLoaderProgress({ root: rootRef.current, progress: value });
+          }
+        });
+      } catch {
+        // Readiness probing must never trap the overlay.
+      }
+
+      if (cancelled || token !== navTokenRef.current) {
+        return;
+      }
+
+      routeRef.current = committedPath;
+      pendingOutRef.current = true;
+      finishRef.current();
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [loader.enabled, pathname]);
 
   const mark = loader.brandName.trim().charAt(0).toUpperCase() || 'K';
   const brand = loader.brandName.trim() || 'KLEENOIL';
@@ -326,11 +518,7 @@ export function PageLoader({ loader }: PageLoaderProps) {
           data-loader="center"
           className="absolute inset-0 flex flex-col items-center justify-center gap-7 px-6 md:gap-10"
         >
-          <div
-            className={cn(
-              'flex flex-col items-center gap-4 md:flex-row md:items-center md:gap-[18px]',
-            )}
-          >
+          <div className="flex flex-col items-center gap-4 md:flex-row md:items-center md:gap-[18px]">
             <span
               data-loader="mark"
               className="flex size-16 items-center justify-center rounded-xl bg-brand-primary font-heading text-[32px] font-extrabold text-background md:size-[72px] md:rounded-[14px] md:text-4xl"
