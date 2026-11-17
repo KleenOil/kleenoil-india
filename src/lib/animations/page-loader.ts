@@ -158,15 +158,16 @@ export async function playLoaderOut({
   gsap.killTweensOf(dots);
   gsap.set(dots, { opacity: 1, backgroundColor: '#006633' });
 
-  const duration = fadeSeconds(fadeMs, reduced);
+  // Exit must be snappy — page is already committed under the overlay.
+  const duration = reduced ? 0.12 : Math.min(0.32, fadeSeconds(fadeMs, reduced) * 0.45);
   const tl = gsap.timeline({ defaults: { force3D: true } });
 
   tl.to(
     fill,
-    { scaleX: 1, duration: Math.min(0.28, duration * 0.4), ease: 'sine.out', overwrite: true },
+    { scaleX: 1, duration: Math.min(0.18, duration * 0.5), ease: 'sine.out', overwrite: true },
     0,
   );
-  tl.to(root, { autoAlpha: 0, pointerEvents: 'none', duration, ease: 'sine.inOut' }, 0.06);
+  tl.to(root, { autoAlpha: 0, pointerEvents: 'none', duration, ease: 'sine.inOut' }, 0.04);
 
   return tl as unknown as PageLoaderTimeline;
 }

@@ -19,84 +19,24 @@ type PageLoaderProps = {
   loader: SiteLoader;
 };
 
-const SAFETY_MAX_MS = 4500;
-const ASSET_WAIT_MS = 1800;
-const CONTENT_SWAP_MS = 3200;
-const MIN_VISIBLE_MS = 320;
+/** Absolute last resort only — never used as the normal dismiss path. */
+const HARD_SAFETY_MS = 12000;
+/** Cap above-fold image wait so slow media never stalls the reveal. */
+const ASSET_WAIT_MS = 500;
+const MIN_VISIBLE_MS = 280;
+
+function normalizePath(path: string) {
+  if (!path) {
+    return '/';
+  }
+  if (path.length > 1 && path.endsWith('/')) {
+    return path.slice(0, -1);
+  }
+  return path;
+}
 
 function isModifiedClick(event: MouseEvent) {
   return event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0;
-}
-
-/** Fingerprint of visible page content under <main> (URL excluded — it updates before the DOM). */
-function getMainSignature(): string {
-  const main = document.querySelector('main');
-  if (!main) {
-    return '';
-  }
-
-  const contentRoots = Array.from(main.children).filter((el) => el.id !== 'header-scroll-sentinel');
-  const root = contentRoots[0];
-  const heading = main.querySelector('h1');
-
-  return [
-    contentRoots.length,
-    root?.tagName ?? '',
-    root?.getAttribute('class')?.slice(0, 64) ?? '',
-    heading?.textContent?.trim().slice(0, 100) ?? '',
-    String(main.scrollHeight),
-    root?.textContent?.trim().slice(0, 140) ?? '',
-  ].join('\u00a7');
-}
-
-function waitForMainContentSwap(previous: string, timeoutMs: number): Promise<boolean> {
-  if (!previous || getMainSignature() !== previous) {
-    return Promise.resolve(true);
-  }
-
-  return new Promise((resolve) => {
-    const main = document.querySelector('main');
-    let settled = false;
-
-    const finish = (changed: boolean) => {
-      if (settled) {
-        return;
-      }
-      settled = true;
-      observer?.disconnect();
-      window.clearInterval(poll);
-      window.clearTimeout(timer);
-      resolve(changed);
-    };
-
-    const check = () => {
-      if (getMainSignature() !== previous) {
-        finish(true);
-      }
-    };
-
-    const observer =
-      main != null
-        ? new MutationObserver(() => {
-            check();
-          })
-        : null;
-
-    observer?.observe(main as Node, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-    });
-
-    const poll = window.setInterval(check, 32);
-    const timer = window.setTimeout(() => finish(getMainSignature() !== previous), timeoutMs);
-    check();
-  });
-}
-
-/** Two paint cycles so the new route is composited under the still-opaque loader. */
-function waitForCommittedPaint(): Promise<void> {
-  return waitForPaint().then(() => waitForPaint());
 }
 
 function shouldHandleAnchor(anchor: HTMLAnchorElement): boolean {
@@ -157,7 +97,6 @@ function waitForAboveFoldImages(timeoutMs: number): Promise<void> {
       if (!(node instanceof HTMLImageElement) || node.complete) {
         return false;
       }
-
       const rect = node.getBoundingClientRect();
       if (rect.height === 0 && rect.width === 0) {
         return false;
@@ -198,32 +137,23 @@ function waitForAboveFoldImages(timeoutMs: number): Promise<void> {
   });
 }
 
-async function waitForPageReady(
-  fromSignature: string,
-  onProgress: (value: number) => void,
-): Promise<void> {
-  onProgress(0.28);
-  // Hold until the previous page DOM is gone — pathname alone updates too early.
-  await waitForMainContentSwap(fromSignature, CONTENT_SWAP_MS);
-  onProgress(0.5);
-  await waitForCommittedPaint();
-  onProgress(0.62);
-
-  const fontsReady =
-    'fonts' in document
-      ? document.fonts.ready.then(() => undefined).catch(() => undefined)
-      : Promise.resolve();
-
+/**
+ * In the App Router, usePathname updates when the destination tree commits.
+ * Wait one paint so that committed tree is on screen under the opaque loader,
+ * then briefly settle above-fold images — never block on fonts or long media.
+ */
+async function waitForCommittedPage(onProgress: (value: number) => void): Promise<void> {
+  onProgress(0.55);
+  await waitForPaint();
+  onProgress(0.75);
   await Promise.race([
-    Promise.all([waitForAboveFoldImages(ASSET_WAIT_MS), fontsReady]),
+    waitForAboveFoldImages(ASSET_WAIT_MS),
     new Promise<void>((resolve) => {
       window.setTimeout(resolve, ASSET_WAIT_MS);
     }),
   ]);
-
-  onProgress(0.9);
-  // Final paints: new page must be on screen before we start fading the overlay.
-  await waitForCommittedPaint();
+  onProgress(0.92);
+  await waitForPaint();
   onProgress(1);
 }
 
@@ -236,14 +166,12 @@ export function PageLoader({ loader }: PageLoaderProps) {
   const closingRef = useRef(false);
   const startedAtRef = useRef(0);
   const navTokenRef = useRef(0);
-  const safetyTimerRef = useRef<number | null>(null);
   const hardSafetyTimerRef = useRef<number | null>(null);
   const minDurationMsRef = useRef(loader.minDurationMs);
   const inTimelineRef = useRef<PageLoaderTimeline | null>(null);
   const outTimelineRef = useRef<PageLoaderTimeline | null>(null);
-  const startRef = useRef<() => void>(() => undefined);
   const finishRef = useRef<() => void>(() => undefined);
-  const fromSignatureRef = useRef('');
+  const pendingPathRef = useRef<string | null>(null);
 
   useEffect(() => {
     minDurationMsRef.current = loader.minDurationMs;
@@ -253,7 +181,6 @@ export function PageLoader({ loader }: PageLoaderProps) {
     preloadPageLoaderGsap();
   }, []);
 
-  // Stable controller — never torn down on pathname changes.
   useEffect(() => {
     if (!loader.enabled) {
       return;
@@ -263,11 +190,7 @@ export function PageLoader({ loader }: PageLoaderProps) {
       document.documentElement.classList.toggle('page-loader-active', locked);
     };
 
-    const clearSafety = () => {
-      if (safetyTimerRef.current !== null) {
-        window.clearTimeout(safetyTimerRef.current);
-        safetyTimerRef.current = null;
-      }
+    const clearHardSafety = () => {
       if (hardSafetyTimerRef.current !== null) {
         window.clearTimeout(hardSafetyTimerRef.current);
         hardSafetyTimerRef.current = null;
@@ -275,10 +198,11 @@ export function PageLoader({ loader }: PageLoaderProps) {
     };
 
     const resetIdle = () => {
-      clearSafety();
+      clearHardSafety();
       phaseRef.current = 'idle';
       pendingOutRef.current = false;
       closingRef.current = false;
+      pendingPathRef.current = null;
       lockScroll(false);
       const root = rootRef.current;
       if (root) {
@@ -346,37 +270,30 @@ export function PageLoader({ loader }: PageLoaderProps) {
         });
     };
 
-    const armSafety = () => {
-      clearSafety();
-      safetyTimerRef.current = window.setTimeout(() => {
-        if (phaseRef.current === 'idle') {
-          return;
-        }
-        pendingOutRef.current = true;
-        if (phaseRef.current === 'in') {
-          phaseRef.current = 'hold';
-        }
-        finish();
-      }, SAFETY_MAX_MS);
+    finishRef.current = finish;
 
+    const armHardSafety = () => {
+      clearHardSafety();
       hardSafetyTimerRef.current = window.setTimeout(() => {
         if (phaseRef.current !== 'idle') {
           resetIdle();
         }
-      }, SAFETY_MAX_MS + 1500);
+      }, HARD_SAFETY_MS);
     };
 
-    const start = () => {
+    const start = (destinationPath?: string) => {
       const root = rootRef.current;
       if (!root) {
         return;
       }
 
+      if (destinationPath) {
+        pendingPathRef.current = destinationPath;
+      }
+
       if (phaseRef.current === 'in' || phaseRef.current === 'hold') {
-        // Chained navigation: re-baseline against whatever is currently under the overlay.
-        fromSignatureRef.current = getMainSignature();
         pendingOutRef.current = false;
-        armSafety();
+        armHardSafety();
         return;
       }
 
@@ -393,13 +310,12 @@ export function PageLoader({ loader }: PageLoaderProps) {
       closingRef.current = false;
       pendingOutRef.current = false;
       phaseRef.current = 'in';
-      fromSignatureRef.current = getMainSignature();
       startedAtRef.current = performance.now();
       lockScroll(true);
       root.setAttribute('aria-hidden', 'false');
       root.setAttribute('data-state', 'active');
       root.setAttribute('aria-busy', 'true');
-      armSafety();
+      armHardSafety();
 
       const reduced = prefersReducedMotion();
       void playLoaderIn({ root, reduced, fadeMs: minDurationMsRef.current })
@@ -409,7 +325,7 @@ export function PageLoader({ loader }: PageLoaderProps) {
             return;
           }
           inTimelineRef.current = tl;
-          setLoaderProgress({ root, progress: 0.2 });
+          setLoaderProgress({ root, progress: 0.25 });
 
           const enterHold = () => {
             if (token !== navTokenRef.current || phaseRef.current !== 'in') {
@@ -440,9 +356,6 @@ export function PageLoader({ loader }: PageLoaderProps) {
         });
     };
 
-    startRef.current = start;
-    finishRef.current = finish;
-
     const onClick = (event: MouseEvent) => {
       if (isModifiedClick(event) || event.defaultPrevented) {
         return;
@@ -458,11 +371,17 @@ export function PageLoader({ loader }: PageLoaderProps) {
         return;
       }
 
-      start();
+      let destination = '';
+      try {
+        destination = normalizePath(new URL(anchor.href, window.location.href).pathname);
+      } catch {
+        destination = '';
+      }
+      start(destination || undefined);
     };
 
     const onPopState = () => {
-      start();
+      start(normalizePath(window.location.pathname));
       pendingOutRef.current = true;
     };
 
@@ -486,7 +405,7 @@ export function PageLoader({ loader }: PageLoaderProps) {
     const root = rootRef.current;
 
     return () => {
-      clearSafety();
+      clearHardSafety();
       window.removeEventListener('load', releaseFirstLoad);
       document.removeEventListener('click', onClick, true);
       window.removeEventListener('popstate', onPopState);
@@ -499,12 +418,11 @@ export function PageLoader({ loader }: PageLoaderProps) {
       phaseRef.current = 'idle';
       pendingOutRef.current = false;
       closingRef.current = false;
+      pendingPathRef.current = null;
     };
   }, [loader.enabled, loader.showOnFirstLoad]);
 
-  // Dismiss only when the committed route changes after a started transition.
-  // Intentionally delay updating routeRef until dismiss is scheduled so React
-  // Strict Mode / effect re-runs cannot skip the finish path.
+  // Dismiss only after the destination route has committed (pathname update).
   useEffect(() => {
     if (!loader.enabled) {
       return;
@@ -519,14 +437,19 @@ export function PageLoader({ loader }: PageLoaderProps) {
       return;
     }
 
+    // Ignore intermediate commits if we know the clicked destination.
+    const pending = pendingPathRef.current;
+    if (pending && normalizePath(pathname) !== normalizePath(pending)) {
+      return;
+    }
+
     const token = navTokenRef.current;
     const committedPath = pathname;
-    const fromSignature = fromSignatureRef.current;
     let cancelled = false;
 
     void (async () => {
       try {
-        await waitForPageReady(fromSignature, (value) => {
+        await waitForCommittedPage((value) => {
           if (cancelled || token !== navTokenRef.current || !rootRef.current) {
             return;
           }
@@ -535,17 +458,7 @@ export function PageLoader({ loader }: PageLoaderProps) {
           }
         });
       } catch {
-        // Readiness probing must never trap the overlay.
-      }
-
-      if (cancelled || token !== navTokenRef.current) {
-        return;
-      }
-
-      // One last check: never reveal while the departure page is still mounted.
-      if (fromSignature && getMainSignature() === fromSignature) {
-        await waitForMainContentSwap(fromSignature, 800);
-        await waitForCommittedPaint();
+        // Never trap the overlay on readiness errors.
       }
 
       if (cancelled || token !== navTokenRef.current) {
